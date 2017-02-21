@@ -18,6 +18,11 @@ After receiving the user input as a String, Parser is responsible for transformi
 
 The parser passes back the map of turtle commands to the controller, which it will use to call the step function of the Model. The step function of the model gets a map of turtle to a single command to be executed for every step, and the model will send back the updated turtles' properties and updated user-defined functions and variables to the GUI for display. 
 
+**The following image is a rough sketch of out design:**
+
+<img src="Design.png" width="256"> 
+
+
 ## User Interface
 
 **GUI and User Interaction**
