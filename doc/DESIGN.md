@@ -382,5 +382,5 @@ Sequence of calls (Controller Class):
 
 **Gideon - Primary: Parser and its internal API; Secondary : GUI components**
 
-**Tahia - Backend External API (Model Interface, Controller Interface)	**
+**Tahia - Backend External API (Model Interface, Controller Interface)**
 
