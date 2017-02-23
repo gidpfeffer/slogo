@@ -1,6 +1,6 @@
-package tokenizer;
+package syntax_tokenizer.enums;
 
-public enum TokenTypes {
+public enum SyntaxTypes {
 /** These represent all possible types of 
  * tokens as specified by the resources/languages/syntax.properties file
  */
