@@ -1,4 +1,4 @@
-package syntax_tokenizer;
+package tokenizer;
 
 import syntax_tokenizer.enums.SyntaxTypes;
 

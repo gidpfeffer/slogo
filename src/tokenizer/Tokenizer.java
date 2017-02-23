@@ -1,4 +1,4 @@
-package syntax_tokenizer;
+package tokenizer;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -61,5 +61,7 @@ public class Tokenizer {
 	private boolean match(String text, Pattern regex) {
 		return regex.matcher(text).matches();
 	}
+	
+	
 
 }
