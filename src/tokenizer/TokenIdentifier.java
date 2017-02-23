@@ -1,7 +1,5 @@
 package tokenizer;
 
-import syntax_tokenizer.enums.SyntaxTypes;
-
 public class TokenIdentifier {
 	
 	private String token;

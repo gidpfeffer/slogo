@@ -3,13 +3,9 @@ package tokenizer;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import syntax_tokenizer.enums.SyntaxTypes;
 
 public class Tokenizer {
 	private static final String[] SYNTAX = {"resources/languages/English", "resources/languages/Syntax"};

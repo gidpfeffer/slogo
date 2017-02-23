@@ -2,8 +2,6 @@ package tokenizer;
 
 import java.util.regex.Pattern;
 
-import syntax_tokenizer.enums.SyntaxTypes;
-
 public class TokenPatterns {
 	Pattern pattern;
 	String token;

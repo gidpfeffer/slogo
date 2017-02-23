@@ -1,15 +1,18 @@
-package tokenizer;
+package interpreter;
 
 import java.util.List;
 
-public class TokenTest {
+import tokenizer.TokenList;
+import tokenizer.TokenListGenerator;
+
+public class LoopTest {
 
 	public static void main(String args[]){
-		String testCode = "repeat 50  [ fd 50 rt 90 BACK :distance Left :angle ] fd 50 #coment/n";
+		String testCode = "repeat 2 [ fd rt 20 pick [ 10 20 30 ] repeat 5 [ 50 ] ] ";
 		
 		TokenListGenerator t = new TokenListGenerator(testCode);
-		
 		TokenList TL = t.getList();
+		Interpreter IT = new Interpreter(TL);
 		
 		List<String> literals = TL.getLiterals();
 		List<String> logo = TL.getLogo();
