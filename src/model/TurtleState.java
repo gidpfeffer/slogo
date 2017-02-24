@@ -1,7 +1,9 @@
 package model;
 
+import java.util.Observer;
+import java.util.Observable; 
 
-public class TurtleState{
+public class TurtleState implements Observer{
 	double myX; 
 	double myY; 
 	double myAngle; 
@@ -46,4 +48,15 @@ public class TurtleState{
 	public boolean getPen(){
 		return myPen; 
 	}
+	@Override
+	public void update(Observable o, Object arg) {
+		TurtleState s = ((Turtle) o).getState();
+		this.setX(s.getX());
+		this.setY(s.getY());
+		this.setHeadAngle(s.getHeadAngle());
+		this.setPen(s.getPen());
+		
+	}
+	
+	
 }
