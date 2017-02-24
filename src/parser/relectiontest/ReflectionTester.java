@@ -34,7 +34,7 @@ public class ReflectionTester {
             // the more robust way
             Constructor<?> ctor = clazz.getDeclaredConstructor(List.class);
             Object o = ctor.newInstance(Arrays.asList(new TreeNode[] {new Constant(50)}));
-            Forward f = (Forward) o;
+            TreeNode f = (TreeNode) clazz.cast(o);
             System.out.println("Printing: " + f.getValue());
         } catch (Exception e) {
             e.printStackTrace();
