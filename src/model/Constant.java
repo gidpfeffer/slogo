@@ -1,9 +1,9 @@
 package model;
 
-public class ConstantNode extends TreeNode{
+public class Constant extends TreeNode{
 	double myConstant; 
 	
-	public ConstantNode(double num){
+	public Constant(double num){
 		myConstant = num; 
 	}
 	

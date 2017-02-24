@@ -1,9 +1,9 @@
-package interpreter;
+package parser.interpreter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import tokenizer.TokenList;
+import parser.tokenizer.TokenList;
 
 public abstract class LoopHandler {
 	private TokenList list;

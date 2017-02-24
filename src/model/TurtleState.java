@@ -1,9 +1,9 @@
 package model;
 
-import java.util.Observer;
+
 import java.util.Observable; 
 
-public class TurtleState implements Observer{
+public class TurtleState extends Observable{
 	double myX; 
 	double myY; 
 	double myAngle; 
@@ -16,24 +16,32 @@ public class TurtleState implements Observer{
 	}
 	public void setX(double num){
 		myX = num; 
-		
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void setY(double num){
 		myY = num; 
+		setChanged();
+		notifyObservers();
 
 	}
 	
 	public void setHeadAngle(double num){
 		myAngle = num; 
+		setChanged();
+		notifyObservers();
 		
 	}
 	public void setPen(boolean p){
 		myPen = p; 
+		setChanged();
+		notifyObservers();
 	}
 	
 	public double getX(){
 		return myX ;
+		
 		
 	}
 	
@@ -48,16 +56,7 @@ public class TurtleState implements Observer{
 	public boolean getPen(){
 		return myPen; 
 	}
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		TurtleState s = ((Turtle) o).getState();
-		this.setX(s.getX());
-		this.setY(s.getY());
-		this.setHeadAngle(s.getHeadAngle());
-		this.setPen(s.getPen());
-		
-	}
-	
+
+
 	
 }
