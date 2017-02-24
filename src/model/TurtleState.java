@@ -48,6 +48,7 @@ public class TurtleState implements Observer{
 	public boolean getPen(){
 		return myPen; 
 	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		TurtleState s = ((Turtle) o).getState();
