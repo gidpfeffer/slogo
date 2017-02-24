@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModelController {
+	
 	ArrayList<Turtle> turtles;
 	HashMap<Turtle, TurtleObserver> turtleMap; 
+	
 	public ModelController(){
 		turtles = new ArrayList<Turtle>();
 		turtleMap = new HashMap<Turtle, TurtleObserver>(); 
@@ -17,9 +19,12 @@ public class ModelController {
 									
 	}
 	
+	
+	// is this illegal
 	public List<Turtle> getTurtles(){ 
 		return turtles; 
 	}
+	
 	public Map<Turtle, TurtleObserver> getTurtleMap(){
 		return turtleMap; 
 	}

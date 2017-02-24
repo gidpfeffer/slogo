@@ -1,30 +1,27 @@
 package controller;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observer;
-import java.util.Queue;
 
 import model.ModelController;
 import model.TreeNode;
-import model.TurtleState;
 import model.Turtle;
-import model.TurtleCommand;
 import model.TurtleObserver;
 
 public class Controller {
 	ModelController myModel; 
-	Map<Turtle, TurtleObserver> turtleStates; 
+	//Map<Turtle, TurtleObserver> turtleStates;
 
 	public Controller(){
 		myModel = new ModelController(); 
-		turtleStates = myModel.getTurtleMap();
+		//turtleStates = myModel.getTurtleMap();
 		setTurtleRelationship(); 
 	}
 
 	private void setTurtleRelationship() {
-		for (Turtle t : turtleStates.keySet()){
-			t.addObserver((Observer) turtleStates.get(t)); // how to handle turtles you add??
+		for (Turtle t : myModel.getTurtles()){
+			t.addObserver(new TurtleObserver(t.getState())); 
 		}
 	}
 
@@ -32,18 +29,26 @@ public class Controller {
 		// get Map from parser 
 		// call process commands
 	}
+	
 
 	private void processCommands(Map<Integer, TreeNode> commandMap){
-		myModel.update(commandMap);
-		turtleStates = myModel.getTurtleMap();
+		myModel.update(commandMap); // need to update list of turtles within my model
+		//turtleStates = myModel.getTurtleMap();
 		/*		
 		 * for (Turtle t : turtleStates){
 		 *  GUI.update(turtle, turtle.getState);
 		 *  }
 		 *   */
-		
-		
 	}
+	
+	
+	////FOR TESTING ONLY
+	protected ModelController getModel(){
+		return myModel; 
+	}
+
+	
+	
 }
 
 
