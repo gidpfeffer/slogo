@@ -10,7 +10,7 @@ import parser.tokenizer.TokenListGenerator;
 public class TreeTester {
 	
 	public static void main(String args[]){
-		String testCode = "repeat 3 [ product ] fd fd 30 repeat 12 [ 50 ]";
+		String testCode = "product fd 10 product 10 12 product 5 10";
 		
 		TokenListGenerator t = new TokenListGenerator(testCode);
 		TokenList TL = t.getList();
