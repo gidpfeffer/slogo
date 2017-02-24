@@ -12,6 +12,7 @@ public class Forward extends TurtleCommand {
 	}
 	
 	public void execute(Turtle turtle){
+		TurtleState turtleState = turtle.getState(); 
 		
 	}
 	
