@@ -6,14 +6,14 @@ import java.util.Observable;
 public class Turtle extends Observable {
 	private double xLocation;
 	private double yLocation; 
-	private double pen; 
+	private boolean pen; 
 	private double headAngle;
 	
-	public Turtle(double x, double y,double p, double angle){
+	public Turtle(double x, double y, double angle, boolean p){
 		xLocation = x; 
 		yLocation = y; 
-		pen = p; 
 		headAngle = angle; 
+		pen = p;
 	}
 	
 	public void setX(double num){
@@ -33,8 +33,8 @@ public class Turtle extends Observable {
 		setChanged();
 		notifyObservers();
 	}
-	public void setPen(){
-		pen = (pen == 0.0)? 1.0: 0.0;
+	public void setPen(boolean p){
+		pen = p; 
 		setChanged();
 		notifyObservers();
 	}
@@ -53,7 +53,7 @@ public class Turtle extends Observable {
 		return headAngle;
 	}
 	
-	public double getPen(){
+	public boolean getPen(){
 		return pen; 
 	}
 	
