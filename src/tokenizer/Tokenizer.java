@@ -57,7 +57,4 @@ public class Tokenizer {
 	private boolean match(String text, Pattern regex) {
 		return regex.matcher(text).matches();
 	}
-	
-	
-
 }

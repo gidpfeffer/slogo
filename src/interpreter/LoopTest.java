@@ -8,7 +8,7 @@ import tokenizer.TokenListGenerator;
 public class LoopTest {
 
 	public static void main(String args[]){
-		String testCode = "repeat 2 [ fd rt 20 pick [ 10 20 30 ] repeat 5 [ 50 ] ] ";
+		String testCode = "#fdsflkdls \n repeat 2 [ fd rt 20 pick [ 10 20 30 ] repeat 5 [ 50 ] ] ";
 		
 		TokenListGenerator t = new TokenListGenerator(testCode);
 		TokenList TL = t.getList();

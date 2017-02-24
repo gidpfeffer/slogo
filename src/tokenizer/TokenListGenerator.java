@@ -12,14 +12,16 @@ public class TokenListGenerator {
 	public TokenListGenerator(String toGenerate){
 		input = toGenerate;
 		tokenizing = new String(toGenerate);
+		tokens = new TokenList(new ArrayList<>(), new ArrayList<>());
 		setup();
 	}
 	
 	private void setup(){
 		CommentRemover comment = new CommentRemover(tokenizing);
-		tokenizer = new Tokenizer(comment.getString());
+		String withoutComments = comment.getString();
+		if(withoutComments.equals("")) return;
+		tokenizer = new Tokenizer(withoutComments);
 		generate();
-		
 	}
 	
 	public void generate(){
