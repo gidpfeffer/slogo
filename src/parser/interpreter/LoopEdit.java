@@ -1,9 +1,9 @@
-package interpreter;
+package parser.interpreter;
 
 import java.util.List;
 import java.util.Stack;
 
-import tokenizer.TokenList;
+import parser.tokenizer.TokenList;
 
 public class LoopEdit extends LoopHandler{
 	private static final String CONSTANT = "Constant";

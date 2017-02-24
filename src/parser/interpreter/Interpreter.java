@@ -1,6 +1,6 @@
-package interpreter;
+package parser.interpreter;
 
-import tokenizer.TokenList;
+import parser.tokenizer.TokenList;
 
 public class Interpreter {
 	private TokenList tokens;

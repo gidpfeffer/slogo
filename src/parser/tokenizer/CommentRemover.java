@@ -1,4 +1,4 @@
-package tokenizer;
+package parser.tokenizer;
 
 public class CommentRemover {
 	String str;
