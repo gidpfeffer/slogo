@@ -1,11 +1,12 @@
 package parser.relectiontest;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+import model.ListEnd;
+import model.ListStart;
 import model.TreeNode;
 import parser.tokenizer.TokenList;
 
@@ -14,7 +15,7 @@ public class TreeGenerator {
 	private Stack<TreeNode> parsed;
 	private Stack<String> commands, logo;
 	private NumArgsHandler numArgs;
-	private Queue<TreeNode> commandQueue;
+	private List<TreeNode> commandList;
 	private static final String CONSTANT = "Constant";
 	
 	public TreeGenerator(TokenList t){
@@ -29,7 +30,7 @@ public class TreeGenerator {
 		commands = new Stack<>();
 		logo = new Stack<>();
 		numArgs = new NumArgsHandler();
-		commandQueue = new LinkedList<TreeNode>();
+		commandList = new ArrayList<>();
 	}
 	
 	private void fillStack(){
@@ -52,9 +53,11 @@ public class TreeGenerator {
 		String logoType = logo.pop();
 		int arguments = numArgs.getNumArgs(logoType);
 		TreeNode t = makeNode(command, logoType, arguments);
-		parsed.add(t);
+		if(!((t instanceof ListStart)||(t instanceof ListEnd))){
+			parsed.add(t);
+		}
 		if(!logoType.equals("Constant")){
-			commandQueue.add(t);
+			commandList.add(0, t);
 		}
 	}
 	
@@ -81,7 +84,7 @@ public class TreeGenerator {
 		return list;
 	}
 	
-	public Queue<TreeNode> getQueue(){
-		return commandQueue;
+	public List<TreeNode> getList(){
+		return commandList;
 	}
 }
