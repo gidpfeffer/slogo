@@ -3,7 +3,8 @@ package parser.control_structures;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.TreeNode;
+import model.command.TreeNode;
+
 
 public class Controller {
 	List<TreeNode> list;

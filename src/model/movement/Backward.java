@@ -4,7 +4,6 @@ import java.util.List;
 
 import model.command.TreeNode;
 import model.command.TurtleCommand;
-import model.turtle.Turtle;
 import model.turtle.TurtleState;
 
 public class Backward extends TurtleCommand {
@@ -12,16 +11,17 @@ public class Backward extends TurtleCommand {
 	private TurtleState myTurtleState;
 
 	
-	public Backward (List<TreeNode> args, Turtle t){
+	public Backward (List<TreeNode> args, TurtleState st){
 		children = args;
 		pixels = children.get(0).getValue();
-		myTurtleState = t.getState();
+		myTurtleState = st;
 	}
 	
 	public void execute(){
 	
-		myTurtleState.setX(myTurtleState.getX()-Math.cos(myTurtleState.getHeadAngle())*pixels);
-		myTurtleState.setY(myTurtleState.getY()-Math.sin(myTurtleState.getHeadAngle())*pixels);
+		double newX = myTurtleState.getX()-Math.cos(myTurtleState.getHeadAngle())*pixels;
+		double newY = myTurtleState.getY()-Math.sin(myTurtleState.getHeadAngle())*pixels;
+		myTurtleState.setPosition(newX, newY);
 	}
 	
 	public double getValue(){
