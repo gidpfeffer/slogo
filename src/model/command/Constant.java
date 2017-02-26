@@ -1,4 +1,4 @@
-package model;
+package model.command;
 
 public class Constant extends TreeNode{
 	double myConstant; 

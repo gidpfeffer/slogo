@@ -1,50 +1,33 @@
 package controller;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Observer;
-import java.util.Queue;
-
-import model.ModelController;
-import model.TreeNode;
-import model.TurtleState;
-import model.Turtle;
-import model.TurtleCommand;
-import model.TurtleObserver;
+import java.util.*;
+import model.*;
+import model.command.TurtleCommand;
+import model.turtle.Turtle;
+import parser.main.Parser;
 
 public class Controller {
-	ModelController myModel; 
-	Map<Turtle, TurtleObserver> turtleStates; 
+	private ModelController myModel; 
+	private Turtle myTurtle;
+	private Parser myParser;
+	private TurtleObserver myObserver;
+	
 
 	public Controller(){
 		myModel = new ModelController(); 
-		turtleStates = myModel.getTurtleMap();
-		setTurtleRelationship(); 
+		myTurtle = myModel.getTurtle();
+		myObserver = new TurtleObserver();
+		myTurtle.getState().addObserver(myObserver);
+		myParser = new Parser("fd 50");
 	}
-
-	private void setTurtleRelationship() {
-		for (Turtle t : turtleStates.keySet()){
-			t.addObserver((Observer) turtleStates.get(t)); // how to handle turtles you add??
+	
+	
+	// handle input 
+	private void processCommands(Map<Integer, Queue<TurtleCommand>> commandMap){
+		for (Integer key: commandMap.keySet()){
+			//myModel.update(commandMap.get(key));
+			//turtleStates = myModel.getTurtleMap();
+			// GUI.update(turtle, turtle.getState) 
 		}
 	}
-
-	public void processInput(String input){
-		// get Map from parser 
-		// call process commands
-	}
-
-	private void processCommands(Map<Integer, TreeNode> commandMap){
-		myModel.update(commandMap);
-		turtleStates = myModel.getTurtleMap();
-		/*		
-		 * for (Turtle t : turtleStates){
-		 *  GUI.update(turtle, turtle.getState);
-		 *  }
-		 *   */
-		
-		
-	}
+	
 }
-
-
-
