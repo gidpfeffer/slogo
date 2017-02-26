@@ -69,9 +69,9 @@ public class TurtleState extends Observable{
 	public boolean getPen(){
 		return myPen; 
 	}
+
 	public boolean getVisibility(){
 		return myVisibility; 
 	}
-	
 	
 }
