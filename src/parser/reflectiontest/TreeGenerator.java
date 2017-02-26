@@ -18,9 +18,11 @@ public class TreeGenerator {
 	private NumArgsHandler numArgs;
 	private Queue<TreeNode> commandQueue;
 	private static final String CONSTANT = "Constant";
+	ClassGenerator CG;
 	
 	public TreeGenerator(TokenList t){
 		list = new TokenList(new ArrayList<String>(t.getLiterals()), new ArrayList<String>(t.getLogo()));
+		CG = new ClassGenerator();
 		initializeData();
 		fillStack();
 		generateTree();
@@ -63,13 +65,12 @@ public class TreeGenerator {
 	}
 	
 	private TreeNode makeNode(String command, String logo, int arguments){
-		ClassGenerator CG;
 		List<TreeNode> list = makeList(arguments);
 		if(logo.equals(CONSTANT)){
-			CG = new ClassGenerator(logo, Double.parseDouble(command));
+			CG.generate(logo, Double.parseDouble(command));
 		}
 		else{
-			CG = new ClassGenerator(logo, list);
+			CG.generate(logo, list);
 		}
 		return CG.getGenerated();
 	}

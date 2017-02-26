@@ -8,12 +8,17 @@ import model.Constant;
 import model.TreeNode;
 
 public class ClassGenerator {
-	TreeNode generated;
-
-	public ClassGenerator(String className, List<TreeNode> list) {
+	private TreeNode generated;
+	private PackageLocationHandler PLH;
+	
+	public ClassGenerator(){
+		PLH = new PackageLocationHandler();
+	}
+		
+	public void generate(String className, List<TreeNode> list) {
 		Class<?> clazz;
 		try {
-			clazz = Class.forName("model." + className);
+			clazz = Class.forName(PLH.getLoc(className) + className);
 			makeAdvancedClass(clazz, list);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -21,10 +26,10 @@ public class ClassGenerator {
 		}
 	}
 	
-	public ClassGenerator(String className, Double num) {
+	public void generate(String className, Double num) {
 		Class<?> clazz;
 		try {
-			clazz = Class.forName("model." + className);
+			clazz = Class.forName(PLH.getLoc(className) + className);
 			makeAdvancedClass(clazz, num);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
