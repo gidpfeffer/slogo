@@ -2,6 +2,7 @@ package parser.control_structures;
 
 import java.util.List;
 
+import model.turtle.TurtleState;
 import parser.interpreter.BracketAid;
 import parser.reflectiontest.TreeGenerator;
 import parser.tokenizer.TokenList;
@@ -12,8 +13,8 @@ public class IfElseHandler extends BracketAid{
 	private int ifStart, ifEnd, elseStart, elseEnd;
 	
 	
-	public IfElseHandler(TokenList list){
-		super(list, INDICATOR);
+	public IfElseHandler(TokenList list, TurtleState t){
+		super(list, INDICATOR, t);
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class IfElseHandler extends BracketAid{
 			return Double.parseDouble(literals.get(loc + 1)) != 0;
 		}
 		TreeGenerator TG = new TreeGenerator(
-				list.newSubList(getLogoLocations(indicator).get(0) + 1, ifStart));
+				list.newSubList(getLogoLocations(indicator).get(0) + 1, ifStart), turtle);
 		if(TG.getQueue().size() == 0) 
 			throw new IllegalStateException("invalid if/else syntax");
 		return TG.getQueue().remove().getValue() != 0;

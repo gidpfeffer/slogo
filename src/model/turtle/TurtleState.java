@@ -16,6 +16,11 @@ public class TurtleState extends Observable{
 		myVisibility = v;
 	}
 	
+	
+	public TurtleState(){
+		this(0,0,0, true, true);
+	}
+	
 	public TurtleState(TurtleState o){
 		myX = o.getX();
 		myY = o.getY();
