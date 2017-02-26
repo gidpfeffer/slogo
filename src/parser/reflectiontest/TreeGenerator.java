@@ -8,7 +8,8 @@ import java.util.Stack;
 
 import model.ListEnd;
 import model.ListStart;
-import model.TreeNode;
+import model.command.TreeNode;
+import model.turtle.TurtleState;
 import parser.tokenizer.TokenList;
 
 public class TreeGenerator {
@@ -18,9 +19,13 @@ public class TreeGenerator {
 	private NumArgsHandler numArgs;
 	private Queue<TreeNode> commandQueue;
 	private static final String CONSTANT = "Constant";
+	private ClassGenerator CG;
+	private TurtleState turtle;
 	
-	public TreeGenerator(TokenList t){
+	public TreeGenerator(TokenList t, TurtleState turtle){
 		list = new TokenList(new ArrayList<String>(t.getLiterals()), new ArrayList<String>(t.getLogo()));
+		CG = new ClassGenerator();
+		this.turtle = turtle;
 		initializeData();
 		fillStack();
 		generateTree();
@@ -63,13 +68,12 @@ public class TreeGenerator {
 	}
 	
 	private TreeNode makeNode(String command, String logo, int arguments){
-		ClassGenerator CG;
 		List<TreeNode> list = makeList(arguments);
 		if(logo.equals(CONSTANT)){
-			CG = new ClassGenerator(logo, Double.parseDouble(command));
+			CG.generate(logo, Double.parseDouble(command), turtle);
 		}
 		else{
-			CG = new ClassGenerator(logo, list);
+			CG.generate(logo, list, turtle);
 		}
 		return CG.getGenerated();
 	}

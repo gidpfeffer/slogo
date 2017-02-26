@@ -33,7 +33,8 @@ public class Controller {
 		
 		myObserver = new TurtleObserver();
 		myTurtle.getState().addObserver(myObserver);
-		myParser = new Parser("fd 50");
+		myParser = new Parser();
+		myParser.parse("fd 50");
 	}
 	
 

@@ -1,6 +1,6 @@
 package model.movement;
 
-import java.util.*;
+import java.util.List;
 
 import model.command.TreeNode;
 import model.command.TurtleCommand;
@@ -12,8 +12,6 @@ public class Forward extends TurtleCommand {
 	private double pixels;
 	private TurtleState myTurtleState;
 	
-	
-	
 	public Forward(List<TreeNode> args, TurtleState st){
 		children = args;
 		pixels = children.get(0).getValue();
@@ -21,11 +19,9 @@ public class Forward extends TurtleCommand {
 	}
 	
 	public void execute(){
-		
 		double newX = myTurtleState.getX()+Math.cos(myTurtleState.getHeadAngle())*pixels;		
 		double newY = myTurtleState.getY()+Math.sin(myTurtleState.getHeadAngle())*pixels;
-		myTurtleState.setPosition(newX, newY);
-		 
+		myTurtleState.setPosition(newX, newY); 
 	}
 	
 	public double getValue(){
