@@ -35,6 +35,8 @@ public class ModelController {
 			TreeNode commandNode = commandMap.get(turtleIndex); 
 			if (commandNode instanceof TurtleCommand){
 				((TurtleCommand) commandNode).execute(turtles.get(turtleIndex));
+				// String output =  ((TurtleCommand) commandNode).execute(turtles.get(turtleIndex));
+				// need to return this 
 			}
 			
 		}

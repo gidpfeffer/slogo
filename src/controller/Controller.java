@@ -11,11 +11,9 @@ import model.TurtleObserver;
 
 public class Controller {
 	ModelController myModel; 
-	//Map<Turtle, TurtleObserver> turtleStates;
 
 	public Controller(){
 		myModel = new ModelController(); 
-		//turtleStates = myModel.getTurtleMap();
 		setTurtleRelationship(); 
 	}
 
@@ -30,6 +28,9 @@ public class Controller {
 		// call process commands
 	}
 	
+	public void reset(){
+		myModel = new ModelController(); 
+	}
 
 	private void processCommands(Map<Integer, TreeNode> commandMap){
 		myModel.update(commandMap); // need to update list of turtles within my model
