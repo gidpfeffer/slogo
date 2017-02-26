@@ -1,5 +1,7 @@
 package gui;
 
-public class UITurtleDisplayView {
+import gui.API.UIDisplayAPI;
+
+public class UITurtleDisplayView implements UIDisplayAPI{
 
 }

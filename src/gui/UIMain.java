@@ -3,6 +3,7 @@ package gui;
 import java.util.List;
 
 import controller.ControlHandler;
+import gui.API.UIMainAPI;
 
 public class UIMain implements UIMainAPI {
 	
@@ -10,7 +11,7 @@ public class UIMain implements UIMainAPI {
 	UITerminalView terminal;
 	UITurtleDisplayView display;
 	UIVariablesView varBox;
-	UIFunctionsTable vocabBox;
+	UIVocabTable vocabTable;
 	
 	public UIMain(ControlHandler handler){
 		super();
@@ -35,5 +36,18 @@ public class UIMain implements UIMainAPI {
 	private void setupViews(){
 		
 	}
-
+	
+	private void setupTerminalButtons(){
+		//TODO
+	}
+	
+	private void resetProgram(){
+		this.handler.handleReset();
+	}
+	private void clearTerminal(){
+		//TODO
+	}
+	private void setTurtleImage(){
+		//TODO
+	}
 }

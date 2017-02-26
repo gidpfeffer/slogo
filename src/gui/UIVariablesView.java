@@ -1,5 +1,7 @@
 package gui;
 
-public class UIVariablesView {
+import gui.API.UIVariablesAPI;
+
+public class UIVariablesView implements UIVariablesAPI {
 
 }

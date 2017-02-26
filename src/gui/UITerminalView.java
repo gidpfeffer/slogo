@@ -1,5 +1,7 @@
 package gui;
 
-public class UITerminalView {
+import gui.API.UITerminalAPI;
 
+public class UITerminalView implements UITerminalAPI {
+	
 }
