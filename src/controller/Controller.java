@@ -6,6 +6,18 @@ import model.turtle.Turtle;
 import parser.main.Parser;
 
 public class Controller {
+	
+	Map<Turtle, TurtleObserver> turtleStates;
+	class myHandler implements ControlHandler{
+		@Override
+		public void handleTextInput(String input){
+			processInput(input);
+		}
+		@Override
+	    public void handleReset(){
+			reset();
+	    }
+	}
 	private ModelController myModel; 
 	private Turtle myTurtle;
 	private Parser myParser;
@@ -20,14 +32,25 @@ public class Controller {
 		myParser = new Parser("fd 50");
 	}
 	
-	
-	// handle input 
-	private void processCommands(Map<Integer, Queue<TurtleCommand>> commandMap){
-		for (Integer key: commandMap.keySet()){
-			//myModel.update(commandMap.get(key));
-			//turtleStates = myModel.getTurtleMap();
-			// GUI.update(turtle, turtle.getState) 
-		}
+
+	public void processInput(String input){
+		// get Map from parser 
+		// call process commands
 	}
-	
+
+	private void processCommands(Map<Integer, TreeNode> commandMap){
+		myModel.update(commandMap);
+		turtleStates = myModel.getTurtleMap();
+		/*		
+		 * for (Turtle t : turtleStates){
+		 *  GUI.update(turtle, turtle.getState);
+		 *  }
+		 *   */
+		
+		
+	}
+	private void reset(){
+		//TODO:
+	}
+
 }
