@@ -3,6 +3,7 @@ import java.util.*;
 import model.*;
 import model.command.TurtleCommand;
 import model.turtle.Turtle;
+import model.turtle.TurtleState;
 import parser.main.Parser;
 
 public class Controller {
@@ -15,6 +16,9 @@ public class Controller {
 	public Controller(){
 		myModel = new ModelController(); 
 		myTurtle = myModel.getTurtle();
+
+		//TurtleState turtleState = new TurtleState(myTurtle.getState()); //pass a copy of turtle state into the parser for safety
+		
 		myObserver = new TurtleObserver();
 		myTurtle.getState().addObserver(myObserver);
 		myParser = new Parser("fd 50");

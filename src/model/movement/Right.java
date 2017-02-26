@@ -4,22 +4,23 @@ import java.util.List;
 
 import model.command.TreeNode;
 import model.command.TurtleCommand;
-import model.turtle.Turtle;
 import model.turtle.TurtleState;
 
 public class Right extends TurtleCommand {
 	
 	private double degrees;
+	private TurtleState myTurtleState;
 
 	
-	public Right(List<TreeNode> args){
+	public Right(List<TreeNode> args, TurtleState st){
 		children = args;
 		degrees = children.get(0).getValue();
+		myTurtleState = st;
 	}
 	
-	public void execute(Turtle turtle){
-		TurtleState turtleState = turtle.getState(); 
-		turtleState.setHeadAngle(turtleState.getHeadAngle() - degrees);
+	public void execute(){
+	 
+		myTurtleState.setHeadAngle((myTurtleState.getHeadAngle() - degrees) % 360);
 		 
 	}
 	
