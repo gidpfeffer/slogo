@@ -6,11 +6,9 @@ import java.util.List;
 public class TokenListGenerator {
 	Tokenizer tokenizer;
 	TokenList tokens;
-	String input;
 	String tokenizing;
 	
 	public TokenListGenerator(String toGenerate){
-		input = toGenerate;
 		tokenizing = new String(toGenerate);
 		tokens = new TokenList(new ArrayList<>(), new ArrayList<>());
 		setup();

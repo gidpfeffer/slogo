@@ -1,4 +1,4 @@
-package parser.relectiontest;
+package parser.reflectiontest;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;

@@ -1,56 +1,60 @@
 package controller;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Observer;
-
-import model.ModelController;
-import model.TreeNode;
-import model.Turtle;
-import model.TurtleObserver;
+import java.util.*;
+import model.*;
+import model.command.TurtleCommand;
+import model.turtle.Turtle;
+import model.turtle.TurtleState;
+import parser.main.Parser;
 
 public class Controller {
-	ModelController myModel; 
+	
+	Map<Turtle, TurtleObserver> turtleStates;
+	class myHandler implements ControlHandler{
+		@Override
+		public void handleTextInput(String input){
+			processInput(input);
+		}
+		@Override
+	    public void handleReset(){
+			reset();
+	    }
+	}
+	private ModelController myModel; 
+	private Turtle myTurtle;
+	private Parser myParser;
+	private TurtleObserver myObserver;
+	
 
 	public Controller(){
 		myModel = new ModelController(); 
-		setTurtleRelationship(); 
-	}
+		myTurtle = myModel.getTurtle();
 
-	private void setTurtleRelationship() {
-		for (Turtle t : myModel.getTurtles()){
-			t.addObserver(new TurtleObserver(t.getState())); 
-		}
+		//TurtleState turtleState = new TurtleState(myTurtle.getState()); //pass a copy of turtle state into the parser for safety
+		
+		myObserver = new TurtleObserver();
+		myTurtle.getState().addObserver(myObserver);
+		myParser = new Parser("fd 50");
 	}
+	
 
 	public void processInput(String input){
 		// get Map from parser 
 		// call process commands
 	}
-	
-	public void reset(){
-		myModel = new ModelController(); 
-	}
 
 	private void processCommands(Map<Integer, TreeNode> commandMap){
-		myModel.update(commandMap); // need to update list of turtles within my model
-		//turtleStates = myModel.getTurtleMap();
+		myModel.update(commandMap);
+		turtleStates = myModel.getTurtleMap();
 		/*		
 		 * for (Turtle t : turtleStates){
 		 *  GUI.update(turtle, turtle.getState);
 		 *  }
 		 *   */
+		
+		
 	}
-	
-	
-	////FOR TESTING ONLY
-	protected ModelController getModel(){
-		return myModel; 
+	private void reset(){
+		//TODO:
 	}
 
-	
-	
 }
-
-
-

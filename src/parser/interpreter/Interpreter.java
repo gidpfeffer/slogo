@@ -1,12 +1,15 @@
 package parser.interpreter;
 
+import java.util.ArrayList;
+
+import parser.control_structures.IfElseHandler;
 import parser.tokenizer.TokenList;
 
 public class Interpreter {
 	private TokenList tokens;
 
 	public Interpreter(TokenList TL) {
-		tokens = TL;
+		tokens = new TokenList(new ArrayList<String>(TL.getLiterals()), new ArrayList<String>(TL.getLogo()));
 		checkValidity();
 		interpret();
 	}
@@ -21,7 +24,8 @@ public class Interpreter {
 	}
 	
 	private void handleLoops(){
-		LoopHandler lh = new LoopEdit(tokens);
+		BracketHandler le = new LoopEdit(tokens);
+		BracketHandler ie = new IfElseHandler(tokens);
 	}
 	
 	public TokenList getTokenList(){

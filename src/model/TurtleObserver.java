@@ -2,34 +2,48 @@ package model;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.turtle.Turtle;
+import model.turtle.TurtleState;
+
 
 
 public class TurtleObserver implements Observer {
+	private TurtleState observerTurtleState;
 
-	private TurtleState observableTurtleState;
-	public TurtleObserver(TurtleState state){
-		observableTurtleState = state; 
-	}
+
 	public TurtleObserver(){
-		observableTurtleState = new TurtleState(0, 0, 0, false); 
+		observerTurtleState = new TurtleState(0, 0, 0, false, false);
 	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		observableTurtleState = ((Turtle) o).getState(); 
-		TurtleState s = observableTurtleState;
-		System.out.println("new x is " + s.getX()); // for testing
-		System.out.println("new y is " + s.getY());
+		observerTurtleState = new TurtleState((TurtleState) o); 
+		System.out.println("new x is " + observerTurtleState.getX()); // for testing
+		System.out.println("new y is " + observerTurtleState.getY());
+		
 	}
 
-	public TurtleState getNewState(){
-		return observableTurtleState;
-	}
+	
+	
 /*	public static void main(String[] args){
 		Turtle t = new Turtle(0,0,0,true);
 		TurtleObserver o = new TurtleObserver();
 		t.getState().addObserver(o);
 		t.getState().setX(3);
 	}*/
+	
+	
+	
+/*
+	public static void main(String[] args){
+		Turtle t = new Turtle(0,0,0,true,true);
+		TurtleObserver o = new TurtleObserver();
+		t.getState().addObserver(o);
+		
+		
+		t.getState().setX(3);
+	*/
 
 }
+
