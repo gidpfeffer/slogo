@@ -1,10 +1,9 @@
 package model.movement;
 
-import java.util.*;
+import java.util.List;
 
 import model.command.TreeNode;
 import model.command.TurtleCommand;
-import model.turtle.Turtle;
 import model.turtle.TurtleState;
 
 
@@ -15,10 +14,10 @@ public class Forward extends TurtleCommand {
 	
 	
 	
-	public Forward(List<TreeNode> args, Turtle t){
+	public Forward(List<TreeNode> args, TurtleState t){
 		children = args;
 		pixels = children.get(0).getValue();
-		myTurtleState = t.getState();
+		myTurtleState = t;
 	}
 	
 	public void execute(){

@@ -17,7 +17,8 @@ public class Controller {
 		myTurtle = myModel.getTurtle();
 		myObserver = new TurtleObserver();
 		myTurtle.getState().addObserver(myObserver);
-		myParser = new Parser("fd 50");
+		myParser = new Parser();
+		myParser.parse("fd 50");
 	}
 	
 	

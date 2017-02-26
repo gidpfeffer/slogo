@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import model.TreeNode;
+import model.command.TreeNode;
+import model.turtle.TurtleState;
 import parser.interpreter.Interpreter;
 import parser.reflectiontest.TreeGenerator;
 import parser.tokenizer.TokenList;
@@ -17,15 +18,17 @@ public class Parser {
 	private TokenList TL;
 	private Interpreter IT;
 	private TreeGenerator TG;
+	private TurtleState t;
 	
-	public Parser(){
+	public Parser(TurtleState t){
+		this.t = t;
 	}
 	
 	private void initialize(){
 		TLG = new TokenListGenerator(str);
 		IT = new Interpreter(TLG.getList());
 		TL = IT.getTokenList();
-		TG = new TreeGenerator(TL);
+		TG = new TreeGenerator(TL, t);
 	}
 	
 	public TokenList getTokenList(){

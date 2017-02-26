@@ -3,15 +3,20 @@ package parser.interpreter;
 import java.util.List;
 import java.util.Stack;
 
+import model.turtle.TurtleState;
 import parser.tokenizer.TokenList;
 
 public abstract class BracketAid extends BracketHandler{
 	protected ListMultiplier listMultiplier;
 
-	public BracketAid(TokenList list, String indicator) {
-		super(list, indicator);
+	public BracketAid(TokenList list, String indicator, TurtleState t) {
+		super(list, indicator, t);
 		listMultiplier = new ListMultiplier();
 		correctList();
+	}
+	
+	public BracketAid(TokenList list, String indicator) {
+		this(list, indicator, new TurtleState());
 	}
 	
 	protected void correctList(){

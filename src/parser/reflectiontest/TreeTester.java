@@ -2,15 +2,16 @@ package parser.reflectiontest;
 
 import model.ListEnd;
 import model.ListStart;
-import model.TreeNode;
+import model.command.TreeNode;
+import model.turtle.TurtleState;
 import parser.main.Parser;
 
 public class TreeTester {
 	
 	public static void main(String args[]){
-		String testCode1 = "repeat 5 [ [ fd 20 ] [ fd 40 ] ]";
+		String testCode1 = "if 5 [ fd 10 ]";
 		
-		Parser p = new Parser();
+		Parser p = new Parser(new TurtleState());
 		p.parse(testCode1);
 		
 		for(TreeNode node : p.getOrderedTreeList()){

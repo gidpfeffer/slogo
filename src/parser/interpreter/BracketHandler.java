@@ -3,6 +3,8 @@ package parser.interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.turtle.Turtle;
+import model.turtle.TurtleState;
 import parser.tokenizer.TokenList;
 
 public abstract class BracketHandler {
@@ -11,10 +13,12 @@ public abstract class BracketHandler {
 	protected String indicator;
 	protected static final String LEFT_BRACKET 	= "[";
 	protected static final String RIGHT_BRACKET = "]";
+	protected TurtleState turtle;
 	
-	public BracketHandler(TokenList list, String indicator){
+	public BracketHandler(TokenList list, String indicator, TurtleState t){
 		this.indicator = indicator;
 		this.list = list;
+		this.turtle = t;
 		literals = list.getLiterals();
 		logo = list.getLogo();
 		checkSyntax();
