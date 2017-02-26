@@ -1,5 +1,7 @@
 package gui.API;
 
-public interface UIVocabularyAPI {
+import general_data_structures.Vocabulary;
 
+public interface UIVocabularyAPI {
+	public abstract void update(Vocabulary newVocab);
 }

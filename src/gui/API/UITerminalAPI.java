@@ -1,5 +1,7 @@
 package gui.API;
 
-public interface UITerminalAPI {
+import java.util.List;
 
+public interface UITerminalAPI {
+	public abstract void addNewLines(List<String> lines);
 }

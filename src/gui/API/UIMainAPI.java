@@ -8,5 +8,6 @@ public interface UIMainAPI {
 	public abstract void sendTextOutput(String output);
 	public abstract void updateVocabBox(List<String> words);
 	public abstract void updateVarBox(List<String> variables);
+	public abstract void updateTerminalWithNewLines(List<String> lines);
 	
 }
