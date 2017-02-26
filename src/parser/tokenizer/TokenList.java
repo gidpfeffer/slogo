@@ -1,5 +1,6 @@
 package parser.tokenizer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TokenList {
@@ -17,6 +18,21 @@ public class TokenList {
 	
 	public List<String> getLogo(){
 		return logo;
+	}
+	
+	public TokenList newSubList(int start, int end){
+		return new TokenList(literals.subList(start, end), logo.subList(start, end));
+	}
+	
+	public void removeAll(int start, int end){
+		for(int i = start; i <= end; i++){
+			literals.remove(start);
+			logo.remove(start);
+		}
+	}
+	
+	public int size(){
+		return literals.size();
 	}
 
 }
