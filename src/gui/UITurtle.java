@@ -1,10 +1,12 @@
 package gui;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import model.turtle.TurtleState;
 
-public class UITurtle {
-	Image _image;
-	public UITurtle(Image image){
-		this._image = image;
+public class UITurtle extends ImageView {
+	TurtleState _turtleState;
+	public UITurtle(TurtleState t){
+		_turtleState = t;
 	}
 }
