@@ -4,7 +4,6 @@ import java.util.List;
 
 import model.command.TreeNode;
 import model.command.TurtleCommand;
-import model.turtle.Turtle;
 import model.turtle.TurtleState;
 
 public class Left extends TurtleCommand {
@@ -13,10 +12,10 @@ public class Left extends TurtleCommand {
 	private TurtleState myTurtleState;
 
 	
-	public Left(List<TreeNode> args, Turtle t){
+	public Left(List<TreeNode> args, TurtleState st){
 		children = args;
 		degrees = children.get(0).getValue();
-		myTurtleState = t.getState();
+		myTurtleState = st;
 	}
 	
 	public void execute(){
