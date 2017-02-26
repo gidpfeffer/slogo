@@ -1,5 +1,8 @@
 package parser.main;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import model.TreeNode;
@@ -15,9 +18,7 @@ public class Parser {
 	private Interpreter IT;
 	private TreeGenerator TG;
 	
-	public Parser(String toParse){
-		str = toParse;
-		initialize();
+	public Parser(){
 	}
 	
 	private void initialize(){
@@ -28,10 +29,24 @@ public class Parser {
 	}
 	
 	public TokenList getTokenList(){
-		return TL;
+		return new TokenList(TL.getLiterals(), TL.getLogo());
 	}
 	
-	public Queue<TreeNode> getTreeList(){
-		return TG.getQueue();
+	public Queue<TreeNode> getTreeQueue(){
+		return new LinkedList<>(TG.getQueue());
+	}
+	
+	public List<TreeNode> getOrderedTreeList(){
+		List<TreeNode> list = new ArrayList<>();
+		Queue<TreeNode> copy = new LinkedList<>(TG.getQueue());;
+		while(!copy.isEmpty()){
+			list.add(0, copy.remove());
+		}
+		return list;
+	}
+	
+	public void parse(String toParse){		
+		str = toParse;
+		initialize();
 	}
 }

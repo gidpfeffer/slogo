@@ -3,6 +3,7 @@ package parser.interpreter;
 import java.util.ArrayList;
 
 import parser.control_structures.IfElseHandler;
+import parser.control_structures.IfHandler;
 import parser.tokenizer.TokenList;
 
 public class Interpreter {
@@ -25,6 +26,7 @@ public class Interpreter {
 	
 	private void handleLoops(){
 		BracketHandler le = new LoopEdit(tokens);
+		BracketHandler i = new IfHandler(tokens);
 		BracketHandler ie = new IfElseHandler(tokens);
 	}
 	
