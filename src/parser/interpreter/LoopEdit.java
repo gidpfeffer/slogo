@@ -5,77 +5,35 @@ import java.util.Stack;
 
 import parser.tokenizer.TokenList;
 
-public class LoopEdit extends LoopHandler{
+public class LoopEdit extends BracketAid{
 	private static final String CONSTANT = "Constant";
-	private List<String> literals, logo;
+	private static final String REPEAT = "Repeat";
 	private int startIndex, endIndex, times;
-	private Stack<Integer> stack;
-	private ListMultiplier listMultiplier;
-	
 	
 	public LoopEdit(TokenList list){
-		super(list);
-		literals = list.getLiterals();
-		logo = list.getLogo();
-		listMultiplier = new ListMultiplier();
-		stack = new Stack<>();
-		correctList();
+		super(list, REPEAT);
 	}
 	
-	private void correctList(){
-		while(!isDone()){
-			handleLoop();
-		}
-	}
-	
-	private void handleLoop(){
-		reset();
-		findIndices();
-		replace();
-	}
-	
-	private void reset(){
+	protected void reset(){
 		startIndex = endIndex = times = -1;
-		stack.clear();
-		checkValidRepeat();
+		checkValidity();
 	}
 	
-	private void findIndices(){
-		boolean found = false;
-		startIndex = getLocations(REPEAT).get(0) + 2;
+	protected void findIndices(){
+		startIndex = findStartBracket(getLogoLocations(indicator).get(0));
 		times = Integer.parseInt(literals.get(startIndex - 1));
-		stack.push(startIndex);
-		for(int i = startIndex + 1; i < literals.size(); i++){
-			if(literals.get(i).equals(LEFT_BRACKET))
-				stack.push(i);
-			if(literals.get(i).equals(RIGHT_BRACKET)){
-				stack.pop();
-				if(stack.isEmpty()){
-					endIndex = i;
-					found = true;
-					break;
-				}
-			}
-		}
-		if(!found){
-			throw new IllegalStateException("Invalid Bracket Syntax");
-		}
+		endIndex = findEndBracket(startIndex);
 	}
 	
-	private void replace(){
-		List<String> literalFiller = getSubList(literals, startIndex + 1, endIndex);
-		List<String> logoFiller = getSubList(logo, startIndex + 1, endIndex);
-		listMultiplier.replace(startIndex - 2, endIndex + 1, literals, literalFiller);
-		listMultiplier.replace(startIndex - 2, endIndex + 1, logo, logoFiller);
+	protected void replace(){
+		List<String> literalFiller = getSubList(literals, startIndex + 1, endIndex, times);
+		List<String> logoFiller = getSubList(logo, startIndex + 1, endIndex, times);
+		listMultiplier.replace(startIndex - 2, endIndex, literals, literalFiller);
+		listMultiplier.replace(startIndex - 2, endIndex, logo, logoFiller);
 	}
 	
-	private List<String> getSubList(List<String> list, int start, int end){
-		return listMultiplier.multiplyList(
-				list.subList(start, end), times);
-	}
-	
-	private void checkValidRepeat(){
-		int repeatIndex = getLocations(REPEAT).get(0);
+	protected void checkValidity(){
+		int repeatIndex = getLogoLocations(REPEAT).get(0);
 		if(repeatIndex + 2 >= literals.size() ||
 				!literals.get(repeatIndex + 2).equals(LEFT_BRACKET) ||
 				!logo.get(repeatIndex + 1).equals(CONSTANT)){

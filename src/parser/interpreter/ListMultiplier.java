@@ -18,7 +18,7 @@ public class ListMultiplier {
 	}
 	
 	public void replace(int start, int end, List<String> toFill, List<String> filler){
-		for(int i = start; i < end; i++){
+		for(int i = start; i <= end; i++){
 			toFill.remove(start);
 		}
 		toFill.addAll(start, filler);

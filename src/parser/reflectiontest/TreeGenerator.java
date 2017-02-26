@@ -1,6 +1,7 @@
-package parser.relectiontest;
+package parser.reflectiontest;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
@@ -15,11 +16,11 @@ public class TreeGenerator {
 	private Stack<TreeNode> parsed;
 	private Stack<String> commands, logo;
 	private NumArgsHandler numArgs;
-	private List<TreeNode> commandList;
+	private Queue<TreeNode> commandQueue;
 	private static final String CONSTANT = "Constant";
 	
 	public TreeGenerator(TokenList t){
-		list = t;
+		list = new TokenList(new ArrayList<String>(t.getLiterals()), new ArrayList<String>(t.getLogo()));
 		initializeData();
 		fillStack();
 		generateTree();
@@ -30,7 +31,7 @@ public class TreeGenerator {
 		commands = new Stack<>();
 		logo = new Stack<>();
 		numArgs = new NumArgsHandler();
-		commandList = new ArrayList<>();
+		commandQueue = new LinkedList<>();
 	}
 	
 	private void fillStack(){
@@ -57,7 +58,7 @@ public class TreeGenerator {
 			parsed.add(t);
 		}
 		if(!logoType.equals("Constant")){
-			commandList.add(0, t);
+			commandQueue.add(t);
 		}
 	}
 	
@@ -84,7 +85,7 @@ public class TreeGenerator {
 		return list;
 	}
 	
-	public List<TreeNode> getList(){
-		return commandList;
+	public Queue<TreeNode> getQueue(){
+		return commandQueue;
 	}
 }
