@@ -2,6 +2,8 @@ package model;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.turtle.TurtleState;
+
 
 
 public class TurtleObserver implements Observer {
@@ -11,9 +13,8 @@ public class TurtleObserver implements Observer {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		observableTurtleState = (TurtleState) o; 
-		TurtleState s = observableTurtleState;
-		System.out.println("new x is " + s.getX()); // for testing
-		System.out.println("new y is " + s.getY());
+		System.out.println("new x is " + observableTurtleState.getX()); // for testing
+		System.out.println("new y is " + observableTurtleState.getY());
 	}
 	
 //	public static void main(String[] args){

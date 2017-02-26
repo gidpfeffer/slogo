@@ -5,40 +5,47 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.command.TreeNode;
+import model.command.TurtleCommand;
+import model.turtle.Turtle;
+import model.turtle.TurtleState;
+
 public class ModelController {
-	ArrayList<Turtle> turtles;
-	HashMap<Turtle, TurtleState> turtleMap; 
+	//List<Turtle> turtles;  
+	
+	Turtle myTurtle;
+	
 	public ModelController(){
-		turtles = new ArrayList<Turtle>();
-		turtleMap = new HashMap<Turtle, TurtleState>(); 
-		// need blank constructor for turtle - set to default value to initialize
+		//turtles = new ArrayList<Turtle>();
+
 		// GUI can hand these to controller and controller can hand them down if needed -  x and y should be based on GUI size 
-		Turtle firstTurtle = new Turtle(0,0,0,true); 
-//		TurtleState firstState = new TurtleState(); 
-		turtleMap.put(firstTurtle, firstTurtle.getState()); 
-		turtles.add(firstTurtle);
+		
+		myTurtle = new Turtle();
+		
+		//turtles.add(firstTurtle);
 									
 	}
 	
-	public List<Turtle> getTurtles(){ 
-		return turtles; 
+	public Turtle getTurtle(){ 
+		return myTurtle; 
 	}
-	public Map<Turtle, TurtleState> getTurtleMap(){
-		return turtleMap; 
+
+	public void update(TreeNode commandToExecute){	
+		if (commandToExecute instanceof TurtleCommand){
+			((TurtleCommand) commandToExecute).execute(myTurtle);
+		}
 	}
-	public void update(Map<Integer,TreeNode> commandMap){
-//		while (!commands.isEmpty()){
-//		Command c = commands.poll();
-//		c.execute(); 
 		
+		
+	/* for multiple turtle extension
+	public void update(Map<Integer,TreeNode> commandMap){
 		for (Integer turtleIndex: commandMap.keySet()){
-			
 			TreeNode commandNode = commandMap.get(turtleIndex); 
 			if (commandNode instanceof TurtleCommand){
 				((TurtleCommand) commandNode).execute(turtles.get(turtleIndex));
 			}
-			
 		}
 	}
+	 */
 	
 }

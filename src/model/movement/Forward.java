@@ -1,6 +1,11 @@
-package model;
+package model.movement;
 
 import java.util.*;
+
+import model.command.TreeNode;
+import model.command.TurtleCommand;
+import model.turtle.Turtle;
+import model.turtle.TurtleState;
 
 
 public class Forward extends TurtleCommand {
