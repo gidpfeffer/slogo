@@ -1,9 +1,8 @@
 package model.turtle;
 
-import java.util.Observable;
 
 
-public class Turtle extends Observable {
+public class Turtle {
 	
 	private TurtleState myState; 
 
@@ -23,11 +22,11 @@ public class Turtle extends Observable {
 		return myState;
 	}
 	
-	public void setState(TurtleState newState){
-		myState = newState;
-		setChanged();
-		notifyObservers();
-	}
+//	public void setState(TurtleState newState){
+//		myState = newState;
+//		setChanged();
+//		notifyObservers();
+//	}
 	
 	
 }

@@ -10,16 +10,18 @@ import model.turtle.TurtleState;
 public class Left extends TurtleCommand {
 	
 	private double degrees;
+	private TurtleState myTurtleState;
 
 	
-	public Left(List<TreeNode> args){
+	public Left(List<TreeNode> args, Turtle t){
 		children = args;
 		degrees = children.get(0).getValue();
+		myTurtleState = t.getState();
 	}
 	
-	public void execute(Turtle turtle){
-		TurtleState turtleState = turtle.getState(); 
-		turtleState.setHeadAngle(turtleState.getHeadAngle()+degrees);
+	public void execute(){
+		
+		myTurtleState.setHeadAngle((myTurtleState.getHeadAngle()+degrees) % 360);
 		 
 	}
 	

@@ -15,6 +15,16 @@ public class TurtleState extends Observable{
 		myPen = pen;
 		myVisibility = v;
 	}
+	
+	public TurtleState(TurtleState o){
+		myX = o.getX();
+		myY = o.getY();
+		myAngle = o.getHeadAngle();
+		myPen = o.getPen();
+		myVisibility = o.getVisibility();
+	}
+	
+	
 	public void setX(double num){
 		myX = num; 
 		setChanged();

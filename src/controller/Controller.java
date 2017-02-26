@@ -3,30 +3,29 @@ import java.util.*;
 import model.*;
 import model.command.TurtleCommand;
 import model.turtle.Turtle;
-import model.turtle.TurtleState;
+import parser.main.Parser;
 
 public class Controller {
 	private ModelController myModel; 
-	private List<Turtle> myTurtleList;
+	private Turtle myTurtle;
+	private Parser myParser;
+	private TurtleObserver myObserver;
 	
 
 	public Controller(){
 		myModel = new ModelController(); 
-		myTurtleList = myModel.getTurtles();
-		setTurtleRelationship(); 
+		myTurtle = myModel.getTurtle();
+		myObserver = new TurtleObserver();
+		myTurtle.getState().addObserver(myObserver);
+		myParser = new Parser("fd 50");
 	}
-
-	private void setTurtleRelationship() {
-
-	}
-	
 	
 	
 	// handle input 
 	private void processCommands(Map<Integer, Queue<TurtleCommand>> commandMap){
 		for (Integer key: commandMap.keySet()){
-			myModel.update(commandMap.get(key));
-			turtleStates = myModel.getTurtleMap();
+			//myModel.update(commandMap.get(key));
+			//turtleStates = myModel.getTurtleMap();
 			// GUI.update(turtle, turtle.getState) 
 		}
 	}
