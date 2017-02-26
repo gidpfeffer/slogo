@@ -13,8 +13,19 @@ import model.TurtleCommand;
 import model.TurtleObserver;
 
 public class Controller {
+	
 	ModelController myModel; 
-	Map<Turtle, TurtleObserver> turtleStates; 
+	Map<Turtle, TurtleObserver> turtleStates;
+	class myHandler implements ControlHandler{
+		@Override
+		public void handleTextInput(String input){
+			processInput(input);
+		}
+		@Override
+	    public void handleReset(){
+			reset();
+	    }
+	}
 
 	public Controller(){
 		myModel = new ModelController(); 
@@ -43,6 +54,9 @@ public class Controller {
 		 *   */
 		
 		
+	}
+	private void reset(){
+		//TODO:
 	}
 }
 
