@@ -17,16 +17,9 @@ public class Turtle {
 		myState = new TurtleState(0,0,0,true,true);
 	}
 
-	
 	public TurtleState getState(){
 		return myState;
 	}
-	
-//	public void setState(TurtleState newState){
-//		myState = newState;
-//		setChanged();
-//		notifyObservers();
-//	}
-	
+
 	
 }

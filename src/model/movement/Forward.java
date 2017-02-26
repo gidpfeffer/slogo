@@ -12,19 +12,16 @@ public class Forward extends TurtleCommand {
 	private double pixels;
 	private TurtleState myTurtleState;
 	
-	
-	
-	public Forward(List<TreeNode> args, TurtleState t){
+	public Forward(List<TreeNode> args, TurtleState st){
 		children = args;
 		pixels = children.get(0).getValue();
-		myTurtleState = t;
+		myTurtleState = st;
 	}
 	
 	public void execute(){
-		
-		myTurtleState.setX(myTurtleState.getX()+Math.cos(myTurtleState.getHeadAngle())*pixels);		
-		myTurtleState.setY(myTurtleState.getY()+Math.sin(myTurtleState.getHeadAngle())*pixels);
-		 
+		double newX = myTurtleState.getX()+Math.cos(myTurtleState.getHeadAngle())*pixels;		
+		double newY = myTurtleState.getY()+Math.sin(myTurtleState.getHeadAngle())*pixels;
+		myTurtleState.setPosition(newX, newY); 
 	}
 	
 	public double getValue(){
