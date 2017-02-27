@@ -26,6 +26,7 @@ public class Controller {
 	private Turtle myTurtle;
 	private Parser myParser;
 	private TurtleObserver myObserver;
+	private String output; 
 	
 
 	public Controller(){
@@ -44,16 +45,15 @@ public class Controller {
 	public void processInput(String input){
 		// get Map from parser 
 		myParser.parse(input);
-		processCommands(myParser.getOrderedTreeList());
+		myModel.update(myParser.getOrderedTreeList());
+		output = myModel.getStringOutput();
 		// call process commands
 	}
-	private void processCommands(List<TreeNode> commands){
-		myModel.update(commands);
-		String output = myModel.getStringOutput(); 
-		// hand to GUI		
 	
-		
+	public String getStringOutput(){
+		return output; 
 	}
+
 	private void reset(){
 		myModel.reset(); 
 	}
