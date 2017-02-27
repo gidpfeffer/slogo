@@ -11,6 +11,11 @@ import model.turtle.Turtle;
 import model.turtle.TurtleState;
 
 public class ModelController {
+
+	
+	ArrayList<Turtle> turtles;
+	HashMap<Turtle, TurtleObserver> turtleMap; 
+
 	//List<Turtle> turtles;  
 	
 	Turtle myTurtle;
@@ -27,6 +32,18 @@ public class ModelController {
 									
 	}
 	
+
+	
+	// is this illegal
+	public List<Turtle> getTurtles(){ 
+		return turtles; 
+	}
+	
+	public Map<Turtle, TurtleObserver> getTurtleMap(){
+		return turtleMap; 
+	}
+	
+
 	public Turtle getTurtle(){ 
 		return myTurtle; 
 	}
@@ -36,6 +53,13 @@ public class ModelController {
 		if (commandToExecute instanceof TurtleCommand){
 			((TurtleCommand) commandToExecute).execute();
 		}
+		
+	}
+
+
+
+	public void reset() {
+		myTurtle = new Turtle(); 
 	}
 		
 		
@@ -46,6 +70,8 @@ public class ModelController {
 			TreeNode commandNode = commandMap.get(turtleIndex); 
 			if (commandNode instanceof TurtleCommand){
 				((TurtleCommand) commandNode).execute(turtles.get(turtleIndex));
+				// String output =  ((TurtleCommand) commandNode).execute(turtles.get(turtleIndex));
+				// need to return this 
 			}
 		}
 	}
