@@ -47,4 +47,8 @@ public class Frame {
 	public Frame toLocalBounds(){
 		return bounds;
 	}
+	
+	public String toString(){
+		return "x: " + x + "\ty: " + y + "\tw: " + width + "\th" + height;
+	}
 }

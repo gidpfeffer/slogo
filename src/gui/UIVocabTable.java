@@ -2,13 +2,15 @@ package gui;
 
 import general_data_structures.Vocabulary;
 import gui.API.UIVocabularyAPI;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class UIVocabTable extends Pane implements UIVocabularyAPI {
-
-	public UIVocabTable(Frame vocabFrame) {
-		// TODO Auto-generated constructor stub
+	Frame _bounds;
+	public UIVocabTable(Frame bounds) {
+		super();
+		_bounds = bounds;
 		setupViews();
 	}
 
@@ -22,7 +24,7 @@ public class UIVocabTable extends Pane implements UIVocabularyAPI {
 
 	private void setupViews() {
 		// TODO Auto-generated method stub
-		this.setBackground(GUITools.getBackgroundWithColor(Color.BLANCHEDALMOND, 20));
+		GUITools.addBackgroundWithColor(this, Color.BISQUE, _bounds);
 		
 	}
 

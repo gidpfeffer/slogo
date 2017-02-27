@@ -5,14 +5,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class UITurtleDisplayView extends Pane implements UIDisplayAPI{
-
-	public UITurtleDisplayView(Frame localBounds) {
+	Frame _bounds;
+	public UITurtleDisplayView(Frame bounds) {
 		// TODO Auto-generated constructor stub
+		_bounds = bounds;
 		setupViews();
 	}
 
 	private void setupViews() {
-		this.setBackground(GUITools.getBackgroundWithColor(Color.BLUE, 8));
+		GUITools.addBackgroundWithColor(this, Color.BLUE, _bounds);
 		
 	}
 

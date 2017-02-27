@@ -20,13 +20,13 @@ public class UIMain implements UIMainAPI {
 	
 	//define the location of UI Components here
 	public static final double SCREEN_WIDTH = 700;
-	public static final double SCREEN_HEIGHT = 500;
-	public static final double TOP_INSET = 50;
-	public static final Frame TERMINAL_FRAME = new Frame(8, SCREEN_HEIGHT*2/3, SCREEN_WIDTH*2/3 - 16 - 50, SCREEN_HEIGHT/3 - 16);
+	public static final double SCREEN_HEIGHT = 650;
+	public static final double TOP_INSET = 70;
+	public static final Frame DISPLAY_FRAME = new Frame(8,TOP_INSET, SCREEN_WIDTH*3/4 - 16,SCREEN_HEIGHT*3/4 - 16);
+	public static final Frame TERMINAL_FRAME = new Frame(8, DISPLAY_FRAME.getMaxY() + 8, DISPLAY_FRAME.getWidth() - 50, SCREEN_HEIGHT - DISPLAY_FRAME.getMaxY() - 16 );
 	public static final Frame BUTTONS_FRAME = new Frame(TERMINAL_FRAME.getMaxX(), TERMINAL_FRAME.getY(), 50, TERMINAL_FRAME.getHeight());
-	public static final Frame DISPLAY_FRAME = new Frame(8,TOP_INSET, SCREEN_HEIGHT*2/3 - 16 - TOP_INSET,SCREEN_HEIGHT*2/3 - 16);
-	public static final Frame VARS_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,TOP_INSET, SCREEN_HEIGHT/3 - 16,SCREEN_HEIGHT*3 - 16);
-	public static final Frame VOCAB_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,VARS_FRAME.getMaxY() + 8,SCREEN_HEIGHT*2/3 - 16 - TOP_INSET,SCREEN_HEIGHT/3 - 16);
+	public static final Frame VOCAB_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,DISPLAY_FRAME.getY(), SCREEN_WIDTH - DISPLAY_FRAME.getMaxX() - 16,SCREEN_HEIGHT*2/3 - 16);
+	public static final Frame VARS_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,VOCAB_FRAME.getMaxY() + 8, VOCAB_FRAME.getWidth(),SCREEN_HEIGHT - VOCAB_FRAME.getMaxY() - 16);
 	
 	Pane _root;
 	Scene _scene;
@@ -68,6 +68,8 @@ public class UIMain implements UIMainAPI {
 
 	private void setupViews(){
 		setupRoot();
+		setupTitleAndMenuButton();
+		setupMenu();
 		setupTerminal();
 		setupDisplay();
 		setupVocabTable();
@@ -80,6 +82,12 @@ public class UIMain implements UIMainAPI {
 		_root = new Pane();
 		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(Color.GRAY));
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
+	}
+	private void setupTitleAndMenuButton(){
+		//TODO
+	}
+	private void setupMenu(){
+		//TODO
 	}
 	private void setupTerminal(){
 		_terminalView = new UITerminalView(TERMINAL_FRAME.toLocalBounds());
@@ -98,15 +106,16 @@ public class UIMain implements UIMainAPI {
 		_root.getChildren().add(_displayView);
 	}
 	private void setupVocabTable(){
-		_vocabTableView = new UIVocabTable(VOCAB_FRAME);
-		_vocabTableView.setLayoutX(VARS_FRAME.getX());
-		_vocabTableView.setLayoutY(VARS_FRAME.getMaxY());
-		_vocabTableView.prefHeight(VARS_FRAME.getHeight());
-		_vocabTableView.prefWidth(VARS_FRAME.getWidth());
+		System.out.println(VOCAB_FRAME);
+		_vocabTableView = new UIVocabTable(VOCAB_FRAME.toLocalBounds());
+		_vocabTableView.setLayoutX(VOCAB_FRAME.getX());
+		_vocabTableView.setLayoutY(VOCAB_FRAME.getY());
+		_vocabTableView.prefHeight(VOCAB_FRAME.getHeight());
+		_vocabTableView.prefWidth(VOCAB_FRAME.getWidth());
 		_root.getChildren().add(_vocabTableView);
 	}
 	private void setupVarsBox(){
-		_varBoxView = new UIVariablesView(VARS_FRAME);
+		_varBoxView = new UIVariablesView(VARS_FRAME.toLocalBounds());
 		_varBoxView.setLayoutX(VARS_FRAME.getX());
 		_varBoxView.setLayoutY(VARS_FRAME.getY());
 		_varBoxView.prefHeight(VARS_FRAME.getHeight());
@@ -150,6 +159,8 @@ public class UIMain implements UIMainAPI {
 	
 	private void didPressExecute(){
 		_handler.handleTextInput(_terminalView.getTextInput());
+		_terminalView.clear();
+
 	}
 	
 	private void didPressReset(){
