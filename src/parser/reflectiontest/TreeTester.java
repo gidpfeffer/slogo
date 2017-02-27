@@ -27,7 +27,7 @@ public class TreeTester {
 		
 		System.out.println("\n++++++++++++++++++++++++++++++++");
 		
-		String testCode2 = "repeat 2 [ if fd 20 [ fd 5 ] ifelse 5 [ fd 1 ] [ fd 3 ] ]";
+		String testCode2 = "fd penup xcor 10";
 		
 		p.parse(testCode2);
 		
