@@ -20,7 +20,7 @@ public class UITerminalView extends Pane implements UITerminalAPI {
 	
 	private void setupViews(){
 		this.setBackground(GUITools.getBackgroundWithColor(Color.WHITE, 12));
-		_textArea = new TextArea();
+		_textArea = new TextArea("Sample Text. Please Ignore.");
 		_textArea.setPrefWidth(_bounds.getWidth());
 		_textArea.setPrefHeight(_bounds.getHeight());
 	}
