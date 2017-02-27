@@ -14,11 +14,14 @@ public abstract class TreeNode {
 		return children;
 	}
 	
+	
 	public int getNumChildrenRequired(){
 		return 0;
 	}
 	public void addChild(TreeNode childToAdd){
 		children.add(childToAdd);
 	}
+	
+	public void execute(){};
 	
 }
