@@ -37,7 +37,7 @@ public abstract class BracketHandler {
 	
 	protected List<Integer> getLogoLocations(String str){
 		List<Integer> indices = new ArrayList<>();
-		for(int i = 0; i < list.getLiterals().size(); i++){
+		for(int i = 0; i < list.getLogo().size(); i++){
 			if(list.getLogo().get(i).equals(str)){
 				indices.add(i);
 			}
@@ -48,7 +48,7 @@ public abstract class BracketHandler {
 	protected List<Integer> getLiteralLocations(String str){
 		List<Integer> indices = new ArrayList<>();
 		for(int i = 0; i < list.getLiterals().size(); i++){
-			if(list.getLogo().get(i).equals(str)){
+			if(list.getLiterals().get(i).equals(str)){
 				indices.add(i);
 			}
 		}
