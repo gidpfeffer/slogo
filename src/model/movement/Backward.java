@@ -19,8 +19,8 @@ public class Backward extends TurtleCommand {
 	
 	public void execute(){
 	
-		double newX = myTurtleState.getX()-Math.cos(myTurtleState.getHeadAngle())*pixels;
-		double newY = myTurtleState.getY()-Math.sin(myTurtleState.getHeadAngle())*pixels;
+		double newX = myTurtleState.getX()-Math.cos(Math.toRadians(myTurtleState.getHeadAngle()))*pixels;
+		double newY = myTurtleState.getY()-Math.sin(Math.toRadians(myTurtleState.getHeadAngle()))*pixels;
 		myTurtleState.setPosition(newX, newY);
 	}
 	
