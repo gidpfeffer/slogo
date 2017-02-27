@@ -12,7 +12,7 @@ public class UITurtleDisplayView extends Pane implements UIDisplayAPI{
 	}
 
 	private void setupViews() {
-		this.setBackground(GUITools.getBackgroundWithColor(Color.BLUE));
+		this.setBackground(GUITools.getBackgroundWithColor(Color.BLUE, 8));
 		
 	}
 
