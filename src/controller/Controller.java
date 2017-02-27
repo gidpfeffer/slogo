@@ -9,7 +9,7 @@ import parser.main.Parser;
 
 public class Controller {
 	
-	Map<Turtle, TurtleObserver> turtleStates;
+
 	
 	class myHandler implements ControlHandler{
 		@Override
@@ -26,6 +26,7 @@ public class Controller {
 	private Turtle myTurtle;
 	private Parser myParser;
 	private TurtleObserver myObserver;
+	private String output; 
 	
 
 	public Controller(){
@@ -36,27 +37,23 @@ public class Controller {
 		
 		myObserver = new TurtleObserver();
 		myTurtle.getState().addObserver(myObserver);
-		myParser = new Parser();
-		myParser.parse("fd 50");
+		myParser = new Parser(myTurtle.getState());
+		
 	}
 	
 
 	public void processInput(String input){
 		// get Map from parser 
+		myParser.parse(input);
+		myModel.update(myParser.getOrderedTreeList());
+		output = myModel.getStringOutput();
 		// call process commands
 	}
-
-	private void processCommands(TreeNode command){
-		myModel.update(command);
-		turtleStates = myModel.getTurtleMap();
-		/*		
-		 * for (Turtle t : turtleStates){
-		 *  GUI.update(turtle, turtle.getState);
-		 *  }
-		 *   */
-		
-		
+	
+	public String getStringOutput(){
+		return output; 
 	}
+
 	private void reset(){
 		myModel.reset(); 
 	}
