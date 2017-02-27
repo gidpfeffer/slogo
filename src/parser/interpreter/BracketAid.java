@@ -35,15 +35,6 @@ public abstract class BracketAid extends BracketHandler{
 				list.subList(start, end), 1);
 	}
 	
-	protected int getNextBracket(int start){
-		for(int i = start + 1; i < literals.size(); i++){
-			if(literals.get(i).equals(LEFT_BRACKET)){
-				return i;
-			}
-		}
-		throw new IllegalStateException("couldn;t find the beginning of the bracket");
-	}
-	
 	protected int findEndBracket(int startIndex){
 		Stack<Integer> stack = new Stack<>();
 		stack.push(startIndex);

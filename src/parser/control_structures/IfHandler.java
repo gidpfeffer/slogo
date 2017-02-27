@@ -36,7 +36,7 @@ public class IfHandler extends BracketAid{
 		List<String> logoAdd = new ArrayList<>(Arrays.asList(new String[] {LEFT_BRACKET, RIGHT_BRACKET}));
 		list.getLogo().set(getLogoLocations(indicator).get(0), IF_ELSE);
 		list.getLiterals().addAll(addLoc, literalAdd);
-		list.getLogo().addAll(addLoc, literalAdd);
+		list.getLogo().addAll(addLoc, logoAdd);
 	}
 
 	@Override

@@ -61,6 +61,6 @@ public class IfElseHandler extends BracketAid{
 				list.newSubList(getLogoLocations(indicator).get(0) + 1, ifStart), turtle);
 		if(TG.getQueue().size() == 0) 
 			throw new IllegalStateException("invalid if/else syntax");
-		return TG.getQueue().remove().getValue() != 0;
+		return TG.getLast() != 0;
 	}
 }
