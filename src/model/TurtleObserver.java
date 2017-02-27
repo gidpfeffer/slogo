@@ -19,8 +19,7 @@ public class TurtleObserver implements Observer {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		observerTurtleState = new TurtleState((TurtleState) o); 
-		System.out.println("new x is " + observerTurtleState.getX()); // for testing
-		System.out.println("new y is " + observerTurtleState.getY());
+		System.out.println("x: "+observerTurtleState.getX() + " y: " + observerTurtleState.getY()+" angle: " + observerTurtleState.getHeadAngle()); // for testing
 		
 	}
 
