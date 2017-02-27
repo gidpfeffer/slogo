@@ -17,8 +17,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class UIMain extends Application implements UIMainAPI {
-	public static final double SCREEN_WIDTH = 500;
+	
+	public static final double SCREEN_WIDTH = 700;
 	public static final double SCREEN_HEIGHT = 500;
+	public static final Frame TERMINAL_FRAME = new Frame(8, SCREEN_HEIGHT*2/3, SCREEN_WIDTH*2/3 - 16, SCREEN_HEIGHT/3 - 16);
+	public static final Frame DISPLAY_FRAME = new Frame(8,8, SCREEN_HEIGHT*2/3 - 16,SCREEN_HEIGHT*2/3 - 16);
+	public static final Frame VARS_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,8, SCREEN_HEIGHT/3 - 16,SCREEN_HEIGHT*3 - 16);
+	public static final Frame VOCAB_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,VARS_FRAME.getMaxY() + 8,SCREEN_HEIGHT*2/3 - 16,SCREEN_HEIGHT/3 - 16);
 	
 	Group _root;
 	Scene _scene;
@@ -34,6 +39,7 @@ public class UIMain extends Application implements UIMainAPI {
 		this._handler = handler;
 		setupViews();
 	}
+	
 	@Override
 	public void displayErrorWithMessage(String error){
 		Alert alert = new Alert(AlertType.CONFIRMATION, error, ButtonType.CLOSE);
@@ -44,6 +50,7 @@ public class UIMain extends Application implements UIMainAPI {
 	public void updateVocabBox(Vocabulary vocab) {
 		_vocabTableView.update(vocab);
 	}
+	
 	@Override
 	public void updateVarBox(UserVariables vars) {
 		_varBoxView.update(vars);
@@ -68,42 +75,33 @@ public class UIMain extends Application implements UIMainAPI {
 		_root = new Group();
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
 	}
-	
 	private void setupTerminal(){
-		double height = SCREEN_HEIGHT/3 - 16;
-		double width = SCREEN_WIDTH*2/3 - 16;
-		_terminalView = new UITerminalView();
-		_terminalView.setLayoutX(8);
-		_terminalView.setLayoutY(SCREEN_HEIGHT*2/3);
-		_terminalView.prefHeight(height);
-		_terminalView.prefWidth(width);
+		_terminalView = new UITerminalView(TERMINAL_FRAME.toLocalBounds(),_handler);
+		_terminalView.setLayoutX(TERMINAL_FRAME.getX());
+		_terminalView.setLayoutY(TERMINAL_FRAME.getY());
+		_terminalView.prefHeight(TERMINAL_FRAME.getHeight());
+		_terminalView.prefWidth(TERMINAL_FRAME.getWidth());
 	}
 	private void setupDisplay(){
-		double height = SCREEN_HEIGHT*2/3 - 16;
-		double width = SCREEN_WIDTH*2/3 - 16;
-		_displayView = new UITurtleDisplayView();
-		_displayView.setLayoutX(8);
-		_displayView.setLayoutY(8);
-		_displayView.prefHeight(height);
-		_displayView.prefWidth(width);
+		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds());
+		_displayView.setLayoutX(DISPLAY_FRAME.getX());
+		_displayView.setLayoutY(DISPLAY_FRAME.getY());
+		_displayView.prefHeight(DISPLAY_FRAME.getHeight());
+		_displayView.prefWidth(DISPLAY_FRAME.getWidth());
 	}
 	private void setupVocabTable(){
-		double height = SCREEN_HEIGHT*2/3 - 16;
-		double width = SCREEN_WIDTH/3 - 16;
-		_vocabTableView = new UIVocabTable();
-		_vocabTableView.setLayoutX(SCREEN_WIDTH * 2 / 3 + 8);
-		_vocabTableView.setLayoutY(SCREEN_HEIGHT / 3);
-		_vocabTableView.prefHeight(height);
-		_vocabTableView.prefWidth(width);
+		_vocabTableView = new UIVocabTable(VOCAB_FRAME);
+		_vocabTableView.setLayoutX(VARS_FRAME.getX());
+		_vocabTableView.setLayoutY(VARS_FRAME.getMaxY());
+		_vocabTableView.prefHeight(VARS_FRAME.getHeight());
+		_vocabTableView.prefWidth(VARS_FRAME.getWidth());
 	}
 	private void setupVarsBox(){
-		double height = SCREEN_HEIGHT / 3 - 16;
-		double width = SCREEN_WIDTH / 3 - 16;
-		_varBoxView = new UIVariablesView();
-		_varBoxView.setLayoutX(SCREEN_WIDTH * 2 / 3 + 8);
-		_varBoxView.setLayoutY(8);
-		_varBoxView.prefHeight(height);
-		_varBoxView.prefWidth(width);
+		_varBoxView = new UIVariablesView(VARS_FRAME);
+		_varBoxView.setLayoutX(VARS_FRAME.getX());
+		_varBoxView.setLayoutY(VARS_FRAME.getY());
+		_varBoxView.prefHeight(VARS_FRAME.getHeight());
+		_varBoxView.prefWidth(VARS_FRAME.getWidth());
 	}
 	private void setupTerminalButtons(){
 		//TODO
@@ -129,5 +127,10 @@ public class UIMain extends Application implements UIMainAPI {
 		s.setScene(_scene);
 		s.setTitle("SLOGO");
 		s.show();
+	}
+	@Override
+	public void clearScreen() {
+		// TODO Auto-generated method stub
+		
 	}
 }

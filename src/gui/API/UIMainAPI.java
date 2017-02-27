@@ -9,5 +9,5 @@ public interface UIMainAPI {
 	public abstract void updateVocabBox(Vocabulary words);
 	public abstract void updateVarBox(UserVariables variables);
 	public abstract void updateTerminalWithNewLines(List<String> lines);
-	
+	public abstract void clearScreen();
 }
