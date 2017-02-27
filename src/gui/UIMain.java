@@ -10,6 +10,11 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
@@ -80,11 +85,26 @@ public class UIMain implements UIMainAPI {
 	
 	private void setupRoot(){
 		_root = new Pane();
-		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(Color.GRAY));
+		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(MyColors.GREEN));
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
 	}
 	private void setupTitleAndMenuButton(){
-		//TODO
+		
+		
+		ImageButton menu = new ImageButton();
+		menu.updateImages(new Image("menu.png"), new Image("menu.png"));
+		menu.setLayoutX(10);
+		menu.setLayoutY(20);
+		menu.setPrefSize(32, 32);
+		
+		Label title = GUITools.plainLabelBoldHelvetica("SLOGO", 28, MyColors.LIGHT_GREEN);
+		title.setLayoutX(64);
+		title.setLayoutY(24);
+		
+		_root.getChildren().add(title);
+		_root.getChildren().add(menu);
+
+	
 	}
 	private void setupMenu(){
 		//TODO
@@ -123,22 +143,22 @@ public class UIMain implements UIMainAPI {
 		_root.getChildren().add(_varBoxView);
 	}
 	private void setupTerminalButtons(){
-		Button exec = new Button("Execute"); //TODO add image
+		ImageButton exec = new ImageButton();
+		exec.updateImages(new Image("execute.png"), new Image("execute.png"));
 		exec.setLayoutX(BUTTONS_FRAME.getX());
-		exec.setLayoutY(BUTTONS_FRAME.getY());
-		exec.setPrefWidth(BUTTONS_FRAME.getWidth());
-		exec.setPrefHeight(BUTTONS_FRAME.getHeight()/2);
+		exec.setLayoutY(BUTTONS_FRAME.getY() + 4);
+		exec.setPrefSize(32,32);
 		exec.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressExecute();
 			}
 		});
 		
-		Button reset = new Button("Reset");
+		ImageButton reset = new ImageButton();
+		reset.updateImages(new Image("reset.png"), new Image("reset.png"));
 		reset.setLayoutX(BUTTONS_FRAME.getX());
 		reset.setLayoutY(BUTTONS_FRAME.getY() + BUTTONS_FRAME.getHeight()/2);
-		reset.setPrefWidth(BUTTONS_FRAME.getWidth());
-		reset.setPrefHeight(BUTTONS_FRAME.getHeight()/2);
+		reset.setPrefSize(32,32);
 		reset.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressReset();

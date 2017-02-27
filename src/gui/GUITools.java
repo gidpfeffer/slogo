@@ -1,12 +1,16 @@
 package gui;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class GUITools {
 	public static Background getBackgroundWithColor(Color color){
@@ -22,5 +26,13 @@ public class GUITools {
 		Rectangle rect = new Rectangle(frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
 		rect.setFill(color);
 		self.getChildren().add(0, rect);
+	}
+	public static Label plainLabelBoldHelvetica(String text, int fontSize, Color color) {
+		Label label = new Label();
+		label.setText(text);
+		label.setFont(Font.font("HelveticaNeue", FontWeight.BOLD, fontSize));
+		label.setAlignment(Pos.CENTER);
+		label.setTextFill(color);
+		return label;
 	}
 }

@@ -24,7 +24,7 @@ public class UIVariablesView extends Pane implements UIVariablesAPI {
 
 	private void setupViews() {
 		// TODO Auto-generated method stub
-		GUITools.addBackgroundWithColor(this, Color.RED, _bounds);
+		GUITools.addBackgroundWithColor(this, MyColors.LIGHT_GREEN, _bounds);
 		
 	}
 
