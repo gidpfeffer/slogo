@@ -26,6 +26,6 @@ public class SetHeading extends TurtleCommand {
 	}
 	
 	public double getValue(){
-		return degrees - myTurtleState.getHeadAngle();
+		return 	degrees - myTurtleState.getHeadAngle();
 	}
 }

@@ -1,9 +1,6 @@
-import controller.ControlHandler;
 import controller.Controller;
-import gui.UIMain;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.ModelController;
 
 public class Main extends Application{
 

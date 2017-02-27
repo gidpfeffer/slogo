@@ -39,8 +39,9 @@ public class ModelController {
 		output = "";
 
 		for(TreeNode command : commandsToExecute){ 
-			command.execute();
+			// order of these calls matters!!
 			output = ((Double)command.getValue()).toString();
+			command.execute();
 		}
 	}
 

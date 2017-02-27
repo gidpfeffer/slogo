@@ -19,8 +19,8 @@ public class SetPosition extends TurtleCommand {
 	
 	public SetPosition(List<TreeNode> args, TurtleState st){
 		children = args;
-		x = children.get(1).getValue();
-		y = children.get(0).getValue();
+		x = children.get(0).getValue();
+		y = children.get(1).getValue();
 		myTurtleState = st;
 		distance = Math.sqrt(Math.pow(x-myTurtleState.getX(), 2) + Math.pow(y-myTurtleState.getY(), 2));
 		
