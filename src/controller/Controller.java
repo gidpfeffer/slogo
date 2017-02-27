@@ -36,9 +36,7 @@ public class Controller {
 	public Controller(){
 		myModel = new ModelController(); 
 		myTurtle = myModel.getTurtle();
-		List<UITurtle> list = new ArrayList<UITurtle>();
-		list.add(new UITurtle(myTurtle.getState()));
-		myViewController = new UIMain(new myHandler(), list);
+		myViewController = new UIMain(new myHandler(), new ArrayList<UITurtle>(Arrays.asList(new UITurtle(myTurtle.getState()))));
 		myTurtle.getState().addObserver(myViewController);
 
 		//TurtleState turtleState = new TurtleState(myTurtle.getState()); //pass a copy of turtle state into the parser for safety
