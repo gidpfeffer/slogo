@@ -9,7 +9,7 @@ import parser.main.Parser;
 public class TreeTester {
 	
 	public static void main(String args[]){
-		String testCode1 = "if 5 [ fd 10 ]";
+		String testCode1 = "product fd 5 10";
 		
 		Parser p = new Parser(new TurtleState());
 		p.parse(testCode1);
@@ -27,7 +27,7 @@ public class TreeTester {
 		
 		System.out.println("\n++++++++++++++++++++++++++++++++");
 		
-		String testCode2 = "fd penup xcor 10";
+		String testCode2 = "repeat sum fd 3 2 [ fd 50 ]";
 		
 		p.parse(testCode2);
 		

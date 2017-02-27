@@ -92,4 +92,15 @@ public class TreeGenerator {
 	public Queue<TreeNode> getQueue(){
 		return commandQueue;
 	}
+	
+	public double getLast(){
+		Queue<TreeNode> q = new LinkedList<>(commandQueue);
+		while(!q.isEmpty()){
+			double val = q.remove().getValue();
+			if(q.isEmpty()){
+				return val;
+			}
+		}
+		throw new IllegalStateException("empty queue");
+	}
 }
