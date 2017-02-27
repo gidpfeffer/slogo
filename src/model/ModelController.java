@@ -1,9 +1,9 @@
 package model;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 import model.command.TreeNode;
 import model.turtle.Turtle;
@@ -35,12 +35,13 @@ public class ModelController {
 	}
 
 
-	public void update(List<TreeNode> commandsToExecute){
+	public void update(Queue<TreeNode> commandsToExecute){
 		output = "";
 
-		for(TreeNode command : commandsToExecute){ 
+		while(!commandsToExecute.isEmpty()){ 
 			// order of these calls matters!!
-			output = ((Double)command.getValue()).toString();
+			TreeNode command= commandsToExecute.remove();
+			output = ((Double) command.getValue()).toString();
 			command.execute();
 		}
 	}

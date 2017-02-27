@@ -18,8 +18,9 @@ public class NaturalLog extends LogicCommand {
 	}
 	
 	public double getValue(){
-		return Math.log(children.get(0).getValue()); // value of x in ln(x) cannot be negative, throw error here 
 		
+		return Math.log(children.get(0).getValue()); // value of x in ln(x) cannot be negative, throw error here 
+		 
 	}
 	
 }
