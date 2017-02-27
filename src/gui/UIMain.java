@@ -7,23 +7,30 @@ import controller.ControlHandler;
 import general_data_structures.UserVariables;
 import general_data_structures.Vocabulary;
 import gui.API.UIMainAPI;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
 
 public class UIMain implements UIMainAPI {
 	
+	//define the location of UI Components here
 	public static final double SCREEN_WIDTH = 700;
 	public static final double SCREEN_HEIGHT = 500;
+	public static final double TOP_INSET = 50;
 	public static final Frame TERMINAL_FRAME = new Frame(8, SCREEN_HEIGHT*2/3, SCREEN_WIDTH*2/3 - 16, SCREEN_HEIGHT/3 - 16);
-	public static final Frame DISPLAY_FRAME = new Frame(8,8, SCREEN_HEIGHT*2/3 - 16,SCREEN_HEIGHT*2/3 - 16);
-	public static final Frame VARS_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,8, SCREEN_HEIGHT/3 - 16,SCREEN_HEIGHT*3 - 16);
+	public static final Frame DISPLAY_FRAME = new Frame(8,TOP_INSET, SCREEN_HEIGHT*2/3 - 16,SCREEN_HEIGHT*2/3 - 16);
+	public static final Frame VARS_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,TOP_INSET, SCREEN_HEIGHT/3 - 16,SCREEN_HEIGHT*3 - 16);
 	public static final Frame VOCAB_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,VARS_FRAME.getMaxY() + 8,SCREEN_HEIGHT*2/3 - 16,SCREEN_HEIGHT/3 - 16);
 	
-	Group _root;
+	Pane _root;
 	Scene _scene;
 	ControlHandler _handler;
 	UITerminalView _terminalView;
@@ -54,10 +61,6 @@ public class UIMain implements UIMainAPI {
 		_varBoxView.update(vars);
 	}
 	
-	@Override
-	public void updateTerminalWithNewLines(List<String> lines){
-		_terminalView.addNewLines(lines);
-	}
 
 	private void setupViews(){
 		setupRoot();
@@ -70,11 +73,12 @@ public class UIMain implements UIMainAPI {
 	}
 	
 	private void setupRoot(){
-		_root = new Group();
+		_root = new Pane();
+		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(Color.GRAY));
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
 	}
 	private void setupTerminal(){
-		_terminalView = new UITerminalView(TERMINAL_FRAME.toLocalBounds(),_handler);
+		_terminalView = new UITerminalView(TERMINAL_FRAME.toLocalBounds());
 		_terminalView.setLayoutX(TERMINAL_FRAME.getX());
 		_terminalView.setLayoutY(TERMINAL_FRAME.getY());
 		_terminalView.prefHeight(TERMINAL_FRAME.getHeight());
