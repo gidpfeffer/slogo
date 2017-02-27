@@ -7,16 +7,14 @@ import controller.ControlHandler;
 import general_data_structures.UserVariables;
 import general_data_structures.Vocabulary;
 import gui.API.UIMainAPI;
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
-public class UIMain extends Application implements UIMainAPI {
+public class UIMain implements UIMainAPI {
 	
 	public static final double SCREEN_WIDTH = 700;
 	public static final double SCREEN_HEIGHT = 500;
@@ -121,13 +119,10 @@ public class UIMain extends Application implements UIMainAPI {
 	}
 	
 	
-	
-	@Override
-	public void start(Stage s) throws Exception {
-		s.setScene(_scene);
-		s.setTitle("SLOGO");
-		s.show();
+	public Scene getScene(){
+		return _scene;
 	}
+
 	@Override
 	public void clearScreen() {
 		// TODO Auto-generated method stub
