@@ -1,10 +1,6 @@
 package controller;
 
-import java.util.List;
 
-import model.*;
-import model.turtle.Turtle;
-import model.turtle.TurtleState; 
 
 public class ControllerTester{
 	private Controller myController; 

@@ -1,12 +1,8 @@
 package controller;
-import java.util.*;
-
 import gui.UIMain;
 import model.*;
-import model.command.TreeNode;
-import model.command.TurtleCommand;
+
 import model.turtle.Turtle;
-import model.turtle.TurtleState;
 import parser.main.Parser;
 
 public class Controller {
@@ -48,7 +44,9 @@ public class Controller {
 	public void processInput(String input){
 		// get Map from parser 
 		myParser.parse(input);
-		myModel.update(myParser.getOrderedTreeList());
+		
+		// if error isnt thrown update on the queue, else discard the queue
+		myModel.update(myParser.getTreeQueue());
 		output = myModel.getStringOutput();
 		// call process commands
 	}
