@@ -7,9 +7,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class UIVariablesView extends Pane implements UIVariablesAPI {
-	
-	public UIVariablesView(Frame varsFrame) {
-		// TODO Auto-generated constructor stub
+	Frame _bounds;
+	public UIVariablesView(Frame bounds) {
+		super();
+		_bounds = bounds;
 		setupViews();
 	}
 
@@ -23,7 +24,7 @@ public class UIVariablesView extends Pane implements UIVariablesAPI {
 
 	private void setupViews() {
 		// TODO Auto-generated method stub
-		this.setBackground(GUITools.getBackgroundWithColor(Color.RED, 0));
+		GUITools.addBackgroundWithColor(this, Color.RED, _bounds);
 		
 	}
 
