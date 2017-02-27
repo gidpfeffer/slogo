@@ -1,6 +1,7 @@
 package controller;
 import java.util.*;
 import model.*;
+import model.command.TreeNode;
 import model.command.TurtleCommand;
 import model.turtle.Turtle;
 import model.turtle.TurtleState;
@@ -9,6 +10,7 @@ import parser.main.Parser;
 public class Controller {
 	
 	Map<Turtle, TurtleObserver> turtleStates;
+	
 	class myHandler implements ControlHandler{
 		@Override
 		public void handleTextInput(String input){
@@ -19,6 +21,7 @@ public class Controller {
 			reset();
 	    }
 	}
+	
 	private ModelController myModel; 
 	private Turtle myTurtle;
 	private Parser myParser;
@@ -43,8 +46,8 @@ public class Controller {
 		// call process commands
 	}
 
-	private void processCommands(Map<Integer, TreeNode> commandMap){
-		myModel.update(commandMap);
+	private void processCommands(TreeNode command){
+		myModel.update(command);
 		turtleStates = myModel.getTurtleMap();
 		/*		
 		 * for (Turtle t : turtleStates){
@@ -55,7 +58,7 @@ public class Controller {
 		
 	}
 	private void reset(){
-		//TODO:
+		myModel.reset(); 
 	}
 
 }

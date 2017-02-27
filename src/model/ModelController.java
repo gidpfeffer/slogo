@@ -53,6 +53,13 @@ public class ModelController {
 		if (commandToExecute instanceof TurtleCommand){
 			((TurtleCommand) commandToExecute).execute();
 		}
+		
+	}
+
+
+
+	public void reset() {
+		myTurtle = new Turtle(); 
 	}
 		
 		
