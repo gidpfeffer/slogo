@@ -1,7 +1,6 @@
 package gui.tools;
 
 import general_data_structures.Tuple;
-import gui.Frame;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -42,8 +41,8 @@ public class GUITools {
 	}
 	
 	public static Tuple<Double, Double> turtleCoordinateToPixelCoordinate(TurtleState t, Frame bounds){
-		double x=t.getX() + bounds.getWidth()/2.0;
-		double y=t.getY() + bounds.getHeight()/2.0;
+		double x=t.getX() + bounds.getWidth()/2.0 - 16;
+		double y=t.getY() + bounds.getHeight()/2.0 - 16;
 		return new Tuple<Double, Double>(x,y);
 	}
 }

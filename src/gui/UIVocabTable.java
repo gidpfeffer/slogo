@@ -2,7 +2,9 @@ package gui;
 
 import general_data_structures.Vocabulary;
 import gui.API.UIVocabularyAPI;
+import gui.tools.Frame;
 import gui.tools.GUITools;
+import gui.tools.MyColors;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;

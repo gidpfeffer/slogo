@@ -1,4 +1,4 @@
-package gui;
+package gui.tools;
 
 public class Frame {
 	private double x;

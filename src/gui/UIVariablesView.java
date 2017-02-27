@@ -2,7 +2,9 @@ package gui;
 
 import general_data_structures.UserVariables;
 import gui.API.UIVariablesAPI;
+import gui.tools.Frame;
 import gui.tools.GUITools;
+import gui.tools.MyColors;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
