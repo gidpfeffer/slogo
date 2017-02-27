@@ -1,5 +1,7 @@
-package gui;
+package gui.tools;
 
+import general_data_structures.Tuple;
+import gui.Frame;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -11,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import model.turtle.TurtleState;
 
 public class GUITools {
 	public static Background getBackgroundWithColor(Color color){
@@ -36,5 +39,11 @@ public class GUITools {
 		label.setAlignment(Pos.CENTER);
 		label.setTextFill(color);
 		return label;
+	}
+	
+	public static Tuple<Double, Double> turtleCoordinateToPixelCoordinate(TurtleState t, Frame bounds){
+		double x=t.getX() + bounds.getWidth()/2.0;
+		double y=t.getY() + bounds.getHeight()/2.0;
+		return new Tuple<Double, Double>(x,y);
 	}
 }

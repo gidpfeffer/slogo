@@ -9,6 +9,7 @@ import controller.ControlHandler;
 import general_data_structures.UserVariables;
 import general_data_structures.Vocabulary;
 import gui.API.UIMainAPI;
+import gui.tools.GUITools;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -200,6 +201,7 @@ public class UIMain implements UIMainAPI, Observer {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		UITurtle modifiedTurtle = getTurtleFromListWithState((TurtleState) o);
+		_displayView.updateTurtleState(modifiedTurtle);
 		System.out.println("turtle updated:\t" + modifiedTurtle.getTurtleState().getX());
 	}
 	private UITurtle getTurtleFromListWithState(TurtleState s){

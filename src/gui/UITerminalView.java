@@ -1,6 +1,7 @@
 package gui;
 
 import gui.API.UITerminalAPI;
+import gui.tools.GUITools;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
