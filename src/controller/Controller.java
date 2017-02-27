@@ -1,5 +1,7 @@
 package controller;
 import java.util.*;
+
+import gui.UIMain;
 import model.*;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
@@ -26,13 +28,14 @@ public class Controller {
 	private Turtle myTurtle;
 	private Parser myParser;
 	private TurtleObserver myObserver;
+	private UIMain myViewController;
 	private String output; 
 	
 
 	public Controller(){
 		myModel = new ModelController(); 
 		myTurtle = myModel.getTurtle();
-
+		myViewController = new UIMain(new myHandler());
 		//TurtleState turtleState = new TurtleState(myTurtle.getState()); //pass a copy of turtle state into the parser for safety
 		
 		myObserver = new TurtleObserver();
@@ -56,6 +59,11 @@ public class Controller {
 
 	private void reset(){
 		myModel.reset(); 
+	}
+
+
+	public UIMain getViewController() {
+		return myViewController;
 	}
 
 }
