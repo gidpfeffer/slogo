@@ -19,7 +19,7 @@ public class ControllerTester{
 	public static void main (String[] args){
 		ControllerTester test = new ControllerTester();
 		
-		test.getControl().processInput("");
+		test.getControl().processInput("setxy 1 2");
 		
 		System.out.println("String to print " + test.getControl().getStringOutput());
 	}
