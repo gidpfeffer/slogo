@@ -25,6 +25,8 @@ public class GUITools {
 	public static void addBackgroundWithColor(Pane self, Color color, Frame frame){
 		Rectangle rect = new Rectangle(frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
 		rect.setFill(color);
+		rect.setArcHeight(3);
+		rect.setArcWidth(3);
 		self.getChildren().add(0, rect);
 	}
 	public static Label plainLabelBoldHelvetica(String text, int fontSize, Color color) {

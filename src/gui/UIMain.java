@@ -1,6 +1,9 @@
 package gui;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import controller.ControlHandler;
 import general_data_structures.UserVariables;
@@ -20,8 +23,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import model.turtle.TurtleState;
 
-public class UIMain implements UIMainAPI {
+public class UIMain implements UIMainAPI, Observer {
 	
 	//define the location of UI Components here
 	public static final double SCREEN_WIDTH = 700;
@@ -40,11 +44,12 @@ public class UIMain implements UIMainAPI {
 	UITurtleDisplayView _displayView;
 	UIVariablesView _varBoxView;
 	UIVocabTable _vocabTableView;
-	ArrayList<UITurtle> _turtlesOnDisplay = new ArrayList<UITurtle>();
+	List<UITurtle> _turtlesOnDisplay;
 	
-	public UIMain(ControlHandler handler){
+	public UIMain(ControlHandler handler, List<UITurtle> turtles){
 		super();
-		this._handler = handler;
+		_handler = handler;
+		_turtlesOnDisplay = turtles;
 		setupViews();
 	}
 	
@@ -118,7 +123,7 @@ public class UIMain implements UIMainAPI {
 		_root.getChildren().add(_terminalView);
 	}
 	private void setupDisplay(){
-		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds());
+		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds(), _turtlesOnDisplay);
 		_displayView.setLayoutX(DISPLAY_FRAME.getX());
 		_displayView.setLayoutY(DISPLAY_FRAME.getY());
 		_displayView.prefHeight(DISPLAY_FRAME.getHeight());
@@ -189,5 +194,20 @@ public class UIMain implements UIMainAPI {
 	
 	public Scene getScene(){
 		return _scene;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		UITurtle modifiedTurtle = getTurtleFromListWithState((TurtleState) o);
+		System.out.println("turtle updated:\t" + modifiedTurtle.getTurtleState().getX());
+	}
+	private UITurtle getTurtleFromListWithState(TurtleState s){
+		for(UITurtle t: this._turtlesOnDisplay){
+			if(t.getTurtleState() == s){
+				return t;
+			}
+		}
+		throw new RuntimeException();
 	}
 }
