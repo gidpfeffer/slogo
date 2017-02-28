@@ -33,7 +33,7 @@ public class Parser {
 		IT = new Interpreter(TLG.getList());
 		TL = IT.getTokenList();
 		TG = new TreeGenerator(TL, t);
-		QS = new QueueSplitter(TG.getQueue());
+		QS = new QueueSplitter(TG.getCommandQueue());
 	}
 	
 	public TokenList getTokenList(){

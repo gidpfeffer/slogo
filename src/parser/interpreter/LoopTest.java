@@ -2,16 +2,21 @@ package parser.interpreter;
 
 import java.util.List;
 
+import model.turtle.TurtleState;
+import parser.control_structures.DoTimes;
 import parser.tokenizer.TokenList;
 import parser.tokenizer.TokenListGenerator;
 
 public class LoopTest {
 
 	public static void main(String args[]){
-		String testCode = "repeat 2 [ repeat 2 [ fd 50 ] repeat 5 [ 10 ] ]";
+		String testCode = "dotimes [ :x fd 3 ] [ fd 5 ] fd 5";
 		
 		TokenListGenerator t = new TokenListGenerator(testCode);
 		TokenList TL = t.getList();
+		
+		DoTimes DT = new DoTimes(TL, new TurtleState());
+		
 		Interpreter IT = new Interpreter(TL);
 		
 		List<String> literals = IT.getTokenList().getLiterals();

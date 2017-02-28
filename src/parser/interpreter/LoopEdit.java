@@ -14,6 +14,7 @@ public class LoopEdit extends BracketAid{
 	
 	public LoopEdit(TokenList list){
 		super(list, REPEAT);
+		correctList();
 	}
 	
 	protected void reset(){
@@ -34,7 +35,7 @@ public class LoopEdit extends BracketAid{
 		}
 		TreeGenerator TG = new TreeGenerator(
 				list.newSubList(loc + 1, startIndex), turtle);
-		if(TG.getQueue().size() == 0) 
+		if(TG.getCommandQueue().size() == 0) 
 			throw new IllegalStateException("invalid if/else syntax");
 		return (int) TG.getLast();
 	}
