@@ -1,11 +1,15 @@
 package gui;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import controller.ControlHandler;
+import general_data_structures.Tuple;
 import general_data_structures.UserVariables;
 import general_data_structures.Vocabulary;
 import gui.API.UIMainAPI;
@@ -13,6 +17,10 @@ import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.ImageButton;
 import gui.tools.MyColors;
+import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -27,6 +35,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import model.turtle.TurtleState;
 
 public class UIMain implements UIMainAPI, Observer {
@@ -40,20 +49,25 @@ public class UIMain implements UIMainAPI, Observer {
 	public static final Frame BUTTONS_FRAME = new Frame(TERMINAL_FRAME.getMaxX(), TERMINAL_FRAME.getY(), 50, TERMINAL_FRAME.getHeight());
 	public static final Frame VOCAB_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,DISPLAY_FRAME.getY(), SCREEN_WIDTH - DISPLAY_FRAME.getMaxX() - 16,SCREEN_HEIGHT*2/3 - 16);
 	public static final Frame VARS_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,VOCAB_FRAME.getMaxY() + 8, VOCAB_FRAME.getWidth(),SCREEN_HEIGHT - VOCAB_FRAME.getMaxY() - 16);
+	public static final Frame MENU_FRAME = new Frame(-SCREEN_WIDTH*2/5, 0, SCREEN_WIDTH*2/5, SCREEN_HEIGHT);
 	
-	Pane _root;
-	Scene _scene;
-	ControlHandler _handler;
-	UITerminalView _terminalView;
-	UITurtleDisplayView _displayView;
-	UIVariablesView _varBoxView;
-	UIVocabTable _vocabTableView;
-	List<UITurtle> _turtlesOnDisplay;
+	private Pane _root;
+	private Scene _scene;
+	private ControlHandler _handler;
+	private UITerminalView _terminalView;
+	private UITurtleDisplayView _displayView;
+	private UIVariablesView _varBoxView;
+	private UIVocabTable _vocabTableView;
+	private UIMenuView _menuView;
+	private ImageButton _menuButton;
+	private Map<UITurtle, Tuple<TranslateTransition, RotateTransition>> _turtlesOnDisplay;
 	
-	public UIMain(ControlHandler handler, List<UITurtle> turtles){
+	
+	
+	public UIMain(ControlHandler handler){
 		super();
 		_handler = handler;
-		_turtlesOnDisplay = turtles;
+		setupTurtleMap(1);
 		setupViews();
 	}
 	
@@ -78,18 +92,34 @@ public class UIMain implements UIMainAPI, Observer {
 		// TODO Auto-generated method stub
 		
 	}
+	public void addTurtle(){
+		UITurtle t = new UITurtle();
+		TranslateTransition tran = new TranslateTransition();
+		
+		RotateTransition rot = new RotateTransition();
+		
+		
+		_turtlesOnDisplay.put(t, new Tuple<TranslateTransition, RotateTransition>(tran, rot));
+	}
+	private void setupTurtleMap(double numberOfTurtles){
+		_turtlesOnDisplay = new HashMap<UITurtle, Tuple<TranslateTransition, RotateTransition>>();
+		for(int i = 0; i < numberOfTurtles; i++){
+			addTurtle();
+		}
+	}
+	
 	
 
 	private void setupViews(){
 		setupRoot();
 		setupTitleAndMenuButton();
-		setupMenu();
 		setupTerminal();
 		setupDisplay();
 		setupVocabTable();
 		setupVarsBox();
 		setupTerminalButtons();
 		setupTurtleImagePicker();
+		setupMenu();
 	}
 	
 	private void setupRoot(){
@@ -100,23 +130,34 @@ public class UIMain implements UIMainAPI, Observer {
 	private void setupTitleAndMenuButton(){
 		
 		
-		ImageButton menu = new ImageButton();
-		menu.updateImages(new Image("menu.png"), new Image("menu.png"));
-		menu.setLayoutX(10);
-		menu.setLayoutY(20);
-		menu.setPrefSize(32, 32);
+		_menuButton = new ImageButton();
+		_menuButton.updateImages(new Image("menu.png"), new Image("menu.png"));
+		_menuButton.setLayoutX(10);
+		_menuButton.setLayoutY(20);
+		_menuButton.setPrefSize(32, 32);
+		_menuButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				slideMenuIn();
+			}
+		});
 		
 		Label title = GUITools.plainLabelBoldHelvetica("SLOGO", 28, MyColors.LIGHT_GREEN);
 		title.setLayoutX(64);
 		title.setLayoutY(24);
 		
 		_root.getChildren().add(title);
-		_root.getChildren().add(menu);
+		_root.getChildren().add(_menuButton);
 
 	
 	}
 	private void setupMenu(){
-		//TODO
+		//TODO: refactor all of these by making abstract class that gets frame
+		_menuView = new UIMenuView(MENU_FRAME.toLocalBounds());
+		_menuView.setLayoutX(MENU_FRAME.getX());
+		_menuView.setLayoutY(MENU_FRAME.getY());
+		_menuView.setPrefWidth(MENU_FRAME.getWidth());
+		_menuView.setPrefHeight(MENU_FRAME.getHeight());
+		_root.getChildren().add(_menuView);
 	}
 	private void setupTerminal(){
 		_terminalView = new UITerminalView(TERMINAL_FRAME.toLocalBounds());
@@ -127,7 +168,8 @@ public class UIMain implements UIMainAPI, Observer {
 		_root.getChildren().add(_terminalView);
 	}
 	private void setupDisplay(){
-		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds(), _turtlesOnDisplay);
+		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds(),
+				new ArrayList<UITurtle>(_turtlesOnDisplay.keySet()));
 		_displayView.setLayoutX(DISPLAY_FRAME.getX());
 		_displayView.setLayoutY(DISPLAY_FRAME.getY());
 		_displayView.prefHeight(DISPLAY_FRAME.getHeight());
@@ -157,7 +199,7 @@ public class UIMain implements UIMainAPI, Observer {
 		exec.setLayoutX(BUTTONS_FRAME.getX());
 		exec.setLayoutY(BUTTONS_FRAME.getY() + 4);
 		exec.setPrefSize(32,32);
-		exec.setOnMouseReleased(new EventHandler<MouseEvent>() {
+		exec.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressExecute();
 			}
@@ -168,7 +210,7 @@ public class UIMain implements UIMainAPI, Observer {
 		reset.setLayoutX(BUTTONS_FRAME.getX());
 		reset.setLayoutY(BUTTONS_FRAME.getY() + BUTTONS_FRAME.getHeight()/2);
 		reset.setPrefSize(32,32);
-		reset.setOnMouseReleased(new EventHandler<MouseEvent>() {
+		reset.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressReset();
 			}
@@ -186,6 +228,16 @@ public class UIMain implements UIMainAPI, Observer {
 		//TODO
 	}
 	
+	private void slideMenuIn(){
+		
+		TranslateTransition t = new TranslateTransition();
+		t.setNode(_menuView);
+		t.setDuration(Duration.millis(500));
+		t.setToX(_menuView.getPrefWidth());
+		t.play();
+		
+	}
+
 	private void didPressExecute(){
 		_handler.handleTextInput(_terminalView.getTextInput());
 		_terminalView.clear();
@@ -202,17 +254,20 @@ public class UIMain implements UIMainAPI, Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		UITurtle modifiedTurtle = getTurtleFromListWithState((TurtleState) o);
-		_displayView.updateTurtleState(modifiedTurtle);
-		System.out.println("turtle updated:\t" + modifiedTurtle.getTurtleState().getX());
+		
+		TurtleState newState = new TurtleState((TurtleState) o);
+		UITurtle turtle = getTurtleFromListWithState(newState);
+		_displayView.updateTurtleState(turtle, newState);
+		System.out.println("turtle updated:\t" + turtle.getTurtleState().getX());
 	}
 	private UITurtle getTurtleFromListWithState(TurtleState s){
-		for(UITurtle t: this._turtlesOnDisplay){
-			if(t.getTurtleState() == s){
+		for(UITurtle t: this._turtlesOnDisplay.keySet()){
+			if(t.getTurtleState().equals(s)){
 				return t;
 			}
 		}
-		throw new RuntimeException();
+		Entry<UITurtle, Tuple<TranslateTransition, RotateTransition>> entry = _turtlesOnDisplay.entrySet().iterator().next();
+		return entry.getKey();
+		//throw new RuntimeException("turtle not found");
 	}
 }

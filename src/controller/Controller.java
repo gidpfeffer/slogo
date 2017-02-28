@@ -1,10 +1,5 @@
 package controller;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import gui.UIMain;
-import gui.UITurtle;
 import model.*;
 
 import model.turtle.Turtle;
@@ -36,13 +31,8 @@ public class Controller {
 	public Controller(){
 		myModel = new ModelController(); 
 		myTurtle = myModel.getTurtle();
-		myViewController = new UIMain(new myHandler(), new ArrayList<UITurtle>(Arrays.asList(new UITurtle(myTurtle.getState()))));
+		myViewController = new UIMain(new myHandler());
 		myTurtle.getState().addObserver(myViewController);
-
-		//TurtleState turtleState = new TurtleState(myTurtle.getState()); //pass a copy of turtle state into the parser for safety
-		
-		myObserver = new TurtleObserver();
-		myTurtle.getState().addObserver(myObserver);
 		myParser = new Parser(myTurtle.getState());
 		
 	}
