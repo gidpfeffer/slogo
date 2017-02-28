@@ -43,8 +43,11 @@ public class Parser {
 	public Queue<TreeNode> getTreeQueue(){
 		return QS.getQueue();
 	}
-
 	
+	public VariableStorage getVars(){
+		return vars;
+	}
+
 	public void parse(String toParse){		
 		str = toParse;
 		initialize();
