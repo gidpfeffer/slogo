@@ -10,6 +10,7 @@ import java.util.Observer;
 import controller.ControlHandler;
 import general_data_structures.Tuple;
 import gui.API.UIMainAPI;
+import gui.tableviews.UIVariablesView;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.ImageButton;
