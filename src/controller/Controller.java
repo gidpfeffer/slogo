@@ -44,11 +44,10 @@ public class Controller {
 	public void processInput(String input){
 		// get Map from parser 
 		myParser.parse(input);
-
+		
 		// if error isnt thrown update on the queue, else discard the queue
 		myModel.update(myParser.getTreeQueue());
 		output = myModel.getStringOutput();
-		// call process commands
 	}
 
 	public String getStringOutput(){
