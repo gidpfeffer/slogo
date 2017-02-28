@@ -2,6 +2,8 @@ package gui;
 
 import general_data_structures.Tuple;
 import gui.tools.UITurtleAttributes;
+import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
@@ -29,25 +31,35 @@ public class UITurtle extends Rectangle {
 		setFill(new ImagePattern(image));
 	}
 	
+	public void setTurtleState(TurtleState s, Tuple<Double, Double> widthHeight, Tuple<TranslateTransition, RotateTransition> animators){
+		_priorTurtleAtt = _turtleAtt;
+		_turtleAtt = new UITurtleAttributes(widthHeight.x, widthHeight.y, (-s.getHeadAngle() + 90)%360);
+		animators.x.setByX(_turtleAtt.x - _priorTurtleAtt.x);
+		animators.x.setByY(_turtleAtt.y - _priorTurtleAtt.y);
+		animators.y.setByAngle(_turtleAtt.angle - _priorTurtleAtt.angle);
+		animators.x.play();
+		animators.y.play();
+//		this.setLayoutX(_turtleAtt.x);
+//		this.setLayoutY(_turtleAtt.y);
+//		this.setRotate(_turtleAtt.angle);
+		
+	}
 	public void setTurtleState(TurtleState s, Tuple<Double, Double> widthHeight){
 		_priorTurtleAtt = _turtleAtt;
-		_turtleAtt = new UITurtleAttributes(widthHeight.x, widthHeight.y, s.getHeadAngle() + 90);
+		_turtleAtt = new UITurtleAttributes(widthHeight.x, widthHeight.y, (-s.getHeadAngle() + 90)%360);
 		this.setLayoutX(_turtleAtt.x);
 		this.setLayoutY(_turtleAtt.y);
 		this.setWidth(32);
 		this.setHeight(32);
 		this.setRotate(_turtleAtt.angle);
-		
 	}
 	public TurtleState getTurtleState(){
 		return _turtleState;
 	}
 	public UITurtleAttributes getPriorAttributes() {
-		// TODO Auto-generated method stub
 		return _priorTurtleAtt;
 	}
 	public UITurtleAttributes getNewAttributes() {
-		// TODO Auto-generated method stub
 		return _turtleAtt;
 	}
 }

@@ -52,8 +52,8 @@ public class Controller {
 	}
 
 	private void reset(){
-		myModel.reset();
-		myViewController.clearScreen(); 
+		myTurtle.reset();
+		myViewController.clearScreen();  
 	}
 
 

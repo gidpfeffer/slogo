@@ -88,5 +88,14 @@ public class TurtleState extends Observable{
 	public boolean getVisibility(){
 		return myVisibility; 
 	}
+	public void setState(double x, double y, double headAngle, boolean pen,boolean v){
+		myX = x; 
+		myY = y; 
+		myAngle = headAngle; 
+		myPen = pen;
+		myVisibility = v;
+		setChanged(); 
+		notifyObservers(); 
+	}
 	
 }
