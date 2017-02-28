@@ -6,7 +6,6 @@ import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import model.turtle.TurtleState;
 
@@ -39,10 +38,6 @@ public class UITurtle extends Rectangle {
 		animators.y.setByAngle(_turtleAtt.angle - _priorTurtleAtt.angle);
 		animators.x.play();
 		animators.y.play();
-//		this.setLayoutX(_turtleAtt.x);
-//		this.setLayoutY(_turtleAtt.y);
-//		this.setRotate(_turtleAtt.angle);
-		
 	}
 	public void setTurtleState(TurtleState s, Tuple<Double, Double> widthHeight){
 		_priorTurtleAtt = _turtleAtt;
@@ -61,5 +56,8 @@ public class UITurtle extends Rectangle {
 	}
 	public UITurtleAttributes getNewAttributes() {
 		return _turtleAtt;
+	}
+	public void setTurtleImage(Image img){
+		//TODO
 	}
 }

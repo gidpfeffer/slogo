@@ -40,6 +40,7 @@ public class UITurtleDisplayView extends Pane implements UIDisplayAPI{
 		UITurtleAttributes curr = turtle.getNewAttributes();
 
 		if(old != null && turtle.getTurtleState().getPen()){
+			//TODO animate this
 			double ins = turtle.getWidth()/2.;
 			Line line = new Line(old.x + ins, old.y + ins, curr.x + ins, curr.y + ins);
 			line.setStroke(_lineColor);

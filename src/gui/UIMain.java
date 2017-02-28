@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import controller.ControlHandler;
 import general_data_structures.Tuple;
-import general_data_structures.UserVariables;
-import general_data_structures.Vocabulary;
 import gui.API.UIMainAPI;
 import gui.tools.Frame;
 import gui.tools.GUITools;
@@ -19,21 +16,15 @@ import gui.tools.ImageButton;
 import gui.tools.MyColors;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
-import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
@@ -114,8 +105,9 @@ public class UIMain implements UIMainAPI, Observer {
 		setupVocabTable();
 		setupVarsBox();
 		setupTerminalButtons();
-		setupTurtleImagePicker();
 		setupMenu();
+		setupTurtleImagePicker();
+
 	}
 	
 	private void setupRoot(){
@@ -221,11 +213,14 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 	
 	private void setupTurtleImagePicker(){
-		//TODO
+		//TODO add this to menuview
+		ImageButton b = new ImageButton();
+		
 	}
 
 	private void setTurtleImage(){
 		//TODO
+		
 	}
 	
 	private void slideMenuIn(){
@@ -255,6 +250,10 @@ public class UIMain implements UIMainAPI, Observer {
 	
 	public UIVariablesView getVariableView(){
 		return _varBoxView;
+	}
+	
+	public UIVocabTable getVocabTable(){
+		return _vocabTableView;
 	}
 	
 	@Override

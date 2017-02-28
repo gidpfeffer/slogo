@@ -4,7 +4,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import general_data_structures.UserVariables;
-import gui.API.UIVariablesAPI;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
@@ -13,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class UIVariablesView extends Pane implements UIVariablesAPI, Observer {
+public class UIVariablesView extends Pane implements Observer {
 	Frame _bounds;
 	public UIVariablesView(Frame bounds) {
 		super();
@@ -38,7 +37,7 @@ public class UIVariablesView extends Pane implements UIVariablesAPI, Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		
-		
+		System.out.println(o);
 	}
 
 }
