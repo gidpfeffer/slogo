@@ -1,7 +1,9 @@
 package gui;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import general_data_structures.Vocabulary;
-import gui.API.UIVocabularyAPI;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
@@ -10,19 +12,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class UIVocabTable extends Pane implements UIVocabularyAPI {
+public class UIVocabTable extends Pane implements Observer {
 	Frame _bounds;
 	public UIVocabTable(Frame bounds) {
 		super();
 		_bounds = bounds;
 		setupViews();
-	}
-
-
-	@Override
-	public void update(Vocabulary newVocab) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 
@@ -36,6 +31,13 @@ public class UIVocabTable extends Pane implements UIVocabularyAPI {
 		title.setPrefWidth(_bounds.getWidth());
 		title.setPrefHeight(40);
 		this.getChildren().add(title);
+	}
+	
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 
