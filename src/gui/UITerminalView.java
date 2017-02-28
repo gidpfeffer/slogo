@@ -1,7 +1,10 @@
 package gui;
 
 import gui.API.UITerminalAPI;
+import gui.tools.Frame;
+import gui.tools.GUITools;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -24,6 +27,7 @@ public class UITerminalView extends Pane implements UITerminalAPI {
 		_textArea.setPrefWidth(_bounds.getWidth());
 		_textArea.setPrefHeight(_bounds.getHeight());
 		_textArea.setBorder(Border.EMPTY);
+		_textArea.setBackground(Background.EMPTY);
 		this.getChildren().add(_textArea);
 	}
 

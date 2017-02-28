@@ -1,22 +1,35 @@
 package gui;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import controller.ControlHandler;
 import general_data_structures.UserVariables;
 import general_data_structures.Vocabulary;
 import gui.API.UIMainAPI;
+import gui.tools.Frame;
+import gui.tools.GUITools;
+import gui.tools.ImageButton;
+import gui.tools.MyColors;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import model.turtle.TurtleState;
 
-public class UIMain implements UIMainAPI {
+public class UIMain implements UIMainAPI, Observer {
 	
 	//define the location of UI Components here
 	public static final double SCREEN_WIDTH = 700;
@@ -35,11 +48,12 @@ public class UIMain implements UIMainAPI {
 	UITurtleDisplayView _displayView;
 	UIVariablesView _varBoxView;
 	UIVocabTable _vocabTableView;
-	ArrayList<UITurtle> _turtlesOnDisplay = new ArrayList<UITurtle>();
+	List<UITurtle> _turtlesOnDisplay;
 	
-	public UIMain(ControlHandler handler){
+	public UIMain(ControlHandler handler, List<UITurtle> turtles){
 		super();
-		this._handler = handler;
+		_handler = handler;
+		_turtlesOnDisplay = turtles;
 		setupViews();
 	}
 	
@@ -80,11 +94,26 @@ public class UIMain implements UIMainAPI {
 	
 	private void setupRoot(){
 		_root = new Pane();
-		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(Color.GRAY));
+		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(MyColors.GREEN));
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
 	}
 	private void setupTitleAndMenuButton(){
-		//TODO
+		
+		
+		ImageButton menu = new ImageButton();
+		menu.updateImages(new Image("menu.png"), new Image("menu.png"));
+		menu.setLayoutX(10);
+		menu.setLayoutY(20);
+		menu.setPrefSize(32, 32);
+		
+		Label title = GUITools.plainLabelBoldHelvetica("SLOGO", 28, MyColors.LIGHT_GREEN);
+		title.setLayoutX(64);
+		title.setLayoutY(24);
+		
+		_root.getChildren().add(title);
+		_root.getChildren().add(menu);
+
+	
 	}
 	private void setupMenu(){
 		//TODO
@@ -98,7 +127,7 @@ public class UIMain implements UIMainAPI {
 		_root.getChildren().add(_terminalView);
 	}
 	private void setupDisplay(){
-		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds());
+		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds(), _turtlesOnDisplay);
 		_displayView.setLayoutX(DISPLAY_FRAME.getX());
 		_displayView.setLayoutY(DISPLAY_FRAME.getY());
 		_displayView.prefHeight(DISPLAY_FRAME.getHeight());
@@ -123,22 +152,22 @@ public class UIMain implements UIMainAPI {
 		_root.getChildren().add(_varBoxView);
 	}
 	private void setupTerminalButtons(){
-		Button exec = new Button("Execute"); //TODO add image
+		ImageButton exec = new ImageButton();
+		exec.updateImages(new Image("execute.png"), new Image("execute.png"));
 		exec.setLayoutX(BUTTONS_FRAME.getX());
-		exec.setLayoutY(BUTTONS_FRAME.getY());
-		exec.setPrefWidth(BUTTONS_FRAME.getWidth());
-		exec.setPrefHeight(BUTTONS_FRAME.getHeight()/2);
+		exec.setLayoutY(BUTTONS_FRAME.getY() + 4);
+		exec.setPrefSize(32,32);
 		exec.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressExecute();
 			}
 		});
 		
-		Button reset = new Button("Reset");
+		ImageButton reset = new ImageButton();
+		reset.updateImages(new Image("reset.png"), new Image("reset.png"));
 		reset.setLayoutX(BUTTONS_FRAME.getX());
 		reset.setLayoutY(BUTTONS_FRAME.getY() + BUTTONS_FRAME.getHeight()/2);
-		reset.setPrefWidth(BUTTONS_FRAME.getWidth());
-		reset.setPrefHeight(BUTTONS_FRAME.getHeight()/2);
+		reset.setPrefSize(32,32);
 		reset.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressReset();
@@ -169,5 +198,21 @@ public class UIMain implements UIMainAPI {
 	
 	public Scene getScene(){
 		return _scene;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		UITurtle modifiedTurtle = getTurtleFromListWithState((TurtleState) o);
+		_displayView.updateTurtleState(modifiedTurtle);
+		System.out.println("turtle updated:\t" + modifiedTurtle.getTurtleState().getX());
+	}
+	private UITurtle getTurtleFromListWithState(TurtleState s){
+		for(UITurtle t: this._turtlesOnDisplay){
+			if(t.getTurtleState() == s){
+				return t;
+			}
+		}
+		throw new RuntimeException();
 	}
 }

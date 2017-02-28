@@ -1,12 +1,13 @@
 package controller;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import gui.UIMain;
+import gui.UITurtle;
 import model.*;
-import model.command.TreeNode;
-import model.command.TurtleCommand;
+
 import model.turtle.Turtle;
-import model.turtle.TurtleState;
 import parser.main.Parser;
 
 public class Controller {
@@ -35,7 +36,9 @@ public class Controller {
 	public Controller(){
 		myModel = new ModelController(); 
 		myTurtle = myModel.getTurtle();
-		myViewController = new UIMain(new myHandler());
+		myViewController = new UIMain(new myHandler(), new ArrayList<UITurtle>(Arrays.asList(new UITurtle(myTurtle.getState()))));
+		myTurtle.getState().addObserver(myViewController);
+
 		//TurtleState turtleState = new TurtleState(myTurtle.getState()); //pass a copy of turtle state into the parser for safety
 		
 		myObserver = new TurtleObserver();
@@ -48,7 +51,9 @@ public class Controller {
 	public void processInput(String input){
 		// get Map from parser 
 		myParser.parse(input);
-		myModel.update(myParser.getOrderedTreeList());
+		
+		// if error isnt thrown update on the queue, else discard the queue
+		myModel.update(myParser.getTreeQueue());
 		output = myModel.getStringOutput();
 		// call process commands
 	}

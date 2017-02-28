@@ -1,5 +1,6 @@
 package gui;
 
+import gui.tools.Frame;
 import javafx.scene.layout.Pane;
 
 public class MenuView extends Pane {
