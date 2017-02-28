@@ -58,12 +58,25 @@ public class Controller {
 	
 
 	public void processInput(String input){
-		// get Map from parser 
-		myParser.parse(input);
+		
+		
+		//Queue<TreeNode> commandsQueue = new LinkedList();
+		try{
+			myParser.parse(input);
+			//commandsQueue = myParser.getTreeQueue();
+			myModel.update(myParser.getTreeQueue());
+			output = myModel.getStringOutput();
+			System.out.println("String to print" + output);
+			
+		}
+		catch (Exception e){
+			myViewController.displayErrorWithMessage(e.getMessage());
+			//commandsQueue.clear();
+		}
 
-		// if error isnt thrown update on the queue, else discard the queue
-		myModel.update(myParser.getTreeQueue());
-		output = myModel.getStringOutput();
+//		myParser.parse(input);
+//		myModel.update(myParser.getTreeQueue());
+//		output = myModel.getStringOutput();
 	}
 
 	public String getStringOutput(){
