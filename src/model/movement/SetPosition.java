@@ -9,7 +9,6 @@ import model.turtle.TurtleState;
 
 public class SetPosition extends TurtleCommand {
 	
-	private double distance;
 	private double x;
 	private double y; 
 
@@ -22,7 +21,6 @@ public class SetPosition extends TurtleCommand {
 		x = children.get(0).getValue();
 		y = children.get(1).getValue();
 		myTurtleState = st;
-		distance = Math.sqrt(Math.pow(x-myTurtleState.getX(), 2) + Math.pow(y-myTurtleState.getY(), 2));
 		
 	}
 	
@@ -31,6 +29,6 @@ public class SetPosition extends TurtleCommand {
 	}
 	
 	public double getValue(){
-		return distance;
+		return 	Math.sqrt(Math.pow(x-myTurtleState.getX(), 2) + Math.pow(y-myTurtleState.getY(), 2));
 	}
 }

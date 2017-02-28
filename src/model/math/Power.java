@@ -20,7 +20,7 @@ public class Power extends LogicCommand{
 	}
 	
 	public double getValue(){
-		return Math.pow(children.get(1).getValue(),children.get(0).getValue()); 
+		return Math.pow(children.get(0).getValue(),children.get(1).getValue()); 
 	}
 	
 }

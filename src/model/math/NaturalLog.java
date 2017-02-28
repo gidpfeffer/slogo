@@ -19,8 +19,16 @@ public class NaturalLog extends LogicCommand {
 	
 	public double getValue(){
 		
-		return Math.log(children.get(0).getValue()); // value of x in ln(x) cannot be negative, throw error here 
-		 
+		Double val = Math.log(children.get(0).getValue()); // value of x in ln(x) cannot be negative, throw error here 
+		if (val.isNaN()){
+			throw new IllegalArgumentException("can't take log of a negative number");
+		}
+		else{
+			return val;
+		}
+		
+	
+		
 	}
 	
 }

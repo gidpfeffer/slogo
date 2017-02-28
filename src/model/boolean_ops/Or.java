@@ -15,7 +15,7 @@ public class Or extends LogicCommand {
 	}
 	
 	public double getValue(){
-		return ((children.get(1).getValue() != 0) || (children.get(0).getValue() !=0)? 1: 0); 
+		return ((children.get(0).getValue() != 0) || (children.get(1).getValue() !=0)? 1: 0); 
 	
 	}
 }
