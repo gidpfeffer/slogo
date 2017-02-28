@@ -92,6 +92,7 @@ public class UIMain implements UIMainAPI, Observer {
 	public void clearScreen() {
 		System.out.println("clearing screen");
 		_displayView.clearLines();
+		_historyView.clear();
 	}
 	public void addTurtle(){
 		UITurtle t = new UITurtle();
@@ -251,7 +252,6 @@ public class UIMain implements UIMainAPI, Observer {
 		_historyView.addNewCommand(_terminalView.getTextInput());
 		_handler.handleTextInput(_terminalView.getTextInput());
 		_terminalView.clear();
-		_historyView.clear();
 
 	}
 	
