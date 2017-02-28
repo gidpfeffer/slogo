@@ -7,7 +7,7 @@ import parser.main.Parser;
 public class TreeTester {
 	
 	public static void main(String args[]){
-		String testCode1 = "fd 111 product fd 10 product fd fd 50 100";
+		String testCode1 = "product rt 30 fd 50";
 		
 		Parser p = new Parser(new TurtleState());
 		p.parse(testCode1);

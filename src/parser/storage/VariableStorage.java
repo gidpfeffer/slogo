@@ -22,5 +22,4 @@ public class VariableStorage {
 	public void clearMap(){
 		map.clear();
 	}
-
 }

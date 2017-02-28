@@ -4,10 +4,10 @@ import java.util.Queue;
 
 import model.command.TreeNode;
 import model.turtle.TurtleState;
-import parser.interpreter.FixVars;
 import parser.interpreter.Interpreter;
 import parser.queue_splitter.QueueSplitter;
 import parser.reflectiontest.TreeGenerator;
+import parser.storage.FixVars;
 import parser.storage.VariableStorage;
 import parser.tokenizer.TokenList;
 import parser.tokenizer.TokenListGenerator;
