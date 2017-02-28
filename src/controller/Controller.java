@@ -27,7 +27,6 @@ public class Controller {
 	private ModelController myModel; 
 	private Turtle myTurtle;
 	private Parser myParser;
-	private TurtleObserver myObserver;
 	private UIMain myViewController;
 	private String output; 
 
@@ -35,13 +34,8 @@ public class Controller {
 	public Controller(){
 		myModel = new ModelController(new myHandler()); 
 		myTurtle = myModel.getTurtle();
-		myViewController = new UIMain(new myHandler(), new ArrayList<UITurtle>(Arrays.asList(new UITurtle(myTurtle.getState()))));
+		myViewController = new UIMain(new myHandler());
 		myTurtle.getState().addObserver(myViewController);
-
-		//TurtleState turtleState = new TurtleState(myTurtle.getState()); //pass a copy of turtle state into the parser for safety
-
-		myObserver = new TurtleObserver();
-		myTurtle.getState().addObserver(myObserver);
 		myParser = new Parser(myTurtle.getState());
 
 	}

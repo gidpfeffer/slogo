@@ -21,6 +21,7 @@ public class TreeGenerator {
 	private static final String CONSTANT = "Constant";
 	private ClassGenerator CG;
 	private TurtleState turtle;
+	private static final String PI = "Pi";
 	
 	public TreeGenerator(TokenList t, TurtleState turtle){
 		list = new TokenList(new ArrayList<String>(t.getLiterals()), new ArrayList<String>(t.getLogo()));
@@ -59,10 +60,11 @@ public class TreeGenerator {
 		String logoType = logo.pop();
 		int arguments = numArgs.getNumArgs(logoType);
 		TreeNode t = makeNode(command, logoType, arguments);
+		t.deRootAllChild();
 		if(!((t instanceof ListStart)||(t instanceof ListEnd))){
 			parsed.add(t);
 		}
-		if(!logoType.equals("Constant")){
+		if(!logoType.equals(CONSTANT) && !logoType.equals(PI)){
 			commandQueue.add(t);
 		}
 	}
