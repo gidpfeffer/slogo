@@ -34,7 +34,6 @@ public class QueueSplitter {
 	
 	private void remakeQueue(){
 		for(Queue<TreeNode> q : list){
-			System.out.println(q.size());
 			while(!q.isEmpty()){
 				newQueue.add(q.remove());
 			}

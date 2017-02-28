@@ -15,7 +15,7 @@ public class ControllerTester{
 	public static void main (String[] args){
 		ControllerTester test = new ControllerTester();
 		
-		test.getControl().processInput("setxy 1 2");
+		test.getControl().processInput("product rt 20 fd 50");
 		
 		System.out.println("String to print " + test.getControl().getStringOutput());
 	}

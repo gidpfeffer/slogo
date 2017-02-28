@@ -12,7 +12,6 @@ public abstract class BracketAid extends BracketHandler{
 	public BracketAid(TokenList list, String indicator, TurtleState t) {
 		super(list, indicator, t);
 		listMultiplier = new ListMultiplier();
-		correctList();
 	}
 	
 	public BracketAid(TokenList list, String indicator) {

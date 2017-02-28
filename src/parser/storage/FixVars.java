@@ -1,6 +1,5 @@
-package parser.interpreter;
+package parser.storage;
 
-import parser.storage.VariableStorage;
 import parser.tokenizer.TokenList;
 
 public class FixVars {
