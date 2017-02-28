@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-
 import model.command.TreeNode;
 import model.turtle.TurtleState;
 import parser.interpreter.FixVars;
