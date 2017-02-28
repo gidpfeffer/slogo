@@ -1,5 +1,8 @@
 package gui;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import general_data_structures.UserVariables;
 import gui.API.UIVariablesAPI;
 import gui.tools.Frame;
@@ -10,19 +13,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class UIVariablesView extends Pane implements UIVariablesAPI {
+public class UIVariablesView extends Pane implements UIVariablesAPI, Observer {
 	Frame _bounds;
 	public UIVariablesView(Frame bounds) {
 		super();
 		_bounds = bounds;
 		setupViews();
-	}
-
-
-	@Override
-	public void update(UserVariables vars) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 
@@ -36,6 +32,13 @@ public class UIVariablesView extends Pane implements UIVariablesAPI {
 		title.setPrefWidth(_bounds.getWidth());
 		title.setPrefHeight(40);
 		this.getChildren().add(title);
+	}
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+		
+		
 	}
 
 }

@@ -62,7 +62,7 @@ public class UIMain implements UIMainAPI, Observer {
 	private UIMenuView _menuView;
 	private ImageButton _menuButton;
 	private Map<UITurtle, Tuple<TranslateTransition, RotateTransition>> _turtlesOnDisplay;
-	
+
 	
 	
 	public UIMain(ControlHandler handler){
@@ -76,16 +76,6 @@ public class UIMain implements UIMainAPI, Observer {
 	public void displayErrorWithMessage(String error){
 		Alert alert = new Alert(AlertType.CONFIRMATION, error, ButtonType.CLOSE);
 		alert.showAndWait();
-	}
-
-	@Override
-	public void updateVocabBox(Vocabulary vocab) {
-		_vocabTableView.update(vocab);
-	}
-	
-	@Override
-	public void updateVarBox(UserVariables vars) {
-		_varBoxView.update(vars);
 	}
 	
 	@Override
@@ -262,7 +252,11 @@ public class UIMain implements UIMainAPI, Observer {
 	public Scene getScene(){
 		return _scene;
 	}
-
+	
+	public UIVariablesView getVariableView(){
+		return _varBoxView;
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		
