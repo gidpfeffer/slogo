@@ -60,7 +60,7 @@ public class ModelController {
 
 
 	public void reset() {
-		myTurtle = new Turtle(); 
+		myTurtle.reset(); 
 
 	}
 
