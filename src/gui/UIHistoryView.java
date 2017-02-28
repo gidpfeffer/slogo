@@ -5,6 +5,7 @@ import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
@@ -36,6 +37,7 @@ public class UIHistoryView extends Pane implements CommandHistoryAPI {
 		_textArea.setBorder(Border.EMPTY);
 		_textArea.setBackground(Background.EMPTY);
 		_textArea.setEditable(false);
+		_textArea.setBlendMode(BlendMode.DARKEN);
 		this.getChildren().add(_textArea);
 	}
 
