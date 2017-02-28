@@ -16,7 +16,7 @@ public class Equal extends LogicCommand{
 	}
 	
 	public double getValue(){
-		return (children.get(1).getValue() == children.get(0).getValue()? 1: 0); 
+		return (children.get(0).getValue() == children.get(1).getValue()? 1: 0); 
 		
 	}
 }
