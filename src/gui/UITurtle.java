@@ -12,12 +12,17 @@ public class UITurtle extends Rectangle {
 	private TurtleState _turtleState;
 	private UITurtleAttributes _turtleAtt;
 	private UITurtleAttributes _priorTurtleAtt;
-	public UITurtle(TurtleState s, Image image){
-		_turtleState = s;
-		setImageView(image);
+	
+
+	public UITurtle(){
+		this(new Image("turtle.png"));
 	}
-	public UITurtle(TurtleState t){
-		this(t,new Image("turtle.png"));
+	public UITurtle(Image image){
+		this(image, new TurtleState());
+	}
+	public UITurtle(Image image, TurtleState state){
+		_turtleState = state;
+		setImageView(image);
 	}
 	
 	public void setImageView(Image image){
@@ -25,7 +30,6 @@ public class UITurtle extends Rectangle {
 	}
 	
 	public void setTurtleState(TurtleState s, Tuple<Double, Double> widthHeight){
-		_turtleState = s;
 		_priorTurtleAtt = _turtleAtt;
 		_turtleAtt = new UITurtleAttributes(widthHeight.x, widthHeight.y, s.getHeadAngle() + 90);
 		this.setLayoutX(_turtleAtt.x);
