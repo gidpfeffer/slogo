@@ -26,11 +26,12 @@ public class DoTimes extends RegControl{
 		List<Integer> vals = range.getList();
 		TokenList statement = list.newSubList(elseStart + 1, elseEnd);
 		int start = getLogoLocations(indicator).get(0);
-		listMultiplier.replace(start, elseEnd, list, Arrays.asList(new String[] {}));
 		replaceEach(vals, start, statement);
 	}
 	
 	private void replaceEach(List<Integer> ints, int start, TokenList statement){
+		listMultiplier.replace(start, elseEnd, list, Arrays.asList(new String[] {}));
+		System.out.println(statement.getLiterals().size());
 		List<String> literalFiller = new ArrayList<>(statement.getLiterals());
 		List<String> logoFiller = new ArrayList<>(statement.getLogo());
 		for(Integer i : ints){
