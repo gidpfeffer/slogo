@@ -7,17 +7,18 @@ import model.command.TreeNode;
 
 
 public class Random extends LogicCommand {
-	private double max;
-	private double randomValue; 
+
+
 
 	
 	public Random(List<TreeNode> args){
 		children = args;
-		max = children.get(0).getValue();
-		randomValue = getRandomValue();
+		
+		
 	}
 	
 	private double getRandomValue() {
+		double max = children.get(0).getValue();
 		double val = -1;
 		java.util.Random rand = new java.util.Random();
 		while (val <0 || val == max ){
@@ -31,7 +32,7 @@ public class Random extends LogicCommand {
 	}
 	
 	public double getValue(){
-		return randomValue;
+		return getRandomValue();
 	}
 	
 }

@@ -8,6 +8,7 @@ import model.command.TreeNode;
 public class And extends LogicCommand {
 	public And(List<TreeNode> args){
 		children = args;
+		
 	}
 	
 	public void execute(){
@@ -15,7 +16,7 @@ public class And extends LogicCommand {
 	}
 	
 	public double getValue(){
-		return ((children.get(1).getValue() != 0) & (children.get(0).getValue() !=0)? 1: 0); 
+		return ((children.get(0).getValue() != 0) & (children.get(1).getValue() !=0)? 1: 0); 
 		
 	}
 }

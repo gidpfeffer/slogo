@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
+import controller.Controller.myHandler;
 import model.command.TreeNode;
+import model.movement.ClearScreen;
 import model.turtle.Turtle;
 
 public class ModelController {
@@ -15,12 +17,14 @@ public class ModelController {
 
 	Turtle myTurtle;
 	String output; 
+	myHandler handler; 
 
-	public ModelController(){
+	public ModelController(myHandler myHandler){
 
 		// GUI can hand these to controller and controller can hand them down if needed -  x and y should be based on GUI size 
 
 		myTurtle = new Turtle();
+		handler = myHandler; 
 
 	}
 
@@ -41,6 +45,10 @@ public class ModelController {
 		while(!commandsToExecute.isEmpty()){ 
 			// order of these calls matters!!
 			TreeNode command= commandsToExecute.remove();
+			if (command instanceof ClearScreen){
+				handler.handleReset(); 
+			}
+
 			output = ((Double) command.getValue()).toString();
 			command.execute();
 		}

@@ -8,13 +8,11 @@ import model.turtle.TurtleState;
 
 public class ClearScreen extends TurtleCommand {
 	private TurtleState myTurtleState;
-	private double distance;
 	
-
 	public ClearScreen(List<TreeNode> args, TurtleState st){
 		children = args;
 		myTurtleState = st;
-		distance = Math.sqrt(Math.pow(myTurtleState.getX(), 2) + Math.pow(myTurtleState.getY(), 2));
+
 	}
 	
 	public void execute(){
@@ -22,6 +20,6 @@ public class ClearScreen extends TurtleCommand {
 	}
 	
 	public double getValue(){
-		return distance;
+		return 	Math.sqrt(Math.pow(myTurtleState.getX(), 2) + Math.pow(myTurtleState.getY(), 2));
 	}
 }
