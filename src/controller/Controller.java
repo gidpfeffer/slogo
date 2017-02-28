@@ -10,6 +10,12 @@ public class Controller {
 
 
 	public class myHandler implements ControlHandler{
+	
+		String lang; 
+		private final String languageExtension = ".properties";
+		public myHandler(){
+			lang = "English";
+		}
 		@Override
 		public void handleTextInput(String input){
 			processInput(input);
@@ -17,6 +23,14 @@ public class Controller {
 		@Override
 		public void handleReset(){
 			reset();
+		}
+		
+		public void setLanguage(String language){
+			lang = language; 
+		}
+		
+		public String getLanguage(){
+			return lang + languageExtension; 
 		}
 	}
 
@@ -26,25 +40,43 @@ public class Controller {
 	private Parser myParser;
 	private UIMain myViewController;
 	private String output; 
-
+	private myHandler handler; 
+	private String language; 
+	private final String languageLocation = "resources.languages/";
 
 	public Controller(){
 		myModel = new ModelController(new myHandler()); 
 		myTurtle = myModel.getTurtle();
-		myViewController = new UIMain(new myHandler());
+		handler = new myHandler(); 
+		myViewController = new UIMain(handler);
 		myTurtle.getState().addObserver(myViewController);
+		language = languageLocation + handler.getLanguage();
 		myParser = new Parser(myTurtle.getState());
-
+		//myParser = new Parser(myTurtle.getState(), language);
 	}
 
+	
 
 	public void processInput(String input){
-		// get Map from parser 
-		myParser.parse(input);
+		
+		
+		//Queue<TreeNode> commandsQueue = new LinkedList();
+		try{
+			myParser.parse(input);
+			//commandsQueue = myParser.getTreeQueue();
+			myModel.update(myParser.getTreeQueue());
+			output = myModel.getStringOutput();
+			System.out.println("String to print" + output);
+			
+		}
+		catch (Exception e){
+			myViewController.displayErrorWithMessage(e.getMessage());
+			//commandsQueue.clear();
+		}
 
-		// if error isnt thrown update on the queue, else discard the queue
-		myModel.update(myParser.getTreeQueue());
-		output = myModel.getStringOutput();
+//		myParser.parse(input);
+//		myModel.update(myParser.getTreeQueue());
+//		output = myModel.getStringOutput();
 	}
 
 	public String getStringOutput(){
