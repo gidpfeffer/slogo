@@ -3,11 +3,14 @@ package gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import general_data_structures.Tuple;
 import gui.API.UIDisplayAPI;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
 import gui.tools.UITurtleAttributes;
+import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -31,8 +34,8 @@ public class UITurtleDisplayView extends Pane implements UIDisplayAPI{
 	 * use this method to change the attributes of a turtle on screen
 	 * @param turtle to be moved or animated
 	 */
-	public void updateTurtleState(UITurtle turtle, TurtleState newState){
-		turtle.setTurtleState(newState, GUITools.turtleCoordinateToPixelCoordinate(newState, _bounds));
+	public void updateTurtleState(UITurtle turtle, TurtleState newState, Tuple<TranslateTransition, RotateTransition> animators){
+		turtle.setTurtleState(newState, GUITools.turtleCoordinateToPixelCoordinate(newState, _bounds), animators);
 		UITurtleAttributes old = turtle.getPriorAttributes();
 		UITurtleAttributes curr = turtle.getNewAttributes();
 
@@ -45,6 +48,12 @@ public class UITurtleDisplayView extends Pane implements UIDisplayAPI{
 			this.getChildren().add(1,line);
 		}
 	}
+	
+	public void clearLines(){
+		this.getChildren().removeAll(_lines);
+		_lines.clear();
+		System.out.println("\t*\tCleared Screen\t*");
+	}
 
 	private void setupViews() {
 		GUITools.addBackgroundWithColor(this, MyColors.LIGHT_GREEN, _bounds);
@@ -54,5 +63,6 @@ public class UITurtleDisplayView extends Pane implements UIDisplayAPI{
 			this.getChildren().add(t);
 		}
 	}
+	
 
 }

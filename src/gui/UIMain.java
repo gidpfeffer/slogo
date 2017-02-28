@@ -89,15 +89,18 @@ public class UIMain implements UIMainAPI, Observer {
 	
 	@Override
 	public void clearScreen() {
-		// TODO Auto-generated method stub
-		
+		_displayView.clearLines();
 	}
 	public void addTurtle(){
 		UITurtle t = new UITurtle();
+		
 		TranslateTransition tran = new TranslateTransition();
+		tran.setNode(t);
+		tran.setDuration(Duration.millis(200));
 		
 		RotateTransition rot = new RotateTransition();
-		
+		rot.setNode(t);
+		rot.setDuration(Duration.millis(200));
 		
 		_turtlesOnDisplay.put(t, new Tuple<TranslateTransition, RotateTransition>(tran, rot));
 	}
@@ -256,18 +259,18 @@ public class UIMain implements UIMainAPI, Observer {
 	public void update(Observable o, Object arg) {
 		
 		TurtleState newState = new TurtleState((TurtleState) o);
-		UITurtle turtle = getTurtleFromListWithState(newState);
-		_displayView.updateTurtleState(turtle, newState);
-		System.out.println("turtle updated:\t" + turtle.getTurtleState().getX());
+		Entry<UITurtle, Tuple<TranslateTransition, RotateTransition>> entry = getTurtleFromListWithState(newState);
+		_displayView.updateTurtleState(entry.getKey(), newState, entry.getValue());
+		System.out.println("x: "+newState.getX() + " y: " + newState.getY()+" angle: " + newState.getHeadAngle()); // for testing
+
 	}
-	private UITurtle getTurtleFromListWithState(TurtleState s){
-		for(UITurtle t: this._turtlesOnDisplay.keySet()){
-			if(t.getTurtleState().equals(s)){
+	private Entry<UITurtle, Tuple<TranslateTransition, RotateTransition>> getTurtleFromListWithState(TurtleState s){
+		for(Entry<UITurtle, Tuple<TranslateTransition, RotateTransition>> t: _turtlesOnDisplay.entrySet()){
+			if(t.getKey().equals(s)){
 				return t;
 			}
 		}
-		Entry<UITurtle, Tuple<TranslateTransition, RotateTransition>> entry = _turtlesOnDisplay.entrySet().iterator().next();
-		return entry.getKey();
+		return _turtlesOnDisplay.entrySet().iterator().next();
 		//throw new RuntimeException("turtle not found");
 	}
 }
