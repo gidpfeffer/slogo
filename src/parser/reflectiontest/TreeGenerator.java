@@ -18,10 +18,12 @@ public class TreeGenerator {
 	private Stack<String> commands, logo;
 	private NumArgsHandler numArgs;
 	private Queue<TreeNode> commandQueue;
+	private Queue<TreeNode> allQueue;
 	private static final String CONSTANT = "Constant";
 	private ClassGenerator CG;
 	private TurtleState turtle;
 	private static final String PI = "Pi";
+	private AllQueueHelper AQH;
 	
 	public TreeGenerator(TokenList t, TurtleState turtle){
 		list = new TokenList(new ArrayList<String>(t.getLiterals()), new ArrayList<String>(t.getLogo()));
@@ -30,6 +32,7 @@ public class TreeGenerator {
 		initializeData();
 		fillStack();
 		generateTree();
+		AQH = new AllQueueHelper(allQueue);
 	}
 	
 	private void initializeData(){
@@ -38,6 +41,7 @@ public class TreeGenerator {
 		logo = new Stack<>();
 		numArgs = new NumArgsHandler();
 		commandQueue = new LinkedList<>();
+		allQueue = new LinkedList<>();
 	}
 	
 	private void fillStack(){
@@ -67,6 +71,7 @@ public class TreeGenerator {
 		if(!logoType.equals(CONSTANT) && !logoType.equals(PI)){
 			commandQueue.add(t);
 		}
+		allQueue.add(t);
 	}
 	
 	private TreeNode makeNode(String command, String logo, int arguments){
@@ -91,9 +96,14 @@ public class TreeGenerator {
 		return list;
 	}
 	
-	public Queue<TreeNode> getQueue(){
+	public Queue<TreeNode> getCommandQueue(){
 		return commandQueue;
 	}
+	
+	public Queue<TreeNode> getAllQueue(){
+		return AQH.getQueue();
+	}
+	
 	
 	public double getLast(){
 		Queue<TreeNode> q = new LinkedList<>(commandQueue);

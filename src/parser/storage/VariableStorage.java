@@ -2,8 +2,9 @@ package parser.storage;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
-public class VariableStorage {
+public class VariableStorage extends Observable{
 	
 	private Map<String, Double> map;
 	
@@ -17,10 +18,13 @@ public class VariableStorage {
 	
 	public void setValue(String key, double val){
 		map.put(key, val);
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void clearMap(){
 		map.clear();
+		setChanged();
+		notifyObservers();
 	}
-
 }

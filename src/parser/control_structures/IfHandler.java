@@ -16,6 +16,7 @@ public class IfHandler extends BracketAid{
 	
 	public IfHandler(TokenList tokens){
 		super(tokens, INDICATOR);
+		correctList();
 	}
 
 	@Override
