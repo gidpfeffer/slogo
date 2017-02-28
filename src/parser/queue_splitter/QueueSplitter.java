@@ -9,12 +9,15 @@ import model.command.TreeNode;
 
 public class QueueSplitter {
 	Queue<TreeNode> queue;
+	Queue<TreeNode> newQueue;
 	List<Queue<TreeNode>> list;
 	
 	public QueueSplitter(Queue<TreeNode> queue){
 		this.queue = new LinkedList<>(queue);
 		list = new ArrayList<>();
+		newQueue = new LinkedList<>();
 		fix();
+		remakeQueue();
 	}
 	
 	private void fix(){
@@ -24,17 +27,26 @@ public class QueueSplitter {
 			q.add(t);
 			if(t.isRoot()){
 				addToList(q);
-				q = new LinkedList();
+				q = new LinkedList<>();
+			}
+		}
+	}
+	
+	private void remakeQueue(){
+		for(Queue<TreeNode> q : list){
+			System.out.println(q.size());
+			while(!q.isEmpty()){
+				newQueue.add(q.remove());
 			}
 		}
 	}
 	
 	private void addToList(Queue<TreeNode> q){
-		list.add(0, q);
+		list.add(0,q);
 	}
 	
-	public List<Queue<TreeNode>> getList(){
-		return list;
+	public Queue<TreeNode> getQueue(){
+		return newQueue;
 	}
 
 }

@@ -60,6 +60,7 @@ public class TreeGenerator {
 		String logoType = logo.pop();
 		int arguments = numArgs.getNumArgs(logoType);
 		TreeNode t = makeNode(command, logoType, arguments);
+		t.deRootAllChild();
 		if(!((t instanceof ListStart)||(t instanceof ListEnd))){
 			parsed.add(t);
 		}
