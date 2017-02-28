@@ -44,13 +44,13 @@ public class UIMain implements UIMainAPI, Observer {
 	public static final double SCREEN_WIDTH = 700;
 	public static final double SCREEN_HEIGHT = 650;
 	public static final double TOP_INSET = 70;
-	public static final Frame DISPLAY_FRAME = new Frame(8,TOP_INSET, SCREEN_WIDTH*3/4 - 16,SCREEN_HEIGHT*3/4 - 16);
-	public static final Frame TERMINAL_FRAME = new Frame(8, DISPLAY_FRAME.getMaxY() + 8, DISPLAY_FRAME.getWidth() - 50, SCREEN_HEIGHT - DISPLAY_FRAME.getMaxY() - 16 );
-	public static final Frame BUTTONS_FRAME = new Frame(TERMINAL_FRAME.getMaxX(), TERMINAL_FRAME.getY(), 50, TERMINAL_FRAME.getHeight());
+	public static final Frame DISPLAY_FRAME = new Frame(8,TOP_INSET, SCREEN_WIDTH*3/4 - 16,SCREEN_HEIGHT*2/3 - 16);
+	public static final Frame HISTORY_FRAME = new Frame(8, DISPLAY_FRAME.getMaxY() + 8, DISPLAY_FRAME.getWidth() - 50, (SCREEN_HEIGHT - DISPLAY_FRAME.getMaxY())/2 - 16 );
+	public static final Frame TERMINAL_FRAME = new Frame(8, HISTORY_FRAME.getMaxY() + 8, HISTORY_FRAME.getWidth(), HISTORY_FRAME.getHeight() );
 	public static final Frame VOCAB_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,DISPLAY_FRAME.getY(), SCREEN_WIDTH - DISPLAY_FRAME.getMaxX() - 16,SCREEN_HEIGHT*2/3 - 16);
 	public static final Frame VARS_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,VOCAB_FRAME.getMaxY() + 8, VOCAB_FRAME.getWidth(),SCREEN_HEIGHT - VOCAB_FRAME.getMaxY() - 16);
 	public static final Frame MENU_FRAME = new Frame(-SCREEN_WIDTH*2/5, 0, SCREEN_WIDTH*2/5, SCREEN_HEIGHT);
-	
+
 	private Pane _root;
 	private Scene _scene;
 	private ControlHandler _handler;
@@ -58,6 +58,7 @@ public class UIMain implements UIMainAPI, Observer {
 	private UITurtleDisplayView _displayView;
 	private UIVariablesView _varBoxView;
 	private UIVocabTable _vocabTableView;
+	private UIHistoryView _historyView;
 	private UIMenuView _menuView;
 	private ImageButton _menuButton;
 	private Map<UITurtle, Tuple<TranslateTransition, RotateTransition>> _turtlesOnDisplay;
@@ -89,7 +90,9 @@ public class UIMain implements UIMainAPI, Observer {
 	
 	@Override
 	public void clearScreen() {
+		System.out.println("clearing screen");
 		_displayView.clearLines();
+		_historyView.clear();
 	}
 	public void addTurtle(){
 		UITurtle t = new UITurtle();
@@ -104,19 +107,19 @@ public class UIMain implements UIMainAPI, Observer {
 		
 		_turtlesOnDisplay.put(t, new Tuple<TranslateTransition, RotateTransition>(tran, rot));
 	}
+	
 	private void setupTurtleMap(double numberOfTurtles){
 		_turtlesOnDisplay = new HashMap<UITurtle, Tuple<TranslateTransition, RotateTransition>>();
 		for(int i = 0; i < numberOfTurtles; i++){
 			addTurtle();
 		}
 	}
-	
-	
 
 	private void setupViews(){
 		setupRoot();
 		setupTitleAndMenuButton();
 		setupTerminal();
+		setupHistory();
 		setupDisplay();
 		setupVocabTable();
 		setupVarsBox();
@@ -131,8 +134,6 @@ public class UIMain implements UIMainAPI, Observer {
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
 	}
 	private void setupTitleAndMenuButton(){
-		
-		
 		_menuButton = new ImageButton();
 		_menuButton.updateImages(new Image("menu.png"), new Image("menu.png"));
 		_menuButton.setLayoutX(10);
@@ -150,8 +151,6 @@ public class UIMain implements UIMainAPI, Observer {
 		
 		_root.getChildren().add(title);
 		_root.getChildren().add(_menuButton);
-
-	
 	}
 	private void setupMenu(){
 		//TODO: refactor all of these by making abstract class that gets frame
@@ -169,6 +168,14 @@ public class UIMain implements UIMainAPI, Observer {
 		_terminalView.prefHeight(TERMINAL_FRAME.getHeight());
 		_terminalView.prefWidth(TERMINAL_FRAME.getWidth());
 		_root.getChildren().add(_terminalView);
+	}
+	private void setupHistory(){
+		_historyView = new UIHistoryView(TERMINAL_FRAME.toLocalBounds());
+		_historyView.setLayoutX(HISTORY_FRAME.getX());
+		_historyView.setLayoutY(HISTORY_FRAME.getY());
+		_historyView.prefHeight(HISTORY_FRAME.getHeight());
+		_historyView.prefWidth(HISTORY_FRAME.getWidth());
+		_root.getChildren().add(_historyView);
 	}
 	private void setupDisplay(){
 		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds(),
@@ -199,9 +206,9 @@ public class UIMain implements UIMainAPI, Observer {
 	private void setupTerminalButtons(){
 		ImageButton exec = new ImageButton();
 		exec.updateImages(new Image("execute.png"), new Image("execute.png"));
-		exec.setLayoutX(BUTTONS_FRAME.getX());
-		exec.setLayoutY(BUTTONS_FRAME.getY() + 4);
 		exec.setPrefSize(32,32);
+		exec.setLayoutX(TERMINAL_FRAME.getMaxX() + 4);
+		exec.setLayoutY(TERMINAL_FRAME.getY() + (TERMINAL_FRAME.getHeight() - exec.getPrefHeight())/2);
 		exec.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressExecute();
@@ -210,9 +217,9 @@ public class UIMain implements UIMainAPI, Observer {
 		
 		ImageButton reset = new ImageButton();
 		reset.updateImages(new Image("reset.png"), new Image("reset.png"));
-		reset.setLayoutX(BUTTONS_FRAME.getX());
-		reset.setLayoutY(BUTTONS_FRAME.getY() + BUTTONS_FRAME.getHeight()/2);
 		reset.setPrefSize(32,32);
+		reset.setLayoutX(HISTORY_FRAME.getMaxX() + 4);
+		reset.setLayoutY(HISTORY_FRAME.getY() + (HISTORY_FRAME.getHeight() - reset.getPrefHeight())/2);
 		reset.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressReset();
@@ -242,6 +249,7 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 
 	private void didPressExecute(){
+		_historyView.addNewCommand(_terminalView.getTextInput());
 		_handler.handleTextInput(_terminalView.getTextInput());
 		_terminalView.clear();
 
