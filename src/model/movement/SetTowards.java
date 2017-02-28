@@ -19,8 +19,8 @@ public class SetTowards extends TurtleCommand {
 	
 	public SetTowards(List<TreeNode> args, TurtleState st){
 		children = args;
-		y = children.get(0).getValue();
-		x = children.get(1).getValue();
+		y = children.get(1).getValue();
+		x = children.get(0).getValue();
 		myTurtleState = st;
 		degrees = Math.toDegrees(Math.atan2(y - myTurtleState.getY() , x - myTurtleState.getX()));
 	}

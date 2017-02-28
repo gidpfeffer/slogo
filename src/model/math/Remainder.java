@@ -17,6 +17,6 @@ public class Remainder extends LogicCommand {
 	}
 	
 	public double getValue(){
-		return children.get(1).getValue()%children.get(0).getValue();  // divide by 0.0 throw error
+		return children.get(0).getValue()%children.get(1).getValue();  // divide by 0.0 throw error
 	}
 }

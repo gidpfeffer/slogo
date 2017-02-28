@@ -7,18 +7,12 @@ import model.command.TurtleCommand;
 import model.turtle.TurtleState;
 
 public class Home extends TurtleCommand {
-	private double distance;
-
 
 	private TurtleState myTurtleState;
-	
-
-	
+		
 	public Home(List<TreeNode> args, TurtleState st){
 		children = args;
 		myTurtleState = st;
-		distance = Math.sqrt(Math.pow(myTurtleState.getX(), 2) + Math.pow(myTurtleState.getY(), 2));
-		
 	}
 	
 	public void execute(){
@@ -26,6 +20,6 @@ public class Home extends TurtleCommand {
 	}
 	
 	public double getValue(){
-		return distance;
+		return Math.sqrt(Math.pow(myTurtleState.getX() - 0, 2) + Math.pow(myTurtleState.getY() - 0 , 2));
 	}
 }
