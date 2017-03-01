@@ -92,6 +92,10 @@ public class UIMain implements UIMainAPI, Observer {
 		
 		_turtlesOnDisplay.add(t);
 	}
+	@Override
+	public void addNewOutput(String output){
+		_historyView.addNewCommand(output);
+	}
 	
 	private void setupTurtleMap(double numberOfTurtles){
 		_turtlesOnDisplay = new ArrayList<UITurtle>();

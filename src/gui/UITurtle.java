@@ -82,7 +82,7 @@ public class UITurtle extends Rectangle {
 
 	private void play(TurtleState s, Tuple<Double, Double> pos, Line line){
 		_priorTurtleAtt = _turtleAtt;
-		_turtleAtt = new UITurtleAttributes(pos.x, pos.y, (-s.getHeadAngle() + 90)%360);
+		_turtleAtt = new UITurtleAttributes(pos.x, pos.y, (-s.getHeadAngle() + 90));
 		
 		if (_turtleAtt.angle - _priorTurtleAtt.angle == 0){
 			double deltaX = _turtleAtt.x - _priorTurtleAtt.x;
@@ -96,7 +96,8 @@ public class UITurtle extends Rectangle {
 					); 
 			_animators.x.play();
 		}else{
-			double deltaAngle = (_turtleAtt.angle - _priorTurtleAtt.angle)%360;
+			
+			double deltaAngle = Math.min(_turtleAtt.angle - _priorTurtleAtt.angle, 360 + _priorTurtleAtt.angle - _turtleAtt.angle);
 			_animators.y.setByAngle(deltaAngle);
 			_animators.y.setDuration(Duration.millis(
 					Math.abs(deltaAngle))); //1 ms per degree
