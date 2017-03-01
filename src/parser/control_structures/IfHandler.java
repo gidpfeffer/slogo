@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import model.turtle.State;
 import parser.interpreter.BracketAid;
 import parser.tokenizer.TokenList;
 
@@ -14,8 +15,8 @@ public class IfHandler extends BracketAid{
 	private static final String IF_ELSE = "IfElse";
 	private int addLoc;
 	
-	public IfHandler(TokenList tokens){
-		super(tokens, INDICATOR);
+	public IfHandler(TokenList tokens, State state){
+		super(tokens, INDICATOR, state);
 		correctList();
 	}
 

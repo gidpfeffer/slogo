@@ -3,7 +3,7 @@ package parser.main;
 import java.util.Queue;
 
 import model.command.TreeNode;
-import model.turtle.TurtleState;
+import model.turtle.State;
 import parser.interpreter.Interpreter;
 import parser.queue_splitter.QueueSplitter;
 import parser.reflectiontest.TreeGenerator;
@@ -18,21 +18,21 @@ public class Parser {
 	private TokenList TL;
 	private Interpreter IT;
 	private TreeGenerator TG;
-	private TurtleState t;
+	private State state;
 	private VariableStorage vars;
 	private QueueSplitter QS;
 	
-	public Parser(TurtleState t){
-		this.t = t;
+	public Parser(State state){
+		this.state = state;
 		vars = new VariableStorage();
 	}
 	
 	private void initialize(){
 		TLG = new TokenListGenerator(str);
 		FixVars FV = new FixVars(vars, TLG.getList());
-		IT = new Interpreter(TLG.getList());
+		IT = new Interpreter(TLG.getList(), state);
 		TL = IT.getTokenList();
-		TG = new TreeGenerator(TL, t);
+		TG = new TreeGenerator(TL, state);
 		QS = new QueueSplitter(TG.getCommandQueue());
 	}
 	

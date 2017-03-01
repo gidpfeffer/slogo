@@ -9,7 +9,7 @@ import java.util.Stack;
 import model.ListEnd;
 import model.ListStart;
 import model.command.TreeNode;
-import model.turtle.TurtleState;
+import model.turtle.State;
 import parser.tokenizer.TokenList;
 
 public class TreeGenerator {
@@ -21,11 +21,11 @@ public class TreeGenerator {
 	private Queue<TreeNode> allQueue;
 	private static final String CONSTANT = "Constant";
 	private ClassGenerator CG;
-	private TurtleState turtle;
+	private State turtle;
 	private static final String PI = "Pi";
 	private AllQueueHelper AQH;
 	
-	public TreeGenerator(TokenList t, TurtleState turtle){
+	public TreeGenerator(TokenList t, State turtle){
 		list = new TokenList(new ArrayList<String>(t.getLiterals()), new ArrayList<String>(t.getLogo()));
 		CG = new ClassGenerator();
 		this.turtle = turtle;

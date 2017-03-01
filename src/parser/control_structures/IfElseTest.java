@@ -1,5 +1,6 @@
 package parser.control_structures;
 
+import model.turtle.TurtleState;
 import parser.interpreter.Interpreter;
 import parser.tokenizer.TokenList;
 import parser.tokenizer.TokenListGenerator;
@@ -10,7 +11,10 @@ public class IfElseTest {
 		
 		TokenListGenerator t = new TokenListGenerator(testCode);
 		TokenList TL = t.getList();
-		Interpreter IT = new Interpreter(TL);
+		
+		TurtleState TS = new TurtleState();
+		
+		Interpreter IT = new Interpreter(TL, TS);
 		
 		TokenList list = IT.getTokenList();
 		

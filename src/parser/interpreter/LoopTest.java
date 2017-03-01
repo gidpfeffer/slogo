@@ -10,14 +10,15 @@ import parser.tokenizer.TokenListGenerator;
 public class LoopTest {
 
 	public static void main(String args[]){
-		String testCode = "dotimes [ :x fd 3 ] [ fd 5 ] fd 5";
+		String testCode = "dotimes [ :x fd 3 ] [ fd :x ]";
 		
 		TokenListGenerator t = new TokenListGenerator(testCode);
 		TokenList TL = t.getList();
+		TurtleState TS = new TurtleState();
 		
-		DoTimes DT = new DoTimes(TL, new TurtleState());
+		DoTimes DT = new DoTimes(TL, TS);
 		
-		Interpreter IT = new Interpreter(TL);
+		Interpreter IT = new Interpreter(TL, TS);
 		
 		List<String> literals = IT.getTokenList().getLiterals();
 		List<String> logo = IT.getTokenList().getLogo();

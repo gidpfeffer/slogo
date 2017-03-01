@@ -7,7 +7,7 @@ import parser.main.Parser;
 public class TreeTester {
 	
 	public static void main(String args[]){
-		String testCode1 = "ifelse fd 50 [ rt 30 ] [ fd 3 ]";
+		String testCode1 = "dotimes [ :x 10 ] [ fd :x ]";
 		
 		Parser p = new Parser(new TurtleState());
 		p.parse(testCode1);
