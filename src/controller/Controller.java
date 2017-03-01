@@ -1,10 +1,13 @@
 package controller;
 
 import gui.UIMain;
+import gui.tableviews.UIVariablesView;
 import model.*;
 
 import model.turtle.Turtle;
 import parser.main.Parser;
+import parser.storage.*;
+import parser.storage.VariableStorage;
 
 public class Controller {
 
@@ -44,7 +47,16 @@ public class Controller {
 		myParser = new Parser(myTurtle.getReadOnlyState());
 		changeLanguage("English");
 		//myParser = new Parser(myTurtle.getReadOnlyState(), currentLang.toString());  // safe way to hand turtle state
+		configureVariableStorage(); 
 
+	}
+
+
+	private void configureVariableStorage() {
+		VariableStorage vars = myParser.getVars(); 
+		UIVariablesView variableBox = myViewController.getVariableView();
+		vars.addObserver(variableBox);
+		
 	}
 
 
