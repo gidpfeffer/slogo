@@ -94,7 +94,7 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 	@Override
 	public void addNewOutput(String output){
-		_historyView.addNewCommand(output);
+		_historyView.addNewCommand(" > "+output);
 	}
 	
 	private void setupTurtleMap(double numberOfTurtles){
