@@ -8,17 +8,17 @@ public class TokenListGenerator {
 	TokenList tokens;
 	String tokenizing;
 	
-	public TokenListGenerator(String toGenerate){
+	public TokenListGenerator(String toGenerate, String language){
 		tokenizing = new String(toGenerate);
 		tokens = new TokenList(new ArrayList<>(), new ArrayList<>());
-		setup();
+		setup(language);
 	}
 	
-	private void setup(){
+	private void setup(String language){
 		CommentRemover comment = new CommentRemover(tokenizing);
 		String withoutComments = comment.getString();
 		if(withoutComments.equals("")) return;
-		tokenizer = new Tokenizer(withoutComments);
+		tokenizer = new Tokenizer(withoutComments, language);
 		generate();
 	}
 	

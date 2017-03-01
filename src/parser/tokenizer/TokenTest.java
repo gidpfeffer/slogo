@@ -5,9 +5,10 @@ import java.util.List;
 public class TokenTest {
 
 	public static void main(String args[]){
-		String testCode = "make :x 10";
+		String language = "resources/languages/English";
+		String testCode = "doTimes [ :x fd 50 ] [ fd :x ]";
 		
-		TokenListGenerator t = new TokenListGenerator(testCode);
+		TokenListGenerator t = new TokenListGenerator(testCode, language);
 		
 		TokenList TL = t.getList();
 		
