@@ -4,12 +4,13 @@ import java.util.List;
 
 import model.command.TreeNode;
 import model.command.TurtleCommand;
-import model.turtle.TurtleState;
+import model.turtle.State;
+
 
 public class YCoordinate extends TurtleCommand {
-	private TurtleState myTurtleState;
+	private State myTurtleState;
 
-	public YCoordinate(List<TreeNode> args, TurtleState st){
+	public YCoordinate(List<TreeNode> args, State st){
 		children = args;
 		myTurtleState = st;
 	}

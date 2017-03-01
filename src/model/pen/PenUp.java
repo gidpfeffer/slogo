@@ -4,21 +4,22 @@ import java.util.List;
 
 import model.command.TreeNode;
 import model.command.TurtleCommand;
+import model.turtle.State;
 import model.turtle.TurtleState;
 
 public class PenUp extends TurtleCommand{
 	
 
-		private TurtleState myTurtleState;
+		private State myTurtleState;
 
-		public PenUp(List<TreeNode> args, TurtleState st){
+		public PenUp(List<TreeNode> args, State st){
 			children = args;
 			myTurtleState = st;
 		}
 		
 		public void execute(){
-			 
-			myTurtleState.setPen(false);;
+			TurtleState st = (TurtleState) myTurtleState;
+			st.setPen(false);;
 		}
 		
 		public double getValue(){

@@ -3,10 +3,11 @@ package model.math;
 import java.util.List;
 
 import controller.SLogoException;
+import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
-public class NaturalLog extends LogicCommand {
+public class NaturalLog extends LogicCommand implements Command{
 	
 
 	

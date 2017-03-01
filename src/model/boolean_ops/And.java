@@ -2,10 +2,11 @@ package model.boolean_ops;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
-public class And extends LogicCommand {
+public class And extends LogicCommand implements Command{
 	public And(List<TreeNode> args){
 		children = args;
 		
