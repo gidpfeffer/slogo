@@ -5,13 +5,14 @@ import java.util.List;
 import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
+import model.turtle.State;
 import model.turtle.TurtleState;
 
 public class Home extends TurtleCommand implements Command {
 
-	private TurtleState myTurtleState;
+	private State myTurtleState;
 		
-	public Home(List<TreeNode> args, TurtleState st){
+	public Home(List<TreeNode> args, State st){
 		children = args;
 		myTurtleState = st;
 	}
