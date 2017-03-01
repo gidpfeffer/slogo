@@ -1,8 +1,10 @@
 package parser.storage;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Set;
 
 public class VariableStorage extends Observable{
 	
@@ -26,5 +28,9 @@ public class VariableStorage extends Observable{
 		map.clear();
 		setChanged();
 		notifyObservers();
+	}
+	
+	public Set<String> keySet(){
+		return new HashSet<>(map.keySet());
 	}
 }

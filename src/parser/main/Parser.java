@@ -30,7 +30,7 @@ public class Parser {
 	}
 	
 	private void handleLogic(){
-		IT = new Interpreter(TLG.getList(), state);
+		IT = new Interpreter(TL, state, vars.keySet());
 		TL = IT.getTokenList();
 		TG = new TreeGenerator(TL, state);
 		QS = new QueueSplitter(TG.getCommandQueue());
@@ -42,6 +42,7 @@ public class Parser {
 	
 	private void generateTokens(){
 		TLG = new TokenListGenerator(str, language);
+		TL = TLG.getList();
 	}
 	
 	public TokenList getTokenList(){
@@ -59,7 +60,7 @@ public class Parser {
 	public void parse(String toParse){	
 		str = toParse;
 		generateTokens();
-		handleLogic();
 		handleVars();
+		handleLogic();
 	}
 }

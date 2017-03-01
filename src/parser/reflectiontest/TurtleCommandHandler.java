@@ -3,6 +3,8 @@ package parser.reflectiontest;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
+import controller.SLogoException;
+
 public class TurtleCommandHandler {
 	private ResourceBundle bundle;
 	private static final String TURTLE_COMMANDS = "resources/languages/TurtleCommands";
@@ -24,7 +26,7 @@ public class TurtleCommandHandler {
 				return bundle.getString(key).equals(YES);
 			}
 		}
-		throw new IllegalStateException("invalid read");
+		throw new SLogoException("invalid read");
 	}
 
 
