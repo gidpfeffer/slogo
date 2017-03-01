@@ -21,6 +21,11 @@ public class TokenList {
 	}
 	
 	public TokenList newSubList(int start, int end){
+		return new TokenList(new ArrayList<>(literals.subList(start, end)),
+				new ArrayList<>(logo.subList(start, end)));
+	}
+	
+	public TokenList oldSubList(int start, int end){
 		return new TokenList(literals.subList(start, end), logo.subList(start, end));
 	}
 	

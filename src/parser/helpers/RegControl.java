@@ -1,6 +1,6 @@
-package parser.control_structures;
+package parser.helpers;
 
-import model.turtle.TurtleState;
+import model.turtle.State;
 import parser.interpreter.BracketAid;
 import parser.reflectiontest.TreeGenerator;
 import parser.tokenizer.TokenList;
@@ -9,7 +9,7 @@ public abstract class RegControl extends BracketAid{
 	protected static final String CONSTANT = "Constant";
 	protected int ifStart, ifEnd, elseStart, elseEnd;
 	
-	public RegControl(TokenList list, String indicator, TurtleState t){
+	public RegControl(TokenList list, String indicator, State t){
 		super(list, indicator, t);
 	}
 	

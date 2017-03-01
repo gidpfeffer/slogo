@@ -51,7 +51,7 @@ public class Controller {
 		myViewController = new UIMain(handler);
 		myTurtle.getState().addObserver(myViewController);
 		language = languageLocation + handler.getLanguage();
-		myParser = new Parser(myTurtle.getState());
+		myParser = new Parser(myTurtle.getReadOnlyState());  // safe way to hand turtle state
 		//myParser = new Parser(myTurtle.getState(), language);
 	}
 
@@ -66,7 +66,7 @@ public class Controller {
 			//commandsQueue = myParser.getTreeQueue();
 			myModel.update(myParser.getTreeQueue());
 			output = myModel.getStringOutput();
-			System.out.println("String to print" + output);
+			System.out.println("String to print " + output);
 			
 		}
 		catch (Exception e){

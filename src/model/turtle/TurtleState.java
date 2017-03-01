@@ -1,7 +1,7 @@
 package model.turtle;
 import java.util.Observable; 
 
-public class TurtleState extends Observable{
+public class TurtleState extends Observable implements State {
 	private double myX; 
 	private double myY; 
 	private double myAngle; 

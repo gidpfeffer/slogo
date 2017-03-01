@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.turtle.Turtle;
-import model.turtle.TurtleState;
+import model.turtle.State;
 import parser.tokenizer.TokenList;
 
 public abstract class BracketHandler {
@@ -13,9 +13,9 @@ public abstract class BracketHandler {
 	protected String indicator;
 	protected static final String LEFT_BRACKET 	= "[";
 	protected static final String RIGHT_BRACKET = "]";
-	protected TurtleState turtle;
+	protected State turtle;
 	
-	public BracketHandler(TokenList list, String indicator, TurtleState t){
+	public BracketHandler(TokenList list, String indicator, State t){
 		this.indicator = indicator;
 		this.list = list;
 		this.turtle = t;
