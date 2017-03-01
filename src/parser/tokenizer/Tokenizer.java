@@ -8,14 +8,15 @@ import java.util.regex.Pattern;
 
 
 public class Tokenizer {
-	private static final String[] SYNTAX = {"resources/languages/English", "resources/languages/Syntax"};
+	private static final String[] SYNTAX = {"", "resources/languages/Syntax"};
 
 	private List<TokenPatterns> patterns;
 	private String toTokenize;
 	private String[] tokenArray;
 	private int index;
 
-	public Tokenizer(String s) {
+	public Tokenizer(String s, String language) {
+		SYNTAX[0] = language;
 		toTokenize = s;
 		fillPatterns();
 		breakUp();

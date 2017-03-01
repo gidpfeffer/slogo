@@ -3,6 +3,7 @@ package parser.interpreter;
 import java.util.ArrayList;
 
 import model.turtle.State;
+import parser.control_structures.DoTimes;
 import parser.control_structures.IfElseHandler;
 import parser.control_structures.IfHandler;
 import parser.tokenizer.TokenList;
@@ -31,6 +32,7 @@ public class Interpreter {
 		BracketHandler le = new LoopEdit(tokens, turtle);
 		BracketHandler i = new IfHandler(tokens, turtle);
 		BracketHandler ie = new IfElseHandler(tokens, turtle);
+		BracketHandler bh = new DoTimes(tokens, turtle);
 	}
 	
 	public TokenList getTokenList(){

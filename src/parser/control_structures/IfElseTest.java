@@ -7,9 +7,10 @@ import parser.tokenizer.TokenListGenerator;
 
 public class IfElseTest {
 	public static void main(String args[]){
+		String language = "resources/languages/English";
 		String testCode = "if fd 10 [ ifelse 50 [ fd 50 ] [ rt 3 ] ]";
 		
-		TokenListGenerator t = new TokenListGenerator(testCode);
+		TokenListGenerator t = new TokenListGenerator(testCode, language);
 		TokenList TL = t.getList();
 		
 		TurtleState TS = new TurtleState();
