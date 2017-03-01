@@ -8,7 +8,7 @@ public class TreeTester {
 	
 	public static void main(String args[]){
 		String language = "resources/languages/English";
-		String testCode1 = "set :x 20 repeat :x [ fd :x repeat :x [ fd 50 rt 80 fd 20 lt 160 ] rt 90 fd 10 ] ";
+		String testCode1 = "dotimes [ :x 10 ] [ fd :x ]";
 		
 		Parser p = new Parser(new TurtleState(), language);
 		p.parse(testCode1);
@@ -17,10 +17,14 @@ public class TreeTester {
 			System.out.print(node.getValue() + "\n");
 		}
 		
-		System.out.println("\n++++++++++++++++++++++++++++++++");
+		System.out.println("\n++++++++++++++++++++++++++++++++\n");
 		
-		String testCode2 = "";
+		String testCode2 = "fd :x";
 		
 		p.parse(testCode2);
+		
+		for(TreeNode node : p.getTreeQueue()){
+			System.out.print(node.getValue() + "\n");
+		}
 	}
 }

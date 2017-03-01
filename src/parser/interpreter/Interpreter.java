@@ -5,7 +5,8 @@ import java.util.Set;
 
 import controller.SLogoException;
 import model.turtle.State;
-import parser.control_structures.DoTimes;
+import parser.control_structures.DoTimesHandler;
+import parser.control_structures.ForHandler;
 import parser.control_structures.IfElseHandler;
 import parser.control_structures.IfHandler;
 import parser.tokenizer.TokenList;
@@ -20,7 +21,6 @@ public class Interpreter {
 		turtle = t;
 		this.varKeys = varKeys;
 		checkValidity();
-		interpret();
 	}
 	
 	private void checkValidity(){
@@ -28,15 +28,16 @@ public class Interpreter {
 		throw new SLogoException("Invalid Token List");
 	}
 	
-	private void interpret(){
-		handleLoops();
+	
+	public void handleVarLoops(){
+		BracketHandler dt = new DoTimesHandler(tokens, turtle, varKeys);
+		BracketHandler f = new ForHandler(tokens, turtle, varKeys);
 	}
 	
-	private void handleLoops(){
+	public void handleRegLoops(){
 		BracketHandler le = new LoopEdit(tokens, turtle);
 		BracketHandler i = new IfHandler(tokens, turtle);
 		BracketHandler ie = new IfElseHandler(tokens, turtle);
-		BracketHandler bh = new DoTimes(tokens, turtle, varKeys);
 	}
 	
 	public TokenList getTokenList(){
