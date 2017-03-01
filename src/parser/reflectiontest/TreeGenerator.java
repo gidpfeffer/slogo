@@ -105,7 +105,6 @@ public class TreeGenerator {
 		return AQH.getQueue();
 	}
 	
-	
 	public double getLast(){
 		Queue<TreeNode> q = new LinkedList<>(commandQueue);
 		while(!q.isEmpty()){
