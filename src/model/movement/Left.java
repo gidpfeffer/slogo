@@ -2,11 +2,12 @@ package model.movement;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
 import model.turtle.TurtleState;
 
-public class Left extends TurtleCommand {
+public class Left extends TurtleCommand implements Command {
 	
 	private double degrees;
 	private TurtleState myTurtleState;
@@ -19,8 +20,8 @@ public class Left extends TurtleCommand {
 	}
 	
 	public void execute(){
-		
-		myTurtleState.setHeadAngle((myTurtleState.getHeadAngle()+degrees) % 360);
+		TurtleState st = (TurtleState) myTurtleState;
+		st.setHeadAngle((st.getHeadAngle()+degrees) % 360);
 		 
 	}
 	

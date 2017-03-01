@@ -2,11 +2,13 @@ package model.movement;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
+
 import model.turtle.TurtleState;
 
-public class ClearScreen extends TurtleCommand {
+public class ClearScreen extends TurtleCommand implements Command {
 	private TurtleState myTurtleState;
 	
 	public ClearScreen(List<TreeNode> args, TurtleState st){
@@ -16,7 +18,8 @@ public class ClearScreen extends TurtleCommand {
 	}
 	
 	public void execute(){
-		myTurtleState.setPosition(0,0);
+		TurtleState st = (TurtleState) myTurtleState;
+		st.setPosition(0,0);
 	}
 	
 	public double getValue(){
