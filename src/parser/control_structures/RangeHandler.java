@@ -3,7 +3,7 @@ package parser.control_structures;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.turtle.TurtleState;
+import model.turtle.State;
 import parser.reflectiontest.TreeGenerator;
 import parser.tokenizer.TokenList;
 
@@ -15,12 +15,12 @@ public class RangeHandler {
 		list = new ArrayList<>();
 	}
 	
-	public void handle(TurtleState t, TokenList TL){
+	public void handle(State t, TokenList TL){
 		double end = getEnd(t, TL);
 		makeList(end);	
 	}
 	
-	private double getEnd(TurtleState t, TokenList TL){
+	private double getEnd(State t, TokenList TL){
 		TreeGenerator TG = new TreeGenerator(TL, t);
 		if(TG.getAllQueue().size() == 0) 
 			throw new IllegalStateException("invalid if/else syntax");

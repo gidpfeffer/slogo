@@ -1,4 +1,4 @@
-package parser.interpreter;
+package parser.helpers;
 
 import java.util.ArrayList;
 import java.util.List;

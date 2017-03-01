@@ -1,9 +1,8 @@
 package parser.interpreter;
 
 import java.util.List;
-import java.util.Queue;
 
-import model.command.TreeNode;
+import model.turtle.State;
 import parser.reflectiontest.TreeGenerator;
 import parser.tokenizer.TokenList;
 
@@ -12,8 +11,8 @@ public class LoopEdit extends BracketAid{
 	private static final String REPEAT = "Repeat";
 	private int startIndex, endIndex, times;
 	
-	public LoopEdit(TokenList list){
-		super(list, REPEAT);
+	public LoopEdit(TokenList list, State state){
+		super(list, REPEAT, state);
 		correctList();
 	}
 	

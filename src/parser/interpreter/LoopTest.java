@@ -14,10 +14,11 @@ public class LoopTest {
 		
 		TokenListGenerator t = new TokenListGenerator(testCode);
 		TokenList TL = t.getList();
+		TurtleState TS = new TurtleState();
 		
-		DoTimes DT = new DoTimes(TL, new TurtleState());
+		DoTimes DT = new DoTimes(TL, TS);
 		
-		Interpreter IT = new Interpreter(TL);
+		Interpreter IT = new Interpreter(TL, TS);
 		
 		List<String> literals = IT.getTokenList().getLiterals();
 		List<String> logo = IT.getTokenList().getLogo();

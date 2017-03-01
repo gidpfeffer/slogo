@@ -4,8 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 import model.command.TreeNode;
-import model.command.TurtleCommand;
-import model.turtle.TurtleState;
+import model.turtle.State;
 
 public class ClassGenerator {
 	private TreeNode generated;
@@ -17,7 +16,7 @@ public class ClassGenerator {
 		TCH = new TurtleCommandHandler();
 	}
 		
-	public void generate(String className, List<TreeNode> list, TurtleState t) {
+	public void generate(String className, List<TreeNode> list, State t) {
 			Class<?> clazz = getClass(className);
 			makeAdvancedClass(clazz, list, t, TCH.isTurtleCommand(className));
 	}
@@ -34,15 +33,15 @@ public class ClassGenerator {
 		throw new IllegalStateException("invalid class name");
 	}
 	
-	public void generate(String className, Double num, TurtleState t) {
+	public void generate(String className, Double num, State t) {
 		Class<?> clazz = getClass(className);
 		makeAdvancedClass(clazz, num, t, TCH.isTurtleCommand(className));
 	}
 
-	private void makeAdvancedClass(Class<?> clazz, List<TreeNode>list, TurtleState t, boolean isT) {
+	private void makeAdvancedClass(Class<?> clazz, List<TreeNode>list, State t, boolean isT) {
 		try {
 			if(isT){
-				Constructor<?> ctor = clazz.getDeclaredConstructor(List.class, TurtleState.class);
+				Constructor<?> ctor = clazz.getDeclaredConstructor(List.class, State.class);
 				Object o = ctor.newInstance(list, t);
 				generated = (TreeNode) clazz.cast(o);
 			}
@@ -56,10 +55,10 @@ public class ClassGenerator {
 		}
 	}
 	
-	private void makeAdvancedClass(Class<?> clazz, Double num, TurtleState t, boolean isT) {
+	private void makeAdvancedClass(Class<?> clazz, Double num, State t, boolean isT) {
 		try{
 			if(isT){
-				Constructor<?> ctor = clazz.getDeclaredConstructor(double.class, TurtleState.class);
+				Constructor<?> ctor = clazz.getDeclaredConstructor(double.class, State.class);
 				Object o = ctor.newInstance(num, t);
 				generated = (TreeNode) clazz.cast(o);
 			}

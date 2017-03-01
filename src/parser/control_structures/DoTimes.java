@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import model.turtle.TurtleState;
+import model.turtle.State;
+import parser.helpers.RegControl;
+import parser.helpers.Replacer;
 import parser.tokenizer.TokenList;
 
 public class DoTimes extends RegControl{
@@ -15,7 +17,7 @@ public class DoTimes extends RegControl{
 	private RangeHandler range;
 	private Replacer replacer;
 
-	public DoTimes(TokenList TL, TurtleState t){
+	public DoTimes(TokenList TL, State t){
 		super(TL, INDICATOR, t);
 		range = new RangeHandler();
 		replacer = new Replacer();

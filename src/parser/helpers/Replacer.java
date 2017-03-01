@@ -1,4 +1,4 @@
-package parser.control_structures;
+package parser.helpers;
 
 import parser.tokenizer.TokenList;
 
