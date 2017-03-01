@@ -67,6 +67,7 @@ public class UIMain implements UIMainAPI, Observer {
 	
 	@Override
 	public void displayErrorWithMessage(String error){
+		_historyView.addNewCommand("ERROR: " + error);
 		Alert alert = new Alert(AlertType.CONFIRMATION, error, ButtonType.CLOSE);
 		alert.showAndWait();
 	}

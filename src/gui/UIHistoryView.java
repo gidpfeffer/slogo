@@ -24,7 +24,7 @@ public class UIHistoryView extends Pane implements CommandHistoryAPI {
 	@Override
 	public void addNewCommand(String s) {
 		_textArea.setText(_textArea.getText() + s + "\n");
-		
+		_textArea.setScrollTop(1000000);
 	}
 	public void clear(){
 		_textArea.clear();
@@ -38,6 +38,7 @@ public class UIHistoryView extends Pane implements CommandHistoryAPI {
 		_textArea.setBackground(Background.EMPTY);
 		_textArea.setEditable(false);
 		_textArea.setBlendMode(BlendMode.DARKEN);
+		_textArea.setScrollTop(_bounds.getHeight());
 		this.getChildren().add(_textArea);
 	}
 
