@@ -3,6 +3,7 @@ package parser.interpreter;
 import java.util.List;
 import java.util.Stack;
 
+import controller.SLogoException;
 import model.turtle.State;
 import parser.helpers.ListMultiplier;
 import parser.tokenizer.TokenList;
@@ -43,7 +44,7 @@ public abstract class BracketAid extends BracketHandler{
 				}
 			}
 		}
-		throw new IllegalStateException("Invalid Bracket Syntax");
+		throw new SLogoException("Invalid Bracket Syntax");
 	}
 	
 	protected int findStartBracket(int start){
@@ -52,7 +53,7 @@ public abstract class BracketAid extends BracketHandler{
 				return i;
 			}
 		}
-		throw new IllegalStateException("Invalid Bracket Syntax");
+		throw new SLogoException("Invalid Bracket Syntax");
 	}
 	
 	protected void handle(){

@@ -3,7 +3,7 @@ package parser.interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.turtle.Turtle;
+import controller.SLogoException;
 import model.turtle.State;
 import parser.tokenizer.TokenList;
 
@@ -27,7 +27,7 @@ public abstract class BracketHandler {
 	private void checkSyntax(){
 		if(getLiteralLocations(LEFT_BRACKET).size() !=
 				getLiteralLocations(RIGHT_BRACKET).size()){
-			throw new IllegalStateException("Invalid Syntax, uneven number of brackets");
+			throw new SLogoException("Invalid Syntax, uneven number of brackets");
 		}
 	}
 	

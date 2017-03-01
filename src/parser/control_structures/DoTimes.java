@@ -1,10 +1,10 @@
 package parser.control_structures;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import controller.SLogoException;
 import model.turtle.State;
 import parser.helpers.RegControl;
 import parser.helpers.Replacer;
@@ -48,7 +48,7 @@ public class DoTimes extends RegControl{
 	private void setKey(){
 		int place = ifStart + 1;
 		if(!logo.get(place).equals(VARIABLE)){
-			throw new IllegalStateException("invalid syntax");
+			throw new SLogoException("invalid syntax");
 		}
 		key = literals.get(ifStart + 1);
 	}

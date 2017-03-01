@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+import controller.SLogoException;
 import model.ListEnd;
 import model.ListStart;
 import model.command.TreeNode;
@@ -89,7 +90,7 @@ public class TreeGenerator {
 		List<TreeNode> list = new ArrayList<>();
 		for(int i = 0; i < numArgs; i++){
 			if(parsed.isEmpty()){
-				throw new IllegalStateException("Empty treeNode Stack in the Tree Generator");
+				throw new SLogoException("Empty treeNode Stack in the Tree Generator");
 			}
 			list.add(parsed.pop());
 		}
@@ -113,6 +114,6 @@ public class TreeGenerator {
 				return val;
 			}
 		}
-		throw new IllegalStateException("empty queue");
+		throw new SLogoException("empty queue");
 	}
 }

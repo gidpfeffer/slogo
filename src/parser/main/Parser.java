@@ -59,7 +59,7 @@ public class Parser {
 	public void parse(String toParse){	
 		str = toParse;
 		generateTokens();
-		handleLogic();
 		handleVars();
+		handleLogic();
 	}
 }

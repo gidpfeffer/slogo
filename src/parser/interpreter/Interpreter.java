@@ -2,6 +2,7 @@ package parser.interpreter;
 
 import java.util.ArrayList;
 
+import controller.SLogoException;
 import model.turtle.State;
 import parser.control_structures.DoTimes;
 import parser.control_structures.IfElseHandler;
@@ -21,7 +22,7 @@ public class Interpreter {
 	
 	private void checkValidity(){
 		if(tokens.getLiterals().size() == tokens.getLogo().size()) return;
-		throw new IllegalStateException("Invalid Token List");
+		throw new SLogoException("Invalid Token List");
 	}
 	
 	private void interpret(){
