@@ -5,7 +5,7 @@ import java.util.List;
 import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
-
+import model.turtle.State;
 import model.turtle.TurtleState;
 
 public class SetPosition extends TurtleCommand implements Command{
@@ -13,11 +13,11 @@ public class SetPosition extends TurtleCommand implements Command{
 	private double x;
 	private double y; 
 
-	private TurtleState myTurtleState;
+	private State myTurtleState;
 	
 
 	
-	public SetPosition(List<TreeNode> args, TurtleState st){
+	public SetPosition(List<TreeNode> args, State st){
 		children = args;
 		x = children.get(0).getValue();
 		y = children.get(1).getValue();
