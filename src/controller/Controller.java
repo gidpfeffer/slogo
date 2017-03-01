@@ -66,6 +66,7 @@ public class Controller {
 			//commandsQueue = myParser.getTreeQueue();
 			myModel.update(myParser.getTreeQueue());
 			output = myModel.getStringOutput();
+			myViewController.addNewOutput(output);
 			System.out.println("String to print " + output);
 			
 		}
