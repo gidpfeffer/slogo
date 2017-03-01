@@ -2,10 +2,11 @@ package model.math;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
-public class Cosine extends LogicCommand {
+public class Cosine extends LogicCommand implements Command {
 	private double degrees;
 
 	

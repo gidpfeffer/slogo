@@ -4,19 +4,20 @@ import java.util.List;
 
 import model.command.TreeNode;
 import model.command.TurtleCommand;
+import model.turtle.State;
 import model.turtle.TurtleState;
 
 public class ShowTurtle extends TurtleCommand {
-	private TurtleState myTurtleState;
+	private State myTurtleState;
 
-	public ShowTurtle(List<TreeNode> args, TurtleState st){
+	public ShowTurtle(List<TreeNode> args, State st){
 		children = args;
 		myTurtleState = st;
 	}
 	
 	public void execute(){
-		 
-		myTurtleState.setVisibility(true);
+		TurtleState st = (TurtleState) myTurtleState;
+		st.setVisibility(true);
 	}
 	
 	public double getValue(){

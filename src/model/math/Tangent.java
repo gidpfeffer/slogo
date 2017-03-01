@@ -2,10 +2,11 @@ package model.math;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
-public class Tangent extends LogicCommand {
+public class Tangent extends LogicCommand implements Command{
 	private double degrees;
 
 	

@@ -2,22 +2,24 @@ package model.pen;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
+import model.turtle.State;
 import model.turtle.TurtleState;
 
-public class PenDown extends TurtleCommand{
+public class PenDown extends TurtleCommand implements Command{
 
-	private TurtleState myTurtleState;
+	private State myTurtleState;
 
-	public PenDown(List<TreeNode> args, TurtleState st){
+	public PenDown(List<TreeNode> args, State st){
 		children = args;
 		myTurtleState = st;
 	}
 	
 	public void execute(){
-		 
-		myTurtleState.setPen(true);
+		TurtleState st = (TurtleState) myTurtleState;
+		st.setPen(true);
 	}
 	
 	public double getValue(){

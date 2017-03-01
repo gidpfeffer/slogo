@@ -2,10 +2,11 @@ package model.math;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
-public class Pi extends LogicCommand {
+public class Pi extends LogicCommand implements Command{
 	public Pi(List<TreeNode> args){
 		children = args;
 	}
