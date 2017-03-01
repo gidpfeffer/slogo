@@ -2,11 +2,12 @@ package model.math;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
 
-public class Random extends LogicCommand {
+public class Random extends LogicCommand implements Command {
 
 
 
