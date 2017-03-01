@@ -9,10 +9,10 @@ import parser.tokenizer.TokenList;
 
 public class RangeHandler {
 	private TokenList TL;
-	private List<Integer> list;
+	protected List<Integer> list;
 	
 	public RangeHandler(){
-		list = new ArrayList();
+		list = new ArrayList<>();
 	}
 	
 	public void handle(TurtleState t, TokenList TL){

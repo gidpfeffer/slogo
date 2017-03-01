@@ -16,5 +16,4 @@ public class Main extends Application{
 		s.setTitle("SLOGO");
 		s.show();
 	}
-
 }

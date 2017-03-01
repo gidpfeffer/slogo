@@ -10,7 +10,7 @@ import parser.tokenizer.TokenListGenerator;
 public class LoopTest {
 
 	public static void main(String args[]){
-		String testCode = "dotimes [ :x fd 3 ] [ fd 5 ] fd 5";
+		String testCode = "dotimes [ :x fd 3 ] [ fd :x ]";
 		
 		TokenListGenerator t = new TokenListGenerator(testCode);
 		TokenList TL = t.getList();

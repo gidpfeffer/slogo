@@ -30,8 +30,7 @@ public abstract class BracketAid extends BracketHandler{
 	}
 	
 	protected List<String> getSubList(List<String> list, int start, int end){
-		return listMultiplier.multiplyList(
-				list.subList(start, end), 1);
+		return listMultiplier.multiplyList(list.subList(start, end), 1);
 	}
 	
 	protected int findEndBracket(int startIndex){
