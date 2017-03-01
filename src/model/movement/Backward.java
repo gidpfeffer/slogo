@@ -2,11 +2,12 @@ package model.movement;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
 import model.turtle.TurtleState;
 
-public class Backward extends TurtleCommand {
+public class Backward extends TurtleCommand implements Command{
 	private double pixels;
 	private TurtleState myTurtleState;
 
@@ -18,10 +19,10 @@ public class Backward extends TurtleCommand {
 	}
 	
 	public void execute(){
-	
-		double newX = myTurtleState.getX()-Math.cos(Math.toRadians(myTurtleState.getHeadAngle()))*pixels;
-		double newY = myTurtleState.getY()-Math.sin(Math.toRadians(myTurtleState.getHeadAngle()))*pixels;
-		myTurtleState.setPosition(newX, newY);
+		TurtleState st = (TurtleState) myTurtleState;
+		double newX = st.getX()-Math.cos(Math.toRadians(st.getHeadAngle()))*pixels;
+		double newY = st.getY()-Math.sin(Math.toRadians(st.getHeadAngle()))*pixels;
+		st.setPosition(newX, newY);
 	}
 	
 	public double getValue(){

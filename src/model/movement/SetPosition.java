@@ -2,12 +2,13 @@ package model.movement;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
-import model.turtle.Turtle;
+
 import model.turtle.TurtleState;
 
-public class SetPosition extends TurtleCommand {
+public class SetPosition extends TurtleCommand implements Command{
 	
 	private double x;
 	private double y; 
@@ -25,7 +26,8 @@ public class SetPosition extends TurtleCommand {
 	}
 	
 	public void execute(){
-		myTurtleState.setPosition(x, y);
+		TurtleState st = (TurtleState) myTurtleState;
+		st.setPosition(x, y);
 	}
 	
 	public double getValue(){

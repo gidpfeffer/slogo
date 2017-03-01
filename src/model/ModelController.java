@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import controller.Controller.myHandler;
+import model.command.Command;
 import model.command.TreeNode;
 import model.movement.ClearScreen;
 import model.turtle.Turtle;
@@ -50,7 +51,7 @@ public class ModelController {
 			}
 
 			output = ((Double) command.getValue()).toString();
-			command.execute();
+			((Command) command).execute();
 		}
 	}
 
