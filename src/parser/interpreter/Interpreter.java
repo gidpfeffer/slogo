@@ -1,6 +1,7 @@
 package parser.interpreter;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import controller.SLogoException;
 import model.turtle.State;
@@ -12,10 +13,12 @@ import parser.tokenizer.TokenList;
 public class Interpreter {
 	private TokenList tokens;
 	private State turtle;
+	private Set<String> varKeys;
 
-	public Interpreter(TokenList TL, State t) {
+	public Interpreter(TokenList TL, State t, Set<String> varKeys) {
 		tokens = new TokenList(new ArrayList<String>(TL.getLiterals()), new ArrayList<String>(TL.getLogo()));
 		turtle = t;
+		this.varKeys = varKeys;
 		checkValidity();
 		interpret();
 	}
@@ -33,7 +36,7 @@ public class Interpreter {
 		BracketHandler le = new LoopEdit(tokens, turtle);
 		BracketHandler i = new IfHandler(tokens, turtle);
 		BracketHandler ie = new IfElseHandler(tokens, turtle);
-		BracketHandler bh = new DoTimes(tokens, turtle);
+		BracketHandler bh = new DoTimes(tokens, turtle, varKeys);
 	}
 	
 	public TokenList getTokenList(){
