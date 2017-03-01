@@ -10,12 +10,6 @@ public class Controller {
 
 
 	public class myHandler implements ControlHandler{
-	
-		String lang; 
-		private final String languageExtension = ".properties";
-		public myHandler(){
-			lang = "English";
-		}
 		@Override
 		public void handleTextInput(String input){
 			processInput(input);
@@ -24,14 +18,12 @@ public class Controller {
 		public void handleReset(){
 			reset();
 		}
-		
+
 		public void setLanguage(String language){
-			lang = language; 
+
+			changeLanguage(language);
 		}
-		
-		public String getLanguage(){
-			return lang + languageExtension; 
-		}
+
 	}
 
 
@@ -40,44 +32,45 @@ public class Controller {
 	private Parser myParser;
 	private UIMain myViewController;
 	private String output; 
-	private myHandler handler; 
-	private String language; 
 	private final String languageLocation = "resources.languages/";
+	private StringBuilder currentLang; 
 
 	public Controller(){
 		myModel = new ModelController(new myHandler()); 
 		myTurtle = myModel.getTurtle();
-		handler = new myHandler(); 
+		myHandler handler = new myHandler(); 
 		myViewController = new UIMain(handler);
 		myTurtle.getState().addObserver(myViewController);
-		language = languageLocation + handler.getLanguage();
-		myParser = new Parser(myTurtle.getReadOnlyState());  // safe way to hand turtle state
-		//myParser = new Parser(myTurtle.getState(), language);
+		myParser = new Parser(myTurtle.getReadOnlyState());
+		changeLanguage("English");
+		//myParser = new Parser(myTurtle.getReadOnlyState(), currentLang.toString());  // safe way to hand turtle state
+
 	}
 
-	
+
+	public void changeLanguage(String language) {
+		currentLang = new StringBuilder(); 
+		currentLang.append(languageLocation);
+		currentLang.append(language);
+	}
+
 
 	public void processInput(String input){
-		
-		
-		//Queue<TreeNode> commandsQueue = new LinkedList();
 		try{
 			myParser.parse(input);
-			//commandsQueue = myParser.getTreeQueue();
 			myModel.update(myParser.getTreeQueue());
 			output = myModel.getStringOutput();
 			myViewController.addNewOutput(output);
 			System.out.println("String to print " + output);
-			
+
 		}
-		catch (Exception e){
+		catch (Exception e){ // change this 
 			myViewController.displayErrorWithMessage(e.getMessage());
-			//commandsQueue.clear();
 		}
 
-//		myParser.parse(input);
-//		myModel.update(myParser.getTreeQueue());
-//		output = myModel.getStringOutput();
+		//		myParser.parse(input);
+		//		myModel.update(myParser.getTreeQueue());
+		//		output = myModel.getStringOutput();
 	}
 
 	public String getStringOutput(){
