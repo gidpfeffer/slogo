@@ -21,19 +21,27 @@ public class Parser {
 	private State state;
 	private VariableStorage vars;
 	private QueueSplitter QS;
+	private String language;
 	
-	public Parser(State state){
+	public Parser(State state, String language){
 		this.state = state;
+		this.language = language;
 		vars = new VariableStorage();
 	}
 	
-	private void initialize(){
-		TLG = new TokenListGenerator(str);
-		FixVars FV = new FixVars(vars, TLG.getList());
+	private void handleLogic(){
 		IT = new Interpreter(TLG.getList(), state);
 		TL = IT.getTokenList();
 		TG = new TreeGenerator(TL, state);
 		QS = new QueueSplitter(TG.getCommandQueue());
+	}
+	
+	private void handleVars(){
+		FixVars FV = new FixVars(vars, TLG.getList());
+	}
+	
+	private void generateTokens(){
+		TLG = new TokenListGenerator(str, language);
 	}
 	
 	public TokenList getTokenList(){
@@ -48,8 +56,10 @@ public class Parser {
 		return vars;
 	}
 
-	public void parse(String toParse){		
+	public void parse(String toParse){	
 		str = toParse;
-		initialize();
+		generateTokens();
+		handleLogic();
+		handleVars();
 	}
 }
