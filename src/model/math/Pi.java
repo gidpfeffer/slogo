@@ -7,8 +7,10 @@ import model.command.LogicCommand;
 import model.command.TreeNode;
 
 public class Pi extends LogicCommand implements Command{
+
 	public Pi(List<TreeNode> args){
 		children = args;
+		
 	}
 	
 	public void execute(){
@@ -16,7 +18,7 @@ public class Pi extends LogicCommand implements Command{
 	}
 	
 	public double getValue(){
-		return Math.PI; 
+		return Math.PI;
 		
 	}
 }
