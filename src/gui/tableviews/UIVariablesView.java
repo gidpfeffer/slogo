@@ -102,7 +102,7 @@ public class UIVariablesView extends Pane implements Observer {
 		VariableStorage map = (VariableStorage) o;
 		clear();
 		for(Entry<String, Double> e: map.getMap().entrySet()){
-			addLabel(e.getKey() + "\t:\t" + e.getValue());
+			addLabel(e.getKey().replaceFirst(":", "") + "\t:\t" + e.getValue());
 		}
 		System.out.println("updated variables view!");
 	}

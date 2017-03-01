@@ -33,9 +33,19 @@ public class UIVocabTable extends Pane implements Observer {
 		this.getChildren().add(title);
 	}
 	
+	private void addNewFunction(String s){
+		//TODO:
+	}
+	
 
 	@Override
 	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void clear() {
 		// TODO Auto-generated method stub
 		
 	}

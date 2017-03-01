@@ -11,6 +11,8 @@ import java.util.Observer;
 import controller.ControlHandler;
 import general_data_structures.Tuple;
 import gui.API.UIMainAPI;
+import gui.API.UIMainHandler;
+import gui.menu.UIMenuView;
 import gui.tableviews.UIVariablesView;
 import gui.tools.Frame;
 import gui.tools.GUITools;
@@ -57,13 +59,26 @@ public class UIMain implements UIMainAPI, Observer {
 	private List<UITurtle> _turtlesOnDisplay;
 
 	
-	
 	public UIMain(ControlHandler handler){
 		super();
 		_handler = handler;
 		setupTurtleMap(1);
 		setupViews();
 	}
+	
+	public class myHandler implements UIMainHandler{
+
+		@Override
+		public void setLineColor(Color color) {
+			for(UITurtle t : _turtlesOnDisplay){
+				UIMain.this.setLineColor(color, t);
+			}
+		}
+		
+	} 
+	
+	
+	
 	
 	@Override
 	public void displayErrorWithMessage(String error){
@@ -75,8 +90,10 @@ public class UIMain implements UIMainAPI, Observer {
 	@Override
 	public void clearScreen() {
 		System.out.println("clearing screen");
-		_displayView.clearLines();
+		_displayView.resetDisplay();
 		_historyView.clear();
+		_vocabTableView.clear();
+		_terminalView.clear();
 	}
 	public void addTurtle(){
 		TranslateTransition tran = new TranslateTransition();
@@ -145,7 +162,7 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 	private void setupMenu(){
 		//TODO: refactor all of these by making abstract class that gets frame
-		_menuView = new UIMenuView(MENU_FRAME.toLocalBounds());
+		_menuView = new UIMenuView(MENU_FRAME.toLocalBounds(), new myHandler());
 		_menuView.setLayoutX(MENU_FRAME.getX());
 		_menuView.setLayoutY(MENU_FRAME.getY());
 		_menuView.setPrefWidth(MENU_FRAME.getWidth());
@@ -228,6 +245,9 @@ public class UIMain implements UIMainAPI, Observer {
 	private void setTurtleImage(){
 		//TODO
 		
+	}
+	private void setLineColor(Color color, UITurtle t){
+		t.setLineColor(color);
 	}
 	
 	private void slideMenuIn(){

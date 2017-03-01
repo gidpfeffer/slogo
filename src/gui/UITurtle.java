@@ -62,12 +62,16 @@ public class UITurtle extends Rectangle {
 	public void setImageView(Image image){
 		setFill(new ImagePattern(image));
 	}
+	public void setLineColor(Color color){
+		this._lineColor = color;
+	}
 	public void addAnimationToQueue(TurtleState s, Tuple<Double, Double> pos){
 		addAnimationToQueue(s,pos,null);
 	}
 	public void addAnimationToQueue(TurtleState s, Tuple<Double, Double> pos, Line line){
 		_queue.add(new TurtleAnimationData(s,pos,line));
-		if(!Animation.Status.RUNNING.equals(_animators.x.getStatus())){
+		if(!Animation.Status.RUNNING.equals(_animators.x.getStatus()) && 
+				!Animation.Status.RUNNING.equals(_animators.y.getStatus())){
 			//System.out.println("running first animation");
 			playNextAnimation();
 		}
@@ -83,10 +87,12 @@ public class UITurtle extends Rectangle {
 	private void play(TurtleState s, Tuple<Double, Double> pos, Line line){
 		_priorTurtleAtt = _turtleAtt;
 		_turtleAtt = new UITurtleAttributes(pos.x, pos.y, (-s.getHeadAngle() + 90));
-		
-		if (_turtleAtt.angle - _priorTurtleAtt.angle == 0){
-			double deltaX = _turtleAtt.x - _priorTurtleAtt.x;
-			double deltaY = _turtleAtt.y - _priorTurtleAtt.y;
+		double deltaX = _turtleAtt.x - _priorTurtleAtt.x;
+		double deltaY = _turtleAtt.y - _priorTurtleAtt.y;
+		double deltaAngle = Math.min(
+				_turtleAtt.angle - _priorTurtleAtt.angle, 
+				360 + _priorTurtleAtt.angle - _turtleAtt.angle);
+		if (Math.abs(deltaY) + Math.abs(deltaX) != 0){
 			_animators.x.setByX(deltaX);
 			_animators.x.setByY(deltaY);
 			_animators.x.setDuration( //1 pixels per 10 millisecond
@@ -95,10 +101,10 @@ public class UITurtle extends Rectangle {
 							)
 					); 
 			_animators.x.play();
-		}else{
-			double deltaAngle = Math.min(
-					_turtleAtt.angle - _priorTurtleAtt.angle, 
-					360 + _priorTurtleAtt.angle - _turtleAtt.angle);
+		}
+		if(deltaAngle != 0) 
+		{
+			
 			_animators.y.setByAngle(deltaAngle);
 			 //1 ms per degree
 			_animators.y.setDuration(Duration.millis(
@@ -134,11 +140,17 @@ public class UITurtle extends Rectangle {
 	public void setTurtleState(TurtleState s, Tuple<Double, Double> widthHeight){
 		_priorTurtleAtt = _turtleAtt;
 		_turtleAtt = new UITurtleAttributes(widthHeight.x, widthHeight.y, (-s.getHeadAngle() + 90)%360);
-		this.setLayoutX(_turtleAtt.x);
-		this.setLayoutY(_turtleAtt.y);
+		System.out.println(_turtleAtt.x + "\t" + _turtleAtt.y);
+		this.setX(_turtleAtt.x);
+		this.setY(_turtleAtt.y);
 		this.setWidth(32);
 		this.setHeight(32);
 		this.setRotate(_turtleAtt.angle);
+	}
+	public void reset(TurtleState s, Tuple<Double, Double> widthHeight){
+		_priorTurtleAtt = null;
+		_turtleAtt = null;
+		setTurtleState(s, widthHeight);
 	}
 	public TurtleState getTurtleState(){
 		return _turtleState;
@@ -151,5 +163,10 @@ public class UITurtle extends Rectangle {
 	}
 	public void setTurtleImage(Image img){
 		//TODO
+	}
+
+	public void reset() {
+		// TODO Auto-generated method stub
+		
 	}
 }
