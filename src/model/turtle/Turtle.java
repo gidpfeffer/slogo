@@ -17,7 +17,11 @@ public class Turtle {
 		myState = new TurtleState(0,0,0,true,true);
 	}
 
-	public TurtleState getState(){
+	public State getReadOnlyState(){ //safe way to hand turtle state 
+		return (State) myState;
+	}
+	
+	public TurtleState getState(){ 
 		return myState;
 	}
 	public void reset(){
