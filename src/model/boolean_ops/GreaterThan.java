@@ -2,10 +2,11 @@ package model.boolean_ops;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
-public class GreaterThan extends LogicCommand {
+public class GreaterThan extends LogicCommand  implements Command{
 
 	
 	public GreaterThan(List<TreeNode> args){

@@ -1,5 +1,6 @@
 package parser.storage;
 
+import controller.SLogoException;
 import parser.tokenizer.TokenList;
 
 public class FixVars {
@@ -67,13 +68,13 @@ public class FixVars {
 	
 	private void handleErrors(int loc){
 		if(loc == TL.getLiterals().size() - 1 || !TL.getLogo().get(loc + 1).equals(CONSTANT)){
-			throw new IllegalStateException("Invalid variable deifnition");
+			throw new SLogoException("Invalid variable deifnition");
 		}
 	}
 	
 	private void handleUndefined(int loc){
 		if(!VS.getMap().containsKey(TL.getLiterals().get(loc))){
-			throw new IllegalStateException("Variable never defined");
+			throw new SLogoException("Variable never defined");
 		}
 	}
 

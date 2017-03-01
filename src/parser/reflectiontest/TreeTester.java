@@ -8,8 +8,7 @@ public class TreeTester {
 	
 	public static void main(String args[]){
 		String language = "resources/languages/English";
-		String testCode1 = "ifelse fd 50 [ fd 10 ] [ rt 30 ]";
-//		String testCode1 = "ifelse fd 5 [ rt 10 ] [ fd -3 ]";
+		String testCode1 = "set :x 20 repeat :x [ fd :x repeat :x [ fd 50 rt 80 fd 20 lt 160 ] rt 90 fd 10 ] ";
 		
 		Parser p = new Parser(new TurtleState(), language);
 		p.parse(testCode1);

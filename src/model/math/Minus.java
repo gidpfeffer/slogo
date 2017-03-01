@@ -2,10 +2,11 @@ package model.math;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
-public class Minus extends LogicCommand {
+public class Minus extends LogicCommand implements Command {
 	
 
 	

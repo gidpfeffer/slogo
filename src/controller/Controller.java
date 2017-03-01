@@ -45,6 +45,8 @@ public class Controller {
 		myViewController = new UIMain(handler);
 		myTurtle.getState().addObserver(myViewController);
 		//myParser = new Parser(myTurtle.getReadOnlyState());
+//		myParser = new Parser(myTurtle.getReadOnlyState());
+
 		changeLanguage("English");
 		myParser = new Parser(myTurtle.getReadOnlyState(), currentLang.toString());  // safe way to hand turtle state
 		configureVariableStorage(); 
