@@ -1,5 +1,6 @@
 package parser.helpers;
 
+import controller.SLogoException;
 import model.turtle.State;
 import parser.interpreter.BracketAid;
 import parser.reflectiontest.TreeGenerator;
@@ -36,7 +37,7 @@ public abstract class RegControl extends BracketAid{
 	@Override
 	protected void checkValidity() {
 		if(!literals.get(ifEnd + 1).equals(LEFT_BRACKET)){
-			throw new IllegalStateException("Else bracket doesnt follow if bracket");
+			throw new SLogoException("Else bracket doesnt follow if bracket");
 		}
 	}
 	
@@ -48,7 +49,7 @@ public abstract class RegControl extends BracketAid{
 		TreeGenerator TG = new TreeGenerator(
 				list.newSubList(getLogoLocations(indicator).get(0) + 1, ifStart), turtle);
 		if(TG.getCommandQueue().size() == 0) 
-			throw new IllegalStateException("invalid if/else syntax");
+			throw new SLogoException("invalid if/else syntax");
 		return TG.getLast() != 0;
 	}
 

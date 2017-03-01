@@ -3,6 +3,7 @@ package parser.reflectiontest;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
+import controller.SLogoException;
 import model.command.TreeNode;
 import model.turtle.State;
 
@@ -30,7 +31,7 @@ public class ClassGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		throw new IllegalStateException("invalid class name");
+		throw new SLogoException("invalid syntax: " + className);
 	}
 	
 	public void generate(String className, Double num, State t) {

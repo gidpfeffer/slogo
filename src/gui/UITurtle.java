@@ -91,17 +91,22 @@ public class UITurtle extends Rectangle {
 			_animators.x.setByY(deltaY);
 			_animators.x.setDuration( //1 pixels per 10 millisecond
 					Duration.millis(
-							10 * (Math.abs(deltaX) + Math.abs(deltaY))
+							5 * (Math.abs(deltaX) + Math.abs(deltaY)) + 10
 							)
 					); 
 			_animators.x.play();
 		}else{
-			
-			double deltaAngle = Math.min(_turtleAtt.angle - _priorTurtleAtt.angle, 360 + _priorTurtleAtt.angle - _turtleAtt.angle);
+			double deltaAngle = Math.min(
+					_turtleAtt.angle - _priorTurtleAtt.angle, 
+					360 + _priorTurtleAtt.angle - _turtleAtt.angle);
 			_animators.y.setByAngle(deltaAngle);
+			 //1 ms per degree
 			_animators.y.setDuration(Duration.millis(
-					Math.abs(deltaAngle))); //1 ms per degree
+						Math.abs(0)));
+			_animators.y.setDuration(Duration.millis(
+						Math.abs(deltaAngle)));	
 			_animators.y.play();
+			
 		}
 		if(line != null && 
 				getPriorAttributes() != null &&
@@ -112,12 +117,10 @@ public class UITurtle extends Rectangle {
 	public void expandLine(Line line){
 		UITurtleAttributes old = getPriorAttributes();
 		UITurtleAttributes curr = getNewAttributes();
-		//Platform.runLater(new TurtleViewTransition(turtle));
 		if(old != null && getTurtleState().getPen()){
 			//TODO animate this
 			double ins = getWidth()/2.;
 			//Line line = new Line(old.x + ins, old.y + ins, curr.x + ins, curr.y + ins);
-			
 			line.setStartX(old.x + ins);
 			line.setStartY(old.y + ins);
 			line.setEndX(curr.x + ins);

@@ -1,10 +1,12 @@
 package parser.tokenizer;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
+
+import controller.SLogoException;
 
 
 public class Tokenizer {
@@ -48,7 +50,7 @@ public class Tokenizer {
 				return new TokenIdentifier(toTokenize, p.getTokenTypes());
 			}
 		}
-		throw new IllegalStateException("Could not identify: " + toTokenize);
+		throw new SLogoException("Could not identify: " + toTokenize);
 	}
 
 	public boolean isEmpty() {

@@ -31,6 +31,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import parser.storage.VariableStorage;
 
 public class UIVariablesView extends Pane implements Observer {
 	
@@ -68,10 +69,10 @@ public class UIVariablesView extends Pane implements Observer {
 		_flowPane.setAlignment(Pos.TOP_CENTER);
 		_flowPane.setColumnHalignment(HPos.CENTER);
 		//_scroll.setPrefWrapLength(1000); // preferred height = 200
-
-		for(int i=0; i<4; i++){
-			addLabel("testing\t:\t"+i);
-		}
+//
+//		for(int i=0; i<4; i++){
+//			addLabel("testing\t:\t"+i);
+//		}
 		ScrollPane scroll = new ScrollPane(_flowPane);
 		//scroll.setLayoutY(36);
 		scroll.setBackground(Background.EMPTY);
@@ -98,9 +99,9 @@ public class UIVariablesView extends Pane implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Map<String, Double> map = new HashMap<String,Double>((Map<String, Double>) o);
+		VariableStorage map = (VariableStorage) o;
 		clear();
-		for(Entry<String, Double> e: map.entrySet()){
+		for(Entry<String, Double> e: map.getMap().entrySet()){
 			addLabel(e.getKey() + "\t:\t" + e.getValue());
 		}
 		System.out.println("updated variables view!");

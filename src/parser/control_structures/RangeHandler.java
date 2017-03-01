@@ -3,6 +3,7 @@ package parser.control_structures;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.SLogoException;
 import model.turtle.State;
 import parser.reflectiontest.TreeGenerator;
 import parser.tokenizer.TokenList;
@@ -23,7 +24,7 @@ public class RangeHandler {
 	private double getEnd(State t, TokenList TL){
 		TreeGenerator TG = new TreeGenerator(TL, t);
 		if(TG.getAllQueue().size() == 0) 
-			throw new IllegalStateException("invalid if/else syntax");
+			throw new SLogoException("invalid if/else syntax");
 		return TG.getAllQueue().remove().getValue();
 	}
 	

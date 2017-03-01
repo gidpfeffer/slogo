@@ -2,6 +2,7 @@ package parser.interpreter;
 
 import java.util.List;
 
+import controller.SLogoException;
 import model.turtle.State;
 import parser.reflectiontest.TreeGenerator;
 import parser.tokenizer.TokenList;
@@ -35,7 +36,7 @@ public class LoopEdit extends BracketAid{
 		TreeGenerator TG = new TreeGenerator(
 				list.newSubList(loc + 1, startIndex), turtle);
 		if(TG.getCommandQueue().size() == 0) 
-			throw new IllegalStateException("invalid if/else syntax");
+			throw new SLogoException("invalid if/else syntax");
 		return (int) TG.getLast();
 	}
 	
@@ -49,7 +50,7 @@ public class LoopEdit extends BracketAid{
 	protected void checkValidity(){
 		int repeatIndex = getLogoLocations(REPEAT).get(0);
 		if(repeatIndex + 2 >= literals.size()){
-			throw new IllegalStateException("Invalid Bracket Syntax");
+			throw new SLogoException("Invalid Bracket Syntax");
 		}
 	}
 

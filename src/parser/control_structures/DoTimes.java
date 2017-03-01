@@ -1,10 +1,11 @@
 package parser.control_structures;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
+import controller.SLogoException;
 import model.turtle.State;
 import parser.helpers.RegControl;
 import parser.helpers.Replacer;
@@ -16,9 +17,11 @@ public class DoTimes extends RegControl{
 	private String key;
 	private RangeHandler range;
 	private Replacer replacer;
+	private Set<String> keys;
 
-	public DoTimes(TokenList TL, State t){
+	public DoTimes(TokenList TL, State t, Set<String> keys){
 		super(TL, INDICATOR, t);
+		this.keys = keys;
 		range = new RangeHandler();
 		replacer = new Replacer();
 		correctList();
@@ -48,9 +51,12 @@ public class DoTimes extends RegControl{
 	private void setKey(){
 		int place = ifStart + 1;
 		if(!logo.get(place).equals(VARIABLE)){
-			throw new IllegalStateException("invalid syntax");
+			throw new SLogoException("invalid syntax");
 		}
 		key = literals.get(ifStart + 1);
+		if(keys.contains(key)){
+			throw new SLogoException("Cannot use a variable name that already exists: " + key);
+		}
 	}
 
 
