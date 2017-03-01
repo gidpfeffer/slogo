@@ -2,10 +2,11 @@ package model.boolean_ops;
 
 import java.util.List;
 
+import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
-public class Equal extends LogicCommand{
+public class Equal extends LogicCommand implements Command{
 	
 	public Equal(List<TreeNode> args){
 		children = args;
