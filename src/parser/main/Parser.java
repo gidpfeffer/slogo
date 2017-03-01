@@ -37,7 +37,7 @@ public class Parser {
 	}
 	
 	private void handleVars(){
-		FixVars FV = new FixVars(vars, TLG.getList());
+		FixVars FV = new FixVars(vars, TL);
 	}
 	
 	private void generateTokens(){

@@ -10,9 +10,11 @@ import parser.tokenizer.TokenListGenerator;
 public class LoopTest {
 
 	public static void main(String args[]){
-		String testCode = "repeat 2 [ dotimes [ :x fd 3 ] [ fd :x ] ]";
+		String language = "resources/languages/English";
 		
-		TokenListGenerator t = new TokenListGenerator(testCode);
+		String testCode = "dotimes [ :x fd 3 ] [ fd :x ]";
+		
+		TokenListGenerator t = new TokenListGenerator(testCode, language);
 		TokenList TL = t.getList();
 		TurtleState TS = new TurtleState();
 		

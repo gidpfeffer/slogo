@@ -16,7 +16,6 @@ public class Tokenizer {
 	private int index;
 
 	public Tokenizer(String s, String language) {
-		System.out.println(language);
 		SYNTAX[0] = language;
 		toTokenize = s;
 		fillPatterns();
