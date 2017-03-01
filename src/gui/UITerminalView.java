@@ -33,7 +33,6 @@ public class UITerminalView extends Pane implements UITerminalAPI {
 
 	@Override
 	public String getTextInput(){
-		System.out.println(_textArea.textProperty().getValue());
 		return _textArea.textProperty().getValue();
 	}
 	public void clear(){

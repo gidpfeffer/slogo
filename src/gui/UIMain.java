@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -53,7 +54,7 @@ public class UIMain implements UIMainAPI, Observer {
 	private UIHistoryView _historyView;
 	private UIMenuView _menuView;
 	private ImageButton _menuButton;
-	private Map<UITurtle, Tuple<TranslateTransition, RotateTransition>> _turtlesOnDisplay;
+	private List<UITurtle> _turtlesOnDisplay;
 
 	
 	
@@ -77,21 +78,27 @@ public class UIMain implements UIMainAPI, Observer {
 		_historyView.clear();
 	}
 	public void addTurtle(){
-		UITurtle t = new UITurtle();
-		
 		TranslateTransition tran = new TranslateTransition();
+		RotateTransition rot = new RotateTransition();
+		Tuple<TranslateTransition, RotateTransition> animators = new Tuple<TranslateTransition, RotateTransition>(tran, rot);
+
+		UITurtle t = new UITurtle(animators);
+		
 		tran.setNode(t);
 		tran.setDuration(Duration.millis(200));
 		
-		RotateTransition rot = new RotateTransition();
 		rot.setNode(t);
 		rot.setDuration(Duration.millis(200));
 		
-		_turtlesOnDisplay.put(t, new Tuple<TranslateTransition, RotateTransition>(tran, rot));
+		_turtlesOnDisplay.add(t);
+	}
+	@Override
+	public void addNewOutput(String output){
+		_historyView.addNewCommand(" > "+output);
 	}
 	
 	private void setupTurtleMap(double numberOfTurtles){
-		_turtlesOnDisplay = new HashMap<UITurtle, Tuple<TranslateTransition, RotateTransition>>();
+		_turtlesOnDisplay = new ArrayList<UITurtle>();
 		for(int i = 0; i < numberOfTurtles; i++){
 			addTurtle();
 		}
@@ -161,8 +168,7 @@ public class UIMain implements UIMainAPI, Observer {
 		_root.getChildren().add(_historyView);
 	}
 	private void setupDisplay(){
-		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds(),
-				new ArrayList<UITurtle>(_turtlesOnDisplay.keySet()));
+		_displayView = new UITurtleDisplayView(DISPLAY_FRAME.toLocalBounds(), _turtlesOnDisplay);
 		_displayView.setLayoutX(DISPLAY_FRAME.getX());
 		_displayView.setLayoutY(DISPLAY_FRAME.getY());
 		_displayView.prefHeight(DISPLAY_FRAME.getHeight());
@@ -170,7 +176,6 @@ public class UIMain implements UIMainAPI, Observer {
 		_root.getChildren().add(_displayView);
 	}
 	private void setupVocabTable(){
-		System.out.println(VOCAB_FRAME);
 		_vocabTableView = new UIVocabTable(VOCAB_FRAME.toLocalBounds());
 		_vocabTableView.setLayoutX(VOCAB_FRAME.getX());
 		_vocabTableView.setLayoutY(VOCAB_FRAME.getY());
@@ -261,18 +266,18 @@ public class UIMain implements UIMainAPI, Observer {
 	public void update(Observable o, Object arg) {
 		
 		TurtleState newState = new TurtleState((TurtleState) o);
-		Entry<UITurtle, Tuple<TranslateTransition, RotateTransition>> entry = getTurtleFromListWithState(newState);
-		_displayView.updateTurtleState(entry.getKey(), newState, entry.getValue());
-		System.out.println("x: "+newState.getX() + " y: " + newState.getY()+" angle: " + newState.getHeadAngle()); // for testing
+		UITurtle t = getTurtleFromListWithState(newState);
+		_displayView.updateTurtleState(t, newState);
+		//System.out.println("x: "+newState.getX() + " y: " + newState.getY()+" angle: " + newState.getHeadAngle()); // for testing
 
 	}
-	private Entry<UITurtle, Tuple<TranslateTransition, RotateTransition>> getTurtleFromListWithState(TurtleState s){
-		for(Entry<UITurtle, Tuple<TranslateTransition, RotateTransition>> t: _turtlesOnDisplay.entrySet()){
-			if(t.getKey().equals(s)){
+	private UITurtle getTurtleFromListWithState(TurtleState s){
+		for(UITurtle t: _turtlesOnDisplay){
+			if(t.getTurtleState().equals(s)){
 				return t;
 			}
 		}
-		return _turtlesOnDisplay.entrySet().iterator().next();
+		return _turtlesOnDisplay.get(0);
 		//throw new RuntimeException("turtle not found");
 	}
 }
