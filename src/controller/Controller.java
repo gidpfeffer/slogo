@@ -76,7 +76,7 @@ public class Controller {
 			System.out.println("String to print " + output);
 
 		}
-		catch (Exception e){ // change this 
+		catch (SLogoException e){ 
 			myViewController.displayErrorWithMessage(e.getMessage());
 		}
 
