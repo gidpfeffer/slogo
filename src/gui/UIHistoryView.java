@@ -30,7 +30,7 @@ public class UIHistoryView extends Pane implements CommandHistoryAPI {
 		_textArea.clear();
 	}
 	private void setupViews() {
-		GUITools.addBackgroundWithColor(this, MyColors.LIGHT_GREEN, _bounds);
+		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
 		_textArea = new TextArea();
 		_textArea.setPrefWidth(_bounds.getWidth());
 		_textArea.setPrefHeight(_bounds.getHeight());
