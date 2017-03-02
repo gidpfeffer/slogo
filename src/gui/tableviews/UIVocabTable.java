@@ -20,7 +20,8 @@ public class UIVocabTable extends UITableView implements Observer {
 	
 	private UIMainHandler _handler;
 	String[] _initialFunctions = {
-		"set :distance 10\n\nrepeat 18 \n[ \n\tforward * 5 :distance\n\tright 150\n\tforward * 6 :distance\n\tright 100\n\tforward * 3 :distance\n\tright 90\n]"	
+		"set :distance 10\n\nrepeat 18 \n[ \n\tforward * 5 :distance\n\tright 150\n\tforward * 6 :distance\n\tright 100\n\tforward * 3 :distance\n\tright 90\n]",
+		"dotimes [ :dist 200 ] \n[\n\tfd :dist\n\trt 89\n]"
 	};
 	
 	public UIVocabTable(Frame bounds, UIMainHandler handler) {
