@@ -2,6 +2,7 @@ package model.math;
 
 import java.util.List;
 
+import controller.SLogoException;
 import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
@@ -20,7 +21,13 @@ public class Quotient extends LogicCommand implements Command {
 	}
 	
 	public double getValue(){
-		return children.get(0).getValue()/children.get(1).getValue();  // divide by 0.0 throw error
+		Double val = children.get(0).getValue()/children.get(1).getValue();  // divide by 0.0 throw error
+		if (val.isNaN()||val.isInfinite()){
+			throw new SLogoException("Cannot divide by 0 the number " + children.get(0).getValue());
+		}
+		else{
+			return val;
+		}
 	}
 	
 }

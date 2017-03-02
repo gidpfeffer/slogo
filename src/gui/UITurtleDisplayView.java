@@ -42,23 +42,29 @@ public class UITurtleDisplayView extends Pane implements UIDisplayAPI{
 			_lines.add(line);
 			this.getChildren().add(1,line);
 			turtle.addAnimationToQueue(newState, 
-					GUITools.turtleCoordinateToPixelCoordinate(newState, _bounds), 
-					line);
+					GUITools.turtleCoordinateToPixelCoordinate(newState, _bounds), line);
 		}else{
 			turtle.addAnimationToQueue(newState, 
 					GUITools.turtleCoordinateToPixelCoordinate(newState, _bounds));	
 		}
-		
 	}
 	
-	public void clearLines(){
+	public void resetDisplay(){
+		clearLines();
+		for(UITurtle t : _turtles){
+			TurtleState reset = new TurtleState();
+			System.out.println(reset.getHeadAngle()+"\t"+ reset.getX() +"\t"+reset.getY());
+			t.reset(reset, GUITools.turtleCoordinateToPixelCoordinate(reset, _bounds));
+		}
+	}
+	private void clearLines(){
 		this.getChildren().removeAll(_lines);
 		_lines.clear();
 		System.out.println("\t*\tCleared Screen\t*");
 	}
 
 	private void setupViews() {
-		GUITools.addBackgroundWithColor(this, MyColors.LIGHT_GREEN, _bounds);
+		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
 		this.setClip(new Rectangle(_bounds.getWidth(), _bounds.getHeight()));
 		for(UITurtle t: _turtles){
 			t.setTurtleState(t.getTurtleState(), GUITools.turtleCoordinateToPixelCoordinate(t.getTurtleState(), _bounds));

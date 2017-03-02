@@ -24,8 +24,8 @@ public class GUITools {
 		return b;
 	}
 	
-	public static void addBackgroundWithColor(Pane self, Color color, Frame frame){
-		Rectangle rect = new Rectangle(frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
+	public static void addBackgroundWithColor(Pane self, Color color, Frame bounds){
+		Rectangle rect = new Rectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 		rect.setFill(color);
 		rect.setArcHeight(3);
 		rect.setArcWidth(3);

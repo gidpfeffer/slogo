@@ -28,6 +28,7 @@ public class UITerminalView extends Pane implements UITerminalAPI {
 		_textArea.setPrefHeight(_bounds.getHeight());
 		_textArea.setBorder(Border.EMPTY);
 		_textArea.setBackground(Background.EMPTY);
+		_textArea.setWrapText(true);
 		this.getChildren().add(_textArea);
 	}
 
@@ -37,5 +38,11 @@ public class UITerminalView extends Pane implements UITerminalAPI {
 	}
 	public void clear(){
 		_textArea.clear();
+	}
+
+
+	public void addText(String s) {
+		clear();
+		_textArea.setText(s);
 	}
 }

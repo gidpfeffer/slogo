@@ -11,7 +11,10 @@ import java.util.Observer;
 import controller.ControlHandler;
 import general_data_structures.Tuple;
 import gui.API.UIMainAPI;
+import gui.API.UIMainHandler;
+import gui.menu.UIMenuView;
 import gui.tableviews.UIVariablesView;
+import gui.tableviews.UIVocabTable;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.ImageButton;
@@ -24,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
@@ -33,11 +37,10 @@ import model.turtle.TurtleState;
 
 public class UIMain implements UIMainAPI, Observer {
 	
-	//define the location of UI Components here
-	public static final double SCREEN_WIDTH = 700;
-	public static final double SCREEN_HEIGHT = 650;
+	public static final double SCREEN_WIDTH = 800;
+	public static final double SCREEN_HEIGHT = 700;
 	public static final double TOP_INSET = 70;
-	public static final Frame DISPLAY_FRAME = new Frame(8,TOP_INSET, SCREEN_WIDTH*3/4 - 16,SCREEN_HEIGHT*2/3 - 16);
+	public static final Frame DISPLAY_FRAME = new Frame(8,TOP_INSET, SCREEN_WIDTH*0.7 - 16,SCREEN_HEIGHT*2/3 - 16);
 	public static final Frame HISTORY_FRAME = new Frame(8, DISPLAY_FRAME.getMaxY() + 8, DISPLAY_FRAME.getWidth() - 50, (SCREEN_HEIGHT - DISPLAY_FRAME.getMaxY())/2 - 16 );
 	public static final Frame TERMINAL_FRAME = new Frame(8, HISTORY_FRAME.getMaxY() + 8, HISTORY_FRAME.getWidth(), HISTORY_FRAME.getHeight() );
 	public static final Frame VOCAB_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8,DISPLAY_FRAME.getY(), SCREEN_WIDTH - DISPLAY_FRAME.getMaxX() - 16,SCREEN_HEIGHT*2/3 - 16);
@@ -57,13 +60,35 @@ public class UIMain implements UIMainAPI, Observer {
 	private List<UITurtle> _turtlesOnDisplay;
 
 	
-	
 	public UIMain(ControlHandler handler){
 		super();
 		_handler = handler;
 		setupTurtleMap(1);
 		setupViews();
 	}
+	
+	public class myHandler implements UIMainHandler{
+		@Override
+		public void setLineColor(Color color) {
+			for(UITurtle t : _turtlesOnDisplay){
+				UIMain.this.setLineColor(color, t);
+			}
+		}
+		@Override
+		public void addFunctionToTerminal(String s){
+			_terminalView.addText(s);
+		}
+		@Override
+		public void setTurtleImage(Image image) {
+			for(UITurtle t : _turtlesOnDisplay){
+				t.setImageView(new ImageView(image));
+			}
+		}
+		
+	} 
+	
+	
+	
 	
 	@Override
 	public void displayErrorWithMessage(String error){
@@ -75,8 +100,11 @@ public class UIMain implements UIMainAPI, Observer {
 	@Override
 	public void clearScreen() {
 		System.out.println("clearing screen");
-		_displayView.clearLines();
+		_displayView.resetDisplay();
 		_historyView.clear();
+		_terminalView.clear();
+		//TODO: stop animation _displayView.stopAnimation();
+		//also add pauseAnimation() and playAnimation()
 	}
 	public void addTurtle(){
 		TranslateTransition tran = new TranslateTransition();
@@ -136,7 +164,7 @@ public class UIMain implements UIMainAPI, Observer {
 			}
 		});
 		
-		Label title = GUITools.plainLabelBoldHelvetica("SLOGO", 28, MyColors.LIGHT_GREEN);
+		Label title = GUITools.plainLabelBoldHelvetica("SLOGO", 28, MyColors.GREEN_100);
 		title.setLayoutX(64);
 		title.setLayoutY(24);
 		
@@ -145,7 +173,7 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 	private void setupMenu(){
 		//TODO: refactor all of these by making abstract class that gets frame
-		_menuView = new UIMenuView(MENU_FRAME.toLocalBounds());
+		_menuView = new UIMenuView(MENU_FRAME.toLocalBounds(), new myHandler());
 		_menuView.setLayoutX(MENU_FRAME.getX());
 		_menuView.setLayoutY(MENU_FRAME.getY());
 		_menuView.setPrefWidth(MENU_FRAME.getWidth());
@@ -177,7 +205,7 @@ public class UIMain implements UIMainAPI, Observer {
 		_root.getChildren().add(_displayView);
 	}
 	private void setupVocabTable(){
-		_vocabTableView = new UIVocabTable(VOCAB_FRAME.toLocalBounds());
+		_vocabTableView = new UIVocabTable(VOCAB_FRAME.toLocalBounds(), new myHandler());
 		_vocabTableView.setLayoutX(VOCAB_FRAME.getX());
 		_vocabTableView.setLayoutY(VOCAB_FRAME.getY());
 		_vocabTableView.prefHeight(VOCAB_FRAME.getHeight());
@@ -228,6 +256,9 @@ public class UIMain implements UIMainAPI, Observer {
 	private void setTurtleImage(){
 		//TODO
 		
+	}
+	private void setLineColor(Color color, UITurtle t){
+		t.setLineColor(color);
 	}
 	
 	private void slideMenuIn(){
