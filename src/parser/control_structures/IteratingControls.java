@@ -7,26 +7,24 @@ import java.util.Set;
 
 import controller.SLogoException;
 import model.turtle.State;
+import parser.helpers.RangeHandler;
 import parser.helpers.RegControl;
 import parser.helpers.Replacer;
 import parser.tokenizer.TokenList;
 
-public class DoTimes extends RegControl{
-	private static final String INDICATOR = "DoTimes";
+public abstract class IteratingControls extends RegControl{
 	private static final String VARIABLE = "Variable";
 	private String key;
-	private RangeHandler range;
+	protected RangeHandler range;
 	private Replacer replacer;
 	private Set<String> keys;
 
-	public DoTimes(TokenList TL, State t, Set<String> keys){
+	public IteratingControls(TokenList TL, State t, Set<String> keys, String INDICATOR){
 		super(TL, INDICATOR, t);
 		this.keys = keys;
-		range = new RangeHandler();
 		replacer = new Replacer();
-		correctList();
 	}
-
+	
 	@Override
 	protected void replace() {
 		setKey();
@@ -51,7 +49,7 @@ public class DoTimes extends RegControl{
 	private void setKey(){
 		int place = ifStart + 1;
 		if(!logo.get(place).equals(VARIABLE)){
-			throw new SLogoException("invalid syntax");
+			throw new SLogoException("Make sure to use an undefined variable");
 		}
 		key = literals.get(ifStart + 1);
 		if(keys.contains(key)){

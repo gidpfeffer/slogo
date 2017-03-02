@@ -29,9 +29,12 @@ public class Parser {
 		vars = new VariableStorage();
 	}
 	
-	private void handleLogic(){
+	private void makeInterpreter(){
 		IT = new Interpreter(TL, state, vars.keySet());
 		TL = IT.getTokenList();
+	}
+	
+	private void makeTree(){
 		TG = new TreeGenerator(TL, state);
 		QS = new QueueSplitter(TG.getCommandQueue());
 	}
@@ -60,7 +63,10 @@ public class Parser {
 	public void parse(String toParse){	
 		str = toParse;
 		generateTokens();
+		makeInterpreter();
+		IT.handleVarLoops();
 		handleVars();
-		handleLogic();
+		IT.handleRegLoops();
+		makeTree();
 	}
 }
