@@ -138,7 +138,8 @@ public class UITurtle extends Pane {
 			line.setEndX(curr.x + ins);
 			line.setEndY(curr.y + ins);
 			line.setStroke(_lineColor);
-			line.setStrokeWidth(4);
+			line.setStrokeWidth(3);
+			line.setOpacity(0.5);
 //			line.endXProperty().bind(xProperty());
 //			line.endYProperty().bind(yProperty());
 		}

@@ -37,9 +37,8 @@ import model.turtle.TurtleState;
 
 public class UIMain implements UIMainAPI, Observer {
 	
-	//define the location of UI Components here
 	public static final double SCREEN_WIDTH = 800;
-	public static final double SCREEN_HEIGHT = 650;
+	public static final double SCREEN_HEIGHT = 700;
 	public static final double TOP_INSET = 70;
 	public static final Frame DISPLAY_FRAME = new Frame(8,TOP_INSET, SCREEN_WIDTH*0.7 - 16,SCREEN_HEIGHT*2/3 - 16);
 	public static final Frame HISTORY_FRAME = new Frame(8, DISPLAY_FRAME.getMaxY() + 8, DISPLAY_FRAME.getWidth() - 50, (SCREEN_HEIGHT - DISPLAY_FRAME.getMaxY())/2 - 16 );
@@ -104,6 +103,8 @@ public class UIMain implements UIMainAPI, Observer {
 		_displayView.resetDisplay();
 		_historyView.clear();
 		_terminalView.clear();
+		//TODO: stop animation _displayView.stopAnimation();
+		//also add pauseAnimation() and playAnimation()
 	}
 	public void addTurtle(){
 		TranslateTransition tran = new TranslateTransition();

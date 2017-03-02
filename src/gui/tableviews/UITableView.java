@@ -45,8 +45,8 @@ public class UITableView extends Pane {
 		setupTitle(title);
 
 		_flowPane = new FlowPane(Orientation.VERTICAL);
-		_flowPane.setPadding(new Insets(40, 12, 10, 12));
-		_flowPane.setVgap(8);
+		_flowPane.setPadding(new Insets(48, 12, 10, 12));
+		_flowPane.setVgap(20);
 
 		
 		_flowPane.setBackground(Background.EMPTY);
@@ -66,6 +66,7 @@ public class UITableView extends Pane {
 		Label title = GUITools.plainLabelBoldHelvetica(t, 20, MyColors.INDIGO);
 		title.setPrefWidth(_bounds.getWidth());
 		title.setPrefHeight(40);
+		title.setAlignment(Pos.CENTER);
 		this.getChildren().add(title);
 	}
 	protected void addText(String s){
