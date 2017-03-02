@@ -26,7 +26,7 @@ public class UITurtle extends Pane {
 	private UITurtleAttributes _priorTurtleAtt;
 	private Tuple<TranslateTransition, RotateTransition> _animators;
 	private LinkedList<TurtleAnimationData> _queue = new LinkedList<TurtleAnimationData>();
-	private Color _lineColor = MyColors.DARK_GREEN;
+	private Color _lineColor = MyColors.GREEN_900;
 	private ImageView _imageView;
 	
 	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators){

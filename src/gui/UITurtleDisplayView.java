@@ -64,7 +64,7 @@ public class UITurtleDisplayView extends Pane implements UIDisplayAPI{
 	}
 
 	private void setupViews() {
-		GUITools.addBackgroundWithColor(this, MyColors.LIGHT_GREEN, _bounds);
+		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
 		this.setClip(new Rectangle(_bounds.getWidth(), _bounds.getHeight()));
 		for(UITurtle t: _turtles){
 			t.setTurtleState(t.getTurtleState(), GUITools.turtleCoordinateToPixelCoordinate(t.getTurtleState(), _bounds));
