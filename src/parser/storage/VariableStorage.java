@@ -7,7 +7,6 @@ import java.util.Observable;
 import java.util.Set;
 
 public class VariableStorage extends Observable{
-	
 	private Map<String, Double> map;
 	
 	public VariableStorage(){

@@ -9,6 +9,7 @@ import parser.control_structures.DoTimesHandler;
 import parser.control_structures.ForHandler;
 import parser.control_structures.IfElseHandler;
 import parser.control_structures.IfHandler;
+import parser.control_structures.RepeatHandler;
 import parser.tokenizer.TokenList;
 
 public class Interpreter {
@@ -28,14 +29,13 @@ public class Interpreter {
 		throw new SLogoException("Invalid Token List");
 	}
 	
-	
 	public void handleVarLoops(){
 		BracketHandler dt = new DoTimesHandler(tokens, turtle, varKeys);
 		BracketHandler f = new ForHandler(tokens, turtle, varKeys);
 	}
 	
 	public void handleRegLoops(){
-		BracketHandler le = new LoopEdit(tokens, turtle);
+		BracketHandler le = new RepeatHandler(tokens, turtle);
 		BracketHandler i = new IfHandler(tokens, turtle);
 		BracketHandler ie = new IfElseHandler(tokens, turtle);
 	}

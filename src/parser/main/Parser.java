@@ -6,7 +6,7 @@ import model.command.TreeNode;
 import model.turtle.State;
 import parser.interpreter.Interpreter;
 import parser.queue_splitter.QueueSplitter;
-import parser.reflectiontest.TreeGenerator;
+import parser.reflection.TreeGenerator;
 import parser.storage.FixVars;
 import parser.storage.VariableStorage;
 import parser.tokenizer.TokenList;
