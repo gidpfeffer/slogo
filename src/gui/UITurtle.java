@@ -1,8 +1,6 @@
 package gui;
 
 import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 import general_data_structures.Tuple;
 import gui.tools.MyColors;
@@ -10,26 +8,27 @@ import gui.tools.TurtleAnimationData;
 import gui.tools.UITurtleAttributes;
 import javafx.animation.Animation;
 import javafx.animation.RotateTransition;
-import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
-public class UITurtle extends Rectangle {
+public class UITurtle extends Pane {
+	
 	private TurtleState _turtleState;
 	private UITurtleAttributes _turtleAtt;
 	private UITurtleAttributes _priorTurtleAtt;
-	private SequentialTransition sequencer = new SequentialTransition();
 	private Tuple<TranslateTransition, RotateTransition> _animators;
 	private LinkedList<TurtleAnimationData> _queue = new LinkedList<TurtleAnimationData>();
 	private Color _lineColor = MyColors.DARK_GREEN;
+	private ImageView _imageView;
+	
 	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators){
 		this(animators,new Image("turtle.png"));
 	}
@@ -40,7 +39,7 @@ public class UITurtle extends Rectangle {
 	
 	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,Image image, TurtleState state){
 		_turtleState = state;
-		setImageView(image);
+		setImageView(new ImageView(image));
 		_animators = animators;
 		_animators.x.setOnFinished(new EventHandler<ActionEvent>() {
 		      @Override
@@ -59,8 +58,14 @@ public class UITurtle extends Rectangle {
 		});
 	}
 	
-	public void setImageView(Image image){
-		setFill(new ImagePattern(image));
+	public void setImageView(ImageView imageView){
+		if(_imageView != null)
+			this.getChildren().remove(_imageView);
+		_imageView = imageView;
+		imageView.setPreserveRatio(true);
+		imageView.setFitHeight(32);
+		imageView.setFitWidth(32);
+		this.getChildren().add(imageView);
 	}
 	public void setLineColor(Color color){
 		this._lineColor = color;
@@ -120,11 +125,12 @@ public class UITurtle extends Rectangle {
 			expandLine(line);
 		}
 	}
-	public void expandLine(Line line){
+	private void expandLine(Line line){
 		UITurtleAttributes old = getPriorAttributes();
 		UITurtleAttributes curr = getNewAttributes();
 		if(old != null && getTurtleState().getPen()){
 			//TODO animate this
+			//IDEA: make line 1 pixel and stretch it with scale animation
 			double ins = getWidth()/2.;
 			//Line line = new Line(old.x + ins, old.y + ins, curr.x + ins, curr.y + ins);
 			line.setStartX(old.x + ins);
@@ -141,8 +147,8 @@ public class UITurtle extends Rectangle {
 		_priorTurtleAtt = _turtleAtt;
 		_turtleAtt = new UITurtleAttributes(widthHeight.x, widthHeight.y, (-s.getHeadAngle() + 90)%360);
 		System.out.println(_turtleAtt.x + "\t" + _turtleAtt.y);
-		this.setX(_turtleAtt.x);
-		this.setY(_turtleAtt.y);
+		this.setLayoutX(_turtleAtt.x);
+		this.setLayoutY(_turtleAtt.y);
 		this.setWidth(32);
 		this.setHeight(32);
 		this.setRotate(_turtleAtt.angle);
@@ -162,11 +168,7 @@ public class UITurtle extends Rectangle {
 		return _turtleAtt;
 	}
 	public void setTurtleImage(Image img){
-		//TODO
+		_imageView.setImage(img);
 	}
 
-	public void reset() {
-		// TODO Auto-generated method stub
-		
-	}
 }
