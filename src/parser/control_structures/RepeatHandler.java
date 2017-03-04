@@ -1,18 +1,19 @@
-package parser.interpreter;
+package parser.control_structures;
 
 import java.util.List;
 
 import controller.SLogoException;
 import model.turtle.State;
-import parser.reflectiontest.TreeGenerator;
+import parser.interpreter.BracketAid;
+import parser.reflection.TreeGenerator;
 import parser.tokenizer.TokenList;
 
-public class LoopEdit extends BracketAid{
+public class RepeatHandler extends BracketAid{
 	private static final String CONSTANT = "Constant";
 	private static final String REPEAT = "Repeat";
 	private int startIndex, endIndex, times;
 	
-	public LoopEdit(TokenList list, State state){
+	public RepeatHandler(TokenList list, State state){
 		super(list, REPEAT, state);
 		correctList();
 	}

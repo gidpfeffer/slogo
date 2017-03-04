@@ -3,7 +3,7 @@ package parser.helpers;
 import controller.SLogoException;
 import model.turtle.State;
 import parser.interpreter.BracketAid;
-import parser.reflectiontest.TreeGenerator;
+import parser.reflection.TreeGenerator;
 import parser.tokenizer.TokenList;
 
 public abstract class RegControl extends BracketAid{

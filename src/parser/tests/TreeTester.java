@@ -1,4 +1,4 @@
-package parser.reflectiontest;
+package parser.tests;
 
 import model.command.TreeNode;
 import model.turtle.TurtleState;

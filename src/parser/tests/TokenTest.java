@@ -1,19 +1,25 @@
-package parser.tokenizer;
+package parser.tests;
 
 import java.util.List;
+
+import parser.tokenizer.ProtectedTokenList;
+import parser.tokenizer.TokenList;
+import parser.tokenizer.TokenListGenerator;
 
 public class TokenTest {
 
 	public static void main(String args[]){
 		String language = "resources/languages/English";
-		String testCode = "doTimes [ :x fd 50 ] [ fd :x ]";
+		String testCode = "tell [ 100 50 ] ";
 		
 		TokenListGenerator t = new TokenListGenerator(testCode, language);
 		
 		TokenList TL = t.getList();
 		
-		List<String> literals = TL.getLiterals();
-		List<String> logo = TL.getLogo();
+		ProtectedTokenList PTL = new ProtectedTokenList(TL);
+		
+		List<String> literals = PTL.getLiterals();
+		List<String> logo = PTL.getLogo();
 		
 		System.out.println(testCode + "\n====================\n");
 		

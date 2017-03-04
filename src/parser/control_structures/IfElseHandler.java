@@ -4,8 +4,6 @@ import java.util.List;
 
 import model.turtle.State;
 import parser.helpers.RegControl;
-import parser.interpreter.BracketAid;
-import parser.reflectiontest.TreeGenerator;
 import parser.tokenizer.TokenList;
 
 public class IfElseHandler extends RegControl{

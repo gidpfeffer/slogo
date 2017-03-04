@@ -14,7 +14,7 @@ public class doTimesRange extends RangeHandler{
 
 	@Override
 	public void handle(State t, TokenList TL) {
-		list = new ArrayList();
+		list = new ArrayList<>();
 		Queue<TreeNode> q = getQueue(t, TL);
 		makeList(1, q.remove().getValue(), 1);	
 	}
