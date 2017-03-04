@@ -14,7 +14,7 @@ public class CommentRemover {
 			if (str.indexOf("\n", comIndex) >= 0) {
 				int newLineIndex = str.indexOf("\n", comIndex);
 				String start = str.substring(0, comIndex);
-				str = start + str.substring(newLineIndex + 2);
+				str = start + str.substring(newLineIndex + 1);
 			}
 			else{
 				str = str.substring(0, comIndex);

@@ -23,5 +23,4 @@ public class CommandStorage {
 	public void clearMap(){
 		map.clear();
 	}
-
 }
