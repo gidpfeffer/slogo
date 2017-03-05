@@ -8,25 +8,19 @@ import gui.API.UIDisplayAPI;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
-import gui.tools.TurtleViewTransition;
-import gui.tools.UITurtleAttributes;
-import javafx.animation.RotateTransition;
-import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
-import javafx.scene.layout.Pane;
+import gui.tools.UIView;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import model.turtle.TurtleState;
 
-public class UITurtleDisplayView extends Pane implements UIDisplayAPI{
-	private Frame _bounds;
+public class UITurtleDisplayView extends UIView implements UIDisplayAPI{
+	
 	private List<UITurtle> _turtles;
 	private List<Line> _lines = new ArrayList<Line>();
 	double _strokeWidth = 2.5;
 	
-	public UITurtleDisplayView(Frame bounds, List<UITurtle> turtles) {
-		_bounds = bounds;
+	public UITurtleDisplayView(Frame frame, List<UITurtle> turtles) {
+		super(frame);
 		_turtles = turtles;
 		setupViews();
 	}

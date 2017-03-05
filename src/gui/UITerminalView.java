@@ -3,20 +3,19 @@ package gui;
 import gui.API.UITerminalAPI;
 import gui.tools.Frame;
 import gui.tools.GUITools;
+import gui.tools.UIView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class UITerminalView extends Pane implements UITerminalAPI {
+public class UITerminalView extends UIView implements UITerminalAPI {
 	
 	private TextArea _textArea;
-	private Frame _bounds;
 	
-	public UITerminalView(Frame bounds){
-		super();
-		_bounds = bounds;
+	public UITerminalView(Frame frame){
+		super(frame);
 		setupViews();
 	}
 	

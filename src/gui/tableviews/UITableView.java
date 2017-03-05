@@ -8,6 +8,7 @@ import java.util.Observer;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
+import gui.tools.UIView;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -28,14 +29,14 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import parser.storage.VariableStorage;
 
-public class UITableView extends Pane {
+public class UITableView extends UIView {
 	protected Frame _bounds;
 	protected FlowPane _flowPane;
 	protected List<Text> _texts = new ArrayList<Text>();
 	
-	public UITableView(Frame bounds, String title) {
-		super();
-		_bounds = bounds;
+	public UITableView(Frame frame, String title) {
+		super(frame);
+		_bounds = frame.toLocalBounds();
 		setupViews(title);
 
 	}
