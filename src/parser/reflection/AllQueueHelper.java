@@ -1,4 +1,4 @@
-package parser.reflectiontest;
+package parser.reflection;
 
 import java.util.LinkedList;
 import java.util.Queue;

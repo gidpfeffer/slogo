@@ -8,6 +8,9 @@ public class TokenList {
 	List<String> logo;
 	
 	public TokenList(List<String> literals, List<String> logo){
+		if(literals.size() != logo.size()){
+			throw new IllegalStateException("Invalid TokenList");
+		}
 		this.literals = literals;
 		this.logo = logo;
 	}

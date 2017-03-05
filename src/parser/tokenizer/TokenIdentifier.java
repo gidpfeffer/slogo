@@ -17,5 +17,4 @@ public class TokenIdentifier {
 	public String getType(){
 		return type;
 	}
-
 }

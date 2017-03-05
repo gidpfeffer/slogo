@@ -1,4 +1,4 @@
-package parser.reflectiontest;
+package parser.reflection;
 
 import java.util.Enumeration;
 import java.util.ResourceBundle;
