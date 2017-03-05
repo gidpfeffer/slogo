@@ -8,6 +8,8 @@ import java.util.Queue;
 
 import controller.BackEndHandler;
 import controller.Controller.myHandler;
+import model.aesthetic.SetBackGround;
+import model.aesthetic.SetPalette;
 import model.command.Command;
 import model.command.TreeNode;
 import model.movement.ClearScreen;
@@ -45,10 +47,15 @@ public class ModelController {
 			if (command instanceof ClearScreen){
 				handler.handleReset(); 
 			}
-		/*	if (command instanceof DisplayCommand){
-				
+			
+			if (command instanceof SetBackGround){
+				handler.setBackground(command.getValue());
 			}
-*/
+			
+			if (command instanceof SetPalette){
+				handler.setPalette(command.getValue(),command.getChildren().get(1).getValue(),command.getChildren().get(2).getValue(),command.getChildren().get(3).getValue());
+			}
+
 			output = ((Double) command.getValue()).toString();
 			((Command) command).execute();
 		}
