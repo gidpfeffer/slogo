@@ -23,6 +23,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import parser.storage.VariableStorage;
@@ -63,7 +64,7 @@ public class UITableView extends Pane {
 		this.getChildren().add(scroll);
 	}
 	private void setupTitle(String t){
-		Label title = GUITools.plainLabelBoldHelvetica(t, 20, MyColors.INDIGO);
+		Label title = GUITools.plainLabel(t, 20, MyColors.INDIGO, FontWeight.BOLD);
 		title.setPrefWidth(_bounds.getWidth());
 		title.setPrefHeight(40);
 		title.setAlignment(Pos.CENTER);

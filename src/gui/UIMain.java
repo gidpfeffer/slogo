@@ -32,6 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
@@ -111,7 +112,7 @@ public class UIMain implements UIMainAPI, Observer {
 		RotateTransition rot = new RotateTransition();
 		Tuple<TranslateTransition, RotateTransition> animators = new Tuple<TranslateTransition, RotateTransition>(tran, rot);
 
-		UITurtle t = new UITurtle(animators);
+		UITurtle t = new UITurtle(animators, 0);
 		
 		tran.setNode(t);
 		tran.setDuration(Duration.millis(200));
@@ -125,6 +126,7 @@ public class UIMain implements UIMainAPI, Observer {
 	public void addNewOutput(String output){
 		_historyView.addNewCommand(" > "+output);
 	}
+	
 	
 	private void setupTurtleMap(double numberOfTurtles){
 		_turtlesOnDisplay = new ArrayList<UITurtle>();
@@ -164,7 +166,7 @@ public class UIMain implements UIMainAPI, Observer {
 			}
 		});
 		
-		Label title = GUITools.plainLabelBoldHelvetica("SLOGO", 28, MyColors.GREEN_100);
+		Label title = GUITools.plainLabel("SLOGO", 28, MyColors.GREEN_100, FontWeight.BLACK);
 		title.setLayoutX(64);
 		title.setLayoutY(24);
 		
@@ -294,6 +296,31 @@ public class UIMain implements UIMainAPI, Observer {
 		return _vocabTableView;
 	}
 	
+
+	@Override
+	public void addNewPallete(double index, double red, double blue, double green) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPenColor(double index) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setBackgroundColor(double index) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPenWidth(double width) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		
@@ -303,9 +330,10 @@ public class UIMain implements UIMainAPI, Observer {
 		//System.out.println("x: "+newState.getX() + " y: " + newState.getY()+" angle: " + newState.getHeadAngle()); // for testing
 
 	}
+	
 	private UITurtle getTurtleFromListWithState(TurtleState s){
 		for(UITurtle t: _turtlesOnDisplay){
-			if(t.getTurtleState().equals(s)){
+			if(t.getId() == s.getID()){
 				return t;
 			}
 		}
