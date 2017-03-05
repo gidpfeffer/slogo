@@ -7,29 +7,45 @@ public class TurtleState extends Observable implements State {
 	private double myAngle; 
 	private boolean myPen; 
 	private boolean myVisibility;
+	private double myID;
+	private double myPenSize;
+	private double myPenColorIndex;
+	private double myShapeIndex; 
 	
-	public TurtleState(double x, double y, double headAngle, boolean pen,boolean v){
+	public TurtleState(double id, double x, double y, double headAngle, boolean pen,boolean v,double pensize,double pencol,double shape){
+		myID = id;
 		myX = x; 
 		myY = y; 
 		myAngle = headAngle; 
 		myPen = pen;
 		myVisibility = v;
+		myPenSize = pensize;
+		myPenColorIndex = pencol;
+		myShapeIndex = shape;
 	}
 	
-	
 	public TurtleState(){
-		this(0,0,0, true, true);
+		this(1,0,0,0, true, true,3,0,0);
 	}
 	
 	public TurtleState(TurtleState o){
+		myID = o.getID();
 		myX = o.getX();
 		myY = o.getY();
 		myAngle = o.getHeadAngle();
 		myPen = o.getPen();
-		myVisibility = o.getVisibility();
+		myVisibility = o.getVisibility();	
+		myPenSize = o.getPenSize();
+		myPenColorIndex = o.getPenColorIndex();
+		myShapeIndex = o.getShapeIndex();
 	}
 	
-	
+	public void setID(double id){
+		myID = id;
+		setChanged();
+		notifyObservers();
+	}
+		
 	public void setX(double num){
 		myX = num; 
 		setChanged();
@@ -68,6 +84,28 @@ public class TurtleState extends Observable implements State {
 		notifyObservers();
 	}
 	
+	public void setPenSize(double pensize){
+		myPenSize = pensize;
+		setChanged();
+		notifyObservers();
+		
+	}
+	
+	public void setPenColorIndex (double colindex){
+		myPenColorIndex = colindex;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public void setShapeIndex (double shapeindex){
+		myShapeIndex = shapeindex;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public double getID(){
+		return myID;
+	}
 	
 	public double getX(){
 		return myX ;
@@ -88,14 +126,27 @@ public class TurtleState extends Observable implements State {
 	public boolean getVisibility(){
 		return myVisibility; 
 	}
-	public void setState(double x, double y, double headAngle, boolean pen,boolean v){
-		myX = x; 
-		myY = y; 
-		myAngle = headAngle; 
-		myPen = pen;
-		myVisibility = v;
+	
+	public double getPenSize(){
+		return myPenSize;
+	}
+	public double getPenColorIndex(){
+		return myPenColorIndex;
+	}
+	public double getShapeIndex(){
+		return myShapeIndex; 
+	}
+
+	public void reset(){
+		myX = 0; 
+		myY = 0; 
+		myAngle = 0; 
+		myPen = true;
+		myVisibility = true;
+		myPenSize = 3;
+		myPenColorIndex = 0;
+		myShapeIndex = 0; 
 		setChanged(); 
 		notifyObservers(); 
 	}
-	
 }
