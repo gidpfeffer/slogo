@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import model.turtle.TurtleState;
 
 public class GUITools {
@@ -31,13 +33,20 @@ public class GUITools {
 		rect.setArcWidth(3);
 		self.getChildren().add(0, rect);
 	}
-	public static Label plainLabelBoldHelvetica(String text, int fontSize, Color color) {
+	public static Label plainLabel(String text, int fontSize, Color color,FontWeight weight) {
 		Label label = new Label();
 		label.setText(text);
-		label.setFont(Font.font("HelveticaNeue", FontWeight.BOLD, fontSize));
+		label.setFont(Font.font("HelveticaNeue", weight, fontSize));
 		label.setAlignment(Pos.CENTER);
 		label.setTextFill(color);
 		return label;
+	}
+	public static Text plainTextHelvetica(String text, int fontSize, Color color, FontWeight weight){
+		Text t = new Text(text);
+		t.setFont(Font.font("HelveticaNeue", weight, fontSize));
+		t.setTextAlignment(TextAlignment.CENTER);
+		t.setFill(color);
+		return t;
 	}
 	
 	public static Tuple<Double, Double> turtleCoordinateToPixelCoordinate(TurtleState t, Frame bounds){

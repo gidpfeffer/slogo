@@ -27,18 +27,25 @@ public class UITurtle extends Pane {
 	private Tuple<TranslateTransition, RotateTransition> _animators;
 	private LinkedList<TurtleAnimationData> _queue = new LinkedList<TurtleAnimationData>();
 	private Color _lineColor = MyColors.GREEN_900;
+	private double _strokeWidth = 3;
+	private double _shape = 0;
 	private ImageView _imageView;
+	private double _id;
 	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators){
-		this(animators,new Image("turtle.png"));
+	
+	private double ANIMATION_SPEED=400;//100 pixels per second
+	
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, double id){
+		this(animators,new Image("turtle.png"), id);
 	}
 	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,Image image){
-		this(animators,image, new TurtleState());
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,Image image, double id){
+		this(animators,image, new TurtleState(), id);
 	}
 	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,Image image, TurtleState state){
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,Image image, TurtleState state, double id){
 		_turtleState = state;
+		_id = id;
 		setImageView(new ImageView(image));
 		_animators = animators;
 		_animators.x.setOnFinished(new EventHandler<ActionEvent>() {
@@ -102,7 +109,7 @@ public class UITurtle extends Pane {
 			_animators.x.setByY(deltaY);
 			_animators.x.setDuration( //1 pixels per 10 millisecond
 					Duration.millis(
-							5 * (Math.abs(deltaX) + Math.abs(deltaY)) + 10
+							1000/ANIMATION_SPEED * (Math.abs(deltaX) + Math.abs(deltaY)) + 1
 							)
 					); 
 			_animators.x.play();
@@ -130,18 +137,16 @@ public class UITurtle extends Pane {
 		UITurtleAttributes curr = getNewAttributes();
 		if(old != null && getTurtleState().getPen()){
 			//TODO animate this
-			//IDEA: make line 1 pixel and stretch it with scale animation
 			double ins = getWidth()/2.;
-			//Line line = new Line(old.x + ins, old.y + ins, curr.x + ins, curr.y + ins);
 			line.setStartX(old.x + ins);
 			line.setStartY(old.y + ins);
 			line.setEndX(curr.x + ins);
 			line.setEndY(curr.y + ins);
 			line.setStroke(_lineColor);
-			line.setStrokeWidth(3);
+			line.setStrokeWidth(_strokeWidth);
 			line.setOpacity(0.5);
-//			line.endXProperty().bind(xProperty());
-//			line.endYProperty().bind(yProperty());
+			//line.endXProperty().bind(this.layoutXProperty().add(ins));
+			//line.endYProperty().bind(this.layoutYProperty().add(ins));
 		}
 	}
 	public void setTurtleState(TurtleState s, Tuple<Double, Double> widthHeight){
@@ -170,6 +175,9 @@ public class UITurtle extends Pane {
 	}
 	public void setTurtleImage(Image img){
 		_imageView.setImage(img);
+	}
+	public double getTurtleId(){
+		return _id;
 	}
 
 }

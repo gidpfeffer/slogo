@@ -8,4 +8,9 @@ public interface UIMainAPI {
 	public abstract void clearScreen();
 	public abstract void addNewOutput(String output);
 	public abstract void addTurtle();
+	public abstract void addNewPallete(double index, double red, double blue, double green);
+	public abstract void setPenColor(double index);
+	public abstract void setBackgroundColor(double index);
+	public abstract void setPenWidth(double width);
+	
 }
