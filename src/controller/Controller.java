@@ -79,7 +79,7 @@ public class Controller {
 		myViewController = new UIMain(new myHandler()); // handler currently Front to Back
 		//myTurtle.getState().addObserver(myViewController);
 		
-		
+
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
 		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState().getID())); 
 		
@@ -141,8 +141,10 @@ public class Controller {
 		Map<Double, List<String>> turtleMap =configMap(activeTurtles); // map of turtle to logo commands to be applied
 		List<String> literals= list.getLiterals();
 		List<String> logo = list.getLogo();
+		
 		// up until a Tell 
 		for(int i=0; i<list.getLogo().size	();i++){
+			
 			if (logo.get(i).equals("Ask")){
 				List<String> toParse = literals.subList(i+1, logo.size());
 				List<String> ids = parseIds(toParse);
@@ -150,6 +152,7 @@ public class Controller {
 				List<String> commands = parseIds(literals.subList(i+ids.size()+3, logo.size()));
 				//System.out.println(commands);
 				i += commands.size()+ids.size();
+				
 			}
 			else if (logo.get(i).equals("Tell")){
 				// get the IDS of the turtles + cast to doubles 
@@ -172,6 +175,8 @@ public class Controller {
 				}
 				
 			}
+			
+			
 			else{
 				// add commands to the active turtles' command lists 
 			}
