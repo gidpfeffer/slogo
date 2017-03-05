@@ -63,11 +63,6 @@ public class Parser {
 	public void parse(String toParse){	
 		str = toParse;
 		generateTokens();
-		System.out.println("++++");
-		for(String s: TL.getLiterals()){
-			System.out.println(s);
-		}
-		System.out.println("++++");
 		makeInterpreter();
 		IT.handleVarLoops();
 		handleVars();
