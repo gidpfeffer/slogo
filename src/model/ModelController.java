@@ -19,7 +19,6 @@ public class ModelController {
 	ArrayList<Turtle> turtles; 	
 	ArrayList<State> turtleStates;
 
-	//Turtle myTurtle;
 	String output; 
 	BackEndHandler handler; 
 
@@ -27,25 +26,15 @@ public class ModelController {
 
 		// GUI can hand these to controller and controller can hand them down if needed -  x and y should be based on GUI size 
 		
-		//myTurtle = new Turtle();
 		turtles = new ArrayList<Turtle>();
-		turtles.add(new Turtle(1,0,0,0,true,true));
-
+		turtles.add(new Turtle());
 		handler = myHandler; 
-		
-		turtleStates = new ArrayList<State>(); 
-		
+		turtleStates = new ArrayList<State>(); // may not even need this	
 	}
-
-
+	
 	public List<Turtle> getTurtles(){
 		return turtles; 
 	}
-
-//	public Turtle getTurtle(){ 
-//		return myTurtle; 
-//	}
-
 
 	public void update(Queue<TreeNode> commandsToExecute){
 		output = "";
@@ -69,7 +58,6 @@ public class ModelController {
 		return output; 
 	}
 
-
 	public void reset() {
 		for (Turtle t: turtles){
 			t.reset();
@@ -77,7 +65,6 @@ public class ModelController {
 	}
 	
 	public void makeNewTurtle(double id){
-		turtles.add(new Turtle(id,0,0,0,true,true));
+		turtles.add(new Turtle(id));
 	}
-
 }
