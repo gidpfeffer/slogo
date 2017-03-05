@@ -43,4 +43,8 @@ public class ProtectedTokenList {
 			list.getLogo().remove(start);
 		}
 	}
+	
+	public TokenList getTokenList(){
+		return list;
+	}
 }
