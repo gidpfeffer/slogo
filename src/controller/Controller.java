@@ -60,7 +60,7 @@ public class Controller {
 
 	private ModelController myModel; 
 	private List<Turtle> myTurtles;
-	private List<Turtle> activeTurtles;
+	private List<Double> activeTurtleIndexList;
 	
 	private NewParser myParser;
 	private Compiler compiler;
@@ -74,8 +74,8 @@ public class Controller {
 	public Controller(){
 		myModel = new ModelController(new modelHandler()); 
 		myTurtles = myModel.getTurtles();
-		activeTurtles = new ArrayList<Turtle>();
-		activeTurtles.addAll(myTurtles);
+		activeTurtleIndexList = new ArrayList<Double>();
+		activeTurtleIndexList.add(new Double(1));
 		myViewController = new UIMain(new myHandler()); // handler currently Front to Back
 		//myTurtle.getState().addObserver(myViewController);
 		
@@ -136,15 +136,15 @@ public class Controller {
 	}
 
 	private Map<Double, List<String>> parseList(ProtectedTokenList list) {
-		List<Turtle> activeTurtles = myModel.getTurtles();
+		//List<Turtle> activeTurtleIndexList = myModel.getTurtles();
 		// configure the map for all currently active turtles 
-		Map<Double, List<String>> turtleMap =configMap(activeTurtles); // map of turtle to logo commands to be applied
+		Map<Double, List<String>> turtleMap =configMap(activeTurtleIndexList); // map of turtle to logo commands to be applied
 		List<String> literals= list.getLiterals();
 		List<String> logo = list.getLogo();
 		// up until a Tell 
 		for(int i=0; i<list.getLogo().size	();i++){
 			if (logo.get(i).equals("Ask")){
-				List<String> toParse = literals.subList(i+1, logo.size());
+				List<String> toParse = literals.subList(i+1, logo.size()); // logo.size()?a tell right after an ask
 				List<String> ids = parseIds(toParse);
 				//System.out.println(ids);
 				List<String> commands = parseIds(literals.subList(i+ids.size()+3, logo.size()));
@@ -160,12 +160,12 @@ public class Controller {
 				}
 				i += ids.size();
 				// iterate through the ids and set the active turtles
-				activeTurtles.clear();
+				activeTurtleIndexList.clear();
 				for (Double turtleID: usableIds){
-					if (!activeTurtles.contains(turtleID)){
-						activeTurtles.add(new Turtle(turtleID));
-						myModel.makeNewTurtle(turtleID);
-						myViewController.addTurtle(turtleID);
+					if (!activeTurtleIndexList.contains(turtleID)){
+						//activeTurtles.add(new Turtle(turtleID));
+						activeTurtleIndexList.add(new Double(turtleID));
+						myModel.makeNewTurtle(turtleID).getState().addObserver(myViewController.addTurtle(turtleID));
 						
 					}
 					
