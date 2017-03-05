@@ -112,11 +112,11 @@ public class Controller {
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, List<String>> turtlesToCommands = parseList(list);
-			myModel.update(myParser.getTreeQueue());
+			/*myModel.update(myParser.getTreeQueue());
 			output = myModel.getStringOutput();
 			myViewController.addNewOutput(output);
 			System.out.println("String to print " + output);
-
+*/
 		}
 		catch (SLogoException e){ 
 			myViewController.displayErrorWithMessage(e.getMessage());
@@ -134,7 +134,7 @@ public class Controller {
 		List<String> literals= list.getLiterals();
 		List<String> logo = list.getLogo();
 		// up until a Tell 
-		for(int i=0; i<list.getLogo().size();i++){
+		for(int i=0; i<list.getLogo().size	();i++){
 			if (logo.get(i).equals("Ask")){
 				List<String> toParse = literals.subList(i+1, logo.size());
 				List<String> ids = parseIds(toParse);
