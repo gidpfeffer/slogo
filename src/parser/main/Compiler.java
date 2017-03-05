@@ -14,9 +14,11 @@ import parser.tokenizer.TokenList;
 
 public class Compiler {
 	private VariableStorage vars;
+	private FixVars fixVars;
 
 	public Compiler(){
 		vars = new VariableStorage();
+		fixVars = new FixVars(vars);
 	}
 	
 	private Queue<TreeNode> interpret(ProtectedTokenList list, State state){
@@ -24,7 +26,7 @@ public class Compiler {
 		Interpreter IT = new Interpreter(TL, state, vars.keySet());
 		TL = IT.getTokenList();
 		IT.handleVarLoops();
-		FixVars FV = new FixVars(vars, TL);
+		fixVars.fix(IT.getTokenList());
 		IT.handleRegLoops();
 		return makeTree(TL, state);
 	}

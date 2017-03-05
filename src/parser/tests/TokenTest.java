@@ -10,7 +10,7 @@ public class TokenTest {
 
 	public static void main(String args[]){
 		String language = "resources/languages/English";
-		String testCode = "tell [ 100 50 ] ";
+		String testCode = "to blag [ :x :y ] [ fd :x rt :y ]";
 		
 		TokenListGenerator t = new TokenListGenerator(testCode, language);
 		
