@@ -10,6 +10,7 @@ import java.util.Observer;
 
 import controller.ControlHandler;
 import general_data_structures.Tuple;
+import gui.API.ButtonControlHandler;
 import gui.API.UIMainAPI;
 import gui.API.UIMainHandler;
 import gui.menu.UIMenuView;
@@ -52,7 +53,8 @@ public class UIMain implements UIMainAPI, Observer {
 	public static final Frame VARS_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8, VOCAB_FRAME.getMaxY() + 8,
 			VOCAB_FRAME.getWidth(), SCREEN_HEIGHT - VOCAB_FRAME.getMaxY() - 16);
 	public static final Frame MENU_FRAME = new Frame(-SCREEN_WIDTH * 2 / 5, 0, SCREEN_WIDTH * 2 / 5, SCREEN_HEIGHT);
-
+	public static final Frame BTN_CONTROL_FRAME = new Frame(100, 8, SCREEN_WIDTH-112, DISPLAY_FRAME.getMaxY() - 16);
+	
 	private Pane _root;
 	private Scene _scene;
 	private ControlHandler _handler;
@@ -63,6 +65,7 @@ public class UIMain implements UIMainAPI, Observer {
 	private UIHistoryView _historyView;
 	private UIMenuView _menuView;
 	private ImageButton _menuButton;
+	private UIButtonControlView _buttonControlView;
 	private List<UITurtle> _turtlesOnDisplay;
 
 	public UIMain(ControlHandler handler) {
@@ -93,6 +96,35 @@ public class UIMain implements UIMainAPI, Observer {
 		}
 
 	}
+	
+	public class AnimationControlHandler implements ButtonControlHandler{
+
+		@Override
+		public void handlePause() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void handlePlay() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void handleStop() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void handleNewWorkspace() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+
 
 	@Override
 	public void displayErrorWithMessage(String error) {
@@ -150,6 +182,7 @@ public class UIMain implements UIMainAPI, Observer {
 		setupVarsBox();
 		setupTerminalButtons();
 		setupMenu();
+		setupButtonControlsView();
 	}
 
 	private void setupRoot() {
@@ -206,6 +239,11 @@ public class UIMain implements UIMainAPI, Observer {
 	private void setupVarsBox() {
 		_varBoxView = new UIVariablesView(VARS_FRAME);
 		_root.getChildren().add(_varBoxView);
+	}
+	
+	private void setupButtonControlsView(){
+		_buttonControlView = new UIButtonControlView(BTN_CONTROL_FRAME, new AnimationControlHandler());
+		_root.getChildren().add(_buttonControlView);
 	}
 
 	private void setupTerminalButtons() {
@@ -273,7 +311,7 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 
 	@Override
-	public void addNewPallete(double index, double red, double blue, double green) {
+	public void setPalleteAtIndex(double index, double red, double blue, double green) {
 		// TODO Auto-generated method stub
 
 	}
