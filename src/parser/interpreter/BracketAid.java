@@ -11,8 +11,8 @@ import parser.tokenizer.TokenList;
 public abstract class BracketAid extends BracketHandler{
 	protected ListMultiplier listMultiplier;
 
-	public BracketAid(TokenList list, String indicator, State t) {
-		super(list, indicator, t);
+	public BracketAid(TokenList list, String indicator) {
+		super(list, indicator);
 		listMultiplier = new ListMultiplier();
 	}
 	

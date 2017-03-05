@@ -13,12 +13,10 @@ public abstract class BracketHandler {
 	protected String indicator;
 	protected static final String LEFT_BRACKET 	= "[";
 	protected static final String RIGHT_BRACKET = "]";
-	protected State turtle;
 	
-	public BracketHandler(TokenList list, String indicator, State t){
+	public BracketHandler(TokenList list, String indicator){
 		this.indicator = indicator;
 		this.list = list;
-		this.turtle = t;
 		literals = list.getLiterals();
 		logo = list.getLogo();
 		checkSyntax();

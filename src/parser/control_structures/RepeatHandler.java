@@ -12,9 +12,11 @@ public class RepeatHandler extends BracketAid{
 	private static final String CONSTANT = "Constant";
 	private static final String REPEAT = "Repeat";
 	private int startIndex, endIndex, times;
+	private State turtle; 
 	
-	public RepeatHandler(TokenList list, State state){
-		super(list, REPEAT, state);
+	public RepeatHandler(TokenList list, State turtle){
+		super(list, REPEAT);
+		this.turtle = turtle;
 		correctList();
 	}
 	
