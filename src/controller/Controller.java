@@ -37,34 +37,34 @@ public class Controller {
 		}
 
 	}
-	
+
 	public class modelHandler implements BackEndHandler{ // controller to model 
 
 		@Override
 		public void setBackground(double index) {
 			changeBackground(index); 
-			
+
 		}
 
 		@Override
 		public void setPalette(double index, double r, double g, double b) {
 			changePalette(index, r,g,b);	
 		}
-		
+
 		public void handleReset(){
 			reset(); 
 		}
-		
+
 	}
 
 
 	private ModelController myModel; 
 	private List<Turtle> myTurtles;
 	private List<Double> activeTurtleIndexList;
-	
+
 	private NewParser myParser;
 	private Compiler compiler;
-	
+
 	private UIMain myViewController;
 	private String output; 
 	private final String languageLocation = "resources.languages/";
@@ -78,12 +78,12 @@ public class Controller {
 		activeTurtleIndexList.add(new Double(1));
 		myViewController = new UIMain(new myHandler()); // handler currently Front to Back
 		//myTurtle.getState().addObserver(myViewController);
-		
+
 
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
 		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState().getID())); 
-		
-		
+
+
 		changeLanguage("English");
 		//myParser = new Parser(myTurtle.getReadOnlyState(), currentLang.toString());  // safe way to hand turtle state
 		myParser = new NewParser(currentLang.toString());
@@ -94,16 +94,16 @@ public class Controller {
 
 
 	private void configureVariableStorage() {
-		VariableStorage vars = myParser.getVars(); 
+		VariableStorage vars = compiler.getVars(); 
 		UIVariablesView variableBox = myViewController.getVariableView();
 		vars.addObserver(variableBox);
-		
+
 	}
 
 	public void changeBackground(double index){
 		myViewController.setBackgroundColor(index);
 	}
-	
+
 
 	public void changePalette(double index, double r, double g, double b){
 		myViewController.setPalleteAtIndex(index,r,g,b);
@@ -124,37 +124,47 @@ public class Controller {
 			output = myModel.getStringOutput();
 			myViewController.addNewOutput(output);
 			System.out.println("String to print " + output);
-*/
+			 */
 		}
 		catch (SLogoException e){ 
 			myViewController.displayErrorWithMessage(e.getMessage());
 		}
-
-		//		myParser.parse(input);
-		//		myModel.update(myParser.getTreeQueue());
-		//		output = myModel.getStringOutput();
+		output = myModel.getStringOutput();
 	}
 
 	private Map<Double, List<String>> parseList(ProtectedTokenList list) {
-		//List<Turtle> activeTurtleIndexList = myModel.getTurtles();
+		
 		// configure the map for all currently active turtles 
-		Map<Double, List<String>> turtleMap =configMap(activeTurtleIndexList); // map of turtle to logo commands to be applied
+		Map<Double, List<String>> turtleMap =configMap(); // map of turtle to logo commands to be applied
 		List<String> literals= list.getLiterals();
 		List<String> logo = list.getLogo();
-		
+
 		// up until a Tell 
 		for(int i=0; i<list.getLogo().size	();i++){
-			
+
 			if (logo.get(i).equals("Ask")){
 				List<String> toParse = literals.subList(i+1, logo.size()); // logo.size()?a tell right after an ask
 				List<String> ids = parseIds(toParse);
-				//System.out.println(ids);
 				List<String> commands = parseIds(literals.subList(i+ids.size()+3, logo.size()));
-				//System.out.println(commands);
-				i += commands.size()+ids.size();
 				
+				
+				// give all the turtles the specified commands
+				for (String id: ids){
+					Double turtleId = Double.parseDouble(id);
+					if (!turtleMap.containsKey(turtleId)){
+						turtleMap.put(turtleId, commands);
+					}
+					else{
+						turtleMap.get(turtleId).addAll(commands);
+					}
+				}
+				
+				// increment loop variable
+				i += commands.size()+ids.size();
+
 			}
-			else if (logo.get(i).equals("Tell")){
+			
+			if (logo.get(i).equals("Tell")){
 				// get the IDS of the turtles + cast to doubles 
 				List<String> ids = parseIds(literals.subList(i+1, logo.size()));
 				List<Double> usableIds = new ArrayList<Double>(); 
@@ -162,28 +172,38 @@ public class Controller {
 					usableIds.add(Double.parseDouble(id));
 				}
 				i += ids.size();
+				
 				// iterate through the ids and set the active turtles
 				activeTurtleIndexList.clear();
+				
 				for (Double turtleID: usableIds){
 					if (!activeTurtleIndexList.contains(turtleID)){
 						//activeTurtles.add(new Turtle(turtleID));
 						activeTurtleIndexList.add(new Double(turtleID));
 						myModel.makeNewTurtle(turtleID).getState().addObserver(myViewController.addTurtle(turtleID));
-						
 					}
-					
+
 				}
 				
+
 			}
 			
+			// apply commands to active turtles 
+			for (Double activeID: activeTurtleIndexList){
+				
+				turtleMap.get(activeID).add(literals.get(i));
+				
+				}
 			
-			else{
-				// add commands to the active turtles' command lists 
+			
 			}
-		}
+
 		// TODO Auto-generated method stub
-		return null;
-	}
+		return turtleMap;
+			
+		}
+	
+
 
 
 	private List<String> parseIds(List<String> toParse) {
@@ -204,11 +224,11 @@ public class Controller {
 	}
 
 
-	private Map<Double, List<String>> configMap(List<Turtle> activeTurtles) {
+	private Map<Double, List<String>> configMap() {
 		HashMap<Double,List<String> > turtlesToCommands = new HashMap<Double, List<String>>();
-		for (Turtle t: activeTurtles){
-			if (!turtlesToCommands.containsKey(t.getReadOnlyState().getID())){
-				turtlesToCommands.put(t.getReadOnlyState().getID(), new ArrayList<String>());
+		for (Double t: activeTurtleIndexList){
+			if (!turtlesToCommands.containsKey(t)){
+				turtlesToCommands.put(t, new ArrayList<String>());
 			}
 		}
 		return turtlesToCommands; 
@@ -220,7 +240,7 @@ public class Controller {
 	}
 
 	private void reset(){
-		myTurtle.reset();
+		//myTurtle.reset();
 		myViewController.clearScreen();
 		myModel.reset(); 
 	}
