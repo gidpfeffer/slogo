@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import controller.BackEndHandler;
 import controller.Controller.myHandler;
 import model.command.Command;
 import model.command.TreeNode;
@@ -20,17 +21,16 @@ public class ModelController {
 
 	//Turtle myTurtle;
 	String output; 
-	myHandler handler; 
+	BackEndHandler handler; 
 
-	public ModelController(myHandler myHandler){
+	public ModelController(BackEndHandler myHandler){
 
 		// GUI can hand these to controller and controller can hand them down if needed -  x and y should be based on GUI size 
 		
 		//myTurtle = new Turtle();
 		turtles = new ArrayList<Turtle>();
 		turtles.add(new Turtle(1,0,0,0,true,true));
-		
-		
+
 		handler = myHandler; 
 		
 		turtleStates = new ArrayList<State>(); 
