@@ -1,8 +1,13 @@
 package gui;
 
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 
 import general_data_structures.Tuple;
+import gui.API.TurtleDisplayHandler;
+import gui.tools.Frame;
+import gui.tools.GUITools;
 import gui.tools.MyColors;
 import gui.tools.TurtleAnimationData;
 import gui.tools.UITurtleAttributes;
@@ -19,7 +24,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
-public class UITurtle extends Pane {
+public class UITurtle extends Pane implements Observer {
 	
 	private TurtleState _turtleState;
 	private UITurtleAttributes _turtleAtt;
@@ -27,18 +32,32 @@ public class UITurtle extends Pane {
 	private Tuple<TranslateTransition, RotateTransition> _animators;
 	private LinkedList<TurtleAnimationData> _queue = new LinkedList<TurtleAnimationData>();
 	private Color _lineColor = MyColors.GREEN_900;
+	private double _strokeWidth = 3;
+	private double _shape = 0;
 	private ImageView _imageView;
+	private double _id;
+	private TurtleDisplayHandler _handler;
+	private Frame _displayBounds;
 	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators){
-		this(animators,new Image("turtle.png"));
+	
+	private double ANIMATION_SPEED=400;//100 pixels per second
+	
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, 
+			double id,TurtleDisplayHandler handler, Frame displayBounds){
+		this(animators,new Image("turtle.png"), id, handler,displayBounds);
 	}
 	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,Image image){
-		this(animators,image, new TurtleState());
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,
+			Image image, double id,TurtleDisplayHandler handler,Frame displayBounds){
+		this(animators,image, new TurtleState(), id, handler,displayBounds);
 	}
 	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,Image image, TurtleState state){
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,
+			Image image, TurtleState state, double id, TurtleDisplayHandler handler,Frame displayBounds){
 		_turtleState = state;
+		_id = id;
+		_handler = handler;
+		_displayBounds = displayBounds;
 		setImageView(new ImageView(image));
 		_animators = animators;
 		_animators.x.setOnFinished(new EventHandler<ActionEvent>() {
@@ -102,7 +121,7 @@ public class UITurtle extends Pane {
 			_animators.x.setByY(deltaY);
 			_animators.x.setDuration( //1 pixels per 10 millisecond
 					Duration.millis(
-							5 * (Math.abs(deltaX) + Math.abs(deltaY)) + 10
+							1000/ANIMATION_SPEED * (Math.abs(deltaX) + Math.abs(deltaY)) + 1
 							)
 					); 
 			_animators.x.play();
@@ -130,18 +149,16 @@ public class UITurtle extends Pane {
 		UITurtleAttributes curr = getNewAttributes();
 		if(old != null && getTurtleState().getPen()){
 			//TODO animate this
-			//IDEA: make line 1 pixel and stretch it with scale animation
 			double ins = getWidth()/2.;
-			//Line line = new Line(old.x + ins, old.y + ins, curr.x + ins, curr.y + ins);
 			line.setStartX(old.x + ins);
 			line.setStartY(old.y + ins);
 			line.setEndX(curr.x + ins);
 			line.setEndY(curr.y + ins);
 			line.setStroke(_lineColor);
-			line.setStrokeWidth(3);
+			line.setStrokeWidth(_strokeWidth);
 			line.setOpacity(0.5);
-//			line.endXProperty().bind(xProperty());
-//			line.endYProperty().bind(yProperty());
+			//line.endXProperty().bind(this.layoutXProperty().add(ins));
+			//line.endYProperty().bind(this.layoutYProperty().add(ins));
 		}
 	}
 	public void setTurtleState(TurtleState s, Tuple<Double, Double> widthHeight){
@@ -170,6 +187,16 @@ public class UITurtle extends Pane {
 	}
 	public void setTurtleImage(Image img){
 		_imageView.setImage(img);
+	}
+	public double getTurtleId(){
+		return _id;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		TurtleState newState = new TurtleState((TurtleState) o);
+		addAnimationToQueue(newState, 
+				GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
 	}
 
 }

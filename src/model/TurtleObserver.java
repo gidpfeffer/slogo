@@ -12,7 +12,7 @@ public class TurtleObserver implements Observer {
 
 
 	public TurtleObserver(){
-		observerTurtleState = new TurtleState(0, 0, 0, false, false);
+//		observerTurtleState = new TurtleState(0, 0, 0, false, false);
 	}
 	
 	@Override

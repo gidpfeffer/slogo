@@ -1,26 +1,21 @@
 package gui;
 
-import javax.swing.event.ChangeListener;
-
 import gui.API.CommandHistoryAPI;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
-import javafx.beans.value.ObservableValue;
+import gui.tools.UIView;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
-import javafx.scene.layout.Pane;
 
-public class UIHistoryView extends Pane implements CommandHistoryAPI {
+public class UIHistoryView extends UIView implements CommandHistoryAPI {
 	
 	private TextArea _textArea;
-	private Frame _bounds;
 	
-	public UIHistoryView(Frame bounds){
-		super();
-		_bounds = bounds;
+	public UIHistoryView(Frame frame){
+		super(frame);
 		setupViews();
 	}
 
