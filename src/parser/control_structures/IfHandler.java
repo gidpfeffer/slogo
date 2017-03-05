@@ -14,9 +14,11 @@ public class IfHandler extends BracketAid{
 	private static final String RIGHT_BRACKET = "ListEnd";
 	private static final String IF_ELSE = "IfElse";
 	private int addLoc;
+	protected State turtle;
 	
 	public IfHandler(TokenList tokens, State state){
-		super(tokens, INDICATOR, state);
+		super(tokens, INDICATOR);
+		this.turtle = state;
 		correctList();
 	}
 

@@ -24,7 +24,7 @@ public class CompilerTest {
 			System.out.println(q.remove().getValue());
 		}
 		
-		testCode = "fd :x";
+		testCode = "repeat :x [ fd 5 ] ";
 		
 		PTL = p.parse(testCode);
 		

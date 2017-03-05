@@ -9,9 +9,11 @@ import parser.tokenizer.TokenList;
 public abstract class RegControl extends BracketAid{
 	protected static final String CONSTANT = "Constant";
 	protected int ifStart, ifEnd, elseStart, elseEnd;
+	protected State turtle;
 	
 	public RegControl(TokenList list, String indicator, State t){
-		super(list, indicator, t);
+		super(list, indicator);
+		this.turtle = turtle;
 	}
 	
 	@Override
