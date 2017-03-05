@@ -11,7 +11,7 @@ import parser.tokenizer.ProtectedTokenList;
 public class CompilerTest {
 	public static void main(String args[]){
 		String language = "resources/languages/English";
-		String testCode = "fd fd fd 50 rt 30 repeat fd 50 [ rt 30 fd 10 ]";
+		String testCode = "make :x 10";
 		
 		NewParser p = new NewParser(language);
 		Compiler c = new Compiler();
@@ -19,6 +19,16 @@ public class CompilerTest {
 		ProtectedTokenList PTL = p.parse(testCode);
 		
 		Queue<TreeNode> q = c.compile(new TurtleState(), PTL);
+		
+		while(!q.isEmpty()){
+			System.out.println(q.remove().getValue());
+		}
+		
+		testCode = "fd :x";
+		
+		PTL = p.parse(testCode);
+		
+		q = c.compile(new TurtleState(), PTL);
 		
 		while(!q.isEmpty()){
 			System.out.println(q.remove().getValue());
