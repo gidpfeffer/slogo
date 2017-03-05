@@ -12,7 +12,7 @@ import parser.storage.VariableStorage;
 public class Controller {
 
 
-	public class myHandler implements ControlHandler{
+	public class myHandler implements ControlHandler{ // front end to controller 
 		@Override
 		public void handleTextInput(String input){
 			processInput(input);
@@ -29,7 +29,7 @@ public class Controller {
 
 	}
 	
-	public class modelHandler implements BackEndHandler{
+	public class modelHandler implements BackEndHandler{ // controller to model 
 
 		@Override
 		public void setBackground(double index) {
@@ -40,6 +40,10 @@ public class Controller {
 		@Override
 		public void setPalette(double index, double r, double g, double b) {
 			changePalette(index, r,g,b);	
+		}
+		
+		public void handleReset(){
+			reset(); 
 		}
 		
 	}
@@ -55,7 +59,7 @@ public class Controller {
 
 
 	public Controller(){
-		myModel = new ModelController(new myHandler()); 
+		myModel = new ModelController(new modelHandler()); 
 		//myTurtle = myModel.getTurtle();
 		myHandler GUIToBackHandler = new myHandler(); // currently Front to Back 
 		myViewController = new UIMain(GUIToBackHandler);
@@ -114,7 +118,8 @@ public class Controller {
 
 	private void reset(){
 		myTurtle.reset();
-		myViewController.clearScreen();  
+		myViewController.clearScreen();
+		myModel.reset(); 
 	}
 
 
