@@ -20,8 +20,9 @@ public class Compiler {
 	}
 	
 	private Queue<TreeNode> interpret(ProtectedTokenList list, State state){
-		Interpreter IT = new Interpreter(list.getTokenList(), state, vars.keySet());
-		TokenList TL = IT.getTokenList();
+		TokenList TL = new TokenList(list.getLiterals(), list.getLogo());
+		Interpreter IT = new Interpreter(TL, state, vars.keySet());
+		TL = IT.getTokenList();
 		IT.handleVarLoops();
 		FixVars FV = new FixVars(vars, TL);
 		IT.handleRegLoops();
