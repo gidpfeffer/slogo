@@ -59,7 +59,8 @@ public class Controller {
 
 
 	private ModelController myModel; 
-	private Turtle myTurtle;
+	private List<Turtle> myTurtles;
+	private List<Turtle> activeTurtles;
 	
 	private NewParser myParser;
 	private Compiler compiler;
@@ -72,10 +73,17 @@ public class Controller {
 
 	public Controller(){
 		myModel = new ModelController(new modelHandler()); 
-		//myTurtle = myModel.getTurtle();
-		myHandler GUIToBackHandler = new myHandler(); // currently Front to Back 
-		myViewController = new UIMain(GUIToBackHandler);
-		myTurtle.getState().addObserver(myViewController);
+		myTurtles = myModel.getTurtles();
+		activeTurtles = new ArrayList<Turtle>();
+		activeTurtles.addAll(myTurtles);
+		myViewController = new UIMain(new myHandler()); // handler currently Front to Back
+		//myTurtle.getState().addObserver(myViewController);
+		
+		
+		// set the observable/observer relationship for the first turtle - we can make this into a method. 
+		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState().getID())); 
+		
+		
 		changeLanguage("English");
 		//myParser = new Parser(myTurtle.getReadOnlyState(), currentLang.toString());  // safe way to hand turtle state
 		myParser = new NewParser(currentLang.toString());
