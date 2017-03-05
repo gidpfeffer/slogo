@@ -22,11 +22,13 @@ public class Parser {
 	private VariableStorage vars;
 	private QueueSplitter QS;
 	private String language;
+	private FixVars FV;
 	
 	public Parser(State state, String language){
 		this.state = state;
 		this.language = language;
 		vars = new VariableStorage();
+		FV = new FixVars(vars);
 	}
 	
 	private void makeInterpreter(){
@@ -39,8 +41,8 @@ public class Parser {
 		QS = new QueueSplitter(TG.getCommandQueue());
 	}
 	
-	private void handleVars(){
-		FixVars FV = new FixVars(vars, TL);
+	private void handleVars(TokenList list){
+		FV.fix(list);
 	}
 	
 	private void generateTokens(){
@@ -65,7 +67,7 @@ public class Parser {
 		generateTokens();
 		makeInterpreter();
 		IT.handleVarLoops();
-		handleVars();
+		handleVars(IT.getTokenList());
 		IT.handleRegLoops();
 		makeTree();
 	}

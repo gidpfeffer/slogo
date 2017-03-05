@@ -1,5 +1,6 @@
 package parser.tokenizer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,7 +45,16 @@ public class ProtectedTokenList {
 		}
 	}
 	
-	public TokenList getTokenList(){
-		return list;
+	public ProtectedTokenList oldSubList(int start, int end){
+		TokenList tokenList = new TokenList(list.getLiterals().subList(start, end),
+				list.getLogo().subList(start, end));
+		return new ProtectedTokenList(tokenList);
+	}
+	
+	public ProtectedTokenList newSubList(int start, int end){
+		TokenList tokenList = new TokenList(
+				new ArrayList<>(list.getLiterals().subList(start, end)),
+				new ArrayList<>(list.getLogo().subList(start, end)));
+		return new ProtectedTokenList(tokenList);
 	}
 }

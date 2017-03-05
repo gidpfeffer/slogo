@@ -12,8 +12,11 @@ public class FixVars {
 	private boolean madeNew;
 	private int location;
 	
-	public FixVars(VariableStorage VS, TokenList TL){
+	public FixVars(VariableStorage VS){
 		this.VS = VS;
+	}
+	
+	public void fix(TokenList TL){
 		this.TL = TL;
 		madeNew = false;
 		fix();

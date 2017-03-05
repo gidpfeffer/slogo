@@ -2,42 +2,49 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import controller.BackEndHandler;
 import controller.Controller.myHandler;
 import model.command.Command;
 import model.command.TreeNode;
 import model.movement.ClearScreen;
+import model.turtle.State;
 import model.turtle.Turtle;
 
 public class ModelController {
+	
+	ArrayList<Turtle> turtles; 	
+	ArrayList<State> turtleStates;
 
-	ArrayList<Turtle> turtles;
-	HashMap<Turtle, TurtleObserver> turtleMap; 
-
-	Turtle myTurtle;
+	//Turtle myTurtle;
 	String output; 
-	myHandler handler; 
+	BackEndHandler handler; 
 
-	public ModelController(myHandler myHandler){
+	public ModelController(BackEndHandler myHandler){
 
 		// GUI can hand these to controller and controller can hand them down if needed -  x and y should be based on GUI size 
+		
+		//myTurtle = new Turtle();
+		turtles = new ArrayList<Turtle>();
+		turtles.add(new Turtle(1,0,0,0,true,true));
 
-		myTurtle = new Turtle();
 		handler = myHandler; 
-
+		
+		turtleStates = new ArrayList<State>(); 
+		
 	}
 
 
-	public Map<Turtle, TurtleObserver> getTurtleMap(){
-		return turtleMap; 
+	public List<Turtle> getTurtles(){
+		return turtles; 
 	}
 
-
-	public Turtle getTurtle(){ 
-		return myTurtle; 
-	}
+//	public Turtle getTurtle(){ 
+//		return myTurtle; 
+//	}
 
 
 	public void update(Queue<TreeNode> commandsToExecute){
@@ -49,7 +56,10 @@ public class ModelController {
 			if (command instanceof ClearScreen){
 				handler.handleReset(); 
 			}
-
+		/*	if (command instanceof DisplayCommand){
+				
+			}
+*/
 			output = ((Double) command.getValue()).toString();
 			((Command) command).execute();
 		}
@@ -61,11 +71,13 @@ public class ModelController {
 
 
 	public void reset() {
-		myTurtle.reset(); 
-
+		for (Turtle t: turtles){
+			t.reset();
+		}
 	}
-
-
-
+	
+	public void makeNewTurtle(double id){
+		turtles.add(new Turtle(id,0,0,0,true,true));
+	}
 
 }

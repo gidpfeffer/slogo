@@ -12,7 +12,7 @@ import parser.storage.VariableStorage;
 public class Controller {
 
 
-	public class myHandler implements ControlHandler{
+	public class myHandler implements ControlHandler{ // front end to controller 
 		@Override
 		public void handleTextInput(String input){
 			processInput(input);
@@ -28,6 +28,25 @@ public class Controller {
 		}
 
 	}
+	
+	public class modelHandler implements BackEndHandler{ // controller to model 
+
+		@Override
+		public void setBackground(double index) {
+			changeBackground(index); 
+			
+		}
+
+		@Override
+		public void setPalette(double index, double r, double g, double b) {
+			changePalette(index, r,g,b);	
+		}
+		
+		public void handleReset(){
+			reset(); 
+		}
+		
+	}
 
 
 	private ModelController myModel; 
@@ -38,13 +57,13 @@ public class Controller {
 	private final String languageLocation = "resources.languages/";
 	private StringBuilder currentLang; 
 
+
 	public Controller(){
-		myModel = new ModelController(new myHandler()); 
-		myTurtle = myModel.getTurtle();
-		myHandler handler = new myHandler(); 
-		myViewController = new UIMain(handler);
+		myModel = new ModelController(new modelHandler()); 
+		//myTurtle = myModel.getTurtle();
+		myHandler GUIToBackHandler = new myHandler(); // currently Front to Back 
+		myViewController = new UIMain(GUIToBackHandler);
 		myTurtle.getState().addObserver(myViewController);
-		//myParser = new Parser(myTurtle.getReadOnlyState()); 
 		changeLanguage("English");
 		myParser = new Parser(myTurtle.getReadOnlyState(), currentLang.toString());  // safe way to hand turtle state
 		configureVariableStorage(); 
@@ -59,6 +78,14 @@ public class Controller {
 		
 	}
 
+	public void changeBackground(double index){
+		myViewController.setBackground(index);
+	}
+	
+
+	public void changePalette(double index, double r, double g, double b){
+		myViewController.changePalette(index,r,g,b);
+	}
 
 	public void changeLanguage(String language) {
 		currentLang = new StringBuilder(); 
@@ -91,7 +118,8 @@ public class Controller {
 
 	private void reset(){
 		myTurtle.reset();
-		myViewController.clearScreen();  
+		myViewController.clearScreen();
+		myModel.reset(); 
 	}
 
 
