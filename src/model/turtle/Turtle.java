@@ -30,4 +30,8 @@ public class Turtle {
 		myState.reset();
 	}
 	
+	public double getID(){
+		return myState.getID();
+	}
+	
 }
