@@ -79,12 +79,12 @@ public class Controller {
 	}
 
 	public void changeBackground(double index){
-		myViewController.setBackground(index);
+		myViewController.setBackgroundColor(index);
 	}
 	
 
 	public void changePalette(double index, double r, double g, double b){
-		myViewController.changePalette(index,r,g,b);
+		myViewController.setPalleteAtIndex(index,r,g,b);
 	}
 
 	public void changeLanguage(String language) {
