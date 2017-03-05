@@ -28,6 +28,21 @@ public class Controller {
 		}
 
 	}
+	
+	public class modelHandler implements BackEndHandler{
+
+		@Override
+		public void setBackground(double index) {
+			changeBackground(index); 
+			
+		}
+
+		@Override
+		public void setPalette(double index, double r, double g, double b) {
+			changePalette(index, r,g,b);	
+		}
+		
+	}
 
 
 	private ModelController myModel; 
@@ -38,13 +53,13 @@ public class Controller {
 	private final String languageLocation = "resources.languages/";
 	private StringBuilder currentLang; 
 
+
 	public Controller(){
 		myModel = new ModelController(new myHandler()); 
-		myTurtle = myModel.getTurtle();
-		myHandler handler = new myHandler(); 
-		myViewController = new UIMain(handler);
+		//myTurtle = myModel.getTurtle();
+		myHandler GUIToBackHandler = new myHandler(); // currently Front to Back 
+		myViewController = new UIMain(GUIToBackHandler);
 		myTurtle.getState().addObserver(myViewController);
-		//myParser = new Parser(myTurtle.getReadOnlyState()); 
 		changeLanguage("English");
 		myParser = new Parser(myTurtle.getReadOnlyState(), currentLang.toString());  // safe way to hand turtle state
 		configureVariableStorage(); 
@@ -59,6 +74,14 @@ public class Controller {
 		
 	}
 
+	public void changeBackground(double index){
+		myViewController.setBackground(index);
+	}
+	
+
+	public void changePalette(double index, double r, double g, double b){
+		myViewController.changePalette(index,r,g,b);
+	}
 
 	public void changeLanguage(String language) {
 		currentLang = new StringBuilder(); 
