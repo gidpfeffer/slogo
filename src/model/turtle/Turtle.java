@@ -15,6 +15,9 @@ public class Turtle {
 	public Turtle(){
 		myState = new TurtleState(1,0,0,0,true,true,3,0,0);
 	}
+	public Turtle(double id){
+		myState = new TurtleState(id,0,0,0,true,true,3,0,0);
+	}
 
 	public State getReadOnlyState(){ //safe way to hand turtle state 
 		return (State) myState;
