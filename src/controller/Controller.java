@@ -152,13 +152,28 @@ public class Controller {
 				i += commands.size()+ids.size();
 			}
 			else if (logo.get(i).equals("Tell")){
+				// get the IDS of the turtles + cast to doubles 
 				List<String> ids = parseIds(literals.subList(i+1, logo.size()));
-				// commands = all that follows until another bracket 
+				List<Double> usableIds = new ArrayList<Double>(); 
+				for (String id: ids){
+					usableIds.add(Double.parseDouble(id));
+				}
+				i += ids.size();
+				// iterate through the ids and set the active turtles
+				activeTurtles.clear();
+				for (Double turtleID: usableIds){
+					if (!activeTurtles.contains(turtleID)){
+						activeTurtles.add(new Turtle(turtleID));
+						myModel.makeNewTurtle(turtleID);
+						myViewController.addTurtle(turtleID);
+						
+					}
+					
+				}
+				
 			}
 			else{
-				for (double ID : turtleMap.keySet()){
-					turtleMap.get(ID).add(l);
-				}
+				// add commands to the active turtles' command lists 
 			}
 		}
 		// TODO Auto-generated method stub
