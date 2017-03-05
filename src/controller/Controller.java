@@ -120,11 +120,11 @@ public class Controller {
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, List<String>> turtlesToCommands = parseList(list);
-			myModel.update(myParser.getTreeQueue());
+			/*myModel.update(myParser.getTreeQueue());
 			output = myModel.getStringOutput();
 			myViewController.addNewOutput(output);
 			System.out.println("String to print " + output);
-
+*/
 		}
 		catch (SLogoException e){ 
 			myViewController.displayErrorWithMessage(e.getMessage());
@@ -142,7 +142,7 @@ public class Controller {
 		List<String> literals= list.getLiterals();
 		List<String> logo = list.getLogo();
 		// up until a Tell 
-		for(int i=0; i<list.getLogo().size();i++){
+		for(int i=0; i<list.getLogo().size	();i++){
 			if (logo.get(i).equals("Ask")){
 				List<String> toParse = literals.subList(i+1, logo.size());
 				List<String> ids = parseIds(toParse);
@@ -152,13 +152,28 @@ public class Controller {
 				i += commands.size()+ids.size();
 			}
 			else if (logo.get(i).equals("Tell")){
+				// get the IDS of the turtles + cast to doubles 
 				List<String> ids = parseIds(literals.subList(i+1, logo.size()));
-				// commands = all that follows until another bracket 
+				List<Double> usableIds = new ArrayList<Double>(); 
+				for (String id: ids){
+					usableIds.add(Double.parseDouble(id));
+				}
+				i += ids.size();
+				// iterate through the ids and set the active turtles
+				activeTurtles.clear();
+				for (Double turtleID: usableIds){
+					if (!activeTurtles.contains(turtleID)){
+						activeTurtles.add(new Turtle(turtleID));
+						myModel.makeNewTurtle(turtleID);
+						myViewController.addTurtle(turtleID);
+						
+					}
+					
+				}
+				
 			}
 			else{
-				for (double ID : turtleMap.keySet()){
-					turtleMap.get(ID).add(l);
-				}
+				// add commands to the active turtles' command lists 
 			}
 		}
 		// TODO Auto-generated method stub
