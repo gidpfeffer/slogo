@@ -39,6 +39,9 @@ public class Compiler {
 	
 	public Queue<TreeNode> compile(State state, ProtectedTokenList list){
 		return interpret(list, state);
-
+	}
+	
+	public VariableStorage getVars(){
+		return vars;
 	}
 }

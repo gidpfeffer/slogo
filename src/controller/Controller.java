@@ -94,7 +94,7 @@ public class Controller {
 
 
 	private void configureVariableStorage() {
-		VariableStorage vars = myParser.getVars(); 
+		VariableStorage vars = compiler.getVars(); 
 		UIVariablesView variableBox = myViewController.getVariableView();
 		vars.addObserver(variableBox);
 		
