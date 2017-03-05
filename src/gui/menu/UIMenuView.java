@@ -18,7 +18,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,8 +26,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
@@ -161,10 +158,6 @@ public class UIMenuView extends UIView {
 			}
 		});
 		this.getChildren().add(b);
-	}
-
-	public void addPaneWithFrame(Pane newPane, Frame frame) {
-
 	}
 
 	public void slideMenuOut() {
