@@ -1,8 +1,13 @@
 package gui;
 
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 
 import general_data_structures.Tuple;
+import gui.API.TurtleDisplayHandler;
+import gui.tools.Frame;
+import gui.tools.GUITools;
 import gui.tools.MyColors;
 import gui.tools.TurtleAnimationData;
 import gui.tools.UITurtleAttributes;
@@ -19,7 +24,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
-public class UITurtle extends Pane {
+public class UITurtle extends Pane implements Observer {
 	
 	private TurtleState _turtleState;
 	private UITurtleAttributes _turtleAtt;
@@ -31,21 +36,28 @@ public class UITurtle extends Pane {
 	private double _shape = 0;
 	private ImageView _imageView;
 	private double _id;
+	private TurtleDisplayHandler _handler;
+	private Frame _displayBounds;
 	
 	
 	private double ANIMATION_SPEED=400;//100 pixels per second
 	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, double id){
-		this(animators,new Image("turtle.png"), id);
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, 
+			double id,TurtleDisplayHandler handler, Frame displayBounds){
+		this(animators,new Image("turtle.png"), id, handler,displayBounds);
 	}
 	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,Image image, double id){
-		this(animators,image, new TurtleState(), id);
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,
+			Image image, double id,TurtleDisplayHandler handler,Frame displayBounds){
+		this(animators,image, new TurtleState(), id, handler,displayBounds);
 	}
 	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,Image image, TurtleState state, double id){
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,
+			Image image, TurtleState state, double id, TurtleDisplayHandler handler,Frame displayBounds){
 		_turtleState = state;
 		_id = id;
+		_handler = handler;
+		_displayBounds = displayBounds;
 		setImageView(new ImageView(image));
 		_animators = animators;
 		_animators.x.setOnFinished(new EventHandler<ActionEvent>() {
@@ -178,6 +190,13 @@ public class UITurtle extends Pane {
 	}
 	public double getTurtleId(){
 		return _id;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		TurtleState newState = new TurtleState((TurtleState) o);
+		addAnimationToQueue(newState, 
+				GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
 	}
 
 }

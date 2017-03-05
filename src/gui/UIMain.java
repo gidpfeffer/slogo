@@ -37,7 +37,7 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
-public class UIMain implements UIMainAPI, Observer {
+public class UIMain implements UIMainAPI {
 
 	public static final double SCREEN_WIDTH = 800;
 	public static final double SCREEN_HEIGHT = 700;
@@ -142,22 +142,9 @@ public class UIMain implements UIMainAPI, Observer {
 		// TODO: stop animation _displayView.stopAnimation();
 		// also add pauseAnimation() and playAnimation()
 	}
-
-	public void addTurtle() {
-		TranslateTransition tran = new TranslateTransition();
-		RotateTransition rot = new RotateTransition();
-		Tuple<TranslateTransition, RotateTransition> animators = new Tuple<TranslateTransition, RotateTransition>(tran,
-				rot);
-
-		UITurtle t = new UITurtle(animators, 0);
-
-		tran.setNode(t);
-		tran.setDuration(Duration.millis(200));
-
-		rot.setNode(t);
-		rot.setDuration(Duration.millis(200));
-
-		_turtlesOnDisplay.add(t);
+	@Override
+	public UITurtle addTurtle(double id) {
+		return _displayView.addTurtle(id);
 	}
 
 	@Override
@@ -168,7 +155,7 @@ public class UIMain implements UIMainAPI, Observer {
 	private void setupTurtleMap(double numberOfTurtles) {
 		_turtlesOnDisplay = new ArrayList<UITurtle>();
 		for (int i = 0; i < numberOfTurtles; i++) {
-			addTurtle();
+			addTurtle((double)i);
 		}
 	}
 
@@ -333,27 +320,5 @@ public class UIMain implements UIMainAPI, Observer {
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-
-		TurtleState newState = new TurtleState((TurtleState) o);
-		UITurtle t = getTurtleFromListWithState(newState);
-		_displayView.updateTurtleState(t, newState);
-		// System.out.println("x: "+newState.getX() + " y: " + newState.getY()+"
-		// angle: " + newState.getHeadAngle()); // for testing
-
-	}
-
-	private UITurtle getTurtleFromListWithState(TurtleState s) {
-		// for(UITurtle t: _turtlesOnDisplay){
-		// if(t.getId() == s.getID()){
-		// return t;
-		// }
-		// }
-		return _turtlesOnDisplay.get(0);
-		// throw new RuntimeException("turtle not found");
-	}
-	
 	
 }
