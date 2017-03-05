@@ -65,7 +65,9 @@ public class ModelController {
 		}
 	}
 	
-	public void makeNewTurtle(double id){
-		myTurtles.add(new Turtle(id));
+	public Turtle makeNewTurtle(double id){
+		Turtle newTurtle = new Turtle(id);
+		myTurtles.add(newTurtle);
+		return newTurtle;
 	}
 }
