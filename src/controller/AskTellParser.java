@@ -6,28 +6,43 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import controller.Ask; 
 
-import parser.main.NewParser;
+import controller.Ask;
+import gui.UIMain;
+import model.ModelController;
 import parser.tokenizer.ProtectedTokenList;
 
-public class AskTellQueueTester {
+public class AskTellParser {
 	
-	public static Queue<String> constructQ (ProtectedTokenList p){
+	private HashMap<Double, List<String>> turtlesToCommands;
+	private ModelController currentModel; 
+	private UIMain myView; 
+	
+	public AskTellParser(ModelController myModel, UIMain myViewController){
+		turtlesToCommands = new HashMap<Double, List<String>>(); 
+		currentModel = myModel;
+		myView = myViewController; 
+	}
+	
+	public Map<Double, List<String>> getParsedCommands(){
+		return turtlesToCommands; 
+	}
+	
+	private Queue<String> constructQ (ProtectedTokenList p){
 		Queue<String> inputQ = new LinkedList<String>(); 
 		List<String> literalInput = p.getLiterals(); 
-		List<String> logoInput = p.getLogo(); 
 		for (String s : literalInput){
 			inputQ.add(s);
 		}
 		return inputQ; 
 	}
 
-	public static Map<Double, ArrayList<String>> parseCommands(Queue<String> commands){
-		Map<Double, ArrayList<String>> turtlesToCommands = new HashMap<Double, ArrayList<String>>();
+	public void parseCommands(ProtectedTokenList p){
+		Queue<String> commands = constructQ(p);
 		turtlesToCommands.put(0.0, new ArrayList<String>()); //default value 
 		ArrayList<Double> activeTurtleIds = new ArrayList<Double>(); 
 		ArrayList<String> applyToActives = new ArrayList<String>(); 
+		
 		while (!commands.isEmpty()){
 			String input = commands.poll(); 
 			
@@ -35,11 +50,15 @@ public class AskTellQueueTester {
 				Ask a =  handleAsk(commands);
 			
 				//System.out.println("ask turtles" + a.getTurtles());
+				
 				ArrayList<Double> turtleIds = getTurtleIds(a.getTurtles());				
 				List<String> commandsPerTurtle = a.getCommands();
+				
 				for (Double id: turtleIds){
 					if (!turtlesToCommands.containsKey(id)){
 						turtlesToCommands.put(id, new ArrayList<String>(commandsPerTurtle));
+						currentModel.makeNewTurtle(id).getState().addObserver(myView.addTurtle(id));;
+						
 					}
 					else{
 						turtlesToCommands.get(id).addAll(commandsPerTurtle);
@@ -51,18 +70,24 @@ public class AskTellQueueTester {
 			}
 			
 			else if (input.equals("tell")){
+				
 				ArrayList<String> turtlesStrings = handleTell(commands);
 				activeTurtleIds.clear();
 				activeTurtleIds = getTurtleIds(turtlesStrings); 
 				System.out.println("tell turtles" + turtlesStrings);
+				
 			}
 			
 			else{
+				
 				applyToActives.clear();
 				applyToActives.add(input);
+				
 				for (Double turtle: activeTurtleIds){
 					if (!turtlesToCommands.containsKey(turtle)){
 						turtlesToCommands.put(turtle, new ArrayList<String>(applyToActives));
+						currentModel.makeNewTurtle(turtle).getState().addObserver(myView.addTurtle(turtle));;
+
 					}
 					else{
 						turtlesToCommands.get(turtle).addAll(applyToActives);
@@ -74,13 +99,12 @@ public class AskTellQueueTester {
 		System.out.println("active commands" + applyToActives);
 		
 	
-		System.out.print("command processed map" + turtlesToCommands);
-		return turtlesToCommands; 
+		System.out.print("command processed map" + turtlesToCommands); 
 	}
 
 
 
-	private static ArrayList<Double> getTurtleIds(List<String> turtles) throws SLogoException{
+	private ArrayList<Double> getTurtleIds(List<String> turtles) throws SLogoException{
 		ArrayList<Double> ids = new ArrayList<Double>(); 
 		for (String t: turtles){
 			try {
@@ -92,7 +116,7 @@ public class AskTellQueueTester {
 		return ids; 
 	}
 
-	private static ArrayList<String> handleTell(Queue<String> commands) {
+	private ArrayList<String> handleTell(Queue<String> commands) {
 		ArrayList<String> turtles = new ArrayList<String>(); 
 		int bracketCount =0; 
 		while (bracketCount<2 && !(commands.isEmpty())){
@@ -108,7 +132,7 @@ public class AskTellQueueTester {
 		
 	}
 
-	private static Ask handleAsk(Queue<String> commands) {
+	private Ask handleAsk(Queue<String> commands) {
 		ArrayList<String> turtles = new ArrayList<String>(); 
 		ArrayList<String> commandsToApply = new ArrayList<String>();
 		int bracketCount = 0; 
@@ -137,15 +161,6 @@ public class AskTellQueueTester {
 		return newAsk; 
 	}
 
-
-
-	public static void main (String[] args){
-		NewParser p = new NewParser("resources/languages/English"); 
-		String testCode = "ask [ 100 20 40 90 ] [ fd 50 rt 90 ] tell [ 1 20 ] fd 50 rt 40";
-		String test1 = " tell [ 1 2 ] fd 30 ask [ 1 ] [ rt 30 ] tell [ 2 ] bk 20 ";
-		System.out.println(parseCommands(constructQ(p.parse(testCode)))); 
-		System.out.println();
-		System.out.println(parseCommands(constructQ(p.parse(test1))));
-	}
-
+	
+	
 }
