@@ -1,12 +1,9 @@
 package parser.interpreter;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import controller.SLogoException;
 import model.turtle.State;
 import parser.tokenizer.TokenList;
-
 public abstract class BracketHandler {
 	protected TokenList list;
 	protected List<String> literals, logo;

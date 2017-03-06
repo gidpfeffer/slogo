@@ -1,16 +1,12 @@
 package parser.interpreter;
-
 import java.util.List;
 import java.util.Stack;
-
 import controller.SLogoException;
 import model.turtle.State;
 import parser.helpers.ListMultiplier;
 import parser.tokenizer.TokenList;
-
 public abstract class BracketAid extends BracketHandler{
 	protected ListMultiplier listMultiplier;
-
 	public BracketAid(TokenList list, String indicator) {
 		super(list, indicator);
 		listMultiplier = new ListMultiplier();
