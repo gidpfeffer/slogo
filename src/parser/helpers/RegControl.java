@@ -13,7 +13,7 @@ public abstract class RegControl extends BracketAid{
 	
 	public RegControl(TokenList list, String indicator, State t){
 		super(list, indicator);
-		this.turtle = turtle;
+		this.turtle = t;
 	}
 	
 	@Override

@@ -85,6 +85,9 @@ public class CommandHandler extends StorageHandler{
 	
 	private void fillArgs(int numArgs){
 		arguments = new ArrayList<>();
+		if(location + numArgs >= list.getLiterals().size()){
+			throw new SLogoException("Invalid number of arguments");
+		}
 		for(int i = 1; i <= numArgs; i++){
 			arguments.add(list.getLiterals().get(i + location));
 			if(!list.getLogo().get(i + location).equals(CONSTANT)){

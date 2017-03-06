@@ -1,7 +1,12 @@
 package parser.tests;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
+import model.command.TreeNode;
+import model.command.TurtleCommand;
+import model.turtle.TurtleState;
+import parser.main.Compiler;
 import parser.main.NewParser;
 import parser.storage.CommandHandler;
 import parser.storage.CommandStorage;
@@ -12,10 +17,12 @@ public class CommandTester {
 	
 	public static void main(String args[]){
 		String language = "resources/languages/English";
-		String testCode = "to blah [ :x ] [ product :x 10 ]";
-		String testCode2 = "blah 50";
+		String testCode = "to sq [ :x ] [ product :x :x ] "
+				+ "to addAll [ :x :y :z ] [ sum sum :x :y :z ]";
+		String testCode2 = "fd sq 10 rt addAll 10 20";
 		
 		
+		Compiler compiler = new Compiler();
 		
 		CommandStorage CS = new CommandStorage();
 		
@@ -37,8 +44,13 @@ public class CommandTester {
 		
 		CH.fix(TL);
 		
-		for(int i = 0; i < TL.getLiterals().size(); i++){
-			System.out.format("%s %s\n", TL.getLiterals().get(i), TL.getLogo().get(i));
+		Queue<TreeNode> q = compiler.compile(new TurtleState(), new ProtectedTokenList(TL));
+		
+		while(!q.isEmpty()){
+			TreeNode cur = q.remove();
+			if(cur instanceof TurtleCommand){
+				System.out.println("Class: " + cur.getClass() + "Value: " + cur.getValue());
+			}
 		}
 		
 	}
