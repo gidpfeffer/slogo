@@ -5,14 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.ModelController;
-import model.turtle.Turtle;
+
 import parser.main.NewParser;
 import parser.tokenizer.ProtectedTokenList;
 
-public class TellParseTester {
+public class TellParseTester  {
+
 
 	private static Map<Double, List<String>> parseList(ProtectedTokenList list) {
+
+
 
 		ArrayList<Double> activeTurtleIndexList = new ArrayList<Double>();
 		activeTurtleIndexList.add(1.0);
@@ -20,15 +22,23 @@ public class TellParseTester {
 		// configure the map for all currently active turtles 
 		Map<Double, List<String>> turtleMap =configMap(); // map of turtle to logo commands to be applied
 		List<String> literals= list.getLiterals();
+		ArrayList<String> modifiableLiterals = new ArrayList<String>(literals);
 		List<String> logo = list.getLogo();
 
 		// up until a Tell 
-		for(int i=0; i<list.getLogo().size	();i++){
+		for(int i=0; i<modifiableLiterals.size();i++){
 
 			if (logo.get(i).equals("Ask")){
-				List<String> toParse = literals.subList(i+1, logo.size()); // logo.size()?a tell right after an ask
+				List<String> toParse = modifiableLiterals.subList(i+1, logo.size()); // logo.size()?a tell right after an ask
+				// bracket is i+1
 				List<String> ids = parseIds(toParse);
-				List<String> commands = parseIds(literals.subList(i+ids.size()+3, logo.size()));
+				System.out.println("ids are" + ids);
+				modifiableLiterals.removeAll(ids);
+				i+= ids.size(); 
+				List<String> commands = parseIds(modifiableLiterals.subList(i+ids.size()+3, logo.size())); // this is the current problem 
+				modifiableLiterals.removeAll(commands);
+				i+= commands.size(); 
+				System.out.println("commands are" + commands);
 
 
 				// give all the turtles the specified commands
@@ -43,35 +53,35 @@ public class TellParseTester {
 				}
 
 				// increment loop variable
-				i += commands.size()+ids.size();
 
 			}
 
+			
+			// PARSING IS GOOD - MAKE THIS INTO A METHOD THAT GETS AN ARRAY OF TURTLES TO ACTIVATE 
+			// DOES IT NEED TO GET THE ARRAY
 			if (logo.get(i).equals("Tell")){
 				// get the IDS of the turtles + cast to doubles 
+				// find first bracket, use helper function to find second bracket 
 				List<String> ids = parseIds(literals.subList(i+1, logo.size()));
 				List<Double> usableIds = new ArrayList<Double>(); 
 				for (String id: ids){
 					usableIds.add(Double.parseDouble(id));
 				}
-				i += ids.size();
 
 				// iterate through the ids and set the active turtles
 				activeTurtleIndexList.clear();
 
 				for (Double turtleID: usableIds){
 					if (!activeTurtleIndexList.contains(turtleID)){
-						//activeTurtles.add(new Turtle(turtleID));
 						activeTurtleIndexList.add(new Double(turtleID));
 						//myModel.makeNewTurtle(turtleID).getState().addObserver(myViewController.addTurtle(turtleID));
 					}
 
-
 				}
-
+				System.out.println(activeTurtleIndexList);
+				i+= 1+logo.size();
 
 			}
-
 
 			for (Double activeID: activeTurtleIndexList){
 				if(!turtleMap.containsKey(activeID)){
@@ -79,7 +89,6 @@ public class TellParseTester {
 
 				}
 				//System.out.println(literals.get(i));
-				turtleMap.get(activeID).add(literals.get(i));
 
 			}
 
@@ -96,20 +105,42 @@ public class TellParseTester {
 
 	private static List<String> parseIds(List<String> toParse) {
 		List<String> ids = new ArrayList<String>(); 
-		int turtleStart = 0; 
-		int turtleEnd = 0; 
+		int subListStart = 0; 
+		int subListEnd = 0; 
+		boolean iterated = true; 
 		for (int i=0; i<toParse.size(); i++){
-			if (toParse.get(i).equals("[")){
-				turtleStart= i+1; 
-			}
-			if (toParse.get(i).equals("]")){
-				turtleEnd = i; 
-				break; 
+			if (toParse.get(i).equals("[") && iterated){
+				subListStart = i; 
+				subListEnd = findEnd(i, toParse);
+				System.out.print(subListStart);
+				System.out.println(subListEnd);
+				iterated=false; 
+				break;
 			}
 		}
-		ids = toParse.subList(turtleStart, turtleEnd);
+		
+		ids.addAll(toParse.subList(subListStart+1, subListEnd));
+		System.out.println("new ids" + ids);
 		return ids; 
 	}
+
+
+	private static int findEnd(int i, List<String> toParse) throws SLogoException{
+		for (int j=i; j<toParse.size(); j++){
+			try{
+				if (toParse.get(j).equals("]")){
+					return j; 
+				}
+			}
+			catch(SLogoException e){
+				throw new SLogoException("Invalid bracket syntax");
+			}
+
+		}
+		return i;
+	}
+
+
 
 
 	private static Map<Double, List<String>> configMap() {
@@ -125,9 +156,13 @@ public class TellParseTester {
 
 	public static void main(String[] args){
 		NewParser p = new NewParser("resources/languages/English"); 
-		String testCode = "tell [ 100 20 40 90 ] [ fd 50 rt 90 ] fd 50 rt 40";
+		String testCode = "ask [ 100 20 40 90 ] [ fd 50 rt 90 ] tell [ 1 20 ] fd 50 rt 40";
 		String test1 = " tell [ 1 2 ] fd 30 ask [ 1 ] [ rt 30 ] tell [ 2 ] bk 20 ";
-		System.out.println(p.parse(testCode).getLiterals());
-		System.out.println(parseList(p.parse(test1))); 
+		//System.out.println(p.parse(testCode).getLiterals());
+		System.out.println(parseList(p.parse(testCode))); 
 	}
+
+
+
+
 }
