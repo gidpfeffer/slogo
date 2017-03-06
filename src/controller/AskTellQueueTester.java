@@ -12,6 +12,7 @@ import parser.main.NewParser;
 import parser.tokenizer.ProtectedTokenList;
 
 public class AskTellQueueTester {
+	
 	public static Queue<String> constructQ (ProtectedTokenList p){
 		Queue<String> inputQ = new LinkedList<String>(); 
 		List<String> literalInput = p.getLiterals(); 
@@ -143,6 +144,8 @@ public class AskTellQueueTester {
 		String test1 = " tell [ 1 2 ] fd 30 ask [ 1 ] [ rt 30 ] tell [ 2 ] bk 20 ";
 		//System.out.println(p.parse(testCode).getLiterals());
 		System.out.println(constructQ(p.parse(testCode))); 
+		System.out.println();
+		System.out.println(constructQ(p.parse(test1)));
 	}
 
 }
