@@ -29,6 +29,7 @@ public class IfHandler extends BracketAid{
 
 	@Override
 	protected void findIndices() {
+		checkValidity();
 		int ifStart = findStartBracket(getLogoLocations(indicator).get(0));
 		int ifEnd = findEndBracket(ifStart);
 		addLoc = ifEnd + 1;

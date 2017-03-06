@@ -39,6 +39,14 @@ public class TokenList {
 		}
 	}
 	
+	public void addAll(TokenList list, int loc){
+		if(list.getLiterals().size() != list.getLogo().size()){
+			throw new IllegalStateException("Invalid tokenList");
+		}
+		literals.addAll(loc, list.getLiterals());
+		logo.addAll(loc, list.getLogo());
+	}
+	
 	public int size(){
 		return literals.size();
 	}

@@ -13,7 +13,7 @@ public class CommandStorage {
 	}
 	
 	public Map<FunctionObj, TokenList> getMap(){
-		return new HashMap<>(map);
+		return map;
 	}
 	
 	public void setValue(FunctionObj key, TokenList val){

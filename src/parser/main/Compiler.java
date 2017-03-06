@@ -1,5 +1,6 @@
 package parser.main;
 
+import java.util.ArrayList;
 import java.util.Queue;
 
 import model.command.TreeNode;
@@ -22,7 +23,8 @@ public class Compiler {
 	}
 	
 	private Queue<TreeNode> interpret(ProtectedTokenList list, State state){
-		TokenList TL = new TokenList(list.getLiterals(), list.getLogo());
+		TokenList TL = new TokenList(new ArrayList<>(list.getLiterals()),
+				new ArrayList<>(list.getLogo()));
 		Interpreter IT = new Interpreter(TL, state, vars.keySet());
 		TL = IT.getTokenList();
 		IT.handleVarLoops();
