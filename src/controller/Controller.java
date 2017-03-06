@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import gui.UIMain;
 import gui.tableviews.UIVariablesView;
 import model.*;
+import model.command.TreeNode; 
 
 import model.turtle.Turtle;
+import model.turtle.TurtleState;
 import parser.main.NewParser;
 import parser.main.Parser;
 import parser.storage.*;
@@ -120,11 +123,22 @@ public class Controller {
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, List<String>> turtlesToCommands = parseList(list);
-			/*myModel.update(myParser.getTreeQueue());
-			output = myModel.getStringOutput();
-			myViewController.addNewOutput(output);
-			System.out.println("String to print " + output);
-			 */
+			
+			Compiler c = new Compiler(); 
+			for (Double turtleId: turtlesToCommands.keySet()){
+				List<String> commandsToApply = turtlesToCommands.get(turtleId);
+				List<Turtle> currentTurtles = myModel.getTurtles(); 
+				TurtleState t = findTurtle(turtleId, currentTurtles);
+				// can i do this instead 
+				Queue<TreeNode> Q = c.compile(t, commandsToApply);
+				myModel.update(Q);
+				output = myModel.getStringOutput();
+				myViewController.addNewOutput(output);
+				System.out.println("String to print " + output);
+				
+			}
+			
+
 		}
 		catch (SLogoException e){ 
 			myViewController.displayErrorWithMessage(e.getMessage());
@@ -132,107 +146,27 @@ public class Controller {
 		output = myModel.getStringOutput();
 	}
 
+	private TurtleState findTurtle(Double turtleId, List<Turtle> currentTurtles) {
+		// need throwable exception here 
+		
+		for (Turtle t: currentTurtles){
+			if (t.getID() == turtleId){
+				return t.getState();
+			}
+		}
+		return null; 
+	}
+
+
 	private Map<Double, List<String>> parseList(ProtectedTokenList list) {
 		
-		// configure the map for all currently active turtles 
-		Map<Double, List<String>> turtleMap =configMap(); // map of turtle to logo commands to be applied
-		List<String> literals= list.getLiterals();
-		List<String> logo = list.getLogo();
-
-		// up until a Tell 
-		for(int i=0; i<list.getLogo().size	();i++){
-
-			if (logo.get(i).equals("Ask")){
-				List<String> toParse = literals.subList(i+1, logo.size()); // logo.size()?a tell right after an ask
-				List<String> ids = parseIds(toParse);
-				List<String> commands = parseIds(literals.subList(i+ids.size()+3, logo.size()));
-				
-				
-				// give all the turtles the specified commands
-				for (String id: ids){
-					Double turtleId = Double.parseDouble(id);
-					if (!turtleMap.containsKey(turtleId)){
-						turtleMap.put(turtleId, commands);
-					}
-					else{
-						turtleMap.get(turtleId).addAll(commands);
-					}
-				}
-				
-				// increment loop variable
-				i += commands.size()+ids.size();
-
-			}
-			
-			if (logo.get(i).equals("Tell")){
-				// get the IDS of the turtles + cast to doubles 
-				List<String> ids = parseIds(literals.subList(i+1, logo.size()));
-				List<Double> usableIds = new ArrayList<Double>(); 
-				for (String id: ids){
-					usableIds.add(Double.parseDouble(id));
-				}
-				i += ids.size();
-				
-				// iterate through the ids and set the active turtles
-				activeTurtleIndexList.clear();
-				
-				for (Double turtleID: usableIds){
-					if (!activeTurtleIndexList.contains(turtleID)){
-						//activeTurtles.add(new Turtle(turtleID));
-						activeTurtleIndexList.add(new Double(turtleID));
-						myModel.makeNewTurtle(turtleID).getState().addObserver(myViewController.addTurtle(turtleID));
-					}
-
-				}
-				
-
-			}
-			
-			// apply commands to active turtles 
-			for (Double activeID: activeTurtleIndexList){
-				
-				turtleMap.get(activeID).add(literals.get(i));
-				
-				}
-			
-			
-			}
-
-		// TODO Auto-generated method stub
-		return turtleMap;
-			
-		}
-	
-
-
-
-	private List<String> parseIds(List<String> toParse) {
-		List<String> ids = new ArrayList<String>(); 
-		int turtleStart = 0; 
-		int turtleEnd = 0; 
-		for (int i=0; i<toParse.size(); i++){
-			if (toParse.get(i).equals("[")){
-				turtleStart= i+1; 
-			}
-			if (toParse.get(i).equals("]")){
-				turtleEnd = i; 
-				break; 
-			}
-		}
-		ids = toParse.subList(turtleStart, turtleEnd);
-		return ids; 
-	}
-
-
-	private Map<Double, List<String>> configMap() {
-		HashMap<Double,List<String> > turtlesToCommands = new HashMap<Double, List<String>>();
-		for (Double t: activeTurtleIndexList){
-			if (!turtlesToCommands.containsKey(t)){
-				turtlesToCommands.put(t, new ArrayList<String>());
-			}
-		}
+		AskTellParser ap = new AskTellParser(myModel, myViewController); 
+		ap.parseCommands(list);
+		Map<Double, List<String>> turtlesToCommands = ap.getParsedCommands(); 
 		return turtlesToCommands; 
+			
 	}
+	
 
 
 	public String getStringOutput(){
