@@ -4,6 +4,7 @@ import gui.tableviews.UITableView;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
+import model.turtle.TurtleState;
 
 public class UIAttributesView extends UITableView{
 	
@@ -15,5 +16,10 @@ public class UIAttributesView extends UITableView{
 	private void setupViews() {
 		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
 		this.addText("Turtle ID: 0\nx=0, y=0, PenIsDown=true");
+	}
+
+	public void update(TurtleState s) {
+		// TODO Auto-generated method stub
+		
 	}
 }

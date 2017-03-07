@@ -1,9 +1,13 @@
 package gui.tools;
 
 import general_data_structures.Tuple;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -26,12 +30,13 @@ public class GUITools {
 		return b;
 	}
 	
-	public static void addBackgroundWithColor(Pane self, Color color, Frame bounds){
+	public static Rectangle addBackgroundWithColor(Pane self, Color color, Frame bounds){
 		Rectangle rect = new Rectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 		rect.setFill(color);
 		rect.setArcHeight(3);
 		rect.setArcWidth(3);
 		self.getChildren().add(0, rect);
+		return rect;
 	}
 	public static Label plainLabel(String text, int fontSize, Color color,FontWeight weight) {
 		Label label = new Label();
@@ -53,5 +58,22 @@ public class GUITools {
 		double x=t.getX() + bounds.getWidth()/2.0 - 16;
 		double y=-t.getY() + bounds.getHeight()/2.0 - 16;
 		return new Tuple<Double, Double>(x,y);
+	}
+	public static TurtleState guiTurtleToTurtleState(Tuple<Double, Bounds> uiState,Frame bounds) {
+		TurtleState t = new TurtleState();
+		t.setHeadAngle(uiState.x - 90);
+		t.setX(uiState.y.getMinX() - bounds.getWidth()/2.0 + 16);
+		t.setY(uiState.y.getMinY() - bounds.getHeight()/2.0 + 16);
+		return t;
+	}
+	
+	public static ImageButton makeButton(Image image, Frame frame, EventHandler<MouseEvent> event){
+		ImageButton b = new ImageButton();
+		b.updateImages(image, image);
+		b.setPrefSize(frame.getWidth(), frame.getHeight());
+		b.setLayoutX(frame.getX());
+		b.setLayoutY(frame.getY());
+		b.setOnMouseClicked(event);
+		return b;
 	}
 }
