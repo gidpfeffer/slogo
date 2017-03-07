@@ -5,22 +5,17 @@ import javafx.scene.shape.Line;
 import model.turtle.TurtleState;
 
 public class TurtleAnimationData {
-	private TurtleState state;
-	private Tuple<Double, Double> pos;
-	private Line line;
-	public TurtleAnimationData(TurtleState s, Tuple<Double, Double> p, Line l){
-		state = s;
-		pos = p;
-		line = l;
+	private double angle;
+	private Tuple<Double, Double> position;
+	public TurtleAnimationData(double angle, Tuple<Double, Double> position){
+		this.angle = angle;
+		this.position = position;
 	}
-	public Line getLine(){
-		return line;
+	public Tuple<Double, Double> getPosition(){
+		return position;
 	}
-	public Tuple<Double, Double> getPos(){
-		return pos;
-	}
-	public TurtleState getTurtleState(){
-		return state;
+	public double getAngle(){
+		return angle;
 	}
 	
 }
