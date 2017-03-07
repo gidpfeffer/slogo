@@ -11,22 +11,27 @@ import controller.Ask;
 import gui.UIMain;
 import model.ModelController;
 import parser.tokenizer.ProtectedTokenList;
+import parser.tokenizer.TokenIdentifier;
+import parser.tokenizer.TokenList;
+import parser.tokenizer.Tokenizer;
 
 public class AskTellParser {
 	
-	private HashMap<Double, List<String>> turtlesToCommands;
+	private HashMap<Double, ProtectedTokenList> turtlesToCommands;
 	private ModelController currentModel; 
 	private UIMain myView; 
 	
 	public AskTellParser(ModelController myModel, UIMain myViewController){
-		turtlesToCommands = new HashMap<Double, List<String>>(); 
+		turtlesToCommands = new HashMap<Double, ProtectedTokenList>(); 
 		currentModel = myModel;
 		myView = myViewController; 
 	}
 	
-	public Map<Double, List<String>> getParsedCommands(){
+	public Map<Double, ProtectedTokenList> getParsedCommands(){
 		return turtlesToCommands; 
 	}
+	
+	
 	
 	private Queue<String> constructQ (ProtectedTokenList p){
 		Queue<String> inputQ = new LinkedList<String>(); 
@@ -39,7 +44,6 @@ public class AskTellParser {
 
 	public void parseCommands(ProtectedTokenList p){
 		Queue<String> commands = constructQ(p);
-		turtlesToCommands.put(0.0, new ArrayList<String>()); //default value 
 		ArrayList<Double> activeTurtleIds = new ArrayList<Double>(); 
 		ArrayList<String> applyToActives = new ArrayList<String>(); 
 		
@@ -53,15 +57,19 @@ public class AskTellParser {
 				
 				ArrayList<Double> turtleIds = getTurtleIds(a.getTurtles());				
 				List<String> commandsPerTurtle = a.getCommands();
+				TokenList TL = createTokenList(commandsPerTurtle);
+				// would also get the logo of that here 
+				// make a new protected token list out of the two 
 				
 				for (Double id: turtleIds){
 					if (!turtlesToCommands.containsKey(id)){
-						turtlesToCommands.put(id, new ArrayList<String>(commandsPerTurtle));
+						turtlesToCommands.put(id, new ProtectedTokenList(TL));
 						currentModel.makeNewTurtle(id).getState().addObserver(myView.addTurtle(id));;
 						
 					}
 					else{
-						turtlesToCommands.get(id).addAll(commandsPerTurtle);
+						
+						turtlesToCommands.get(id).add(TL);
 					}
 				}
 				
@@ -84,13 +92,15 @@ public class AskTellParser {
 				applyToActives.add(input);
 				
 				for (Double turtle: activeTurtleIds){
+					TokenList actives = createTokenList(applyToActives);
+
 					if (!turtlesToCommands.containsKey(turtle)){
-						turtlesToCommands.put(turtle, new ArrayList<String>(applyToActives));
+						turtlesToCommands.put(turtle, new ProtectedTokenList(actives));
 						currentModel.makeNewTurtle(turtle).getState().addObserver(myView.addTurtle(turtle));;
 
 					}
 					else{
-						turtlesToCommands.get(turtle).addAll(applyToActives);
+						turtlesToCommands.get(turtle).add(actives);
 					}
 				}
 				
@@ -103,6 +113,20 @@ public class AskTellParser {
 	}
 
 
+
+	
+
+	private TokenList createTokenList(List<String> commandsPerTurtle) {
+		// commands per turtle = literal 
+		List<String> logoPerTurtle = new ArrayList<String>(); 
+		for (String literal: commandsPerTurtle){
+			Tokenizer t = new Tokenizer(literal, "English");
+			TokenIdentifier tID = t.getToken(); 
+			String finalT = tID.getToken();
+			logoPerTurtle.add(finalT);
+		}
+		return new TokenList(commandsPerTurtle, logoPerTurtle);
+	}
 
 	private ArrayList<Double> getTurtleIds(List<String> turtles) throws SLogoException{
 		ArrayList<Double> ids = new ArrayList<Double>(); 
