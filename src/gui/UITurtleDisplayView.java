@@ -25,6 +25,13 @@ import model.turtle.TurtleState;
 
 public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 
+	class Handler implements TurtleDisplayHandler {
+		@Override
+		public void addLineToScreen(Line l) {
+			addLine(l);
+		}
+	}
+
 	private List<UITurtle> _turtles;
 	private List<Line> _lines = new ArrayList<Line>();
 	double _strokeWidth = 2.5;
@@ -34,13 +41,19 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		super(frame);
 		setupTurtleMap(1);
 		setupViews();
+		setupMouseControl();
+
 	}
 
-	class Handler implements TurtleDisplayHandler {
-		@Override
-		public void addLineToScreen(Line l) {
-			addLine(l);
-		}
+	private void setupMouseControl() {
+		setOnMouseClicked(mouseHandler);
+		setOnMouseDragged(mouseHandler);
+		setOnMouseEntered(mouseHandler);
+		setOnMouseExited(mouseHandler);
+		setOnMouseMoved(mouseHandler);
+		setOnMousePressed(mouseHandler);
+		setOnMouseReleased(mouseHandler);
+
 	}
 
 	public void resetDisplay() {
@@ -146,49 +159,52 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		}
 	}
 
-	//MOUSE CONTROLS
-	
+	// MOUSE CONTROLS
+
 	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
 		private UITurtle _selectedTurtle;
 		private Line _line;
+
 		@Override
 		public void handle(MouseEvent mouseEvent) {
 			if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				UITurtle t = detectTurtle(mouseEvent.getX(), mouseEvent.getY());
 				_selectedTurtle = t;
-				_line = new Line(mouseEvent.getX(), mouseEvent.getY(),mouseEvent.getX(), mouseEvent.getY());
+				_line = new Line(mouseEvent.getX(), mouseEvent.getY(), mouseEvent.getX(), mouseEvent.getY());
 			} else if (mouseEvent.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-				//TODO: test
+				// TODO: test
 				System.out.println("MOUSE DRAGGED");
-				if(_line != null){
+				if (_line != null) {
 					_line.setEndX(mouseEvent.getX());
 					_line.setEndY(mouseEvent.getY());
 				}
 			} else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
-				if(_selectedTurtle != null){
-					Tuple<Double,Double> newPos = new Tuple<Double,Double>(mouseEvent.getX(), mouseEvent.getY());
-					Tuple<Double,Double> oldPos = new Tuple<Double,Double>(_line.getStartX(),_line.getStartY());
+				if (_selectedTurtle != null) {
+					Tuple<Double, Double> newPos = new Tuple<Double, Double>(mouseEvent.getX(), mouseEvent.getY());
+					Tuple<Double, Double> oldPos = new Tuple<Double, Double>(_line.getStartX(), _line.getStartY());
 					double angle = getAngleBetweenTwoPoints(newPos, oldPos);
-					_selectedTurtle.addAnimationToQueue(
-							angle, 
-							newPos);
+					_selectedTurtle.addAnimationToQueue(angle, newPos);
 				}
 				_selectedTurtle = null;
-				_line = null;	
+				_line = null;
 			}
 		}
 
 	};
-	
-	private double getAngleBetweenTwoPoints(Tuple<Double,Double> p1, Tuple<Double,Double> p2)
-    {
-        double xDiff = p2.x - p1.x;
-        double yDiff = p2.y - p1.y;
-        return Math.toDegrees(Math.atan2(yDiff, xDiff));
-    }
-	
-	private UITurtle detectTurtle(double x, double y){
-		//TODO
+
+	private double getAngleBetweenTwoPoints(Tuple<Double, Double> p1, Tuple<Double, Double> p2) {
+		double xDiff = p2.x - p1.x;
+		double yDiff = p2.y - p1.y;
+		return Math.toDegrees(Math.atan2(yDiff, xDiff));
+	}
+
+	private UITurtle detectTurtle(double x, double y) {
+		for(UITurtle t: _turtles){
+			if(t.getBoundsInParent().contains(x, y))
+				return t;
+		}
 		return null;
 	}
+	
+	
 }
