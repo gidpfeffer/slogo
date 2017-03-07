@@ -28,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import model.turtle.TurtleState;
 
 public class UIMenuView extends UIView {
 	
@@ -39,6 +40,8 @@ public class UIMenuView extends UIView {
 	
 	private UIMainHandler _handler;
 	private ImageView _turtleImageView;
+	UIAttributesView _turtleAttributesView;
+	PalletteView _paletteView;
 
 	public UIMenuView(Frame frame, UIMainHandler handler) {
 		super(frame);
@@ -60,13 +63,13 @@ public class UIMenuView extends UIView {
 	}
 
 	private void setupTurtleAttributesView() {
-		UIAttributesView a = new UIAttributesView(ATTRIBUTES_FRAME);
-		this.getChildren().add(a);
+		_turtleAttributesView = new UIAttributesView(ATTRIBUTES_FRAME);
+		this.getChildren().add(_turtleAttributesView);
 	}
 
 	private void setupPalletteView() {
-		PalletteView p = new PalletteView(PALLETTE_FRAME);
-		this.getChildren().add(p);
+		_paletteView = new PalletteView(PALLETTE_FRAME);
+		this.getChildren().add(_paletteView);
 	}
 
 	private void setupColorPicker() {
@@ -166,5 +169,13 @@ public class UIMenuView extends UIView {
 		t.setDuration(Duration.millis(500));
 		t.setToX(-_bounds.getWidth());
 		t.play();
+	}
+
+	public void updateTurtleState(TurtleState s) {
+		// TODO Auto-generated method stub
+		_turtleAttributesView.update(s);
+	}
+	public PalletteView getPaletteView(){
+		return _paletteView;
 	}
 }

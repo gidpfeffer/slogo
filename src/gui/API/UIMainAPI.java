@@ -12,6 +12,6 @@ public interface UIMainAPI {
 	public abstract void setPalleteAtIndex(double index, double red, double blue, double green);
 	public abstract void setPenColor(double index);
 	public abstract void setBackgroundColor(double index);
-	public abstract void setPenWidth(double width);
+	public abstract void setPenStrokeWidth(double width);
 	
 }

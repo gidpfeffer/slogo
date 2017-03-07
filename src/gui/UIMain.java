@@ -1,18 +1,11 @@
 package gui;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-
 import controller.ControlHandler;
 import general_data_structures.Tuple;
 import gui.API.ButtonControlHandler;
 import gui.API.UIMainAPI;
 import gui.API.UIMainHandler;
+import gui.API.UITurtleHandler;
 import gui.menu.UIMenuView;
 import gui.tableviews.UIVariablesView;
 import gui.tableviews.UIVocabTable;
@@ -20,9 +13,9 @@ import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.ImageButton;
 import gui.tools.MyColors;
-import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -52,8 +45,10 @@ public class UIMain implements UIMainAPI {
 			SCREEN_WIDTH - DISPLAY_FRAME.getMaxX() - 16, SCREEN_HEIGHT * 2 / 3 - 16);
 	public static final Frame VARS_FRAME = new Frame(DISPLAY_FRAME.getMaxX() + 8, VOCAB_FRAME.getMaxY() + 8,
 			VOCAB_FRAME.getWidth(), SCREEN_HEIGHT - VOCAB_FRAME.getMaxY() - 16);
-	public static final Frame MENU_FRAME = new Frame(-SCREEN_WIDTH * 2 / 5, 0, SCREEN_WIDTH * 2 / 5, SCREEN_HEIGHT);
-	public static final Frame BTN_CONTROL_FRAME = new Frame(100, 8, SCREEN_WIDTH-112, DISPLAY_FRAME.getMaxY() - 16);
+	public static final Frame MENU_FRAME = new Frame(-SCREEN_WIDTH * 2 / 5, 0, 
+			SCREEN_WIDTH * 2 / 5, SCREEN_HEIGHT);
+	public static final Frame BTN_CONTROL_FRAME = new Frame(100, 8, 
+			SCREEN_WIDTH-112, DISPLAY_FRAME.getMaxY() - 16);
 	
 	private Pane _root;
 	private Scene _scene;
@@ -66,21 +61,17 @@ public class UIMain implements UIMainAPI {
 	private UIMenuView _menuView;
 	private ImageButton _menuButton;
 	private UIButtonControlView _buttonControlView;
-	private List<UITurtle> _turtlesOnDisplay;
 
 	public UIMain(ControlHandler handler) {
 		super();
 		_handler = handler;
-		setupTurtleMap(1);
 		setupViews();
 	}
 
 	public class myHandler implements UIMainHandler {
 		@Override
 		public void setLineColor(Color color) {
-			for (UITurtle t : _turtlesOnDisplay) {
-				UIMain.this.setLineColor(color, t);
-			}
+			_displayView.setPenColor(color);
 		}
 
 		@Override
@@ -90,31 +81,27 @@ public class UIMain implements UIMainAPI {
 
 		@Override
 		public void setTurtleImage(Image image) {
-			for (UITurtle t : _turtlesOnDisplay) {
-				t.setImageView(new ImageView(image));
-			}
+			
+			_displayView.setTurtleImage(image);
 		}
 
 	}
 	
-	public class AnimationControlHandler implements ButtonControlHandler{
+	public class ButtonHandler implements ButtonControlHandler{
 
 		@Override
 		public void handlePause() {
-			// TODO Auto-generated method stub
-			
+			_displayView.pause();
 		}
 
 		@Override
 		public void handlePlay() {
-			// TODO Auto-generated method stub
-			
+			_displayView.play();
 		}
 
 		@Override
 		public void handleStop() {
-			// TODO Auto-generated method stub
-			
+			_displayView.stop();
 		}
 
 		@Override
@@ -124,7 +111,15 @@ public class UIMain implements UIMainAPI {
 		}
 		
 	}
+	
+	class TurtleHandler implements UITurtleHandler{
 
+		@Override
+		public void turtleStateDidChange(TurtleState s) {
+			turtleStateChanged(s);
+		}
+		
+	}
 
 	@Override
 	public void displayErrorWithMessage(String error) {
@@ -144,19 +139,17 @@ public class UIMain implements UIMainAPI {
 	}
 	@Override
 	public UITurtle addTurtle(double id) {
-		return _displayView.addTurtle(id);
+		UITurtle t = _displayView.addTurtle(id);
+		t.boundsInParentProperty().addListener( e -> {
+			Tuple<Double, Bounds> state = new Tuple<Double, Bounds>(t.getRotate(), t.getBoundsInParent());
+			turtleStateChanged(GUITools.guiTurtleToTurtleState(state, _displayView.getBounds()));
+		});
+		return t;
 	}
 
 	@Override
 	public void addNewOutput(String output) {
 		_historyView.addNewCommand(" > " + output);
-	}
-
-	private void setupTurtleMap(double numberOfTurtles) {
-		_turtlesOnDisplay = new ArrayList<UITurtle>();
-		for (int i = 0; i < numberOfTurtles; i++) {
-			addTurtle((double)i);
-		}
 	}
 
 	private void setupViews() {
@@ -179,21 +172,15 @@ public class UIMain implements UIMainAPI {
 	}
 
 	private void setupTitleAndMenuButton() {
-		_menuButton = new ImageButton();
-		_menuButton.updateImages(new Image("menu.png"), new Image("menu.png"));
-		_menuButton.setLayoutX(10);
-		_menuButton.setLayoutY(20);
-		_menuButton.setPrefSize(32, 32);
-		_menuButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		Frame frame = new Frame(10,20,32,32);
+		_menuButton = GUITools.makeButton(new Image("menu.png"), frame, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				slideMenuIn();
 			}
 		});
-
 		Label title = GUITools.plainLabel("SLOGO", 28, MyColors.GREEN_100, FontWeight.BLACK);
 		title.setLayoutX(64);
 		title.setLayoutY(24);
-
 		_root.getChildren().add(title);
 		_root.getChildren().add(_menuButton);
 	}
@@ -214,7 +201,7 @@ public class UIMain implements UIMainAPI {
 	}
 
 	private void setupDisplay() {
-		_displayView = new UITurtleDisplayView(DISPLAY_FRAME, _turtlesOnDisplay);
+		_displayView = new UITurtleDisplayView(DISPLAY_FRAME);
 		_root.getChildren().add(_displayView);
 	}
 
@@ -229,28 +216,26 @@ public class UIMain implements UIMainAPI {
 	}
 	
 	private void setupButtonControlsView(){
-		_buttonControlView = new UIButtonControlView(BTN_CONTROL_FRAME, new AnimationControlHandler());
+		_buttonControlView = new UIButtonControlView(BTN_CONTROL_FRAME, new ButtonHandler());
 		_root.getChildren().add(_buttonControlView);
 	}
 
 	private void setupTerminalButtons() {
-		ImageButton exec = new ImageButton();
-		exec.updateImages(new Image("execute.png"), new Image("execute.png"));
-		exec.setPrefSize(32, 32);
-		exec.setLayoutX(TERMINAL_FRAME.getMaxX() + 4);
-		exec.setLayoutY(TERMINAL_FRAME.getY() + (TERMINAL_FRAME.getHeight() - exec.getPrefHeight()) / 2);
-		exec.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		Frame exeFrame = new Frame(
+				TERMINAL_FRAME.getMaxX() + 4,
+				TERMINAL_FRAME.getY() + (TERMINAL_FRAME.getHeight() - 32) / 2,
+				32, 32);
+		ImageButton exec = GUITools.makeButton(new Image("execute.png"), exeFrame, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressExecute();
 			}
 		});
 
-		ImageButton reset = new ImageButton();
-		reset.updateImages(new Image("reset.png"), new Image("reset.png"));
-		reset.setPrefSize(32, 32);
-		reset.setLayoutX(HISTORY_FRAME.getMaxX() + 4);
-		reset.setLayoutY(HISTORY_FRAME.getY() + (HISTORY_FRAME.getHeight() - reset.getPrefHeight()) / 2);
-		reset.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		Frame resFrame = new Frame(
+				HISTORY_FRAME.getMaxX() + 4,
+				HISTORY_FRAME.getY() + (HISTORY_FRAME.getHeight() - 32) / 2,
+				32,32);
+		ImageButton reset = GUITools.makeButton(new Image("reset.png"), resFrame, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				didPressReset();
 			}
@@ -259,30 +244,29 @@ public class UIMain implements UIMainAPI {
 		_root.getChildren().add(exec);
 		_root.getChildren().add(reset);
 	}
+	
 
-	private void setLineColor(Color color, UITurtle t) {
-		t.setLineColor(color);
-	}
 
 	private void slideMenuIn() {
-
 		TranslateTransition t = new TranslateTransition();
 		t.setNode(_menuView);
 		t.setDuration(Duration.millis(500));
 		t.setToX(_menuView.getPrefWidth());
 		t.play();
-
 	}
 
 	private void didPressExecute() {
 		_historyView.addNewCommand(_terminalView.getTextInput());
 		_handler.handleTextInput(_terminalView.getTextInput());
 		_terminalView.clear();
-
 	}
 
 	private void didPressReset() {
 		_handler.handleReset();
+	}
+	
+	private void turtleStateChanged(TurtleState s){
+		_menuView.updateTurtleState(s);
 	}
 
 	public Scene getScene() {
@@ -298,27 +282,32 @@ public class UIMain implements UIMainAPI {
 	}
 
 	@Override
-	public void setPalleteAtIndex(double index, double red, double blue, double green) {
-		// TODO Auto-generated method stub
-
+	public void setPalleteAtIndex(double index, double r, double g, double b) {
+		_menuView.getPaletteView().addNewPallete(index, Color.rgb((int)r, (int)g, (int)b));
 	}
 
 	@Override
 	public void setPenColor(double index) {
-		// TODO Auto-generated method stub
-
+		Color c = _menuView.getPaletteView().getPalette(index);
+		_displayView.setPenColor(c);
 	}
 
 	@Override
 	public void setBackgroundColor(double index) {
-		// TODO Auto-generated method stub
-
+		Color c = _menuView.getPaletteView().getPalette(index);
+		_displayView.setBackgroundColor(c);
 	}
 
 	@Override
-	public void setPenWidth(double width) {
-		// TODO Auto-generated method stub
-
+	public void setPenStrokeWidth(double width) {
+		_displayView.setPenWidth(width);
+	}
+	
+	public UITurtle getTurtle(){
+		return _displayView.getTurtle();
+	}
+	public UITurtle getTurtle(Double id){
+		return _displayView.getTurtle(id);
 	}
 	
 }

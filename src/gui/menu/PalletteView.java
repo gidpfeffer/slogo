@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class PalletteView extends UIView {
 
-	private Map<Double, Rectangle> _pallettes;
+	private Map<Double, Color> _pallettes;
 
 	public PalletteView(Frame frame) {
 		super(frame);
@@ -23,10 +23,10 @@ public class PalletteView extends UIView {
 	}
 
 	public void addNewPallete(Double index, Color color) {
-
+		//TODO:
 	}
 
-	public void setPallete(Map<Double, Rectangle> pallettes) {
+	public void setPallete(Map<Double, Color> pallettes) {
 		_pallettes = pallettes;
 	}
 
@@ -42,6 +42,10 @@ public class PalletteView extends UIView {
 		l.setPrefWidth(_bounds.getWidth());
 		l.setAlignment(Pos.CENTER);
 		this.getChildren().add(l);
+	}
+
+	public Color getPalette(double index) {
+		return this._pallettes.get(index);
 	}
 	
 	
