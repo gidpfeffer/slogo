@@ -12,6 +12,9 @@ import gui.tools.MyColors;
 import gui.tools.UIView;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -22,10 +25,11 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI{
 	private List<UITurtle> _turtles;
 	private List<Line> _lines = new ArrayList<Line>();
 	double _strokeWidth = 2.5;
+	private Rectangle _background;
 	
-	public UITurtleDisplayView(Frame frame, List<UITurtle> turtles) {
+	public UITurtleDisplayView(Frame frame) {
 		super(frame);
-		_turtles = turtles;
+		setupTurtleMap(1);
 		setupViews();
 	}
 	
@@ -36,30 +40,19 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI{
 		}
 	}
 	
-	/**
-	 * use this method to change the attributes of a turtle on screen
-	 * @param turtle to be moved or animated
-	 */
-//	public void updateTurtleState(UITurtle turtle, TurtleState newState){
-//		//turtle.setTurtleState(newState, GUITools.turtleCoordinateToPixelCoordinate(newState, _bounds));
-//		if(newState.getPen()){
-//			Line line = new Line();
-//			_lines.add(line);
-//			this.getChildren().add(1,line);
-//			turtle.addAnimationToQueue(newState, 
-//					GUITools.turtleCoordinateToPixelCoordinate(newState, _bounds), line);
-//		}else{
-//			turtle.addAnimationToQueue(newState, 
-//					GUITools.turtleCoordinateToPixelCoordinate(newState, _bounds));	
-//		}
-//	}
-	
 	public void resetDisplay(){
 		clearLines();
 		for(UITurtle t : _turtles){
 			TurtleState reset = new TurtleState();
 			System.out.println(reset.getHeadAngle()+"\t"+ reset.getX() +"\t"+reset.getY());
 			t.reset(reset, GUITools.turtleCoordinateToPixelCoordinate(reset, _bounds));
+		}
+	}
+	
+	private void setupTurtleMap(double numberOfTurtles) {
+		_turtles = new ArrayList<UITurtle>();
+		for (int i = 0; i < numberOfTurtles; i++) {
+			addTurtle((double)i);
 		}
 	}
 	
@@ -75,7 +68,7 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI{
 	}
 
 	private void setupViews() {
-		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
+		_background = GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
 		this.setClip(new Rectangle(_bounds.getWidth(), _bounds.getHeight()));
 		for(UITurtle t: _turtles){
 			t.setTurtleState(t.getTurtleState(), GUITools.turtleCoordinateToPixelCoordinate(t.getTurtleState(), _bounds));
@@ -97,6 +90,59 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI{
 		rot.setNode(t);
 		rot.setDuration(Duration.millis(200));
 		return t;
+	}
+
+	public void setTurtleImage(Image image) {
+		for (UITurtle t : _turtles) {
+			//TODO check if turtle is active
+			t.setImageView(new ImageView(image));
+		}
+	}
+
+
+	public UITurtle getTurtle() {
+		return _turtles.isEmpty()? null:_turtles.get(0);
+	}
+
+	public UITurtle getTurtle(Double id) {
+		return _turtles.stream()
+				.filter(turtle -> turtle.getTurtleId() == id).
+				findFirst().orElse(null);
+	}
+
+	public void setPenWidth(double width) {
+		for (UITurtle t : _turtles) {
+			t.setPenStrokeWidth(width);
+		}
+		
+	}
+
+	public void setBackgroundColor(Color c) {
+		_background.setFill(c);
+	}
+
+	public void setPenColor(Color c) {
+		for (UITurtle t : _turtles) {
+			t.setLineColor(c);
+		}
+	}
+
+	public void stop() {
+		for (UITurtle t : _turtles) {
+			t.stop();
+		}
+	}
+
+	public void pause() {
+		for (UITurtle t : _turtles) {
+			t.pause();
+		}
+	}
+
+	public void play() {
+		for (UITurtle t : _turtles) {
+			t.play();
+		}
 	}
 	
 

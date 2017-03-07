@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
@@ -86,9 +87,7 @@ public class UITurtle extends Pane implements Observer {
 		imageView.setFitWidth(32);
 		this.getChildren().add(imageView);
 	}
-	public void setLineColor(Color color){
-		this._lineColor = color;
-	}
+
 	public void addAnimationToQueue(TurtleState s, Tuple<Double, Double> pos){
 		addAnimationToQueue(s,pos,null);
 	}
@@ -111,11 +110,24 @@ public class UITurtle extends Pane implements Observer {
 	private void play(TurtleState s, Tuple<Double, Double> pos, Line line){
 		_priorTurtleAtt = _turtleAtt;
 		_turtleAtt = new UITurtleAttributes(pos.x, pos.y, (-s.getHeadAngle() + 90));
+		//TODO UNCOMMENT THE LINE UNDER THIS
+		this.setVisiblityTo(!this.isVisible());
+		
+		//TODO: mention this in analysis
+		//setting the angle was a complicated process but i don't see any easier way
+		//to mathematically ensure that the turtles angle on display is in sync with the 
+		//backend's coordinate system. RotationAnimation also adds a few glitches.
 		double deltaX = _turtleAtt.x - _priorTurtleAtt.x;
 		double deltaY = _turtleAtt.y - _priorTurtleAtt.y;
-		double deltaAngle = Math.min(
-				_turtleAtt.angle - _priorTurtleAtt.angle, 
-				360 + _priorTurtleAtt.angle - _turtleAtt.angle);
+		Tuple<Double, Double> angle1 =
+				new Tuple<Double,Double>(_turtleAtt.angle - _priorTurtleAtt.angle, 
+				Math.abs(_turtleAtt.angle - _priorTurtleAtt.angle));
+		Tuple<Double, Double> angle2 = 
+				new Tuple<Double,Double>(360 + _priorTurtleAtt.angle - _turtleAtt.angle, 
+						Math.abs(360 + _priorTurtleAtt.angle - _turtleAtt.angle));
+		//This line right here sets deltaAngle to the angle with the closest value
+		//to zero while still preserving the angles direction (positive or negative)
+		double deltaAngle = angle1.y == Math.min(angle1.y, angle2.y)? angle1.x:angle2.x;
 		if (Math.abs(deltaY) + Math.abs(deltaX) != 0){
 			_animators.x.setByX(deltaX);
 			_animators.x.setByY(deltaY);
@@ -191,12 +203,47 @@ public class UITurtle extends Pane implements Observer {
 	public double getTurtleId(){
 		return _id;
 	}
+	public void setVisiblityTo(boolean b){
+		this._imageView.setVisible(b);
+	}
+	public void setLineColor(Color color){
+		this._lineColor = color;
+	}
+	public void setPenStrokeWidth(double d){
+		this._strokeWidth = d;
+	}
+	public void setShape(double index, ImageView image){
+		_shape = index;
+		//TODO
+	}
+	public void setShape(double index, Shape shape){
+		_shape = index;
+		//TODO
+	}
+	public void setPenVisibility(boolean bool){
+		this.getTurtleState().setPen(bool);
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		TurtleState newState = new TurtleState((TurtleState) o);
 		addAnimationToQueue(newState, 
 				GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
+	}
+
+	public void stop() {
+		this._animators.x.stop();
+		this._animators.y.stop();
+	}
+
+	public void pause() {
+		this._animators.x.pause();
+		this._animators.y.pause();
+	}
+
+	public void play() {
+		this._animators.x.play();
+		this._animators.y.play();
 	}
 
 }
