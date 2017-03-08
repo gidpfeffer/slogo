@@ -122,14 +122,13 @@ public class Controller {
 	public void processInput(String input){
 		try{
 			ProtectedTokenList list = myParser.parse(input);
-			Map<Double, List<String>> turtlesToCommands = parseList(list);
+			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
 			
 			Compiler c = new Compiler(); 
 			for (Double turtleId: turtlesToCommands.keySet()){
-				List<String> commandsToApply = turtlesToCommands.get(turtleId);
+				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
 				List<Turtle> currentTurtles = myModel.getTurtles(); 
 				TurtleState t = findTurtle(turtleId, currentTurtles);
-				// can i do this instead 
 				Queue<TreeNode> Q = c.compile(t, commandsToApply);
 				myModel.update(Q);
 				output = myModel.getStringOutput();
@@ -158,12 +157,11 @@ public class Controller {
 	}
 
 
-	private Map<Double, List<String>> parseList(ProtectedTokenList list) {
-		
+	private Map<Double, ProtectedTokenList> parseList(ProtectedTokenList list) {
 		AskTellParser ap = new AskTellParser(myModel, myViewController); 
 		ap.parseCommands(list);
-		Map<Double, List<String>> turtlesToCommands = ap.getParsedCommands(); 
-		return turtlesToCommands; 
+		ap.clearParser();
+		return ap.getParsedCommands(); 
 			
 	}
 	
