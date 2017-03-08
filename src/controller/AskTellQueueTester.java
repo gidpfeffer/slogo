@@ -106,7 +106,9 @@ public class AskTellQueueTester {
 			logoPerTurtle.add(finalT);
 		}
 
-		return new TokenList(commandsPerTurtle, logoPerTurtle);
+		TokenList tl = new TokenList(commandsPerTurtle, logoPerTurtle);
+		System.out.println("logo check " + logoPerTurtle.get(0));
+		return tl;
 	}
 
 
