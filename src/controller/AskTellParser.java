@@ -10,6 +10,7 @@ import java.util.Queue;
 import controller.AskTellData;
 import gui.UIMain;
 import model.ModelController;
+import parser.main.NewParser;
 import parser.tokenizer.ProtectedTokenList;
 import parser.tokenizer.TokenIdentifier;
 import parser.tokenizer.TokenList;
@@ -84,27 +85,31 @@ public class AskTellParser {
 	private void buildCommandMap() {
 		for (Double kk : literalMap.keySet()){
 			if (!commandMap.containsKey(kk)){
-				commandMap.put(kk, new ProtectedTokenList(createTokenList(literalMap.get(kk))));
+				ProtectedTokenList t = createTokenList(literalMap.get(kk));
+				System.out.println(t.getLogo());
+				System.out.
+				println(t.getLiterals());
+				commandMap.put(kk, t);
 			}
 			else{
-				ProtectedTokenList ptl = commandMap.get(kk);
-				ptl.add(createTokenList(literalMap.get(kk)));
-				commandMap.put(kk, ptl);
+				ProtectedTokenList ptl = createTokenList(literalMap.get(kk));
+				commandMap.get(kk).add(new TokenList(ptl.getLiterals(), ptl.getLogo()));
 			}
 		}
 	}
 
 
-	private TokenList createTokenList(List<String> commandsPerTurtle) {
+	private ProtectedTokenList createTokenList(List<String> commandsPerTurtle) {
 		// commands per turtle = literal 
-		List<String> logoPerTurtle = new ArrayList<String>(); 
+		List<String> logoPerTurtle = new ArrayList<String>();
+		String bigString = " ";
 		for (String literal: commandsPerTurtle){
-			Tokenizer t = new Tokenizer(literal, "resources.languages/English");
-			TokenIdentifier tID = t.getToken(); 
-			String finalT = tID.getToken();
-			logoPerTurtle.add(finalT);
+			bigString = bigString + literal + " ";
 		}
-		return new TokenList(commandsPerTurtle, logoPerTurtle);
+		
+		NewParser p = new NewParser("resources.languages/English");
+
+		return p.parse(bigString);
 	}
 
 	
