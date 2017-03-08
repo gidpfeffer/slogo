@@ -163,7 +163,10 @@ public class Controller {
 
 	private Map<Double, ProtectedTokenList> parseList(ProtectedTokenList list) {
 		AskTellParser ap = new AskTellParser(myModel, myViewController); 
+
 		ap.parseCommands(list);
+		
+		System.out.println(list.getLiterals().size());
 		return ap.getParsedCommands(); 
 			
 	}

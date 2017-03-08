@@ -45,7 +45,7 @@ public class AskTellParser {
 		}
 	}
 	
-	public void parseCommands(ProtectedTokenList p){
+	public void parseCommands(ProtectedTokenList p){ 
 		constructQ(p);
 
 		while (!commandQ.isEmpty()){
