@@ -87,7 +87,8 @@ public class AskTellParser {
 			if (!commandMap.containsKey(kk)){
 				ProtectedTokenList t = createTokenList(literalMap.get(kk));
 				System.out.println(t.getLogo());
-				System.out.println(t.getLiterals());
+				System.out.
+				println(t.getLiterals());
 				commandMap.put(kk, t);
 			}
 			else{
