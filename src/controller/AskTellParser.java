@@ -32,7 +32,6 @@ public class AskTellParser {
 	}
 	
 	
-	
 	private Queue<String> constructQ (ProtectedTokenList p){
 		Queue<String> inputQ = new LinkedList<String>(); 
 		List<String> literalInput = p.getLiterals(); 
