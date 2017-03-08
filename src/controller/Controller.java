@@ -124,6 +124,12 @@ public class Controller {
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
 			
+			System.out.println(turtlesToCommands.size());
+			
+			for(Double d: turtlesToCommands.keySet()){
+				
+			}
+			
 			Compiler c = new Compiler(); 
 			for (Double turtleId: turtlesToCommands.keySet()){
 				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
