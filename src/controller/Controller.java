@@ -158,11 +158,10 @@ public class Controller {
 
 
 	private Map<Double, ProtectedTokenList> parseList(ProtectedTokenList list) {
-		
 		AskTellParser ap = new AskTellParser(myModel, myViewController); 
 		ap.parseCommands(list);
-		Map<Double, ProtectedTokenList> turtlesToCommands = ap.getParsedCommands(); 
-		return turtlesToCommands; 
+		ap.clearParser();
+		return ap.getParsedCommands(); 
 			
 	}
 	

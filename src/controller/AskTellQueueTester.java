@@ -15,20 +15,21 @@ import parser.tokenizer.TokenList;
 import parser.tokenizer.Tokenizer;
 
 public class AskTellQueueTester {
-	static Queue<String> commands; 
-	static Map<Double, List<String>> literalCommandMap; 
+	static Queue<String> commandQ; 
+	static Map<Double, List<String>> literalMap; 
 	static Map<Double, ProtectedTokenList> commandMap; 
+	
 	public AskTellQueueTester(){
-		commands = new LinkedList<String>(); 
+		commandQ = new LinkedList<String>(); 
 		commandMap = new HashMap<Double, ProtectedTokenList>(); 
-		literalCommandMap = new HashMap<Double, List<String>>(); 
+		literalMap = new HashMap<Double, List<String>>(); 
 
 	}
 
 	private static void constructQ (ProtectedTokenList p){
 		List<String> literalInput = p.getLiterals(); 
 		for (String s : literalInput){
-			commands.add(s);
+			commandQ.add(s);
 		}
 	}
 
@@ -37,9 +38,9 @@ public class AskTellQueueTester {
 	public static void parseCommands(ProtectedTokenList p){
 		constructQ(p);
 
-		while (!commands.isEmpty()){
+		while (!commandQ.isEmpty()){
 
-			String input = commands.poll(); 
+			String input = commandQ.poll(); 
 
 			if (input.equals("ask")){
 				AskTellData askData =  handleAsk();				
@@ -60,21 +61,21 @@ public class AskTellQueueTester {
 
 	private static void buildLiteralMap(AskTellData data) {
 		for (Double t : data.getTurtleIDS()){
-			if (!(literalCommandMap.containsKey(t))){
-				literalCommandMap.put(t, new ArrayList<String>());
+			if (!(literalMap.containsKey(t))){
+				literalMap.put(t, new ArrayList<String>());
 			}
-			literalCommandMap.get(t).addAll(data.getCommands());
+			literalMap.get(t).addAll(data.getCommands());
 		}
 	}
 
 	private static void buildCommandMap() {
-		for (Double kk : literalCommandMap.keySet()){
+		for (Double kk : literalMap.keySet()){
 			if (!commandMap.containsKey(kk)){
-				commandMap.put(kk, new ProtectedTokenList(createTokenList(literalCommandMap.get(kk))));
+				commandMap.put(kk, new ProtectedTokenList(createTokenList(literalMap.get(kk))));
 			}
 			else{
 				ProtectedTokenList ptl = commandMap.get(kk);
-				ptl.add(createTokenList(literalCommandMap.get(kk)));
+				ptl.add(createTokenList(literalMap.get(kk)));
 				commandMap.put(kk, ptl);
 			}
 		}
@@ -114,8 +115,8 @@ public class AskTellQueueTester {
 		ArrayList<String> commandsToApply = new ArrayList<String>();
 
 		int bracketCount =0; 
-		while (bracketCount<2 && !(commands.isEmpty())){
-			String st = commands.poll();
+		while (bracketCount<2 && !(commandQ.isEmpty())){
+			String st = commandQ.poll();
 			if ((st.equals("[")) || (st.equals("]"))){
 				bracketCount++; 
 			}
@@ -124,13 +125,13 @@ public class AskTellQueueTester {
 			}
 		}
 
-		while (!commands.isEmpty()){
-			String ch = commands.peek();
+		while (!commandQ.isEmpty()){
+			String ch = commandQ.peek();
 			if (ch.equals("tell") || ch.equals("ask")){
 				break; 
 			}
 			else{
-				commandsToApply.add(commands.poll());
+				commandsToApply.add(commandQ.poll());
 			}	
 		}
 		return new AskTellData(turtles, commandsToApply); 
@@ -142,7 +143,7 @@ public class AskTellQueueTester {
 		ArrayList<String> askCommands = new ArrayList<String>();
 		int bracketCount = 0; 
 		while (bracketCount<2){
-			String st = commands.poll(); 
+			String st = commandQ.poll(); 
 			if ((st.equals("[")) || (st.equals("]"))){
 				bracketCount++; 
 			}
@@ -152,7 +153,7 @@ public class AskTellQueueTester {
 		}
 		if (bracketCount==2){
 			while (bracketCount<4){
-				String st1 = commands.poll(); 
+				String st1 = commandQ.poll(); 
 				if(st1.equals("tell")){
 					break;
 				}
@@ -170,9 +171,9 @@ public class AskTellQueueTester {
 	}
 	
 	public void clearTester(){
-		commands = new LinkedList<String>(); 
+		commandQ = new LinkedList<String>(); 
 		commandMap = new HashMap<Double, ProtectedTokenList>(); 
-		literalCommandMap = new HashMap<Double, List<String>>(); 
+		literalMap = new HashMap<Double, List<String>>(); 
 	}
 
 
