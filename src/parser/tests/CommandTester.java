@@ -19,7 +19,7 @@ public class CommandTester {
 		String language = "resources/languages/English";
 		String testCode = "to sq [ :x ] [ product :x :x ] "
 				+ "to addAll [ :x :y :z ] [ sum sum :x :y :z ]";
-		String testCode2 = "fd sq 10 rt addAll 10 20";
+		String testCode2 = "fd sq 10 rt addAll 10 20 30";
 		
 		
 		Compiler compiler = new Compiler();
