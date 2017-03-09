@@ -7,8 +7,8 @@ import parser.helpers.ListMultiplier;
 import parser.tokenizer.TokenList;
 public abstract class BracketAid extends BracketHandler{
 	protected ListMultiplier listMultiplier;
-	public BracketAid(TokenList list, String indicator) {
-		super(list, indicator);
+	public BracketAid(String indicator) {
+		super(indicator);
 		listMultiplier = new ListMultiplier();
 	}
 	
@@ -30,10 +30,10 @@ public abstract class BracketAid extends BracketHandler{
 	protected int findEndBracket(int startIndex){
 		Stack<Integer> stack = new Stack<>();
 		stack.push(startIndex);
-		for(int i = startIndex + 1; i < literals.size(); i++){
-			if(literals.get(i).equals(LEFT_BRACKET))
+		for(int i = startIndex + 1; i < list.getLiterals().size(); i++){
+			if(list.getLiterals().get(i).equals(LEFT_BRACKET))
 				stack.push(i);
-			if(literals.get(i).equals(RIGHT_BRACKET)){
+			if(list.getLiterals().get(i).equals(RIGHT_BRACKET)){
 				stack.pop();
 				if(stack.isEmpty()){
 					return i;
@@ -44,8 +44,8 @@ public abstract class BracketAid extends BracketHandler{
 	}
 	
 	protected int findStartBracket(int start){
-		for(int i = start; i < literals.size(); i++){
-			if(literals.get(i).equals(LEFT_BRACKET)){
+		for(int i = start; i < list.getLiterals().size(); i++){
+			if(list.getLiterals().get(i).equals(LEFT_BRACKET)){
 				return i;
 			}
 		}
@@ -58,14 +58,6 @@ public abstract class BracketAid extends BracketHandler{
 		replace();
 	}
 	
-	private void printRemaining(){
-		System.out.println("==========");
-		for(String s: list.getLiterals()){
-			System.out.println(s);
-		}
-		System.out.println("==========");
-	}
-	
 	protected abstract void reset();
 	
 	protected abstract void findIndices();
@@ -73,4 +65,5 @@ public abstract class BracketAid extends BracketHandler{
 	protected abstract void replace();
 	
 	protected abstract void checkValidity();
+	
 }

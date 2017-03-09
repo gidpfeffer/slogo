@@ -1,22 +1,30 @@
 package parser.storage;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FunctionObj{
 	private String name;
 	private List<String> args;
+	private int numArgs;
 	
 	public FunctionObj(String name, List<String> args){
 		this.name = name;
-		this.args = args;
+		this.args = new ArrayList<>(args);
+		numArgs = args.size();
 	}
 	
 	public int numArgs(){
-		return args.size();
+		return numArgs;
 	}
 	
 	public String name(){
 		return name;
+	}
+	
+	public List<String> getArgs(){
+		return Collections.unmodifiableList(args);
 	}
 
 	@Override
