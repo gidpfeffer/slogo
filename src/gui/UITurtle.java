@@ -168,10 +168,10 @@ public class UITurtle extends Pane implements Observer {
 	}
 
 	public void reset() {
-		//TODO
 		_priorTurtleAtt = null;
 		_turtleAtt = null;
 		setTurtleState(getTurtleState());
+		emptyAnimationQueue();
 	}
 
 	public TurtleState getTurtleState() {
@@ -232,6 +232,11 @@ public class UITurtle extends Pane implements Observer {
 	public void stop() {
 		this._animators.x.stop();
 		this._animators.y.stop();
+		emptyAnimationQueue();
+	}
+
+	private void emptyAnimationQueue() {
+		_queue.clear();
 	}
 
 	public void pause() {
@@ -240,7 +245,10 @@ public class UITurtle extends Pane implements Observer {
 	}
 
 	public void play() {
-		this._animators.x.play();
+		if(Animation.Status.PAUSED.equals(_animators.x.getStatus())){
+			this._animators.x.play();
+		}
+		
 		this._animators.y.play();
 	}
 
