@@ -11,7 +11,7 @@ import parser.storage.VariableStorage;
 public class UIVariablesView extends UITableView implements Observer {
 	
 	public UIVariablesView(Frame bounds) {
-		super(bounds, "Variables");
+		super(bounds, "Variables"); //string for title
 
 	}
 	

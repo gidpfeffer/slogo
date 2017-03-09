@@ -42,20 +42,14 @@ public class UITurtle extends Pane implements Observer {
 
 	private double ANIMATION_SPEED = 400;// 100 pixels per second
 
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, double id, TurtleDisplayHandler handler,
-			Frame displayBounds) {
-		this(animators, new Image("turtle.png"), id, handler, displayBounds);
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, TurtleDisplayHandler handler,
+			Frame displayBounds, TurtleState state) {
+		this(animators, new Image("turtle.png"),state, handler, displayBounds);
 	}
 
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, Image image, double id,
-			TurtleDisplayHandler handler, Frame displayBounds) {
-		this(animators, image, new TurtleState(), id, handler, displayBounds);
-	}
-
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, Image image, TurtleState state, double id,
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, Image image, TurtleState state,
 			TurtleDisplayHandler handler, Frame displayBounds) {
 		_turtleState = state;
-		_id = id;
 		_handler = handler;
 		_displayBounds = displayBounds;
 		setImageView(new ImageView(image));
@@ -75,7 +69,7 @@ public class UITurtle extends Pane implements Observer {
 				playNextAnimation();
 			}
 		});
-		this.setTurtleState(new TurtleState());
+		this.setTurtleState(getTurtleState());
 	}
 
 	public void setImageView(ImageView imageView) {
@@ -149,7 +143,6 @@ public class UITurtle extends Pane implements Observer {
 		UITurtleAttributes old = getPriorAttributes();
 		UITurtleAttributes curr = getNewAttributes();
 		if (old != null && getTurtleState().getPen()) {
-			// TODO animate this
 			double ins = getWidth() / 2.;
 			Line line = new Line(old.x + ins, old.y + ins, curr.x + ins, curr.y + ins);
 			line.setStroke(_lineColor);
@@ -161,6 +154,7 @@ public class UITurtle extends Pane implements Observer {
 
 	public void setTurtleState(TurtleState s) {
 		setTurtleAttributes(GUITools.turtleCoordinateToPixelCoordinate(s, _displayBounds),(-s.getHeadAngle() + 90));
+		this._turtleState = s;
 		this.setLayoutX(_turtleAtt.x);
 		this.setLayoutY(_turtleAtt.y);
 		this.setWidth(32);
@@ -181,6 +175,8 @@ public class UITurtle extends Pane implements Observer {
 	}
 
 	public TurtleState getTurtleState() {
+		StackTraceElement[] s = Thread.currentThread().getStackTrace();
+		//System.out.println("getting turtle state " + s[1].getMethodName() + " " + s[2].getMethodName());
 		return _turtleState;
 	}
 
@@ -228,8 +224,8 @@ public class UITurtle extends Pane implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println(o);
-		TurtleState newState = new TurtleState((TurtleState) o);
+		TurtleState newState = (TurtleState) o;
+		System.out.println(newState.getX() + " " + newState.getY());
 		addAnimationToQueue(-newState.getHeadAngle() + 90, GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
 	}
 
