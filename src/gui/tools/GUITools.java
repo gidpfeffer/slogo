@@ -59,11 +59,11 @@ public class GUITools {
 		double y=-t.getY() + bounds.getHeight()/2.0 - 16;
 		return new Tuple<Double, Double>(x,y);
 	}
-	public static TurtleState guiTurtleToTurtleState(Tuple<Double, Bounds> uiState,Frame bounds) {
+	public static TurtleState guiTurtleToTurtleState(double angle, Tuple<Double,Double> pos,Frame bounds) {
 		TurtleState t = new TurtleState();
-		t.setHeadAngle(uiState.x - 90);
-		t.setX(uiState.y.getMinX() - bounds.getWidth()/2.0 + 16);
-		t.setY(uiState.y.getMinY() - bounds.getHeight()/2.0 + 16);
+		t.setHeadAngle(angle - 90);
+		t.setX(pos.x - bounds.getWidth()/2.0 + 16);
+		t.setY(-(pos.y - bounds.getHeight()/2.0 + 16));
 		return t;
 	}
 	

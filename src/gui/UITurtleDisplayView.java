@@ -46,11 +46,11 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 	}
 
 	private void setupMouseControl() {
-		setOnMouseClicked(mouseHandler);
+		//setOnMouseClicked(mouseHandler);
 		setOnMouseDragged(mouseHandler);
-		setOnMouseEntered(mouseHandler);
-		setOnMouseExited(mouseHandler);
-		setOnMouseMoved(mouseHandler);
+		//setOnMouseEntered(mouseHandler);
+		//setOnMouseExited(mouseHandler);
+		//setOnMouseMoved(mouseHandler);
 		setOnMousePressed(mouseHandler);
 		setOnMouseReleased(mouseHandler);
 
@@ -63,13 +63,13 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		}
 	}
 
-	public UITurtle addTurtle(double id) {
+	public UITurtle addTurtle(TurtleState state) {
 		TranslateTransition tran = new TranslateTransition();
 		RotateTransition rot = new RotateTransition();
 		Tuple<TranslateTransition, RotateTransition> animators = new Tuple<TranslateTransition, RotateTransition>(tran,
 				rot);
 
-		UITurtle t = new UITurtle(animators, id, new Handler(), _bounds);
+		UITurtle t = new UITurtle(animators, new Handler(), _bounds, state);
 
 		tran.setNode(t);
 		tran.setDuration(Duration.millis(200));
@@ -163,6 +163,11 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 
 		@Override
 		public void handle(MouseEvent mouseEvent) {
+			if (mouseEvent.getEventType() == MouseEvent.MOUSE_CLICKED){
+				System.out.println("Mouse clicked");
+				UITurtle t = detectTurtle(mouseEvent.getX(), mouseEvent.getY());
+				t.getTurtleState().setVisibility(!t.getTurtleState().getVisibility());
+			}
 			if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				UITurtle t = detectTurtle(mouseEvent.getX(), mouseEvent.getY());
 				_selectedTurtle = t;
@@ -171,18 +176,16 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 				_line.setStrokeWidth(1);
 				addLine(_line);
 			} else if (mouseEvent.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-				// TODO: test
-				System.out.println("MOUSE DRAGGED");
 				if (_line != null) {
 					_line.setEndX(mouseEvent.getX());
 					_line.setEndY(mouseEvent.getY());
 				}
 			} else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
 				if (_selectedTurtle != null) {
+					System.out.println("moving turtle");
 					Tuple<Double, Double> newPos = new Tuple<Double, Double>(mouseEvent.getX() - 16, mouseEvent.getY() - 16);
-					TurtleState newState = GUITools.guiTurtleToTurtleState(
-							new Tuple<Double, Bounds>(90.0,_selectedTurtle.getBoundsInParent()), _bounds);
-					_selectedTurtle.addAnimationToQueue(90, newPos);
+					
+					TurtleState newState = GUITools.guiTurtleToTurtleState(90.0,newPos, _bounds);
 					updateTurtleStatePrimitives(_selectedTurtle.getTurtleState(), newState);
 				}
 				removeLine(_line);
@@ -190,7 +193,6 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 				_line = null;
 			}
 		}
-
 	};
 
 	private UITurtle detectTurtle(double x, double y) {
@@ -202,9 +204,8 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 	}
 	
 	private void updateTurtleStatePrimitives(TurtleState turtleState, TurtleState newState) {
-		turtleState.setHeadAngle(newState.getHeadAngle());
-		turtleState.setX(newState.getX());
-		turtleState.setY(newState.getY());		
+		//turtleState.setHeadAngle(newState.getHeadAngle());
+		turtleState.setAll((newState.getX()),(newState.getY()), newState.getHeadAngle());
 	}
 	
 	

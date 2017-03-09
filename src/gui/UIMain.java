@@ -132,13 +132,15 @@ public class UIMain implements UIMainAPI {
 		_terminalView.clear();
 
 	}
+	
 	@Override
-	public UITurtle addTurtle(double id) {
-		UITurtle t = _displayView.addTurtle(id);
-		t.boundsInParentProperty().addListener( e -> {
-			Tuple<Double, Bounds> state = new Tuple<Double, Bounds>(t.getRotate(), t.getBoundsInParent());
-			turtleStateChanged(GUITools.guiTurtleToTurtleState(state, _displayView.getBounds()));
-		});
+	public UITurtle addTurtle(TurtleState state) {
+		UITurtle t = _displayView.addTurtle(state);
+		//TODO
+//		t.boundsInParentProperty().addListener( e -> {
+//			Tuple<Double, Bounds> s = new Tuple<Double, Bounds>(t.getRotate(), t.getBoundsInParent());
+//			turtleStateChanged(GUITools.guiTurtleToTurtleState(s, _displayView.getBounds()));
+//		});
 		return t;
 	}
 
