@@ -7,9 +7,9 @@ import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
-public class SetBackGround extends LogicCommand implements Command {
+public class SetBackground extends LogicCommand implements Command {
 
-	public SetBackGround(List<TreeNode> args){
+	public SetBackground(List<TreeNode> args){
 		children = args;
 	}
 	
