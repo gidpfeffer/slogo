@@ -135,11 +135,7 @@ public class Controller {
 				
 				TurtleState t = findTurtle(turtleId, currentTurtles);
 				Queue<TreeNode> Q = c.compile(t, commandsToApply); 
-				
-			
-				
-				TurtleState t = findTurtle(turtleId);
-				Queue<TreeNode> Q = c.compile(t, commandsToApply); 
+
 
 				myModel.update(Q);
 				output = myModel.getStringOutput();

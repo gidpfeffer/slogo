@@ -168,10 +168,7 @@ public class UIMain implements UIMainAPI, Observer {
 		_scene.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.UP){
 				_terminalView.clear();
-				_terminalView.addText(_historyView.getCommandUpKey());
-			}else if(e.getCode() == KeyCode.DOWN){
-				_terminalView.clear();
-				_terminalView.addText(_historyView.getCommandDownKey());
+				_terminalView.addText(_terminalView.getPreviousCommand());
 			}
 					});
 	}

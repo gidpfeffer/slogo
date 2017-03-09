@@ -16,7 +16,7 @@ import javafx.scene.layout.Border;
 public class UIHistoryView extends UIView implements CommandHistoryAPI {
 	
 	private TextArea _textArea;
-	private List<String> _history = new ArrayList<String>();
+	//private List<String> _history = new ArrayList<String>();
 	private int _index = 0;
 	
 	public UIHistoryView(Frame frame){
@@ -27,35 +27,35 @@ public class UIHistoryView extends UIView implements CommandHistoryAPI {
 	@Override
 	public void addNewCommand(String s) {
 		_textArea.appendText("\n"+s);
-		_history.add(s);
-		_index = _history.size() - 1;
+//		_history.add(s);
+//		_index = _history.size() - 1;
 	}
 	public void clear(){
 		_textArea.clear();
 	}
-	public String getCommandUpKey(){ //moves backwards in history
-		if(!_history.isEmpty() && _index >= 0 && _index < _history.size()){
-			_index--;
-			return _history.get(_index + 1);
-		}
-		
-		else {
-			_index = 0;
-			return "";
-		}
-	}
-	public String getCommandDownKey(){
-		if(!_history.isEmpty() && _index >= 0 && _index < _history.size()){
-			_index++;
-			return _history.get(_index - 1);
-		}
-		
-		else {
-			_index = _history.size() - 1;
-			return "";
-		}
-			
-	}
+//	public String getCommandUpKey(){ //moves backwards in history
+//		if(!_history.isEmpty() && _index >= 0 && _index < _history.size()){
+//			_index--;
+//			return _history.get(_index + 1);
+//		}
+//		
+//		else {
+//			_index = 0;
+//			return "";
+//		}
+//	}
+//	public String getCommandDownKey(){
+//		if(!_history.isEmpty() && _index >= 0 && _index < _history.size()){
+//			_index++;
+//			return _history.get(_index - 1);
+//		}
+//		
+//		else {
+//			_index = _history.size() - 1;
+//			return "";
+//		}
+//			
+//	}
 	private void setupViews() {
 		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
 		_textArea = new TextArea("\n\n");
