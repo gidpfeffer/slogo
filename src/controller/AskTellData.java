@@ -7,11 +7,14 @@ public class AskTellData {
 	private ArrayList<String> turtles; 
 	private ArrayList<String> commands; 
 	private ArrayList<Double> turtleIDs; 
+	
 	public AskTellData(ArrayList<String> t, ArrayList<String> c){
 		turtles = t; 
 		commands = c; 
 		turtleIDs = new ArrayList<Double>();
 		configTurtleIDs(); 
+		
+		
 		
 	}
 	private void configTurtleIDs() throws SLogoException{
