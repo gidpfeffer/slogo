@@ -14,7 +14,6 @@ import model.command.TreeNode;
 import model.turtle.Turtle;
 import model.turtle.TurtleState;
 import parser.main.NewParser;
-import parser.main.Parser;
 import parser.storage.*;
 import parser.storage.VariableStorage;
 import parser.tokenizer.ProtectedTokenList;

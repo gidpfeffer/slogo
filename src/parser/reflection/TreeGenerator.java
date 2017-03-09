@@ -102,7 +102,7 @@ public class TreeGenerator {
 	}
 	
 	public Queue<TreeNode> getAllQueue(){
-		return AQH.getQueue();
+		return allQueue;
 	}
 	
 	public double getLast(){

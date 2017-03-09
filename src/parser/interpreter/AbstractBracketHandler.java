@@ -3,14 +3,15 @@ import java.util.ArrayList;
 import java.util.List;
 import controller.SLogoException;
 import model.turtle.State;
+import parser.interfaces.BracketHandler;
 import parser.tokenizer.TokenList;
-public abstract class BracketHandler {
+public abstract class AbstractBracketHandler implements BracketHandler{
 	protected TokenList list;
 	protected String indicator;
 	protected static final String LEFT_BRACKET 	= "[";
 	protected static final String RIGHT_BRACKET = "]";
 	
-	public BracketHandler(String indicator){
+	public AbstractBracketHandler(String indicator){
 		this.indicator = indicator;
 	}
 	
@@ -49,5 +50,5 @@ public abstract class BracketHandler {
 		return list;
 	}
 	
-	protected abstract void handle(TokenList TL, State t);
+	public abstract void handle(TokenList TL, State t);
 }
