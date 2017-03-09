@@ -30,9 +30,6 @@ public class Compiler {
 				new ArrayList<>(list.getLogo()));
 		IT.handleVarLoops(TL, state);
 		fixVars.fix(TL);
-		System.out.print("+++");
-		System.out.print(storage.getVars().getMap().size());
-		System.out.print("+++");
 		IT.handleRegLoops(TL, state);
 		return makeTree(TL, state);
 	}
