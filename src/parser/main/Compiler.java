@@ -1,6 +1,7 @@
 package parser.main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Queue;
 
 import model.command.TreeNode;
@@ -10,6 +11,7 @@ import parser.queue_splitter.QueueSplitter;
 import parser.reflection.TreeGenerator;
 import parser.storage.FixVars;
 import parser.storage.TotalStorage;
+import parser.storage.VariableStorage;
 import parser.tokenizer.ProtectedTokenList;
 import parser.tokenizer.TokenList;
 
@@ -41,5 +43,9 @@ public class Compiler {
 	
 	public Queue<TreeNode> compile(State state, ProtectedTokenList list){
 		return interpret(list, state);
+	}
+	
+	public VariableStorage getVars(){
+		return storage.getVars();
 	}
 }
