@@ -2,6 +2,7 @@ package model.math;
 
 import java.util.List;
 
+import controller.BackEndHandler;
 import controller.SLogoException;
 import model.command.Command;
 import model.command.LogicCommand;
@@ -15,7 +16,7 @@ public class NaturalLog extends LogicCommand implements Command{
 		children = args;
 	}
 	
-	public void execute(){
+	public void execute(BackEndHandler myHandler){
 		
 	}
 	

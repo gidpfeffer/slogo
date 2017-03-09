@@ -2,12 +2,14 @@ package model.queries;
 
 import java.util.List;
 
+import controller.BackEndHandler;
+import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
 import model.turtle.State;
 
 
-public class XCoordinate extends TurtleCommand {
+public class XCoordinate extends TurtleCommand implements Command {
 	private State myTurtleState;
 
 	public XCoordinate(List<TreeNode> args, State st){
@@ -15,13 +17,15 @@ public class XCoordinate extends TurtleCommand {
 		myTurtleState = st;
 	}
 	
-	public void execute(){
-		 
-		
-	}
 	
 	public double getValue(){
 		return myTurtleState.getX();
+	}
+
+	@Override
+	public void execute(BackEndHandler myHandler) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

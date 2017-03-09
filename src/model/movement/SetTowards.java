@@ -2,6 +2,7 @@ package model.movement;
 
 import java.util.List;
 
+import controller.BackEndHandler;
 import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
@@ -26,7 +27,7 @@ public class SetTowards extends TurtleCommand implements Command{
 		degrees = Math.toDegrees(Math.atan2(y - myTurtleState.getY() , x - myTurtleState.getX()));
 	}
 	
-	public void execute(){
+	public void execute(BackEndHandler myHandler){
 		TurtleState st = (TurtleState) myTurtleState;
 		st.setHeadAngle(degrees % 360);
 	}
