@@ -2,6 +2,7 @@ package model.movement;
 
 import java.util.List;
 
+import controller.BackEndHandler;
 import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
@@ -25,7 +26,7 @@ public class SetPosition extends TurtleCommand implements Command{
 		
 	}
 	
-	public void execute(){
+	public void execute(BackEndHandler myHandler){
 		TurtleState st = (TurtleState) myTurtleState;
 		st.setPosition(x, y);
 	}
