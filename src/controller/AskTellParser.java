@@ -16,35 +16,39 @@ import parser.tokenizer.ProtectedTokenList;
 import parser.tokenizer.TokenList;
 
 public class AskTellParser {
-	
+
 	private HashMap<Double, ProtectedTokenList> commandMap;
 	private Map<Double, List<String>> literalMap;
 	private Queue<String> commandQ; 
-	
+	private List<Double> activeTurtles; 
+
 	private ModelController currentModel; 
 	private UIMain myView; 
-	
+
 	public AskTellParser(ModelController myModel, UIMain myViewController){
 		currentModel = myModel;
 		myView = myViewController; 
-		
+
 		commandQ = new LinkedList<String>(); 
 		commandMap = new HashMap<Double, ProtectedTokenList>(); 
 		literalMap = new HashMap<Double, List<String>>(); 
+
+		activeTurtles = new ArrayList<Double>(); 
+		activeTurtles.add(1.0);
 	}
-	
+
 	public Map<Double, ProtectedTokenList> getParsedCommands(){
 		return commandMap; 
 	}
-	
-	
+
+
 	private void constructQ (ProtectedTokenList p){
 		List<String> literalInput = p.getLiterals(); 
 		for (String s : literalInput){
 			commandQ.add(s);
 		}
 	}
-	
+
 	public void parseCommands(ProtectedTokenList p){ 
 		constructQ(p);
 
@@ -61,12 +65,28 @@ public class AskTellParser {
 			if (input.equals("tell")){
 				AskTellData tellData = handleTell();
 				buildLiteralMap(tellData);
+				activeTurtles.clear();
+				activeTurtles.addAll(tellData.getTurtleIDS());
+			}
+
+			else{
+				// need to associate commands w the active Turtles
+				for (Double i : activeTurtles){
+					if (!literalMap.containsKey(i)){
+						List<String> val = new ArrayList<String>(); 
+						val.add(input);
+						literalMap.put(i, val);
+					}
+					else{
+						literalMap.get(i).add(input);
+					}
+				}
 			}
 
 		}
-		
+
 		buildCommandMap();		
-	
+
 	}
 
 
@@ -81,7 +101,7 @@ public class AskTellParser {
 			literalMap.get(t).addAll(data.getCommands());
 		}
 	}
-	
+
 	private void buildCommandMap() {
 		for (Double kk : literalMap.keySet()){
 			if (!commandMap.containsKey(kk)){
@@ -101,12 +121,12 @@ public class AskTellParser {
 		for (String literal: commandsPerTurtle){
 			bigString = bigString + literal + " ";
 		}
-		
+
 		NewParser p = new NewParser("resources.languages/English");
 		return p.parse(bigString);
 	}
 
-	
+
 	private AskTellData handleTell() {
 		ArrayList<String> turtles = new ArrayList<String>(); 
 		ArrayList<String> commandsToApply = new ArrayList<String>();
@@ -132,7 +152,7 @@ public class AskTellParser {
 			}	
 		}
 		return new AskTellData(turtles, commandsToApply); 
-		
+
 	}
 
 	private AskTellData handleAsk() {
@@ -172,5 +192,5 @@ public class AskTellParser {
 		literalMap = new HashMap<Double, List<String>>(); 
 	}
 
-	
+
 }
