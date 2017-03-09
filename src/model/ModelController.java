@@ -17,14 +17,21 @@ import model.turtle.Turtle;
 
 public class ModelController {
 	
-	List<Turtle> myTurtles; 	
+	List<Turtle> myTurtles; 
+	List<Double> myTurtleIDs; 
 
 	String myOutput; 
 	BackEndHandler myHandler; 
+	
+	private final Double DEFAULT_TURTLE_ID = 1.0; 
 
 	public ModelController(BackEndHandler handler){	
 		myTurtles = new ArrayList<Turtle>();
-		myTurtles.add(new Turtle());
+		myTurtles.add(new Turtle(DEFAULT_TURTLE_ID)); 
+		
+		myTurtleIDs = new ArrayList<Double>(); 
+		myTurtleIDs.add(DEFAULT_TURTLE_ID);
+		
 		myHandler = handler; 	
 	}
 
@@ -55,6 +62,12 @@ public class ModelController {
 		return Collections.unmodifiableList(myTurtles);  // make this list unmodifiable to anyone except the model
 	}
 	
+	
+	public List<Double> getTurtlesByID(){
+		return myTurtleIDs; 
+	}
+	
+	
 	public String getStringOutput(){
 		return myOutput; 
 	}
@@ -64,6 +77,7 @@ public class ModelController {
 			t.reset();
 		}
 	}
+	
 	
 	public Turtle makeNewTurtle(double id){
 		Turtle newTurtle = new Turtle(id);
