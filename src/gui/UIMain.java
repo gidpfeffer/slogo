@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import controller.ControlHandler;
 import general_data_structures.Tuple;
 import gui.API.ButtonControlHandler;
+import gui.API.DisplayHandler;
 import gui.API.UIMainAPI;
 import gui.API.UIMainHandler;
 import gui.API.UITurtleHandler;
@@ -81,6 +82,11 @@ public class UIMain implements UIMainAPI, Observer {
 		public void setLineColor(Color color) {
 			_displayView.setPenColor(color);
 		}
+		
+		@Override
+		public void setBackgroundColor(Color color){
+			_displayView.setBackgroundColor(color);
+		}
 
 		@Override
 		public void addFunctionToTerminal(String s) {
@@ -119,6 +125,15 @@ public class UIMain implements UIMainAPI, Observer {
 		}
 		
 	}
+	
+	public class displayHandler implements DisplayHandler{
+
+		@Override
+		public Color getColorPalette(double index) {
+			return _menuView.getPaletteView().getPalette(index);
+		}
+		
+	} 
 
 	@Override
 	public void displayErrorWithMessage(String error) {
@@ -203,7 +218,7 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 
 	private void setupDisplay() {
-		_displayView = new UITurtleDisplayView(DISPLAY_FRAME);
+		_displayView = new UITurtleDisplayView(DISPLAY_FRAME, new displayHandler());
 		_root.getChildren().add(_displayView);
 	}
 
@@ -284,8 +299,8 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 
 	@Override
-	public void setPalleteAtIndex(double index, double r, double g, double b) {
-		_menuView.getPaletteView().addNewPallete(index, Color.rgb((int)r, (int)g, (int)b));
+	public void setPaletteAtIndex(double index, double r, double g, double b) {
+		_menuView.getPaletteView().addNewPalette(index, Color.rgb((int)r, (int)g, (int)b));
 	}
 
 	@Override

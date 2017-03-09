@@ -15,6 +15,8 @@ import gui.tools.MyColors;
 import gui.tools.UIView;
 import javafx.animation.TranslateTransition;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ColorPicker;
@@ -34,10 +36,11 @@ import model.turtle.TurtleState;
 public class UIMenuView extends UIView {
 	
 	private final double TOP_INSET = 60;
-	private final Frame COLOR_FRAME;
+	private final Frame LCOLOR_FRAME;
 	private final Frame IMAGE_FRAME;
 	private final Frame PALLETTE_FRAME;
 	private final Frame ATTRIBUTES_FRAME;
+	private final Frame BCOLOR_FRAME;
 	
 	private UIMainHandler _handler;
 	private ImageView _turtleImageView;
@@ -49,17 +52,22 @@ public class UIMenuView extends UIView {
 		super(frame);
 		_handler = handler;
 		_resources = resources;
-		COLOR_FRAME = new Frame(16, TOP_INSET, _bounds.getWidth() - 32, 56);
-		IMAGE_FRAME = new Frame(16, COLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 56);
+		LCOLOR_FRAME = new Frame(16, TOP_INSET, _bounds.getWidth() - 32, 56);
+		BCOLOR_FRAME = new Frame(16, LCOLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 56);
+		IMAGE_FRAME = new Frame(16, BCOLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 56);
 		PALLETTE_FRAME = new Frame(16, IMAGE_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 150);
 		ATTRIBUTES_FRAME = new Frame(16, PALLETTE_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 150);
+		
 		setupViews();
 	}
 
 	private void setupViews() {
 		GUITools.addBackgroundWithColor(this, MyColors.GREEN_900, _bounds);
 		setupBackButton();
-		setupColorPicker();
+		ColorPicker lColorPicker = new ColorPicker(MyColors.GREEN_900);
+		ColorPicker bColorPicker = new ColorPicker(MyColors.GREEN_900);
+		setupColorPicker(LCOLOR_FRAME, "Line Color", lColorPicker, t -> _handler.setLineColor(lColorPicker.getValue())); //TODO resources
+		setupColorPicker(BCOLOR_FRAME, "Background Color", bColorPicker, t -> _handler.setBackgroundColor(bColorPicker.getValue()));
 		setupImagePicker();
 		setupPalletteView();
 		setupTurtleAttributesView();
@@ -75,26 +83,22 @@ public class UIMenuView extends UIView {
 		this.getChildren().add(_paletteView);
 	}
 
-	private void setupColorPicker() {
+	private void setupColorPicker(Frame frame, String text, ColorPicker colorPicker, EventHandler<ActionEvent> event) {
 		
-		ColorPicker colorPicker = new ColorPicker(MyColors.GREEN_900);
+		
 		colorPicker.setLayoutX(12);
 		colorPicker.setLayoutY(0);
 		colorPicker.setPrefWidth(48);
-		colorPicker.setPrefHeight(COLOR_FRAME.getHeight());
-		colorPicker.setOnAction(t -> _handler.setLineColor(colorPicker.getValue()));
+		colorPicker.setPrefHeight(frame.getHeight());
+		colorPicker.setOnAction(event);
 		colorPicker.setBackground(
 				new Background(new BackgroundFill[] { new BackgroundFill(MyColors.GREEN_100, null, null) }));
-		Label l = GUITools.plainLabel("Line Color", 14, Color.BLACK, FontWeight.THIN);//TODO
+		Label l = GUITools.plainLabel(text, 14, Color.BLACK, FontWeight.THIN);//TODO
 		l.setLayoutX(64);
 		l.setAlignment(Pos.CENTER_LEFT);
-		l.setPrefHeight(COLOR_FRAME.getHeight());
+		l.setPrefHeight(frame.getHeight());
 		
-		Pane container = new Pane();
-		container.setLayoutX(COLOR_FRAME.getX());
-		container.setLayoutY(COLOR_FRAME.getY());
-		container.setPrefWidth(COLOR_FRAME.getWidth());
-		container.setPrefHeight(COLOR_FRAME.getHeight());
+		UIView container = new UIView(frame);
 		GUITools.addBackgroundWithColor(container, MyColors.GREEN_100, IMAGE_FRAME.toLocalBounds());
 		container.getChildren().add(colorPicker);
 		container.getChildren().add(l);
