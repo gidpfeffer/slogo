@@ -79,7 +79,7 @@ public class Controller {
 		myTurtles = myModel.getTurtles();
 		activeTurtleIndexList = new ArrayList<Double>();
 		activeTurtleIndexList.add(new Double(1));
-		myViewController = new UIMain(new myHandler()); // handler currently Front to Back
+		myViewController = new UIMain(new myHandler(), "English"); // handler currently Front to Back
 		//myTurtle.getState().addObserver(myViewController);
 
 
