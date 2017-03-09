@@ -181,4 +181,7 @@ public class UIMenuView extends UIView {
 	public PalletteView getPaletteView(){
 		return _paletteView;
 	}
+	public UIAttributesView getAttributesView(){
+		return this._turtleAttributesView;
+	} 
 }

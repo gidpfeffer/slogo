@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import controller.ControlHandler;
@@ -26,13 +28,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
-public class UIMain implements UIMainAPI {
+public class UIMain implements UIMainAPI, Observer {
 	
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	public static final double SCREEN_WIDTH = 800;
@@ -136,11 +139,7 @@ public class UIMain implements UIMainAPI {
 	@Override
 	public UITurtle addTurtle(TurtleState state) {
 		UITurtle t = _displayView.addTurtle(state);
-		//TODO
-//		t.boundsInParentProperty().addListener( e -> {
-//			Tuple<Double, Bounds> s = new Tuple<Double, Bounds>(t.getRotate(), t.getBoundsInParent());
-//			turtleStateChanged(GUITools.guiTurtleToTurtleState(s, _displayView.getBounds()));
-//		});
+		t.getTurtleState().addObserver(this);
 		return t;
 	}
 
@@ -166,6 +165,15 @@ public class UIMain implements UIMainAPI {
 		_root = new Pane();
 		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(MyColors.GREEN));
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
+		_scene.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.UP){
+				_terminalView.clear();
+				_terminalView.addText(_historyView.getCommandUpKey());
+			}else if(e.getCode() == KeyCode.DOWN){
+				_terminalView.clear();
+				_terminalView.addText(_historyView.getCommandDownKey());
+			}
+					});
 	}
 
 	private void setupTitleAndMenuButton() {
@@ -305,6 +313,11 @@ public class UIMain implements UIMainAPI {
 	}
 	public UITurtle getTurtle(Double id){
 		return _displayView.getTurtle(id);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		_menuView.getAttributesView().update((TurtleState) o);
 	}
 	
 }

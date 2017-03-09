@@ -71,7 +71,7 @@ public class UITableView extends UIView {
 		title.setAlignment(Pos.CENTER);
 		this.getChildren().add(title);
 	}
-	protected void addText(String s){
+	protected Text addText(String s){
 		StackPane stack = new StackPane();
 		stack.setBackground(
 				new Background(
@@ -84,6 +84,7 @@ public class UITableView extends UIView {
 		_texts.add(l);
 		stack.getChildren().add(l);
 		_flowPane.getChildren().add(stack);
+		return l;
 	}
 	
 	public void clear(){
