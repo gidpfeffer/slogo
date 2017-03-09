@@ -3,6 +3,7 @@ package parser.tests;
 import java.util.Queue;
 
 import model.command.TreeNode;
+import model.command.TurtleCommand;
 import model.turtle.TurtleState;
 import parser.main.Compiler;
 import parser.main.NewParser;
@@ -11,7 +12,9 @@ import parser.tokenizer.ProtectedTokenList;
 public class CompilerTest {
 	public static void main(String args[]){
 		String language = "resources/languages/English";
-		String testCode = "make :x 0";
+		String testCode = "to sq [ :x ] [ product :x :x ] "
+				+ "to addAll [ :x :y :z ] [ sum sum :x :y :z ]";
+		String testCode2 = "fd sq 10 rt addAll 10 20 30";
 		
 		NewParser p = new NewParser(language);
 		Compiler c = new Compiler();
@@ -21,17 +24,20 @@ public class CompilerTest {
 		Queue<TreeNode> q = c.compile(new TurtleState(), PTL);
 		
 		while(!q.isEmpty()){
+			System.out.println("+++");
 			System.out.println(q.remove().getValue());
+			System.out.println("+++");
 		}
 		
-		testCode = "for [ :xy fd 3 rt 10 2 ] [ fd :xy rt 10 ]";
-		
-		PTL = p.parse(testCode);
+		PTL = p.parse(testCode2);
 		
 		q = c.compile(new TurtleState(), PTL);
 		
 		while(!q.isEmpty()){
-			System.out.println(q.remove().getValue());
+			TreeNode cur = q.remove();
+			if(cur instanceof TurtleCommand){
+				System.out.println("[Class: " + cur.getClass() + "] ["+ "Value: " + cur.getValue() + "]");
+			}
 		}
 	}
 

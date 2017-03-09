@@ -9,19 +9,19 @@ import parser.interpreter.Interpreter;
 import parser.queue_splitter.QueueSplitter;
 import parser.reflection.TreeGenerator;
 import parser.storage.FixVars;
-import parser.storage.VariableStorage;
+import parser.storage.TotalStorage;
 import parser.tokenizer.ProtectedTokenList;
 import parser.tokenizer.TokenList;
 
 public class Compiler {
-	private VariableStorage vars;
+	private TotalStorage storage;
 	private FixVars fixVars;
 	private Interpreter IT;
 
 	public Compiler(){
-		vars = new VariableStorage();
-		fixVars = new FixVars(vars);
-		IT = new Interpreter(vars.keySet());	
+		storage = new TotalStorage();
+		fixVars = new FixVars(storage.getVars());
+		IT = new Interpreter(storage);
 	}
 	
 	private Queue<TreeNode> interpret(ProtectedTokenList list, State state){
@@ -41,9 +41,5 @@ public class Compiler {
 	
 	public Queue<TreeNode> compile(State state, ProtectedTokenList list){
 		return interpret(list, state);
-	}
-	
-	public VariableStorage getVars(){
-		return vars;
 	}
 }

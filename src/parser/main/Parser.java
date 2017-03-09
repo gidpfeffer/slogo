@@ -29,7 +29,7 @@ public class Parser {
 		this.language = language;
 		vars = new VariableStorage();
 		FV = new FixVars(vars);
-		IT = new Interpreter(vars.keySet());
+//		IT = new Interpreter(vars.keySet());
 	}
 	
 	private void makeInterpreter(){

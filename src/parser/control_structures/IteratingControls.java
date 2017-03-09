@@ -3,7 +3,7 @@ package parser.control_structures;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import controller.SLogoException;
 import parser.helpers.RangeHandler;
@@ -16,11 +16,11 @@ public abstract class IteratingControls extends RegControl{
 	private String key;
 	protected RangeHandler range;
 	private Replacer replacer;
-	private Set<String> keys;
+	protected Map<String, Double> varMap;
 
-	public IteratingControls(Set<String> keys, String INDICATOR){
+	public IteratingControls(String INDICATOR, Map<String, Double> varMap){
 		super(INDICATOR);
-		this.keys = keys;
+		this.varMap = varMap;
 		replacer = new Replacer();
 	}
 	
@@ -51,7 +51,7 @@ public abstract class IteratingControls extends RegControl{
 			throw new SLogoException("Make sure to use an undefined variable");
 		}
 		key = list.getLiterals().get(ifStart + 1);
-		if(keys.contains(key)){
+		if(varMap.keySet().contains(key)){
 			throw new SLogoException("Cannot use a variable name that already exists: " + key);
 		}
 	}

@@ -1,6 +1,7 @@
 package parser.interpreter;
 
-import java.util.Set;
+import java.util.Collections;
+
 import controller.SLogoException;
 import model.turtle.State;
 import parser.control_structures.DoTimesHandler;
@@ -8,21 +9,29 @@ import parser.control_structures.ForHandler;
 import parser.control_structures.IfElseHandler;
 import parser.control_structures.IfHandler;
 import parser.control_structures.RepeatHandler;
+import parser.storage.CommandHandler;
+import parser.storage.TotalStorage;
 import parser.tokenizer.TokenList;
 
 public class Interpreter {
 	private BracketHandler[] varLoops, regLoops;
+	private TotalStorage storage;
+	private CommandHandler commandHandler;
 
-	public Interpreter(Set<String> varKeys) {
-		makeVarLoops(varKeys);
-		makeRegLoops(varKeys);
+	public Interpreter(TotalStorage storage) {
+		this.storage = storage;
+		makeVarHandlers();
+		makeRegHandlers();
 	}
 	
-	private void makeVarLoops(Set<String> varKeys){
-		varLoops = new BracketHandler[] {new DoTimesHandler(varKeys), new ForHandler(varKeys)};
+	private void makeVarHandlers(){
+		varLoops = new BracketHandler[]
+				{new DoTimesHandler(Collections.unmodifiableMap(storage.getVars().getMap())), 
+				new ForHandler(Collections.unmodifiableMap(storage.getVars().getMap()))};
+		commandHandler = new CommandHandler(storage.getCommands());
 	}
 	
-	private void makeRegLoops(Set<String> varKeys){
+	private void makeRegHandlers(){
 		regLoops = new BracketHandler[] {new RepeatHandler(), new IfHandler(), new IfElseHandler()};
 	}
 	
@@ -36,6 +45,7 @@ public class Interpreter {
 		for(BracketHandler b: varLoops){
 			b.handle(TL, state);
 		}
+		commandHandler.fix(TL);
 	}
 	
 	public void handleRegLoops(TokenList TL, State state){
