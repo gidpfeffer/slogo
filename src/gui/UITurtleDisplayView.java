@@ -14,6 +14,7 @@ import gui.tools.UIView;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,14 +33,13 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		}
 	}
 
-	private List<UITurtle> _turtles;
+	private List<UITurtle> _turtles = new ArrayList<UITurtle>();
 	private List<Line> _lines = new ArrayList<Line>();
 	double _strokeWidth = 2.5;
 	private Rectangle _background;
 
 	public UITurtleDisplayView(Frame frame) {
 		super(frame);
-		setupTurtleMap(1);
 		setupViews();
 		setupMouseControl();
 
@@ -59,9 +59,7 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 	public void resetDisplay() {
 		clearLines();
 		for (UITurtle t : _turtles) {
-			TurtleState reset = new TurtleState();
-			System.out.println(reset.getHeadAngle() + "\t" + reset.getX() + "\t" + reset.getY());
-			t.reset(reset, GUITools.turtleCoordinateToPixelCoordinate(reset, _bounds));
+			t.reset();
 		}
 	}
 
@@ -78,12 +76,15 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 
 		rot.setNode(t);
 		rot.setDuration(Duration.millis(200));
+		
+		_turtles.add(t);
+		this.getChildren().add(t);
+		
 		return t;
 	}
 
 	public void setTurtleImage(Image image) {
 		for (UITurtle t : _turtles) {
-			// TODO check if turtle is active
 			t.setImageView(new ImageView(image));
 		}
 	}
@@ -131,30 +132,25 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		}
 	}
 
-	private void setupTurtleMap(double numberOfTurtles) {
-		_turtles = new ArrayList<UITurtle>();
-		for (int i = 0; i < numberOfTurtles; i++) {
-			addTurtle((double) i);
-		}
-	}
 
 	private void addLine(Line l) {
 		_lines.add(l);
 		this.getChildren().add(1, l);
 	}
+	
+	private void removeLine(Line l){
+		this.getChildren().remove(l);
+	}
 
 	private void clearLines() {
 		this.getChildren().removeAll(_lines);
 		_lines.clear();
-		System.out.println("\t*\tCleared Screen\t*");
 	}
 
 	private void setupViews() {
 		_background = GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
 		this.setClip(new Rectangle(_bounds.getWidth(), _bounds.getHeight()));
 		for (UITurtle t : _turtles) {
-			t.setTurtleState(t.getTurtleState(),
-					GUITools.turtleCoordinateToPixelCoordinate(t.getTurtleState(), _bounds));
 			this.getChildren().add(t);
 		}
 	}
@@ -171,6 +167,9 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 				UITurtle t = detectTurtle(mouseEvent.getX(), mouseEvent.getY());
 				_selectedTurtle = t;
 				_line = new Line(mouseEvent.getX(), mouseEvent.getY(), mouseEvent.getX(), mouseEvent.getY());
+				_line.setFill(MyColors.INDIGO);
+				_line.setStrokeWidth(1);
+				addLine(_line);
 			} else if (mouseEvent.getEventType() == MouseEvent.MOUSE_DRAGGED) {
 				// TODO: test
 				System.out.println("MOUSE DRAGGED");
@@ -180,11 +179,13 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 				}
 			} else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
 				if (_selectedTurtle != null) {
-					Tuple<Double, Double> newPos = new Tuple<Double, Double>(mouseEvent.getX(), mouseEvent.getY());
-					Tuple<Double, Double> oldPos = new Tuple<Double, Double>(_line.getStartX(), _line.getStartY());
-					double angle = getAngleBetweenTwoPoints(newPos, oldPos);
-					_selectedTurtle.addAnimationToQueue(angle, newPos);
+					Tuple<Double, Double> newPos = new Tuple<Double, Double>(mouseEvent.getX() - 16, mouseEvent.getY() - 16);
+					TurtleState newState = GUITools.guiTurtleToTurtleState(
+							new Tuple<Double, Bounds>(90.0,_selectedTurtle.getBoundsInParent()), _bounds);
+					_selectedTurtle.addAnimationToQueue(90, newPos);
+					updateTurtleStatePrimitives(_selectedTurtle.getTurtleState(), newState);
 				}
+				removeLine(_line);
 				_selectedTurtle = null;
 				_line = null;
 			}
@@ -192,18 +193,18 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 
 	};
 
-	private double getAngleBetweenTwoPoints(Tuple<Double, Double> p1, Tuple<Double, Double> p2) {
-		double xDiff = p2.x - p1.x;
-		double yDiff = p2.y - p1.y;
-		return Math.toDegrees(Math.atan2(yDiff, xDiff));
-	}
-
 	private UITurtle detectTurtle(double x, double y) {
 		for(UITurtle t: _turtles){
 			if(t.getBoundsInParent().contains(x, y))
 				return t;
 		}
 		return null;
+	}
+	
+	private void updateTurtleStatePrimitives(TurtleState turtleState, TurtleState newState) {
+		turtleState.setHeadAngle(newState.getHeadAngle());
+		turtleState.setX(newState.getX());
+		turtleState.setY(newState.getY());		
 	}
 	
 	

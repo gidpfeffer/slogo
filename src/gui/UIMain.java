@@ -50,8 +50,8 @@ public class UIMain implements UIMainAPI {
 			VOCAB_FRAME.getWidth(), SCREEN_HEIGHT - VOCAB_FRAME.getMaxY() - 16);
 	public static final Frame MENU_FRAME = new Frame(-SCREEN_WIDTH * 2 / 5, 0, 
 			SCREEN_WIDTH * 2 / 5, SCREEN_HEIGHT);
-	public static final Frame BTN_CONTROL_FRAME = new Frame(100, 8, 
-			SCREEN_WIDTH-112, DISPLAY_FRAME.getMaxY() - 16);
+	public static final Frame BTN_CONTROL_FRAME = new Frame(188, 20, 
+			DISPLAY_FRAME.getWidth() - 180, TOP_INSET - 28);
 	
 	private Pane _root;
 	private Scene _scene;
@@ -116,15 +116,6 @@ public class UIMain implements UIMainAPI {
 		}
 		
 	}
-	
-	class TurtleHandler implements UITurtleHandler{
-
-		@Override
-		public void turtleStateDidChange(TurtleState s) {
-			turtleStateChanged(s);
-		}
-		
-	}
 
 	@Override
 	public void displayErrorWithMessage(String error) {
@@ -139,8 +130,7 @@ public class UIMain implements UIMainAPI {
 		_displayView.resetDisplay();
 		_historyView.clear();
 		_terminalView.clear();
-		// TODO: stop animation _displayView.stopAnimation();
-		// also add pauseAnimation() and playAnimation()
+
 	}
 	@Override
 	public UITurtle addTurtle(double id) {
@@ -166,8 +156,8 @@ public class UIMain implements UIMainAPI {
 		setupVocabTable();
 		setupVarsBox();
 		setupTerminalButtons();
-		setupMenu();
 		setupButtonControlsView();
+		setupMenu();
 	}
 
 	private void setupRoot() {

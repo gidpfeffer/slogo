@@ -75,6 +75,7 @@ public class UITurtle extends Pane implements Observer {
 				playNextAnimation();
 			}
 		});
+		this.setTurtleState(new TurtleState());
 	}
 
 	public void setImageView(ImageView imageView) {
@@ -158,21 +159,25 @@ public class UITurtle extends Pane implements Observer {
 		}
 	}
 
-	public void setTurtleState(TurtleState s, Tuple<Double, Double> widthHeight) {
-		_priorTurtleAtt = _turtleAtt;
-		_turtleAtt = new UITurtleAttributes(widthHeight.x, widthHeight.y, (-s.getHeadAngle() + 90) % 360);
-		System.out.println(_turtleAtt.x + "\t" + _turtleAtt.y);
+	public void setTurtleState(TurtleState s) {
+		setTurtleAttributes(GUITools.turtleCoordinateToPixelCoordinate(s, _displayBounds),(-s.getHeadAngle() + 90));
 		this.setLayoutX(_turtleAtt.x);
 		this.setLayoutY(_turtleAtt.y);
 		this.setWidth(32);
 		this.setHeight(32);
 		this.setRotate(_turtleAtt.angle);
 	}
+	
+	private void setTurtleAttributes(Tuple<Double, Double> pos, double angle){
+		_priorTurtleAtt = _turtleAtt;
+		_turtleAtt = new UITurtleAttributes(pos.x, pos.y,angle);
+	}
 
-	public void reset(TurtleState s, Tuple<Double, Double> widthHeight) {
+	public void reset() {
+		//TODO
 		_priorTurtleAtt = null;
 		_turtleAtt = null;
-		setTurtleState(s, widthHeight);
+		setTurtleState(getTurtleState());
 	}
 
 	public TurtleState getTurtleState() {
@@ -223,6 +228,7 @@ public class UITurtle extends Pane implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println(o);
 		TurtleState newState = new TurtleState((TurtleState) o);
 		addAnimationToQueue(-newState.getHeadAngle() + 90, GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
 	}
