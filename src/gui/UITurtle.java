@@ -226,6 +226,8 @@ public class UITurtle extends Pane implements Observer {
 	public void update(Observable o, Object arg) {
 		TurtleState newState = (TurtleState) o;
 		System.out.println(newState.getX() + " " + newState.getY());
+		this.setVisiblityTo(newState.getVisibility());
+		//this.setLineColor(newState.getPenColorIndex());
 		addAnimationToQueue(-newState.getHeadAngle() + 90, GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
 	}
 

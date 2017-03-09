@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 public class UITerminalView extends UIView implements UITerminalAPI {
 	
 	private TextArea _textArea;
-	
+	private String _lastCommand = "";
 	public UITerminalView(Frame frame){
 		super(frame);
 		setupViews();
@@ -33,12 +33,14 @@ public class UITerminalView extends UIView implements UITerminalAPI {
 
 	@Override
 	public String getTextInput(){
-		return _textArea.textProperty().getValue();
+		return _lastCommand = _textArea.getText();
 	}
 	public void clear(){
 		_textArea.clear();
 	}
-
+	public String getPreviousCommand(){
+		return _lastCommand;
+	}
 
 	public void addText(String s) {
 		clear();

@@ -110,7 +110,7 @@ public class Controller {
 
 
 	public void changePalette(double index, double r, double g, double b){
-		myViewController.setPalleteAtIndex(index,r,g,b);
+		myViewController.setPaletteAtIndex(index,r,g,b);
 	}
 
 	public void changeLanguage(String language) {
