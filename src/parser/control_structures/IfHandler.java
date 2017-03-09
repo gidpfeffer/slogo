@@ -4,27 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.turtle.State;
-import parser.interpreter.BracketAid;
-import parser.tokenizer.TokenList;
+import parser.interpreter.AbstractBracketAid;
 
-public class IfHandler extends BracketAid{
+public class IfHandler extends AbstractBracketAid{
 	private static final String INDICATOR = "If";
 	private static final String LEFT_BRACKET = "ListStart";
 	private static final String RIGHT_BRACKET = "ListEnd";
 	private static final String IF_ELSE = "IfElse";
 	private int addLoc;
-	protected State turtle;
 	
 	public IfHandler(){
 		super(INDICATOR);
-	}
-	
-	public void handle(TokenList TL, State t){
-		list = TL;
-		turtle = t;
-		checkSyntax();
-		correctList();
 	}
 
 	@Override
@@ -47,13 +37,5 @@ public class IfHandler extends BracketAid{
 		list.getLogo().set(getLogoLocations(indicator).get(0), IF_ELSE);
 		list.getLiterals().addAll(addLoc, literalAdd);
 		list.getLogo().addAll(addLoc, logoAdd);
-	}
-
-	@Override
-	protected void checkValidity() {
-		if(getLogoLocations(LEFT_BRACKET).size() != 
-				getLogoLocations(RIGHT_BRACKET).size()){
-			throw new IllegalArgumentException("Invalid bracket syntax");
-		}
 	}
 }

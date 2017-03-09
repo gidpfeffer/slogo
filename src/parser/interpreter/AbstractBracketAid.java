@@ -5,9 +5,12 @@ import controller.SLogoException;
 import model.turtle.State;
 import parser.helpers.ListMultiplier;
 import parser.tokenizer.TokenList;
-public abstract class BracketAid extends BracketHandler{
+
+public abstract class AbstractBracketAid extends AbstractBracketHandler{
 	protected ListMultiplier listMultiplier;
-	public BracketAid(String indicator) {
+	protected State turtle; 
+	
+	public AbstractBracketAid(String indicator) {
 		super(indicator);
 		listMultiplier = new ListMultiplier();
 	}
@@ -16,6 +19,13 @@ public abstract class BracketAid extends BracketHandler{
 		while(!isDone()){
 			handle();
 		}
+	}
+	
+	public void handle(TokenList TL, State t){
+		list = TL;
+		turtle = t;
+		checkSyntax();
+		correctList();
 	}
 	
 	protected List<String> getSubList(List<String> list, int start, int end, int times){
@@ -58,12 +68,17 @@ public abstract class BracketAid extends BracketHandler{
 		replace();
 	}
 	
+	protected void checkValidity() {
+		if(getLogoLocations(LEFT_BRACKET).size() != 
+				getLogoLocations(RIGHT_BRACKET).size()){
+			throw new IllegalArgumentException("Invalid bracket syntax");
+		}
+	}
+	
 	protected abstract void reset();
 	
 	protected abstract void findIndices();
 	
 	protected abstract void replace();
-	
-	protected abstract void checkValidity();
 	
 }

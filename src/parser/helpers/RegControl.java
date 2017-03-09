@@ -1,14 +1,15 @@
 package parser.helpers;
 
+import java.util.Queue;
+
 import controller.SLogoException;
-import model.turtle.State;
-import parser.interpreter.BracketAid;
+import model.command.TreeNode;
+import parser.interpreter.AbstractBracketAid;
 import parser.reflection.TreeGenerator;
 
-public abstract class RegControl extends BracketAid{
+public abstract class RegControl extends AbstractBracketAid{
 	protected static final String CONSTANT = "Constant";
 	protected int ifStart, ifEnd, elseStart, elseEnd;
-	protected State turtle;
 	
 	public RegControl(String indicator){
 		super(indicator);
@@ -23,34 +24,26 @@ public abstract class RegControl extends BracketAid{
 	protected void findIndices() {
 		ifStart = findStartBracket(getLogoLocations(indicator).get(0));
 		ifEnd = findEndBracket(ifStart);
-		checkValidity();
+		checkBracketValidity();
 		elseStart = findStartBracket(ifEnd);
 		elseEnd = findEndBracket(elseStart);
 	}
 
 	@Override
-	protected void replace() {
-		// TODO Auto-generated method stub
-		
-	}
+	protected abstract void replace();
 
-	@Override
-	protected void checkValidity() {
+	protected void checkBracketValidity() {
 		if(!list.getLiterals().get(ifEnd + 1).equals(LEFT_BRACKET)){
 			throw new SLogoException("Else bracket doesnt follow if bracket");
 		}
 	}
 	
-	protected boolean evaulateExpression(){
-		int loc = getLogoLocations(indicator).get(0);
-		if(list.getLogo().get(loc + 1).equals(CONSTANT)){
-			return Double.parseDouble(list.getLiterals().get(loc + 1)) != 0;
-		}
+	protected Queue<TreeNode> evaluateExpression(){
 		TreeGenerator TG = new TreeGenerator(
 				list.newSubList(getLogoLocations(indicator).get(0) + 1, ifStart), turtle);
-		if(TG.getCommandQueue().size() == 0) 
-			throw new SLogoException("invalid if/else syntax");
-		return TG.getLast() != 0;
+		if(TG.getAllQueue().size() == 0) 
+			throw new SLogoException("invalid syntax");
+		return TG.getAllQueue();
 	}
 
 }

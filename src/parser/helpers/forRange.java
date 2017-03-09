@@ -16,9 +16,6 @@ public class forRange extends RangeHandler{
 	public void handle(State t, TokenList TL) {
 		list = new ArrayList<>();
 		Queue<TreeNode> q = getQueue(t, TL);
-		double inc = q.remove().getValue();
-		double end = q.remove().getValue();
-		double start = q.remove().getValue();
-		makeList(start, end, inc);	
+		makeList(q.remove().getValue(), q.remove().getValue(), q.remove().getValue());	
 	}
 }
