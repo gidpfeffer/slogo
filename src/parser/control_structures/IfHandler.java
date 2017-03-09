@@ -16,9 +16,14 @@ public class IfHandler extends BracketAid{
 	private int addLoc;
 	protected State turtle;
 	
-	public IfHandler(TokenList tokens, State state){
-		super(tokens, INDICATOR);
-		this.turtle = state;
+	public IfHandler(){
+		super(INDICATOR);
+	}
+	
+	public void handle(TokenList TL, State t){
+		list = TL;
+		turtle = t;
+		checkSyntax();
 		correctList();
 	}
 

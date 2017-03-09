@@ -11,7 +11,7 @@ import parser.tokenizer.ProtectedTokenList;
 public class CompilerTest {
 	public static void main(String args[]){
 		String language = "resources/languages/English";
-		String testCode = "make :x 10";
+		String testCode = "make :x 0";
 		
 		NewParser p = new NewParser(language);
 		Compiler c = new Compiler();
@@ -24,7 +24,7 @@ public class CompilerTest {
 			System.out.println(q.remove().getValue());
 		}
 		
-		testCode = "repeat :x [ fd 5 ] ";
+		testCode = "for [ :xy fd 3 rt 10 2 ] [ fd :xy rt 10 ]";
 		
 		PTL = p.parse(testCode);
 		
