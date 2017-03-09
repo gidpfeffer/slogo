@@ -1,7 +1,7 @@
 package parser.control_structures;
 
 
-import java.util.Set;
+import java.util.Map;
 
 import model.turtle.State;
 import parser.helpers.doTimesRange;
@@ -10,8 +10,8 @@ import parser.tokenizer.TokenList;
 public class DoTimesHandler extends IteratingControls{
 	private static final String INDICATOR = "DoTimes";
 
-	public DoTimesHandler(Set<String> keys) {
-		super(keys, INDICATOR);
+	public DoTimesHandler(Map<String, Double> varMap) {
+		super(INDICATOR, varMap);
 		range = new doTimesRange();
 	}
 	
