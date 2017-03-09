@@ -28,7 +28,6 @@ public abstract class RangeHandler {
 	protected void makeList(double start, double end, double increment){
 		list.clear();
 		for(double i = start; i <= end; i += increment){
-			System.out.println(i);
 			list.add((int) i);
 		}
 	}

@@ -16,20 +16,20 @@ import parser.tokenizer.TokenList;
 public class Compiler {
 	private VariableStorage vars;
 	private FixVars fixVars;
+	private Interpreter IT;
 
 	public Compiler(){
 		vars = new VariableStorage();
 		fixVars = new FixVars(vars);
+		IT = new Interpreter(vars.keySet());	
 	}
 	
 	private Queue<TreeNode> interpret(ProtectedTokenList list, State state){
 		TokenList TL = new TokenList(new ArrayList<>(list.getLiterals()),
 				new ArrayList<>(list.getLogo()));
-		Interpreter IT = new Interpreter(TL, state, vars.keySet());
-		TL = IT.getTokenList();
-		IT.handleVarLoops();
-		fixVars.fix(IT.getTokenList());
-		IT.handleRegLoops();
+		IT.handleVarLoops(TL, state);
+		fixVars.fix(TL);
+		IT.handleRegLoops(TL, state);
 		return makeTree(TL, state);
 	}
 	

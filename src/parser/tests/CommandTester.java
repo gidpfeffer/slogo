@@ -21,7 +21,6 @@ public class CommandTester {
 				+ "to addAll [ :x :y :z ] [ sum sum :x :y :z ]";
 		String testCode2 = "fd sq 10 rt addAll 10 20 30";
 		
-		
 		Compiler compiler = new Compiler();
 		
 		CommandStorage CS = new CommandStorage();
@@ -49,9 +48,8 @@ public class CommandTester {
 		while(!q.isEmpty()){
 			TreeNode cur = q.remove();
 			if(cur instanceof TurtleCommand){
-				System.out.println("Class: " + cur.getClass() + "Value: " + cur.getValue());
+				System.out.println("[Class: " + cur.getClass() + "] ["+ "Value: " + cur.getValue() + "]");
 			}
 		}
-		
 	}
 }

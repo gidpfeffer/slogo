@@ -3,6 +3,7 @@ package parser.storage;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.turtle.State;
 import parser.interpreter.BracketAid;
 import parser.tokenizer.TokenList;
 
@@ -11,12 +12,11 @@ public class FunctionBracketAid extends BracketAid{
 	private String key;
 	private CommandStorage storage;
 
-	public FunctionBracketAid(TokenList list, String indicator, CommandStorage storage) {
-		super(list, indicator);
+	public FunctionBracketAid(String indicator, CommandStorage storage) {
+		super(indicator);
 		this.storage = storage;
-		correctList();
 	}
-
+	
 	@Override
 	protected void reset() {
 		start = -1;
@@ -57,5 +57,13 @@ public class FunctionBracketAid extends BracketAid{
 				getLogoLocations(RIGHT_BRACKET).size()){
 			throw new IllegalArgumentException("Invalid bracket syntax");
 		}
+	}
+
+
+	@Override
+	protected void handle(TokenList TL, State t) {
+		list = TL;
+		checkSyntax();
+		correctList();
 	}
 }

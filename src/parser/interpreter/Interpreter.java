@@ -1,8 +1,6 @@
 package parser.interpreter;
 
-import java.util.ArrayList;
 import java.util.Set;
-
 import controller.SLogoException;
 import model.turtle.State;
 import parser.control_structures.DoTimesHandler;
@@ -13,34 +11,37 @@ import parser.control_structures.RepeatHandler;
 import parser.tokenizer.TokenList;
 
 public class Interpreter {
-	private TokenList tokens;
-	private State turtle;
-	private Set<String> varKeys;
+	private BracketHandler[] varLoops, regLoops;
 
-	public Interpreter(TokenList TL, State t, Set<String> varKeys) {
-		tokens = new TokenList(new ArrayList<String>(TL.getLiterals()), new ArrayList<String>(TL.getLogo()));
-		turtle = t;
-		this.varKeys = varKeys;
-		checkValidity();
+	public Interpreter(Set<String> varKeys) {
+		makeVarLoops(varKeys);
+		makeRegLoops(varKeys);
 	}
 	
-	private void checkValidity(){
+	private void makeVarLoops(Set<String> varKeys){
+		varLoops = new BracketHandler[] {new DoTimesHandler(varKeys), new ForHandler(varKeys)};
+	}
+	
+	private void makeRegLoops(Set<String> varKeys){
+		regLoops = new BracketHandler[] {new RepeatHandler(), new IfHandler(), new IfElseHandler()};
+	}
+	
+	private void checkValidity(TokenList tokens){
 		if(tokens.getLiterals().size() == tokens.getLogo().size()) return;
 		throw new SLogoException("Invalid Token List");
 	}
 	
-	public void handleVarLoops(){
-		BracketHandler dt = new DoTimesHandler(tokens, turtle, varKeys);
-		BracketHandler f = new ForHandler(tokens, turtle, varKeys);
+	public void handleVarLoops(TokenList TL, State state){
+		checkValidity(TL);
+		for(BracketHandler b: varLoops){
+			b.handle(TL, state);
+		}
 	}
 	
-	public void handleRegLoops(){
-		BracketHandler le = new RepeatHandler(tokens, turtle);
-		BracketHandler i = new IfHandler(tokens, turtle);
-		BracketHandler ie = new IfElseHandler(tokens, turtle);
-	}
-	
-	public TokenList getTokenList(){
-		return tokens;
+	public void handleRegLoops(TokenList TL, State state){
+		checkValidity(TL);
+		for(BracketHandler b: regLoops){
+			b.handle(TL, state);
+		}
 	}
 }
