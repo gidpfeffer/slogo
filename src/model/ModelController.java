@@ -48,7 +48,7 @@ public class ModelController {
 	}
 	
 	
-	public List<Double> getTurtlesByID(){
+	public List<Double> getTurtleIDs(){
 		return myTurtleIDs; 
 	}
 	
@@ -69,4 +69,5 @@ public class ModelController {
 		myTurtles.add(newTurtle);
 		return newTurtle;
 	}
+	
 }
