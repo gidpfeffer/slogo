@@ -29,11 +29,12 @@ public class Parser {
 		this.language = language;
 		vars = new VariableStorage();
 		FV = new FixVars(vars);
+//		IT = new Interpreter(vars.keySet());
 	}
 	
 	private void makeInterpreter(){
-		IT = new Interpreter(TL, state, vars.keySet());
-		TL = IT.getTokenList();
+//		IT = new Interpreter(TL, state, vars.keySet());
+//		TL = IT.getTokenList();
 	}
 	
 	private void makeTree(){
@@ -66,9 +67,9 @@ public class Parser {
 		str = toParse;
 		generateTokens();
 		makeInterpreter();
-		IT.handleVarLoops();
-		handleVars(IT.getTokenList());
-		IT.handleRegLoops();
+//		IT.handleVarLoops();
+//		handleVars(IT.getTokenList());
+//		IT.handleRegLoops();
 		makeTree();
 	}
 }

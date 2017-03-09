@@ -3,10 +3,9 @@ package parser.control_structures;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import controller.SLogoException;
-import model.turtle.State;
 import parser.helpers.RangeHandler;
 import parser.helpers.RegControl;
 import parser.helpers.Replacer;
@@ -17,11 +16,11 @@ public abstract class IteratingControls extends RegControl{
 	private String key;
 	protected RangeHandler range;
 	private Replacer replacer;
-	private Set<String> keys;
+	protected Map<String, Double> varMap;
 
-	public IteratingControls(TokenList TL, State t, Set<String> keys, String INDICATOR){
-		super(TL, INDICATOR, t);
-		this.keys = keys;
+	public IteratingControls(String INDICATOR, Map<String, Double> varMap){
+		super(INDICATOR);
+		this.varMap = varMap;
 		replacer = new Replacer();
 	}
 	
@@ -48,11 +47,11 @@ public abstract class IteratingControls extends RegControl{
 	
 	private void setKey(){
 		int place = ifStart + 1;
-		if(!logo.get(place).equals(VARIABLE)){
+		if(!list.getLogo().get(place).equals(VARIABLE)){
 			throw new SLogoException("Make sure to use an undefined variable");
 		}
-		key = literals.get(ifStart + 1);
-		if(keys.contains(key)){
+		key = list.getLiterals().get(ifStart + 1);
+		if(varMap.keySet().contains(key)){
 			throw new SLogoException("Cannot use a variable name that already exists: " + key);
 		}
 	}

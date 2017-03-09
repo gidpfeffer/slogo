@@ -3,13 +3,24 @@ package parser.storage;
 import parser.tokenizer.TokenList;
 
 public abstract class StorageHandler {
-	protected String indicator;
+	protected static final String CONSTANT = "Constant";
+	protected String indicator, newIndicator;
 	protected TokenList list;
 	protected int location;
 	protected boolean madeNew;
 	
-	public StorageHandler(String indicator){
+	public StorageHandler(String indicator, String newIndicator){
 		this.indicator = indicator;
+		this.newIndicator = newIndicator;
+	}
+	
+	private int update(){
+		int loc = list.getLogo().indexOf(indicator);
+		if(loc != 0 && list.getLogo().get(loc - 1).equals(newIndicator)){
+			make(loc);
+		}
+		handleUndefined(loc);
+		return loc;
 	}
 	
 	protected boolean isDone(){
@@ -25,8 +36,10 @@ public abstract class StorageHandler {
 		}
 	}
 	
-	protected abstract int update();
 	
 	protected abstract void replace(int location);
-
+	
+	protected abstract void handleUndefined(int index);
+	
+	protected abstract void make(int location);
 }

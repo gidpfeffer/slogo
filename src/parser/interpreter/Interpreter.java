@@ -1,7 +1,6 @@
 package parser.interpreter;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.Collections;
 
 import controller.SLogoException;
 import model.turtle.State;
@@ -10,37 +9,49 @@ import parser.control_structures.ForHandler;
 import parser.control_structures.IfElseHandler;
 import parser.control_structures.IfHandler;
 import parser.control_structures.RepeatHandler;
+import parser.storage.CommandHandler;
+import parser.storage.TotalStorage;
 import parser.tokenizer.TokenList;
 
 public class Interpreter {
-	private TokenList tokens;
-	private State turtle;
-	private Set<String> varKeys;
+	private BracketHandler[] varLoops, regLoops;
+	private TotalStorage storage;
+	private CommandHandler commandHandler;
 
-	public Interpreter(TokenList TL, State t, Set<String> varKeys) {
-		tokens = new TokenList(new ArrayList<String>(TL.getLiterals()), new ArrayList<String>(TL.getLogo()));
-		turtle = t;
-		this.varKeys = varKeys;
-		checkValidity();
+	public Interpreter(TotalStorage storage) {
+		this.storage = storage;
+		makeVarHandlers();
+		makeRegHandlers();
 	}
 	
-	private void checkValidity(){
+	private void makeVarHandlers(){
+		varLoops = new BracketHandler[]
+				{new DoTimesHandler(Collections.unmodifiableMap(storage.getVars().getMap())), 
+				new ForHandler(Collections.unmodifiableMap(storage.getVars().getMap()))};
+		commandHandler = new CommandHandler(storage.getCommands());
+	}
+	
+	private void makeRegHandlers(){
+		regLoops = new BracketHandler[] {new RepeatHandler(), new IfHandler(), new IfElseHandler()};
+	}
+	
+	private void checkValidity(TokenList tokens){
 		if(tokens.getLiterals().size() == tokens.getLogo().size()) return;
 		throw new SLogoException("Invalid Token List");
 	}
 	
-	public void handleVarLoops(){
-		BracketHandler dt = new DoTimesHandler(tokens, turtle, varKeys);
-		BracketHandler f = new ForHandler(tokens, turtle, varKeys);
+	public void handleVarLoops(TokenList TL, State state){
+		checkValidity(TL);
+		for(BracketHandler b: varLoops){
+			b.handle(TL, state);
+		}
+		commandHandler.fix(TL);
 	}
 	
-	public void handleRegLoops(){
-		BracketHandler le = new RepeatHandler(tokens, turtle);
-		BracketHandler i = new IfHandler(tokens, turtle);
-		BracketHandler ie = new IfElseHandler(tokens, turtle);
-	}
-	
-	public TokenList getTokenList(){
-		return tokens;
+	public void handleRegLoops(TokenList TL, State state){
+		checkValidity(TL);
+		for(BracketHandler b: regLoops){
+			b.handle(TL, state);
+		}
 	}
 }

@@ -25,5 +25,4 @@ public class AllQueueHelper {
 	public Queue<TreeNode> getQueue(){
 		return fixedQueue;
 	}
-	
 }

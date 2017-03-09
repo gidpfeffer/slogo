@@ -123,6 +123,13 @@ public class Controller {
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
+
+			System.out.println(turtlesToCommands.size());
+			
+			for(Double d: turtlesToCommands.keySet()){
+				
+			}
+
 			System.out.print(turtlesToCommands);
 			Compiler c = new Compiler(); 
 			
