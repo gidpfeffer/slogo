@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,67 +13,53 @@ import gui.tools.MyColors;
 import gui.tools.UIView;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
-public class UITurtleDisplayView extends UIView implements UIDisplayAPI{
-	
-	private List<UITurtle> _turtles;
-	private List<Line> _lines = new ArrayList<Line>();
-	double _strokeWidth = 2.5;
-	private Rectangle _background;
-	
-	public UITurtleDisplayView(Frame frame) {
-		super(frame);
-		setupTurtleMap(1);
-		setupViews();
-	}
-	
-	class Handler implements TurtleDisplayHandler{
+public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
+
+	class Handler implements TurtleDisplayHandler {
 		@Override
 		public void addLineToScreen(Line l) {
 			addLine(l);
 		}
 	}
-	
-	public void resetDisplay(){
-		clearLines();
-		for(UITurtle t : _turtles){
-			TurtleState reset = new TurtleState();
-			System.out.println(reset.getHeadAngle()+"\t"+ reset.getX() +"\t"+reset.getY());
-			t.reset(reset, GUITools.turtleCoordinateToPixelCoordinate(reset, _bounds));
-		}
-	}
-	
-	private void setupTurtleMap(double numberOfTurtles) {
-		_turtles = new ArrayList<UITurtle>();
-		for (int i = 0; i < numberOfTurtles; i++) {
-			addTurtle((double)i);
-		}
-	}
-	
-	private void addLine(Line l){
-		_lines.add(l);
-		this.getChildren().add(1,l);
-	}
-	
-	private void clearLines(){
-		this.getChildren().removeAll(_lines);
-		_lines.clear();
-		System.out.println("\t*\tCleared Screen\t*");
+
+	private List<UITurtle> _turtles = new ArrayList<UITurtle>();
+	private List<Line> _lines = new ArrayList<Line>();
+	double _strokeWidth = 2.5;
+	private Rectangle _background;
+
+	public UITurtleDisplayView(Frame frame) {
+		super(frame);
+		setupViews();
+		setupMouseControl();
+
 	}
 
-	private void setupViews() {
-		_background = GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
-		this.setClip(new Rectangle(_bounds.getWidth(), _bounds.getHeight()));
-		for(UITurtle t: _turtles){
-			t.setTurtleState(t.getTurtleState(), GUITools.turtleCoordinateToPixelCoordinate(t.getTurtleState(), _bounds));
-			this.getChildren().add(t);
+	private void setupMouseControl() {
+		setOnMouseClicked(mouseHandler);
+		setOnMouseDragged(mouseHandler);
+		setOnMouseEntered(mouseHandler);
+		setOnMouseExited(mouseHandler);
+		setOnMouseMoved(mouseHandler);
+		setOnMousePressed(mouseHandler);
+		setOnMouseReleased(mouseHandler);
+
+	}
+
+	public void resetDisplay() {
+		clearLines();
+		for (UITurtle t : _turtles) {
+			t.reset();
 		}
 	}
 
@@ -89,32 +76,32 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI{
 
 		rot.setNode(t);
 		rot.setDuration(Duration.millis(200));
+		
+		_turtles.add(t);
+		this.getChildren().add(t);
+		
 		return t;
 	}
 
 	public void setTurtleImage(Image image) {
 		for (UITurtle t : _turtles) {
-			//TODO check if turtle is active
 			t.setImageView(new ImageView(image));
 		}
 	}
 
-
 	public UITurtle getTurtle() {
-		return _turtles.isEmpty()? null:_turtles.get(0);
+		return _turtles.isEmpty() ? null : _turtles.get(0);
 	}
 
 	public UITurtle getTurtle(Double id) {
-		return _turtles.stream()
-				.filter(turtle -> turtle.getTurtleId() == id).
-				findFirst().orElse(null);
+		return _turtles.stream().filter(turtle -> turtle.getTurtleId() == id).findFirst().orElse(null);
 	}
 
 	public void setPenWidth(double width) {
 		for (UITurtle t : _turtles) {
 			t.setPenStrokeWidth(width);
 		}
-		
+
 	}
 
 	public void setBackgroundColor(Color c) {
@@ -144,6 +131,81 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI{
 			t.play();
 		}
 	}
-	
 
+
+	private void addLine(Line l) {
+		_lines.add(l);
+		this.getChildren().add(1, l);
+	}
+	
+	private void removeLine(Line l){
+		this.getChildren().remove(l);
+	}
+
+	private void clearLines() {
+		this.getChildren().removeAll(_lines);
+		_lines.clear();
+	}
+
+	private void setupViews() {
+		_background = GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
+		this.setClip(new Rectangle(_bounds.getWidth(), _bounds.getHeight()));
+		for (UITurtle t : _turtles) {
+			this.getChildren().add(t);
+		}
+	}
+
+	// MOUSE CONTROLS
+
+	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+		private UITurtle _selectedTurtle;
+		private Line _line;
+
+		@Override
+		public void handle(MouseEvent mouseEvent) {
+			if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				UITurtle t = detectTurtle(mouseEvent.getX(), mouseEvent.getY());
+				_selectedTurtle = t;
+				_line = new Line(mouseEvent.getX(), mouseEvent.getY(), mouseEvent.getX(), mouseEvent.getY());
+				_line.setFill(MyColors.INDIGO);
+				_line.setStrokeWidth(1);
+				addLine(_line);
+			} else if (mouseEvent.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+				// TODO: test
+				System.out.println("MOUSE DRAGGED");
+				if (_line != null) {
+					_line.setEndX(mouseEvent.getX());
+					_line.setEndY(mouseEvent.getY());
+				}
+			} else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
+				if (_selectedTurtle != null) {
+					Tuple<Double, Double> newPos = new Tuple<Double, Double>(mouseEvent.getX() - 16, mouseEvent.getY() - 16);
+					TurtleState newState = GUITools.guiTurtleToTurtleState(
+							new Tuple<Double, Bounds>(90.0,_selectedTurtle.getBoundsInParent()), _bounds);
+					_selectedTurtle.addAnimationToQueue(90, newPos);
+					updateTurtleStatePrimitives(_selectedTurtle.getTurtleState(), newState);
+				}
+				removeLine(_line);
+				_selectedTurtle = null;
+				_line = null;
+			}
+		}
+
+	};
+
+	private UITurtle detectTurtle(double x, double y) {
+		for(UITurtle t: _turtles){
+			if(t.getBoundsInParent().contains(x, y))
+				return t;
+		}
+		return null;
+	}
+	
+	private void updateTurtleStatePrimitives(TurtleState turtleState, TurtleState newState) {
+		turtleState.setHeadAngle(newState.getHeadAngle());
+		turtleState.setX(newState.getX());
+		turtleState.setY(newState.getY());		
+	}
+	
+	
 }
