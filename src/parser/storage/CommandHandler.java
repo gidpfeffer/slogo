@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import controller.SLogoException;
+import model.turtle.TurtleState;
 import parser.tokenizer.TokenList;
 
 public class CommandHandler extends StorageHandler{
@@ -21,6 +22,7 @@ public class CommandHandler extends StorageHandler{
 	public CommandHandler(CommandStorage storage){
 		super(COMMAND, NEW);
 		this.storage = storage;
+		FBA = new FunctionBracketAid(NEW, storage);
 	}
 
 	@Override
@@ -74,7 +76,7 @@ public class CommandHandler extends StorageHandler{
 	public void fix(TokenList list){
 		this.list = list;
 		madeNew = false;
-		FBA = new FunctionBracketAid(list, NEW, storage);
+		FBA.handle(list, new TurtleState());
 		fix();
 	}
 

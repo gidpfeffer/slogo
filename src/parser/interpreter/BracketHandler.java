@@ -6,20 +6,15 @@ import model.turtle.State;
 import parser.tokenizer.TokenList;
 public abstract class BracketHandler {
 	protected TokenList list;
-	protected List<String> literals, logo;
 	protected String indicator;
 	protected static final String LEFT_BRACKET 	= "[";
 	protected static final String RIGHT_BRACKET = "]";
 	
-	public BracketHandler(TokenList list, String indicator){
+	public BracketHandler(String indicator){
 		this.indicator = indicator;
-		this.list = list;
-		literals = list.getLiterals();
-		logo = list.getLogo();
-		checkSyntax();
 	}
 	
-	private void checkSyntax(){
+	protected void checkSyntax(){
 		if(getLiteralLocations(LEFT_BRACKET).size() !=
 				getLiteralLocations(RIGHT_BRACKET).size()){
 			throw new SLogoException("Invalid Syntax, uneven number of brackets");
@@ -54,4 +49,5 @@ public abstract class BracketHandler {
 		return list;
 	}
 	
+	protected abstract void handle(TokenList TL, State t);
 }

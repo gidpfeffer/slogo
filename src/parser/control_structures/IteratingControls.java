@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import controller.SLogoException;
-import model.turtle.State;
 import parser.helpers.RangeHandler;
 import parser.helpers.RegControl;
 import parser.helpers.Replacer;
@@ -19,8 +18,8 @@ public abstract class IteratingControls extends RegControl{
 	private Replacer replacer;
 	private Set<String> keys;
 
-	public IteratingControls(TokenList TL, State t, Set<String> keys, String INDICATOR){
-		super(TL, INDICATOR, t);
+	public IteratingControls(Set<String> keys, String INDICATOR){
+		super(INDICATOR);
 		this.keys = keys;
 		replacer = new Replacer();
 	}
@@ -48,10 +47,10 @@ public abstract class IteratingControls extends RegControl{
 	
 	private void setKey(){
 		int place = ifStart + 1;
-		if(!logo.get(place).equals(VARIABLE)){
+		if(!list.getLogo().get(place).equals(VARIABLE)){
 			throw new SLogoException("Make sure to use an undefined variable");
 		}
-		key = literals.get(ifStart + 1);
+		key = list.getLiterals().get(ifStart + 1);
 		if(keys.contains(key)){
 			throw new SLogoException("Cannot use a variable name that already exists: " + key);
 		}
