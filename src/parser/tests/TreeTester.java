@@ -2,7 +2,9 @@ package parser.tests;
 
 import model.command.TreeNode;
 import model.turtle.TurtleState;
-import parser.main.Parser;
+import parser.main.Compiler;
+import parser.main.NewParser;
+import parser.tokenizer.ProtectedTokenList;
 
 public class TreeTester {
 	
@@ -10,20 +12,11 @@ public class TreeTester {
 		String language = "resources/languages/English";
 		String testCode1 = "dotimes [ :x 10 ] [ fd :x ]";
 		
-		Parser p = new Parser(new TurtleState(), language);
-		p.parse(testCode1);
+		NewParser p = new NewParser(language);
+		Compiler c = new Compiler();
+		ProtectedTokenList PTL = p.parse(testCode1);
 		
-		for(TreeNode node : p.getTreeQueue()){
-			System.out.print(node.getValue() + "\n");
-		}
-		
-		System.out.println("\n++++++++++++++++++++++++++++++++\n");
-		
-		String testCode2 = "fd :x";
-		
-		p.parse(testCode2);
-		
-		for(TreeNode node : p.getTreeQueue()){
+		for(TreeNode node : c.compile(new TurtleState(), PTL)){
 			System.out.print(node.getValue() + "\n");
 		}
 	}

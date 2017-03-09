@@ -25,7 +25,7 @@ public abstract class RangeHandler {
 		return TG.getAllQueue();
 	}
 	
-	protected void makeList(double start, double end, double increment){
+	protected void makeList(double increment, double end, double start){
 		list.clear();
 		for(double i = start; i <= end; i += increment){
 			list.add((int) i);
