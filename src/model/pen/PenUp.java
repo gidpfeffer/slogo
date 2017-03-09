@@ -2,10 +2,7 @@ package model.pen;
 
 import java.util.List;
 
-<<<<<<< HEAD
-=======
 import controller.BackEndHandler;
->>>>>>> b97929e078a01dc92668a8daff37d0f78ad7ab18
 import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
