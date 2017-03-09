@@ -1,8 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -64,6 +63,7 @@ public class Controller {
 	private ModelController myModel; 
 	private List<Turtle> myTurtles;
 	private List<Double> activeTurtleIndexList;
+	//private List<Double> currentTurtleIds; 
 
 	private NewParser myParser;
 	private Compiler compiler;
@@ -71,6 +71,7 @@ public class Controller {
 	private UIMain myViewController;
 	private String output; 
 	private final String languageLocation = "resources.languages/";
+	private final Double DEFAULT_TURTLE_ID = 1.0; 
 	private StringBuilder currentLang; 
 
 
@@ -78,7 +79,12 @@ public class Controller {
 		myModel = new ModelController(new modelHandler()); 
 		myTurtles = myModel.getTurtles();
 		activeTurtleIndexList = new ArrayList<Double>();
-		activeTurtleIndexList.add(new Double(1));
+		activeTurtleIndexList.add(DEFAULT_TURTLE_ID);
+		
+		//currentTurtleIds = new ArrayList<Double>(); 
+		//currentTurtleIds.add(DEFAULT_TURTLE_ID);
+		
+		activeTurtleIndexList.add(DEFAULT_TURTLE_ID);
 		myViewController = new UIMain(new myHandler(), "English"); // handler currently Front to Back
 
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
@@ -120,6 +126,8 @@ public class Controller {
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
 			Compiler c = new Compiler(); 
+
+			// refactor into a method 
 			
 			for (Double turtleId: turtlesToCommands.keySet()){
 				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
@@ -128,12 +136,17 @@ public class Controller {
 				TurtleState t = findTurtle(turtleId, currentTurtles);
 				Queue<TreeNode> Q = c.compile(t, commandsToApply); 
 				
+			
+				
+				TurtleState t = findTurtle(turtleId);
+				Queue<TreeNode> Q = c.compile(t, commandsToApply); 
+
 				myModel.update(Q);
 				output = myModel.getStringOutput();
 				myViewController.addNewOutput(output);
 				
 			}
-			
+
 
 		}
 		catch (SLogoException e){ 
@@ -161,9 +174,8 @@ public class Controller {
 		AskTellParser ap = new AskTellParser(myModel, myViewController); 
 		ap.parseCommands(list);		
 		return ap.getParsedCommands(); 
-			
 	}
-	
+
 
 
 	public String getStringOutput(){
