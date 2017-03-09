@@ -1,7 +1,6 @@
 package parser.main;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Queue;
 
 import model.command.TreeNode;
@@ -31,6 +30,9 @@ public class Compiler {
 				new ArrayList<>(list.getLogo()));
 		IT.handleVarLoops(TL, state);
 		fixVars.fix(TL);
+		System.out.print("+++");
+		System.out.print(storage.getVars().getMap().size());
+		System.out.print("+++");
 		IT.handleRegLoops(TL, state);
 		return makeTree(TL, state);
 	}
