@@ -1,7 +1,6 @@
 package parser.main;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Queue;
 
 import model.command.TreeNode;
