@@ -33,7 +33,7 @@ public class UIVocabTable extends UITableView implements Observer {
 	}
 	
 	@Override
-	protected void addText(String s){
+	protected Text addText(String s){
 		super.addText(s);
 		Text t = _texts.get(_texts.size() - 1); //were assuming that super added text to list
 		t.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -41,6 +41,7 @@ public class UIVocabTable extends UITableView implements Observer {
 				_handler.addFunctionToTerminal(t.getText());
 			}
 		});
+		return t;
 	}
 
 	@Override

@@ -1,13 +1,19 @@
 package gui.menu;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import gui.tableviews.UITableView;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
+import javafx.scene.text.Text;
 import model.turtle.TurtleState;
 
 public class UIAttributesView extends UITableView{
-	
+	private Map<Double, Text> _idToText = new HashMap<Double, Text>();
 	public UIAttributesView(Frame frame){
 		super(frame, "Turtle Attributes");
 		setupViews();
@@ -15,11 +21,21 @@ public class UIAttributesView extends UITableView{
 
 	private void setupViews() {
 		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
-		this.addText("Turtle ID: 0\nx=0, y=0, PenIsDown=true");
 	}
 
 	public void update(TurtleState s) {
-		// TODO Auto-generated method stub
-		
+		if(_idToText.containsKey(s.getID())){
+			_idToText.get(s.getID()).setText(turtleStateToString(s));
+		}else{
+			_idToText.put(s.getID(), addText(turtleStateToString(s)));
+		}
+	}
+	
+	private String turtleStateToString(TurtleState s){
+		String pen = s.getPen()? "Down":"Up";
+		double x = Math.round(s.getX());
+		double y = Math.round(s.getY());
+		return "ID: "+s.getID()+"\tPosition: (" + x + ", " + y + ")\t"
+				+ "\nAngle: " + s.getHeadAngle() + "\tPen: " + pen ;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import general_data_structures.Tuple;
+import gui.API.DisplayHandler;
 import gui.API.TurtleDisplayHandler;
 import gui.API.UIDisplayAPI;
 import gui.tools.Frame;
@@ -31,15 +32,23 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		public void addLineToScreen(Line l) {
 			addLine(l);
 		}
+
+		@Override
+		public Color getColorPalette(double index) {
+			return _handler.getColorPalette(index);
+		}
+		
 	}
 
 	private List<UITurtle> _turtles = new ArrayList<UITurtle>();
 	private List<Line> _lines = new ArrayList<Line>();
 	double _strokeWidth = 2.5;
 	private Rectangle _background;
+	private DisplayHandler _handler;
 
-	public UITurtleDisplayView(Frame frame) {
+	public UITurtleDisplayView(Frame frame, DisplayHandler handler) {
 		super(frame);
+		_handler = handler;
 		setupViews();
 		setupMouseControl();
 

@@ -1,10 +1,13 @@
 package gui;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import controller.ControlHandler;
 import general_data_structures.Tuple;
 import gui.API.ButtonControlHandler;
+import gui.API.DisplayHandler;
 import gui.API.UIMainAPI;
 import gui.API.UIMainHandler;
 import gui.API.UITurtleHandler;
@@ -26,13 +29,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
-public class UIMain implements UIMainAPI {
+public class UIMain implements UIMainAPI, Observer {
 	
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	public static final double SCREEN_WIDTH = 800;
@@ -78,6 +82,11 @@ public class UIMain implements UIMainAPI {
 		public void setLineColor(Color color) {
 			_displayView.setPenColor(color);
 		}
+		
+		@Override
+		public void setBackgroundColor(Color color){
+			_displayView.setBackgroundColor(color);
+		}
 
 		@Override
 		public void addFunctionToTerminal(String s) {
@@ -116,6 +125,15 @@ public class UIMain implements UIMainAPI {
 		}
 		
 	}
+	
+	public class displayHandler implements DisplayHandler{
+
+		@Override
+		public Color getColorPalette(double index) {
+			return _menuView.getPaletteView().getPalette(index);
+		}
+		
+	} 
 
 	@Override
 	public void displayErrorWithMessage(String error) {
@@ -136,11 +154,7 @@ public class UIMain implements UIMainAPI {
 	@Override
 	public UITurtle addTurtle(TurtleState state) {
 		UITurtle t = _displayView.addTurtle(state);
-		//TODO
-//		t.boundsInParentProperty().addListener( e -> {
-//			Tuple<Double, Bounds> s = new Tuple<Double, Bounds>(t.getRotate(), t.getBoundsInParent());
-//			turtleStateChanged(GUITools.guiTurtleToTurtleState(s, _displayView.getBounds()));
-//		});
+		t.getTurtleState().addObserver(this);
 		return t;
 	}
 
@@ -166,6 +180,12 @@ public class UIMain implements UIMainAPI {
 		_root = new Pane();
 		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(MyColors.GREEN));
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
+		_scene.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.UP){
+				_terminalView.clear();
+				_terminalView.addText(_terminalView.getPreviousCommand());
+			}
+					});
 	}
 
 	private void setupTitleAndMenuButton() {
@@ -198,7 +218,7 @@ public class UIMain implements UIMainAPI {
 	}
 
 	private void setupDisplay() {
-		_displayView = new UITurtleDisplayView(DISPLAY_FRAME);
+		_displayView = new UITurtleDisplayView(DISPLAY_FRAME, new displayHandler());
 		_root.getChildren().add(_displayView);
 	}
 
@@ -279,8 +299,8 @@ public class UIMain implements UIMainAPI {
 	}
 
 	@Override
-	public void setPalleteAtIndex(double index, double r, double g, double b) {
-		_menuView.getPaletteView().addNewPallete(index, Color.rgb((int)r, (int)g, (int)b));
+	public void setPaletteAtIndex(double index, double r, double g, double b) {
+		_menuView.getPaletteView().addNewPalette(index, Color.rgb((int)r, (int)g, (int)b));
 	}
 
 	@Override
@@ -305,6 +325,11 @@ public class UIMain implements UIMainAPI {
 	}
 	public UITurtle getTurtle(Double id){
 		return _displayView.getTurtle(id);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		_menuView.getAttributesView().update((TurtleState) o);
 	}
 	
 }
