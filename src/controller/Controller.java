@@ -123,13 +123,17 @@ public class Controller {
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
-			
+			System.out.print(turtlesToCommands);
 			Compiler c = new Compiler(); 
+			
 			for (Double turtleId: turtlesToCommands.keySet()){
 				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
 				List<Turtle> currentTurtles = myModel.getTurtles(); 
+				System.out.println("current turtles are" + currentTurtles);
 				TurtleState t = findTurtle(turtleId, currentTurtles);
-				Queue<TreeNode> Q = c.compile(t, commandsToApply);
+				
+				Queue<TreeNode> Q = c.compile(t, commandsToApply); // this is problem
+				
 				myModel.update(Q);
 				output = myModel.getStringOutput();
 				myViewController.addNewOutput(output);
@@ -159,8 +163,11 @@ public class Controller {
 
 	private Map<Double, ProtectedTokenList> parseList(ProtectedTokenList list) {
 		AskTellParser ap = new AskTellParser(myModel, myViewController); 
+
 		ap.parseCommands(list);
-		ap.clearParser();
+		
+		Map<Double, ProtectedTokenList> parsedMap = ap.getParsedCommands(); 
+		
 		return ap.getParsedCommands(); 
 			
 	}

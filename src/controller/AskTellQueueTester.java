@@ -91,6 +91,7 @@ public class AskTellQueueTester {
 			ProtectedTokenList ptl = commandMap.get(key); 
 			System.out.println("turtle id " + key );
 			System.out.println("Literal command value " + ptl.getLiterals());
+			System.out.println("Logo commands value " + ptl.getLogo	());
 			System.out.println();
 		}
 
@@ -105,7 +106,9 @@ public class AskTellQueueTester {
 			logoPerTurtle.add(finalT);
 		}
 
-		return new TokenList(commandsPerTurtle, logoPerTurtle);
+		TokenList tl = new TokenList(commandsPerTurtle, logoPerTurtle);
+		System.out.println("logo check " + logoPerTurtle.get(0));
+		return tl;
 	}
 
 
@@ -182,11 +185,13 @@ public class AskTellQueueTester {
 		AskTellQueueTester q = new AskTellQueueTester(); 
 		String testCode = "ask [ 100 20 40 90 ] [ fd 50 rt 90 ] tell [ 1 20 ] fd 50 rt 40";
 		String test1 = " tell [ 1 2 ] fd 30 ask [ 1 ] [ rt 30 ] tell [ 2 ] bk 20 ";
+		String test2 = " tell [ 1 ] fd 50";
 		q.parseCommands(p.parse(testCode)); 
 		q.clearTester();
 		System.out.println();
 		System.out.println();
-		q.parseCommands(p.parse(test1));
+		q.parseCommands(p.parse(test2));
+		
 	}
 
 }
