@@ -88,12 +88,8 @@ public class Controller {
 		myViewController = new UIMain(new myHandler(), "English"); // handler currently Front to Back
 		//myTurtle.getState().addObserver(myViewController);
 
-
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
-		System.out.println("turtle to be added" + myTurtles.get(0).getState().getID());
-		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState().getID())); 
-		
-
+		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState())); 
 
 		changeLanguage("English");
 		//myParser = new Parser(myTurtle.getReadOnlyState(), currentLang.toString());  // safe way to hand turtle state

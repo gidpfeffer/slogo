@@ -58,6 +58,14 @@ public class TurtleState extends Observable implements State {
 		notifyObservers();
 	}
 	
+	public void setAll(double x, double y, double angle){
+		myX = x;
+		myY = y; 
+		myAngle = angle;
+		setChanged();
+		notifyObservers();
+	}
+	
 	public void setPosition(double x, double y){
 		myX = x;
 		myY = y;

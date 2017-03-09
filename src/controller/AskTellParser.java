@@ -10,6 +10,7 @@ import java.util.Queue;
 import controller.AskTellData;
 import gui.UIMain;
 import model.ModelController;
+import model.turtle.Turtle;
 import parser.main.NewParser;
 import parser.tokenizer.ProtectedTokenList;
 import parser.tokenizer.TokenList;
@@ -74,7 +75,8 @@ public class AskTellParser {
 		for (Double t : data.getTurtleIDS()){
 			if (!(literalMap.containsKey(t))){
 				literalMap.put(t, new ArrayList<String>());
-				currentModel.makeNewTurtle(t).getState().addObserver(myView.addTurtle(t));
+				Turtle turtle = currentModel.makeNewTurtle(t);
+				turtle.getState().addObserver(myView.addTurtle(turtle.getState()));
 			}
 			literalMap.get(t).addAll(data.getCommands());
 		}
