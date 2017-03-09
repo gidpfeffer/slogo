@@ -173,7 +173,8 @@ public class Controller {
 
 		ap.parseCommands(list);
 		
-		System.out.println(list.getLiterals().size());
+		Map<Double, ProtectedTokenList> parsedMap = ap.getParsedCommands(); 
+		
 		return ap.getParsedCommands(); 
 			
 	}
