@@ -63,7 +63,7 @@ public class Controller {
 	private ModelController myModel; 
 	private List<Turtle> myTurtles;
 	private List<Double> activeTurtleIndexList;
-	private List<Double> currentTurtleIds; 
+	//private List<Double> currentTurtleIds; 
 
 	private NewParser myParser;
 	private Compiler compiler;
@@ -81,21 +81,18 @@ public class Controller {
 		activeTurtleIndexList = new ArrayList<Double>();
 		activeTurtleIndexList.add(DEFAULT_TURTLE_ID);
 		
-		currentTurtleIds = new ArrayList<Double>(); 
-		currentTurtleIds.add(DEFAULT_TURTLE_ID);
+		//currentTurtleIds = new ArrayList<Double>(); 
+		//currentTurtleIds.add(DEFAULT_TURTLE_ID);
 		
-		
-		activeTurtleIndexList.add(new Double(1));
+		activeTurtleIndexList.add(DEFAULT_TURTLE_ID);
 		myViewController = new UIMain(new myHandler(), "English"); // handler currently Front to Back
 		//myTurtle.getState().addObserver(myViewController);
 
 
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
+		System.out.println("turtle to be added" + myTurtles.get(0).getState().getID());
 		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState().getID())); 
 		
-		for (Turtle t: myTurtles){
-			System.out.println("turtle id is " + t.getID());
-		}
 
 
 		changeLanguage("English");
@@ -135,13 +132,7 @@ public class Controller {
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
 
-			System.out.println(turtlesToCommands.size());
-			
-			for(Double d: turtlesToCommands.keySet()){
-				
-			}
-
-			System.out.print(turtlesToCommands);
+			 
 			Compiler c = new Compiler(); 
 
 			// refactor into a method 
@@ -150,10 +141,11 @@ public class Controller {
 				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
 				System.out.println(turtleId);
 				
-				if (!(myModel.getTurtles().stream().anyMatch(t -> t.getID() == turtleId))){ 
+				if (!(myModel.getTurtlesByID().contains(turtleId))){ 
 					System.out.println("Working");
 					myModel.makeNewTurtle(turtleId).getState().addObserver(myViewController.addTurtle(turtleId));
-					currentTurtleIds.add(turtleId);
+					activeTurtleIndexList.add(turtleId);
+					//currentTurtleIds.add(turtleId);
 				}
 				
 			
