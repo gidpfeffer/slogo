@@ -3,6 +3,7 @@ package gui.menu;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
@@ -40,12 +41,14 @@ public class UIMenuView extends UIView {
 	
 	private UIMainHandler _handler;
 	private ImageView _turtleImageView;
-	UIAttributesView _turtleAttributesView;
-	PalletteView _paletteView;
+	private ResourceBundle _resources;
+	private UIAttributesView _turtleAttributesView;
+	private PalletteView _paletteView;
 
-	public UIMenuView(Frame frame, UIMainHandler handler) {
+	public UIMenuView(Frame frame, UIMainHandler handler, ResourceBundle resources) {
 		super(frame);
 		_handler = handler;
+		_resources = resources;
 		COLOR_FRAME = new Frame(16, TOP_INSET, _bounds.getWidth() - 32, 56);
 		IMAGE_FRAME = new Frame(16, COLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 56);
 		PALLETTE_FRAME = new Frame(16, IMAGE_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 150);

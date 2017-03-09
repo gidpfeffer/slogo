@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.ResourceBundle;
+
 import controller.ControlHandler;
 import general_data_structures.Tuple;
 import gui.API.ButtonControlHandler;
@@ -31,7 +33,8 @@ import javafx.util.Duration;
 import model.turtle.TurtleState;
 
 public class UIMain implements UIMainAPI {
-
+	
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	public static final double SCREEN_WIDTH = 800;
 	public static final double SCREEN_HEIGHT = 700;
 	public static final double TOP_INSET = 70;
@@ -47,8 +50,8 @@ public class UIMain implements UIMainAPI {
 			VOCAB_FRAME.getWidth(), SCREEN_HEIGHT - VOCAB_FRAME.getMaxY() - 16);
 	public static final Frame MENU_FRAME = new Frame(-SCREEN_WIDTH * 2 / 5, 0, 
 			SCREEN_WIDTH * 2 / 5, SCREEN_HEIGHT);
-	public static final Frame BTN_CONTROL_FRAME = new Frame(100, 8, 
-			SCREEN_WIDTH-112, DISPLAY_FRAME.getMaxY() - 16);
+	public static final Frame BTN_CONTROL_FRAME = new Frame(188, 20, 
+			DISPLAY_FRAME.getWidth() - 180, TOP_INSET - 28);
 	
 	private Pane _root;
 	private Scene _scene;
@@ -61,10 +64,12 @@ public class UIMain implements UIMainAPI {
 	private UIMenuView _menuView;
 	private ImageButton _menuButton;
 	private UIButtonControlView _buttonControlView;
+	private ResourceBundle _resources;
 
-	public UIMain(ControlHandler handler) {
+	public UIMain(ControlHandler handler, String language) {
 		super();
 		_handler = handler;
+		_resources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
 		setupViews();
 	}
 
@@ -111,15 +116,6 @@ public class UIMain implements UIMainAPI {
 		}
 		
 	}
-	
-	class TurtleHandler implements UITurtleHandler{
-
-		@Override
-		public void turtleStateDidChange(TurtleState s) {
-			turtleStateChanged(s);
-		}
-		
-	}
 
 	@Override
 	public void displayErrorWithMessage(String error) {
@@ -134,8 +130,7 @@ public class UIMain implements UIMainAPI {
 		_displayView.resetDisplay();
 		_historyView.clear();
 		_terminalView.clear();
-		// TODO: stop animation _displayView.stopAnimation();
-		// also add pauseAnimation() and playAnimation()
+
 	}
 	@Override
 	public UITurtle addTurtle(double id) {
@@ -161,8 +156,8 @@ public class UIMain implements UIMainAPI {
 		setupVocabTable();
 		setupVarsBox();
 		setupTerminalButtons();
-		setupMenu();
 		setupButtonControlsView();
+		setupMenu();
 	}
 
 	private void setupRoot() {
@@ -186,7 +181,7 @@ public class UIMain implements UIMainAPI {
 	}
 
 	private void setupMenu() {
-		_menuView = new UIMenuView(MENU_FRAME, new myHandler());
+		_menuView = new UIMenuView(MENU_FRAME, new myHandler(), _resources);
 		_root.getChildren().add(_menuView);
 	}
 

@@ -14,9 +14,14 @@ public class RepeatHandler extends BracketAid{
 	private int startIndex, endIndex, times;
 	private State turtle; 
 	
-	public RepeatHandler(TokenList list, State turtle){
-		super(list, REPEAT);
-		this.turtle = turtle;
+	public RepeatHandler(){
+		super(REPEAT);
+	}
+	
+	public void handle(TokenList TL, State t){
+		list = TL;
+		turtle = t;
+		checkSyntax();
 		correctList();
 	}
 	
@@ -33,8 +38,8 @@ public class RepeatHandler extends BracketAid{
 	
 	private int evaluateExpression(){
 		int loc = getLogoLocations(indicator).get(0);
-		if(logo.get(loc + 1).equals(CONSTANT)){
-			return (int) Double.parseDouble(literals.get(loc + 1));
+		if(list.getLogo().get(loc + 1).equals(CONSTANT)){
+			return (int) Double.parseDouble(list.getLiterals().get(loc + 1));
 		}
 		TreeGenerator TG = new TreeGenerator(
 				list.newSubList(loc + 1, startIndex), turtle);
@@ -44,15 +49,15 @@ public class RepeatHandler extends BracketAid{
 	}
 	
 	protected void replace(){
-		List<String> literalFiller = getSubList(literals, startIndex + 1, endIndex, times);
-		List<String> logoFiller = getSubList(logo, startIndex + 1, endIndex, times);
-		listMultiplier.replace(getLogoLocations(indicator).get(0), endIndex, literals, literalFiller);
-		listMultiplier.replace(getLogoLocations(indicator).get(0), endIndex, logo, logoFiller);
+		List<String> literalFiller = getSubList(list.getLiterals(), startIndex + 1, endIndex, times);
+		List<String> logoFiller = getSubList(list.getLogo(), startIndex + 1, endIndex, times);
+		listMultiplier.replace(getLogoLocations(indicator).get(0), endIndex, list.getLiterals(), literalFiller);
+		listMultiplier.replace(getLogoLocations(indicator).get(0), endIndex, list.getLogo(), logoFiller);
 	}
 	
 	protected void checkValidity(){
 		int repeatIndex = getLogoLocations(REPEAT).get(0);
-		if(repeatIndex + 2 >= literals.size()){
+		if(repeatIndex + 2 >= list.getLiterals().size()){
 			throw new SLogoException("Invalid Bracket Syntax");
 		}
 	}

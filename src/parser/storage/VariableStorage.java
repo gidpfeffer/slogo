@@ -14,7 +14,7 @@ public class VariableStorage extends Observable{
 	}
 	
 	public Map<String, Double> getMap(){
-		return new HashMap<>(map);
+		return map;
 	}
 	
 	public void setValue(String key, double val){

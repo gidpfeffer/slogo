@@ -26,7 +26,7 @@ import javafx.util.Duration;
 import model.turtle.TurtleState;
 
 public class UITurtle extends Pane implements Observer {
-	
+
 	private TurtleState _turtleState;
 	private UITurtleAttributes _turtleAtt;
 	private UITurtleAttributes _priorTurtleAtt;
@@ -39,22 +39,21 @@ public class UITurtle extends Pane implements Observer {
 	private double _id;
 	private TurtleDisplayHandler _handler;
 	private Frame _displayBounds;
-	
-	
-	private double ANIMATION_SPEED=400;//100 pixels per second
-	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, 
-			double id,TurtleDisplayHandler handler, Frame displayBounds){
-		this(animators,new Image("turtle.png"), id, handler,displayBounds);
+
+	private double ANIMATION_SPEED = 400;// 100 pixels per second
+
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, double id, TurtleDisplayHandler handler,
+			Frame displayBounds) {
+		this(animators, new Image("turtle.png"), id, handler, displayBounds);
 	}
-	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,
-			Image image, double id,TurtleDisplayHandler handler,Frame displayBounds){
-		this(animators,image, new TurtleState(), id, handler,displayBounds);
+
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, Image image, double id,
+			TurtleDisplayHandler handler, Frame displayBounds) {
+		this(animators, image, new TurtleState(), id, handler, displayBounds);
 	}
-	
-	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators,
-			Image image, TurtleState state, double id, TurtleDisplayHandler handler,Frame displayBounds){
+
+	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, Image image, TurtleState state, double id,
+			TurtleDisplayHandler handler, Frame displayBounds) {
 		_turtleState = state;
 		_id = id;
 		_handler = handler;
@@ -62,24 +61,25 @@ public class UITurtle extends Pane implements Observer {
 		setImageView(new ImageView(image));
 		_animators = animators;
 		_animators.x.setOnFinished(new EventHandler<ActionEvent>() {
-		      @Override
-		      public void handle(ActionEvent event) {
-		    	  //System.out.println("translation finished");
-		    	  playNextAnimation();
-		      }
+			@Override
+			public void handle(ActionEvent event) {
+				// System.out.println("translation finished");
+				playNextAnimation();
+			}
 		});
 		_animators.y.setOnFinished(new EventHandler<ActionEvent>() {
-		     
-		      @Override
-		      public void handle(ActionEvent event) {
-		    	  //System.out.println("rotation finished");
-		    	  playNextAnimation();
-		      }
+
+			@Override
+			public void handle(ActionEvent event) {
+				// System.out.println("rotation finished");
+				playNextAnimation();
+			}
 		});
+		this.setTurtleState(new TurtleState());
 	}
-	
-	public void setImageView(ImageView imageView){
-		if(_imageView != null)
+
+	public void setImageView(ImageView imageView) {
+		if (_imageView != null)
 			this.getChildren().remove(_imageView);
 		_imageView = imageView;
 		imageView.setPreserveRatio(true);
@@ -88,147 +88,149 @@ public class UITurtle extends Pane implements Observer {
 		this.getChildren().add(imageView);
 	}
 
-	public void addAnimationToQueue(TurtleState s, Tuple<Double, Double> pos){
-		addAnimationToQueue(s,pos,null);
-	}
-	public void addAnimationToQueue(TurtleState s, Tuple<Double, Double> pos, Line line){
-		_queue.add(new TurtleAnimationData(s,pos,line));
-		if(!Animation.Status.RUNNING.equals(_animators.x.getStatus()) && 
-				!Animation.Status.RUNNING.equals(_animators.y.getStatus())){
-			//System.out.println("running first animation");
+	public void addAnimationToQueue(double angle, Tuple<Double, Double> pos) {
+		_queue.add(new TurtleAnimationData(angle, pos));
+		if (!Animation.Status.RUNNING.equals(_animators.x.getStatus())
+				&& !Animation.Status.RUNNING.equals(_animators.y.getStatus())) {
 			playNextAnimation();
 		}
 	}
-	private void playNextAnimation(){
+
+	private void playNextAnimation() {
 		TurtleAnimationData next = _queue.poll();
-		if(next != null){
-			//System.out.println("playNextAnimation");
-			play(next.getTurtleState(), next.getPos(), next.getLine());
+		if (next != null) {
+			play(next.getAngle(), next.getPosition());
 		}
 	}
 
-	private void play(TurtleState s, Tuple<Double, Double> pos, Line line){
+	private void play(double angle, Tuple<Double, Double> pos) {
 		_priorTurtleAtt = _turtleAtt;
-		_turtleAtt = new UITurtleAttributes(pos.x, pos.y, (-s.getHeadAngle() + 90));
-		//TODO UNCOMMENT THE LINE UNDER THIS
-		this.setVisiblityTo(!this.isVisible());
-		
-		//TODO: mention this in analysis
-		//setting the angle was a complicated process but i don't see any easier way
-		//to mathematically ensure that the turtles angle on display is in sync with the 
-		//backend's coordinate system. RotationAnimation also adds a few glitches.
+		_turtleAtt = new UITurtleAttributes(pos.x, pos.y, angle);
+		// TODO UNCOMMENT THE LINE UNDER THIS
+		// this.setVisiblityTo(!this.isVisible());
+
+		// TODO: mention this in analysis
+		// setting the angle was a complicated process but i don't see any
+		// easier way
+		// to mathematically ensure that the turtles angle on display is in sync
+		// with the
+		// backend's coordinate system. RotationAnimation also adds a few
+		// glitches.
 		double deltaX = _turtleAtt.x - _priorTurtleAtt.x;
 		double deltaY = _turtleAtt.y - _priorTurtleAtt.y;
-		Tuple<Double, Double> angle1 =
-				new Tuple<Double,Double>(_turtleAtt.angle - _priorTurtleAtt.angle, 
+		Tuple<Double, Double> angle1 = new Tuple<Double, Double>(_turtleAtt.angle - _priorTurtleAtt.angle,
 				Math.abs(_turtleAtt.angle - _priorTurtleAtt.angle));
-		Tuple<Double, Double> angle2 = 
-				new Tuple<Double,Double>(360 + _priorTurtleAtt.angle - _turtleAtt.angle, 
-						Math.abs(360 + _priorTurtleAtt.angle - _turtleAtt.angle));
-		//This line right here sets deltaAngle to the angle with the closest value
-		//to zero while still preserving the angles direction (positive or negative)
-		double deltaAngle = angle1.y == Math.min(angle1.y, angle2.y)? angle1.x:angle2.x;
-		if (Math.abs(deltaY) + Math.abs(deltaX) != 0){
+		Tuple<Double, Double> angle2 = new Tuple<Double, Double>(360 + _priorTurtleAtt.angle - _turtleAtt.angle,
+				Math.abs(360 + _priorTurtleAtt.angle - _turtleAtt.angle));
+		// This line right here sets deltaAngle to the angle with the closest
+		// value
+		// to zero while still preserving the angles direction (positive or
+		// negative)
+		double deltaAngle = angle1.y == Math.min(angle1.y, angle2.y) ? angle1.x : angle2.x;
+		if (Math.abs(deltaY) + Math.abs(deltaX) != 0) {
 			_animators.x.setByX(deltaX);
 			_animators.x.setByY(deltaY);
-			_animators.x.setDuration( //1 pixels per 10 millisecond
-					Duration.millis(
-							1000/ANIMATION_SPEED * (Math.abs(deltaX) + Math.abs(deltaY)) + 1
-							)
-					); 
+			_animators.x.setDuration( // 1 pixels per 10 millisecond
+					Duration.millis(1000 / ANIMATION_SPEED * (Math.abs(deltaX) + Math.abs(deltaY)) + 1));
 			_animators.x.play();
 		}
-		if(deltaAngle != 0) 
-		{
-			
-			_animators.y.setByAngle(deltaAngle);
-			 //1 ms per degree
-			_animators.y.setDuration(Duration.millis(
-						Math.abs(0)));
-			_animators.y.setDuration(Duration.millis(
-						Math.abs(deltaAngle)));	
+		if (deltaAngle != 0) {
+			_animators.y.setByAngle(deltaAngle); // 1 ms per degree
+			_animators.y.setDuration(Duration.millis(Math.abs(0)));
+			_animators.y.setDuration(Duration.millis(Math.abs(deltaAngle)));
 			_animators.y.play();
-			
 		}
-		if(line != null && 
-				getPriorAttributes() != null &&
-				getTurtleState().getPen()){
-			expandLine(line);
+		if (getPriorAttributes() != null && getTurtleState().getPen()) {
+			addLine();
 		}
 	}
-	private void expandLine(Line line){
+
+	private void addLine() {
 		UITurtleAttributes old = getPriorAttributes();
 		UITurtleAttributes curr = getNewAttributes();
-		if(old != null && getTurtleState().getPen()){
-			//TODO animate this
-			double ins = getWidth()/2.;
-			line.setStartX(old.x + ins);
-			line.setStartY(old.y + ins);
-			line.setEndX(curr.x + ins);
-			line.setEndY(curr.y + ins);
+		if (old != null && getTurtleState().getPen()) {
+			// TODO animate this
+			double ins = getWidth() / 2.;
+			Line line = new Line(old.x + ins, old.y + ins, curr.x + ins, curr.y + ins);
 			line.setStroke(_lineColor);
 			line.setStrokeWidth(_strokeWidth);
 			line.setOpacity(0.5);
-			//line.endXProperty().bind(this.layoutXProperty().add(ins));
-			//line.endYProperty().bind(this.layoutYProperty().add(ins));
+			_handler.addLineToScreen(line);
 		}
 	}
-	public void setTurtleState(TurtleState s, Tuple<Double, Double> widthHeight){
-		_priorTurtleAtt = _turtleAtt;
-		_turtleAtt = new UITurtleAttributes(widthHeight.x, widthHeight.y, (-s.getHeadAngle() + 90)%360);
-		System.out.println(_turtleAtt.x + "\t" + _turtleAtt.y);
+
+	public void setTurtleState(TurtleState s) {
+		setTurtleAttributes(GUITools.turtleCoordinateToPixelCoordinate(s, _displayBounds),(-s.getHeadAngle() + 90));
 		this.setLayoutX(_turtleAtt.x);
 		this.setLayoutY(_turtleAtt.y);
 		this.setWidth(32);
 		this.setHeight(32);
 		this.setRotate(_turtleAtt.angle);
 	}
-	public void reset(TurtleState s, Tuple<Double, Double> widthHeight){
+	
+	private void setTurtleAttributes(Tuple<Double, Double> pos, double angle){
+		_priorTurtleAtt = _turtleAtt;
+		_turtleAtt = new UITurtleAttributes(pos.x, pos.y,angle);
+	}
+
+	public void reset() {
+		//TODO
 		_priorTurtleAtt = null;
 		_turtleAtt = null;
-		setTurtleState(s, widthHeight);
+		setTurtleState(getTurtleState());
 	}
-	public TurtleState getTurtleState(){
+
+	public TurtleState getTurtleState() {
 		return _turtleState;
 	}
+
 	public UITurtleAttributes getPriorAttributes() {
 		return _priorTurtleAtt;
 	}
+
 	public UITurtleAttributes getNewAttributes() {
 		return _turtleAtt;
 	}
-	public void setTurtleImage(Image img){
+
+	public void setTurtleImage(Image img) {
 		_imageView.setImage(img);
 	}
-	public double getTurtleId(){
+
+	public double getTurtleId() {
 		return _id;
 	}
-	public void setVisiblityTo(boolean b){
+
+	public void setVisiblityTo(boolean b) {
 		this._imageView.setVisible(b);
 	}
-	public void setLineColor(Color color){
+
+	public void setLineColor(Color color) {
 		this._lineColor = color;
 	}
-	public void setPenStrokeWidth(double d){
+
+	public void setPenStrokeWidth(double d) {
 		this._strokeWidth = d;
 	}
-	public void setShape(double index, ImageView image){
+
+	public void setShape(double index, ImageView image) {
 		_shape = index;
-		//TODO
+		// TODO
 	}
-	public void setShape(double index, Shape shape){
+
+	public void setShape(double index, Shape shape) {
 		_shape = index;
-		//TODO
+		// TODO
 	}
-	public void setPenVisibility(boolean bool){
+
+	public void setPenVisibility(boolean bool) {
 		this.getTurtleState().setPen(bool);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println(o);
 		TurtleState newState = new TurtleState((TurtleState) o);
-		addAnimationToQueue(newState, 
-				GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
+		addAnimationToQueue(-newState.getHeadAngle() + 90, GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
 	}
 
 	public void stop() {

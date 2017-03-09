@@ -1,5 +1,7 @@
 package parser.main;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Queue;
 
 import model.command.TreeNode;
@@ -8,26 +10,28 @@ import parser.interpreter.Interpreter;
 import parser.queue_splitter.QueueSplitter;
 import parser.reflection.TreeGenerator;
 import parser.storage.FixVars;
+import parser.storage.TotalStorage;
 import parser.storage.VariableStorage;
 import parser.tokenizer.ProtectedTokenList;
 import parser.tokenizer.TokenList;
 
 public class Compiler {
-	private VariableStorage vars;
+	private TotalStorage storage;
 	private FixVars fixVars;
+	private Interpreter IT;
 
 	public Compiler(){
-		vars = new VariableStorage();
-		fixVars = new FixVars(vars);
+		storage = new TotalStorage();
+		fixVars = new FixVars(storage.getVars());
+		IT = new Interpreter(storage);
 	}
 	
 	private Queue<TreeNode> interpret(ProtectedTokenList list, State state){
-		TokenList TL = new TokenList(list.getLiterals(), list.getLogo());
-		Interpreter IT = new Interpreter(TL, state, vars.keySet());
-		TL = IT.getTokenList();
-		IT.handleVarLoops();
-		fixVars.fix(IT.getTokenList());
-		IT.handleRegLoops();
+		TokenList TL = new TokenList(new ArrayList<>(list.getLiterals()),
+				new ArrayList<>(list.getLogo()));
+		IT.handleVarLoops(TL, state);
+		fixVars.fix(TL);
+		IT.handleRegLoops(TL, state);
 		return makeTree(TL, state);
 	}
 	
@@ -42,6 +46,6 @@ public class Compiler {
 	}
 	
 	public VariableStorage getVars(){
-		return vars;
+		return storage.getVars();
 	}
 }

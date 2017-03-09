@@ -83,7 +83,11 @@ public class Controller {
 		
 		currentTurtleIds = new ArrayList<Double>(); 
 		currentTurtleIds.add(DEFAULT_TURTLE_ID);
-		myViewController = new UIMain(new myHandler()); 
+		
+		
+		activeTurtleIndexList.add(new Double(1));
+		myViewController = new UIMain(new myHandler(), "English"); // handler currently Front to Back
+		//myTurtle.getState().addObserver(myViewController);
 
 
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
@@ -130,6 +134,14 @@ public class Controller {
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
+
+			System.out.println(turtlesToCommands.size());
+			
+			for(Double d: turtlesToCommands.keySet()){
+				
+			}
+
+			System.out.print(turtlesToCommands);
 			Compiler c = new Compiler(); 
 
 			// refactor into a method 
