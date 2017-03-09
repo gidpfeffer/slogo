@@ -86,13 +86,11 @@ public class Controller {
 		
 		activeTurtleIndexList.add(DEFAULT_TURTLE_ID);
 		myViewController = new UIMain(new myHandler(), "English"); // handler currently Front to Back
-		//myTurtle.getState().addObserver(myViewController);
 
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
 		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState())); 
 
 		changeLanguage("English");
-		//myParser = new Parser(myTurtle.getReadOnlyState(), currentLang.toString());  // safe way to hand turtle state
 		myParser = new NewParser(currentLang.toString());
 		compiler = new Compiler(); 
 		configureVariableStorage(); 
@@ -127,22 +125,16 @@ public class Controller {
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
-
-			 
 			Compiler c = new Compiler(); 
 
 			// refactor into a method 
 			
 			for (Double turtleId: turtlesToCommands.keySet()){
 				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
-				System.out.println(turtleId);
+				List<Turtle> currentTurtles = myModel.getTurtles(); 
 				
-				if (!(myModel.getTurtlesByID().contains(turtleId))){ 
-					System.out.println("Working");
-					myModel.makeNewTurtle(turtleId).getState().addObserver(myViewController.addTurtle(turtleId));
-					activeTurtleIndexList.add(turtleId);
-					//currentTurtleIds.add(turtleId);
-				}
+				TurtleState t = findTurtle(turtleId, currentTurtles);
+				Queue<TreeNode> Q = c.compile(t, commandsToApply); 
 				
 			
 				
@@ -152,7 +144,7 @@ public class Controller {
 				myModel.update(Q);
 				output = myModel.getStringOutput();
 				myViewController.addNewOutput(output);
-
+				
 			}
 
 
@@ -163,13 +155,16 @@ public class Controller {
 		output = myModel.getStringOutput();
 	}
 
-	private TurtleState findTurtle(Double turtleId) {
-		// need throwable exception here 
-
-		for (Turtle t: myTurtles){
+	private TurtleState findTurtle (Double turtleId, List<Turtle> currentTurtles) {
+		try{
+		for (Turtle t: currentTurtles){
 			if (t.getID() == turtleId){
 				return t.getState();
 			}
+		}
+		}
+		catch(SLogoException e){
+			throw new SLogoException("turtle does not exist");
 		}
 		return null; 
 	}
@@ -177,7 +172,7 @@ public class Controller {
 
 	private Map<Double, ProtectedTokenList> parseList(ProtectedTokenList list) {
 		AskTellParser ap = new AskTellParser(myModel, myViewController); 
-		ap.parseCommands(list);
+		ap.parseCommands(list);		
 		return ap.getParsedCommands(); 
 	}
 
@@ -188,8 +183,7 @@ public class Controller {
 	}
 
 	private void reset(){
-		//myTurtle.reset();
-		myViewController.clearScreen();
+ 		myViewController.clearScreen();
 		myModel.reset(); 
 	}
 
