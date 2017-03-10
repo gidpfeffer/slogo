@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 
-public class AskWith extends MultipleTurtleCommand{
+public class Askwith extends MultipleTurtleCommand{
 	AskTellData data; 
 	
 	List<String> toParse; 
@@ -17,7 +17,7 @@ public class AskWith extends MultipleTurtleCommand{
 	private final String LEFT_BRACKET = "[";
 	private final String RIGHT_BRACKET = "]";
 	
-	public AskWith(List<String> commands, List<Double> turtle){
+	public Askwith(List<String> commands, List<Double> turtle){
 		toParse = new ArrayList<String>(commands);
 		myTurtles = new ArrayList<Double>(turtle);
 		
@@ -101,7 +101,7 @@ public class AskWith extends MultipleTurtleCommand{
 		String testCode = "askwith [ equals xcor 50 ] [ fd 100 ] ";
 		List<String> commands = Arrays.asList(testCode.split(" " ));
 		
-		AskWith aw = new AskWith(commands, turtles);
+		Askwith aw = new Askwith(commands, turtles);
 		aw.execute();
 		
 		

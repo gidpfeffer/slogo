@@ -16,7 +16,7 @@ public class Ask  extends MultipleTurtleCommand {
 	private final String RIGHT_BRACKET = "]";
 	
 	
-	public Ask(List<String> data){
+	public Ask(List<String> data, List<Double> turtles){
 		parsedData = new ArrayList<String>(data);
 	}
 	

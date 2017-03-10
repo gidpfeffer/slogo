@@ -134,6 +134,8 @@ public class Controller {
 		currentLang = new StringBuilder(); 
 		currentLang.append(languageLocation);
 		currentLang.append(language);
+		myParser = new NewParser(currentLang.toString());
+		
 	}
 
 
@@ -148,7 +150,7 @@ public class Controller {
 			List<List<String>> subs = SLC.getSublists();
 			List<List<String>> cleanSubs = cleanSubLists(subs);
 			
-			SubListProcessor SLP = new SubListProcessor(cleanSubs);
+			SubListProcessor SLP = new SubListProcessor(cleanSubs, myModel);
 			
 			
 
