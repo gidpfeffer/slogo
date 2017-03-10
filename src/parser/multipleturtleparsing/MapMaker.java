@@ -22,14 +22,16 @@ public class MapMaker implements CommandMap<Double, List<String>, ProtectedToken
 	Map <Double, ProtectedTokenList> ptlMap;
 
 	private ModelController currentModel; 
+	private String currentLanguage; 
 
 	public MapMaker(List<Object> commandObjects, List<String> precedingCommands, List<String> remainingCommands,
-			Map<Double, List<String>> currentLiterals, ModelController myModel){
+			Map<Double, List<String>> currentLiterals, ModelController myModel, String language){
 		
 		literalMap = currentLiterals; 
 		ptlMap = new HashMap<Double, ProtectedTokenList>();
 		
 		currentModel = myModel; 
+		currentLanguage = language;
 
 		buildLiteralMap(commandObjects, precedingCommands, remainingCommands);
 		buildPTLMap();
@@ -70,8 +72,8 @@ public class MapMaker implements CommandMap<Double, List<String>, ProtectedToken
 			bigString = bigString + literal + " ";
 		}
 
-		NewParser p = new NewParser(currentModel.getLanguage());
-
+		//NewParser p = new NewParser(currentModel.getLanguage());
+		NewParser p = new NewParser(currentLanguage);
 		return p.parse(bigString);
 	}
 

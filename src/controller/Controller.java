@@ -71,11 +71,6 @@ public class Controller {
 			setRelation( id); 
 		}
 
-		@Override
-		public String getCurrentLang() {
-			return getLang(); 
-		}
-
 	}
 
 
@@ -170,7 +165,7 @@ public class Controller {
 			
 			
 			
-			MapMaker MM = new MapMaker(comms, precedingComms,  remainingComms, myLiteralMap, myModel);
+			MapMaker MM = new MapMaker(comms, precedingComms,  remainingComms, myLiteralMap, myModel,getLang());
 			
 			
 			
@@ -255,6 +250,4 @@ public class Controller {
 		return myViewController;
 	}
 
-
-	
 }

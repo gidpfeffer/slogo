@@ -6,5 +6,4 @@ public interface BackEndHandler {
 	public void handleReset();
 	public double getNumTurtle();
 	public void setRelationship(Double id);
-	public String getCurrentLang();
 }
