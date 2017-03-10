@@ -1,6 +1,5 @@
 package gui.API;
 
-import general_data_structures.*;
 import gui.UITurtle;
 import model.turtle.TurtleState;
 

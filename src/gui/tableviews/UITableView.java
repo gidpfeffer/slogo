@@ -2,9 +2,6 @@ package gui.tableviews;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Observable;
-import java.util.Observer;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
@@ -21,29 +18,24 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import parser.storage.VariableStorage;
 
 public class UITableView extends UIView {
-	protected Frame _bounds;
-	protected FlowPane _flowPane;
-	protected List<Text> _texts = new ArrayList<Text>();
+	private FlowPane _flowPane;
+	private List<Text> _texts = new ArrayList<Text>();
 	
 	public UITableView(Frame frame, String title) {
 		super(frame);
-		_bounds = frame.toLocalBounds();
 		setupViews(title);
 
 	}
 	
 
 	private void setupViews(String title) {
-		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
+		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, getBounds());
 		setupTitle(title);
 
 		_flowPane = new FlowPane(Orientation.VERTICAL);
@@ -59,14 +51,14 @@ public class UITableView extends UIView {
 		scroll.setBackground(Background.EMPTY);
 		scroll.setBorder(Border.EMPTY);
 		scroll.setBlendMode(BlendMode.DARKEN);
-		scroll.setPrefWidth(_bounds.getWidth());
-		scroll.setPrefHeight(_bounds.getHeight());
+		scroll.setPrefWidth(getBounds().getWidth());
+		scroll.setPrefHeight(getBounds().getHeight());
 		
 		this.getChildren().add(scroll);
 	}
 	private void setupTitle(String t){
-		Label title = GUITools.plainLabel(t, 20, MyColors.INDIGO, FontWeight.BOLD);
-		title.setPrefWidth(_bounds.getWidth());
+		Label title = GUITools.plainLabel(t, 20, MyColors.INDIGO, FontWeight.NORMAL);
+		title.setPrefWidth(getBounds().getWidth());
 		title.setPrefHeight(40);
 		title.setAlignment(Pos.CENTER);
 		this.getChildren().add(title);
@@ -79,7 +71,7 @@ public class UITableView extends UIView {
 								new BackgroundFill(
 										MyColors.GREEN_200, new CornerRadii(4), new Insets(-8,-12,-8,-8))}));
 		Text l = new Text(s);
-		l.setWrappingWidth(_bounds.getWidth() - 48);
+		l.setWrappingWidth(getBounds().getWidth() - 48);
 		l.setTextAlignment(TextAlignment.LEFT);
 		_texts.add(l);
 		stack.getChildren().add(l);
@@ -90,7 +82,10 @@ public class UITableView extends UIView {
 	public void clear(){
 		_flowPane.getChildren().clear();
 	}
-
+	
+	public List<Text> getTexts(){
+		return _texts;
+	}
 
 
 }

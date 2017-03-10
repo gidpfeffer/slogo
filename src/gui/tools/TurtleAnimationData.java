@@ -1,8 +1,6 @@
 package gui.tools;
 
 import general_data_structures.Tuple;
-import javafx.scene.shape.Line;
-import model.turtle.TurtleState;
 
 public class TurtleAnimationData {
 	private double angle;

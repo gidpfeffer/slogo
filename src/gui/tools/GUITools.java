@@ -2,7 +2,6 @@ package gui.tools;
 
 import general_data_structures.Tuple;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

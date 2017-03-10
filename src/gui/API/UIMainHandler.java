@@ -8,4 +8,5 @@ public interface UIMainHandler {
 	public abstract void setTurtleImage(Image image);
 	public abstract void addFunctionToTerminal(String s);
 	public abstract void setBackgroundColor(Color value);
+	public abstract void setLanguage(String language);
 }

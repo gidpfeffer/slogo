@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import gui.tools.UIView;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -36,6 +34,12 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		@Override
 		public Color getColorPalette(double index) {
 			return _handler.getColorPalette(index);
+		}
+
+		@Override
+		public Image getTurtleImage(double index) {
+			// TODO Auto-generated method stub
+			return _handler.getShape(index);
 		}
 		
 	}
@@ -67,9 +71,6 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 
 	public void resetDisplay() {
 		clearLines();
-		for (UITurtle t : _turtles) {
-			t.reset();
-		}
 	}
 
 	public UITurtle addTurtle(TurtleState state) {
@@ -78,7 +79,7 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		Tuple<TranslateTransition, RotateTransition> animators = new Tuple<TranslateTransition, RotateTransition>(tran,
 				rot);
 
-		UITurtle t = new UITurtle(animators, new Handler(), _bounds, state);
+		UITurtle t = new UITurtle(animators, new Handler(), getBounds(), state);
 
 		tran.setNode(t);
 		tran.setDuration(Duration.millis(200));
@@ -96,10 +97,6 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		for (UITurtle t : _turtles) {
 			t.setImageView(new ImageView(image));
 		}
-	}
-
-	public UITurtle getTurtle() {
-		return _turtles.isEmpty() ? null : _turtles.get(0);
 	}
 
 	public UITurtle getTurtle(Double id) {
@@ -157,8 +154,8 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 	}
 
 	private void setupViews() {
-		_background = GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
-		this.setClip(new Rectangle(_bounds.getWidth(), _bounds.getHeight()));
+		_background = GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, getBounds());
+		this.setClip(new Rectangle(getBounds().getWidth(), getBounds().getHeight()));
 		for (UITurtle t : _turtles) {
 			this.getChildren().add(t);
 		}
@@ -194,7 +191,7 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 					System.out.println("moving turtle");
 					Tuple<Double, Double> newPos = new Tuple<Double, Double>(mouseEvent.getX() - 16, mouseEvent.getY() - 16);
 					
-					TurtleState newState = GUITools.guiTurtleToTurtleState(90.0,newPos, _bounds);
+					TurtleState newState = GUITools.guiTurtleToTurtleState(90.0,newPos, getBounds());
 					updateTurtleStatePrimitives(_selectedTurtle.getTurtleState(), newState);
 				}
 				removeLine(_line);
@@ -211,11 +208,18 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		}
 		return null;
 	}
+
+	public void setSpeed(double speed) {
+		for(UITurtle t: _turtles){
+			t.setSpeed(speed);
+		}
+	}
 	
 	private void updateTurtleStatePrimitives(TurtleState turtleState, TurtleState newState) {
 		//turtleState.setHeadAngle(newState.getHeadAngle());
 		turtleState.setAll((newState.getX()),(newState.getY()), newState.getHeadAngle());
 	}
+
 	
 	
 }

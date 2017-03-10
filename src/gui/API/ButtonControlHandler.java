@@ -4,6 +4,5 @@ public interface ButtonControlHandler {
 	public void handlePause();
 	public void handlePlay();
 	public void handleStop();
-	public void handleNewWorkspace();
-	
+	public void handleNewSpeed(double speed);	
 }

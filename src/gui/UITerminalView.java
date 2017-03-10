@@ -7,7 +7,6 @@ import gui.tools.UIView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class UITerminalView extends UIView implements UITerminalAPI {
@@ -21,10 +20,10 @@ public class UITerminalView extends UIView implements UITerminalAPI {
 	
 	
 	private void setupViews(){
-		GUITools.addBackgroundWithColor(this, Color.WHITE, _bounds);
+		GUITools.addBackgroundWithColor(this, Color.WHITE, getBounds());
 		_textArea = new TextArea();
-		_textArea.setPrefWidth(_bounds.getWidth());
-		_textArea.setPrefHeight(_bounds.getHeight());
+		_textArea.setPrefWidth(getBounds().getWidth());
+		_textArea.setPrefHeight(getBounds().getHeight());
 		_textArea.setBorder(Border.EMPTY);
 		_textArea.setBackground(Background.EMPTY);
 		_textArea.setWrapText(true);

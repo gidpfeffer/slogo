@@ -1,7 +1,9 @@
-package controller;
+package model.multipleturtle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+
+import parser.multipleturtleparsing.QueueConstructor;
 
 public class Ask implements MultipleTurtleCommand {
 	private AskTellData dataObject; 
