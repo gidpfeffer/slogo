@@ -4,8 +4,8 @@ import javafx.scene.layout.Pane;
 
 public class UIView extends Pane{
 	
-	protected Frame _frame;
-	protected Frame _bounds;
+	private Frame _frame;
+	private Frame _bounds;
 	
 	public UIView(){
 		super();

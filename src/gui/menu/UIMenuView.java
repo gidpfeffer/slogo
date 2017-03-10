@@ -53,17 +53,17 @@ public class UIMenuView extends UIView {
 		_handler = handler;
 		_resources = resources;
 		double rightInset = 80 + 32;
-		LCOLOR_FRAME = new Frame(16, TOP_INSET, _bounds.getWidth() - rightInset, 56);
-		BCOLOR_FRAME = new Frame(16, LCOLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - rightInset, 56);
-		IMAGE_FRAME = new Frame(16, BCOLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - rightInset, 56);
+		LCOLOR_FRAME = new Frame(16, TOP_INSET, getBounds().getWidth() - rightInset, 56);
+		BCOLOR_FRAME = new Frame(16, LCOLOR_FRAME.getMaxY() + 16, getBounds().getWidth() - rightInset, 56);
+		IMAGE_FRAME = new Frame(16, BCOLOR_FRAME.getMaxY() + 16, getBounds().getWidth() - rightInset, 56);
 		PALLETTE_FRAME = new Frame(LCOLOR_FRAME.getMaxX() + 8, TOP_INSET, rightInset - 32, IMAGE_FRAME.getMaxY() - TOP_INSET );
-		ATTRIBUTES_FRAME = new Frame(16, PALLETTE_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 150);
+		ATTRIBUTES_FRAME = new Frame(16, PALLETTE_FRAME.getMaxY() + 16, getBounds().getWidth() - 32, 150);
 		
 		setupViews();
 	}
 
 	private void setupViews() {
-		GUITools.addBackgroundWithColor(this, MyColors.GREEN_900, _bounds);
+		GUITools.addBackgroundWithColor(this, MyColors.GREEN_900, getBounds());
 		setupBackButton();
 		ColorPicker lColorPicker = new ColorPicker(MyColors.GREEN_900);
 		ColorPicker bColorPicker = new ColorPicker(MyColors.GREEN_900);
@@ -159,7 +159,7 @@ public class UIMenuView extends UIView {
 	private void setupBackButton() {
 		ImageButton b = new ImageButton();
 		b.updateImages(new Image("back.png"), new Image("back.png"));
-		b.setLayoutX(_bounds.getWidth() - 64);
+		b.setLayoutX(getBounds().getWidth() - 64);
 		b.setLayoutY(10);
 		b.setPrefWidth(32);
 		b.setPrefHeight(32);
@@ -175,7 +175,7 @@ public class UIMenuView extends UIView {
 		TranslateTransition t = new TranslateTransition();
 		t.setNode(this);
 		t.setDuration(Duration.millis(500));
-		t.setToX(-_bounds.getWidth());
+		t.setToX(-getBounds().getWidth());
 		t.play();
 	}
 

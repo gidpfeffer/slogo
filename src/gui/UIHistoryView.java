@@ -57,15 +57,15 @@ public class UIHistoryView extends UIView implements CommandHistoryAPI {
 //			
 //	}
 	private void setupViews() {
-		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
+		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, getBounds());
 		_textArea = new TextArea("\n\n");
-		_textArea.setPrefWidth(_bounds.getWidth());
-		_textArea.setPrefHeight(_bounds.getHeight());
+		_textArea.setPrefWidth(getBounds().getWidth());
+		_textArea.setPrefHeight(getBounds().getHeight());
 		_textArea.setBorder(Border.EMPTY);
 		_textArea.setBackground(Background.EMPTY);
 		_textArea.setEditable(false);
 		_textArea.setBlendMode(BlendMode.DARKEN);
-		_textArea.setScrollTop(_bounds.getHeight());
+		_textArea.setScrollTop(getBounds().getHeight());
 		_textArea.setWrapText(true);
 		_textArea.textProperty().addListener(e -> {_textArea.setScrollTop(Double.MAX_VALUE);});
 		this.getChildren().add(_textArea);

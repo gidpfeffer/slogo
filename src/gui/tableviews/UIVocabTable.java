@@ -47,6 +47,9 @@ public class UIVocabTable extends UITableView {
 	
 	public void setFunctionBox(List<String> functions){
 		clear();
+		for(String s: this._initialFunctions){
+			addText(s);
+		}
 		for(String s: functions){
 			this.addText(s);
 		}

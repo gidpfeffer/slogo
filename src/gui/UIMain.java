@@ -117,10 +117,9 @@ public class UIMain implements UIMainAPI, Observer {
 		public void handleStop() {
 			_displayView.stop();
 		}
-
 		@Override
-		public void handleNewWorkspace() {
-			// TODO Auto-generated method stub
+		public void handleNewSpeed(double speed) {
+			_displayView.setSpeed(speed);
 			
 		}
 		
@@ -180,6 +179,7 @@ public class UIMain implements UIMainAPI, Observer {
 		_root = new Pane();
 		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(MyColors.GREEN));
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
+		//up key puts previous command into terminal
 		_scene.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.UP){
 				_terminalView.clear();
