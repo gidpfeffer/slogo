@@ -20,7 +20,6 @@ public class Tokenizer {
 	public Tokenizer(String s, String language) {
 		syntax[0] = language;
 		toTokenize = s;
-		System.out.println("Language: " + syntax[0] + s);
 		fillPatterns();
 		breakUp();
 	}

@@ -101,7 +101,7 @@ public class Controller {
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
 		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState())); 
 
-		changeLanguage("Italian");
+		changeLanguage("English");
 		compiler = new Compiler(); 
 		configureVariableStorage(); 
 	}

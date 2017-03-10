@@ -23,7 +23,7 @@ public abstract class AbstractRangeHandler implements RangeHandler{
 		TreeGenerator TG = new TreeGenerator(TL, t);
 		if(TG.getAllQueue().size() == 0) 
 			throw new SLogoException("invalid syntax");
-		return TG.getAllQueue();
+		return TG.getCommandQueue();
 	}
 	
 	protected void makeList(double increment, double end, double start){
