@@ -212,5 +212,9 @@ public class UIMenuView extends UIView {
 	}
 	public UIAttributesView getAttributesView(){
 		return this._turtleAttributesView;
+	}
+
+	public ShapesView getShapesView() {
+		return _shapesView;
 	} 
 }

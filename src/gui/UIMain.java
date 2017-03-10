@@ -127,6 +127,12 @@ public class UIMain implements UIMainAPI, Observer {
 		public Color getColorPalette(double index) {
 			return _menuView.getPaletteView().getPalette(index);
 		}
+
+		@Override
+		public Image getShape(double index) {
+			return _menuView.getShapesView().getImage(index);
+		}
+		
 		
 	} 
 
@@ -312,9 +318,6 @@ public class UIMain implements UIMainAPI, Observer {
 		_displayView.setPenWidth(width);
 	}
 	
-	public UITurtle getTurtle(){
-		return _displayView.getTurtle();
-	}
 	public UITurtle getTurtle(Double id){
 		return _displayView.getTurtle(id);
 	}

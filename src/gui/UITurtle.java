@@ -35,10 +35,10 @@ public class UITurtle extends Pane implements Observer {
 	private Tuple<TranslateTransition, RotateTransition> _animators;
 	private LinkedList<TurtleAnimationData> _queue = new LinkedList<TurtleAnimationData>();
 	private Color _lineColor = MyColors.GREEN_900;
-	private double _strokeWidth = 3;
-	private double _shape = 0;
-	private ImageView _imageView;
+	private double _shapeIndex;
 	private double _id;
+	private double _strokeWidth = 3;
+	private ImageView _imageView;
 	private TurtleDisplayHandler _handler;
 	private Frame _displayBounds;
 
@@ -210,10 +210,6 @@ public class UITurtle extends Pane implements Observer {
 		_imageView.setImage(img);
 	}
 
-	public double getTurtleId() {
-		return _id;
-	}
-
 	public void setVisiblityTo(boolean b) {
 		this._imageView.setVisible(b);
 	}
@@ -224,16 +220,6 @@ public class UITurtle extends Pane implements Observer {
 
 	public void setPenStrokeWidth(double d) {
 		this._strokeWidth = d;
-	}
-
-	public void setShape(double index, ImageView image) {
-		_shape = index;
-		// TODO
-	}
-
-	public void setShape(double index, Shape shape) {
-		_shape = index;
-		// TODO
 	}
 
 	public void setPenVisibility(boolean bool) {
@@ -249,6 +235,9 @@ public class UITurtle extends Pane implements Observer {
 		TurtleState newState = (TurtleState) o;
 		if( this._lineColor != _handler.getColorPalette(newState.getPenColorIndex())){
 			this.setLineColor(_handler.getColorPalette(newState.getPenColorIndex()));
+		}else if(_shapeIndex != newState.getShapeIndex()){
+			this.setTurtleImage(_handler.getTurtleImage(newState.getShapeIndex()));
+			_shapeIndex = newState.getShapeIndex();
 		}else{
 			addAnimationToQueue(-newState.getHeadAngle() + 90, GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
 		}
@@ -281,6 +270,10 @@ public class UITurtle extends Pane implements Observer {
 
 	public void setSpeed(double speed) {
 		this.ANIMATION_SPEED = speed;
+	}
+
+	public double getTurtleId() {
+		return _id;
 	}
 
 }

@@ -35,6 +35,12 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		public Color getColorPalette(double index) {
 			return _handler.getColorPalette(index);
 		}
+
+		@Override
+		public Image getTurtleImage(double index) {
+			// TODO Auto-generated method stub
+			return _handler.getShape(index);
+		}
 		
 	}
 
@@ -91,10 +97,6 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 		for (UITurtle t : _turtles) {
 			t.setImageView(new ImageView(image));
 		}
-	}
-
-	public UITurtle getTurtle() {
-		return _turtles.isEmpty() ? null : _turtles.get(0);
 	}
 
 	public UITurtle getTurtle(Double id) {
