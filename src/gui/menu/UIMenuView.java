@@ -40,10 +40,12 @@ public class UIMenuView extends UIView {
 	private final Frame PALLETTE_FRAME;
 	private final Frame ATTRIBUTES_FRAME;
 	private final Frame BCOLOR_FRAME;
+	private final Frame SHAPES_FRAME;
 	
 	private UIMainHandler _handler;
 	private ImageView _turtleImageView;
 	private ResourceBundle _resources;
+	private ShapesView _shapesView;
 	private UIAttributesView _turtleAttributesView;
 	private PalletteView _paletteView;
 
@@ -52,11 +54,12 @@ public class UIMenuView extends UIView {
 		_handler = handler;
 		_resources = resources;
 		double rightInset = 80 + 32;
-		LCOLOR_FRAME = new Frame(16, TOP_INSET, getBounds().getWidth() - rightInset, 56);
-		BCOLOR_FRAME = new Frame(16, LCOLOR_FRAME.getMaxY() + 16, getBounds().getWidth() - rightInset, 56);
-		IMAGE_FRAME = new Frame(16, BCOLOR_FRAME.getMaxY() + 16, getBounds().getWidth() - rightInset, 56);
-		PALLETTE_FRAME = new Frame(LCOLOR_FRAME.getMaxX() + 8, TOP_INSET, rightInset - 32, IMAGE_FRAME.getMaxY() - TOP_INSET );
-		ATTRIBUTES_FRAME = new Frame(16, PALLETTE_FRAME.getMaxY() + 16, getBounds().getWidth() - 32, 150);
+		LCOLOR_FRAME = new Frame(12, TOP_INSET, getBounds().getWidth() - rightInset, 56);
+		BCOLOR_FRAME = new Frame(12, LCOLOR_FRAME.getMaxY() + 16, getBounds().getWidth() - rightInset, 56);
+		IMAGE_FRAME = new Frame(12, BCOLOR_FRAME.getMaxY() + 16, getBounds().getWidth() - rightInset, 56);
+		PALLETTE_FRAME = new Frame(LCOLOR_FRAME.getMaxX() + 12, TOP_INSET, rightInset - 36, IMAGE_FRAME.getMaxY() - TOP_INSET );
+		SHAPES_FRAME = new Frame(12, PALLETTE_FRAME.getMaxY() + 16, getBounds().getWidth() - 24, 120);
+		ATTRIBUTES_FRAME = new Frame(12, SHAPES_FRAME.getMaxY() + 16, getBounds().getWidth() - 24, 150);
 		
 		setupViews();
 	}
@@ -70,7 +73,30 @@ public class UIMenuView extends UIView {
 		setupColorPicker(BCOLOR_FRAME, _resources.getString("BackgroundTitle"), bColorPicker, t -> _handler.setBackgroundColor(bColorPicker.getValue()));
 		setupImagePicker();
 		setupPalletteView();
+		setupShapesView();
 		setupTurtleAttributesView();
+		setupHelpButton();
+	}
+
+	private void setupHelpButton() {
+		ImageButton b = new ImageButton();
+		b.updateImages(new Image("q.png"), new Image("q.png"));
+		b.setLayoutX(16);
+		b.setLayoutY(10);
+		b.setPrefWidth(32);
+		b.setPrefHeight(32);
+
+		b.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				slideMenuOut();
+			}
+		});
+		this.getChildren().add(b);
+	}
+
+	private void setupShapesView() {
+		_shapesView = new ShapesView(SHAPES_FRAME, _handler,_resources);
+		this.getChildren().add(_shapesView);
 	}
 
 	private void setupTurtleAttributesView() {

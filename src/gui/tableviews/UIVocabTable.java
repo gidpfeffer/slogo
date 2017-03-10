@@ -29,7 +29,7 @@ public class UIVocabTable extends UITableView {
 	@Override
 	protected Text addText(String s){
 		super.addText(s);
-		Text t = _texts.get(_texts.size() - 1); //were assuming that super added text to list
+		Text t = getTexts().get(getTexts().size() - 1); //were assuming that super added text to list
 		t.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				_handler.addFunctionToTerminal(t.getText());

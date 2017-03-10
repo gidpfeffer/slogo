@@ -10,37 +10,38 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 
-final class Palette extends UIView{
+final class Palette extends UIView {
+
 	private Color _color;
 	private ColorPicker _picker;
 	private Label _label;
-	
-	public Palette(Color color, String text, Frame frame){
+
+	public Palette(Color color, String text, Frame frame) {
 		super(frame);
-		System.out.println(frame);
 		_color = color;
-		//8,8,frame.getWidth()/2 - 16,frame.getWidth()/2 - 16
 		_picker = new ColorPicker(color);
 		_picker.setLayoutX(0);
 		_picker.setLayoutY(0);
 		_picker.setPrefHeight(getBounds().getHeight());
-		_picker.setPrefWidth(getBounds().getWidth()*2./3.);
+		_picker.setPrefWidth(getBounds().getWidth() * 2. / 3.);
 		_picker.setBackground(Background.EMPTY);
 		_picker.setOnAction(e -> setColor(_picker.getValue()));
 		_label = new Label(text);
-		_label.setLayoutX(getBounds().getWidth()*2./3.);
+		_label.setLayoutX(getBounds().getWidth() * 2. / 3.);
 		_label.setLayoutY(0);
 		_label.setPrefHeight(getBounds().getHeight());
-		_label.setPrefWidth(getBounds().getWidth() /3.0);
+		_label.setPrefWidth(getBounds().getWidth() / 3.0);
 		_label.setAlignment(Pos.CENTER);
 		this.getChildren().add(_picker);
 		this.getChildren().add(_label);
 		GUITools.addBackgroundWithColor(this, MyColors.GREEN_200, getBounds());
 	}
-	public Color getColor(){
+
+	public Color getColor() {
 		return _color;
 	}
-	public void setColor(Color color){
+
+	public void setColor(Color color) {
 		_color = color;
 		_picker.setValue(color);
 	}

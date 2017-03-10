@@ -18,7 +18,7 @@ public class UIAttributesView extends UITableView{
 	}
 
 	private void setupViews() {
-		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, _bounds);
+		GUITools.addBackgroundWithColor(this, MyColors.GREEN_100, getBounds());
 	}
 
 	public void update(TurtleState s) {

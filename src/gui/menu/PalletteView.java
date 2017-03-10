@@ -53,8 +53,7 @@ public class PalletteView extends UIView {
 	}
 
 	private void setupTitle(){
-		//TODO resources file
-		Label l = GUITools.plainLabel(_resources.getString("PaletteTitle"), 18, MyColors.INDIGO, FontWeight.LIGHT); //TODO
+		Label l = GUITools.plainLabel(_resources.getString("PaletteTitle"), 18, MyColors.INDIGO, FontWeight.LIGHT);
 		l.setPrefHeight(40);
 		l.setPrefWidth(getBounds().getWidth());
 		l.setAlignment(Pos.CENTER);
