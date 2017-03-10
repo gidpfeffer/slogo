@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -46,6 +47,16 @@ public class UITurtle extends Pane implements Observer {
 			Frame displayBounds, TurtleState state) {
 		this(animators, new Image("turtle.png"),state, handler, displayBounds);
 	}
+	
+	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent e) {
+			
+			
+		}
+		
+	};
 
 	public UITurtle(Tuple<TranslateTransition, RotateTransition> animators, Image image, TurtleState state,
 			TurtleDisplayHandler handler, Frame displayBounds) {
@@ -57,7 +68,6 @@ public class UITurtle extends Pane implements Observer {
 		_animators.x.setOnFinished(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// System.out.println("translation finished");
 				playNextAnimation();
 			}
 		});
@@ -65,7 +75,6 @@ public class UITurtle extends Pane implements Observer {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// System.out.println("rotation finished");
 				playNextAnimation();
 			}
 		});
@@ -170,13 +179,11 @@ public class UITurtle extends Pane implements Observer {
 	public void reset() {
 		_priorTurtleAtt = null;
 		_turtleAtt = null;
-		setTurtleState(getTurtleState());
 		emptyAnimationQueue();
 	}
 
 	public TurtleState getTurtleState() {
 		StackTraceElement[] s = Thread.currentThread().getStackTrace();
-		//System.out.println("getting turtle state " + s[1].getMethodName() + " " + s[2].getMethodName());
 		return _turtleState;
 	}
 
@@ -222,13 +229,19 @@ public class UITurtle extends Pane implements Observer {
 		this.getTurtleState().setPen(bool);
 	}
 
+	/**
+	 * Updates turtle attributes like position, angle, visibility, etc.
+	 * Adds the changes in position and angle to the animation queue
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		TurtleState newState = (TurtleState) o;
-		System.out.println(newState.getX() + " " + newState.getY());
-		this.setVisiblityTo(newState.getVisibility());
-		//this.setLineColor(newState.getPenColorIndex());
-		addAnimationToQueue(-newState.getHeadAngle() + 90, GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
+		//assumes that pen and animatable variables aren't changed at the same time
+		if( this._lineColor != _handler.getColorPalette(newState.getPenColorIndex())){
+			this.setLineColor(_handler.getColorPalette(newState.getPenColorIndex()));
+		}else{
+			addAnimationToQueue(-newState.getHeadAngle() + 90, GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
+		}
 	}
 
 	public void stop() {

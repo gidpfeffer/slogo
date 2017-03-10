@@ -141,6 +141,7 @@ public class Controller {
 				Queue<TreeNode> Q = compiler.compile(t, commandsToApply); 
 
 				myModel.update(Q);
+				
 				output = myModel.getStringOutput();
 				myViewController.addNewOutput(output);
 				
