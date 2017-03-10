@@ -5,12 +5,10 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 import controller.ControlHandler;
-import general_data_structures.Tuple;
 import gui.API.ButtonControlHandler;
 import gui.API.DisplayHandler;
 import gui.API.UIMainAPI;
 import gui.API.UIMainHandler;
-import gui.API.UITurtleHandler;
 import gui.menu.UIMenuView;
 import gui.tableviews.UIVariablesView;
 import gui.tableviews.UIVocabTable;
@@ -20,13 +18,11 @@ import gui.tools.ImageButton;
 import gui.tools.MyColors;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
@@ -95,8 +91,12 @@ public class UIMain implements UIMainAPI, Observer {
 
 		@Override
 		public void setTurtleImage(Image image) {
-			
 			_displayView.setTurtleImage(image);
+		}
+
+		@Override
+		public void setLanguage(String language) {
+			_handler.setLanguage(language);
 		}
 
 	}
@@ -117,10 +117,9 @@ public class UIMain implements UIMainAPI, Observer {
 		public void handleStop() {
 			_displayView.stop();
 		}
-
 		@Override
-		public void handleNewWorkspace() {
-			// TODO Auto-generated method stub
+		public void handleNewSpeed(double speed) {
+			_displayView.setSpeed(speed);
 			
 		}
 		
@@ -132,6 +131,12 @@ public class UIMain implements UIMainAPI, Observer {
 		public Color getColorPalette(double index) {
 			return _menuView.getPaletteView().getPalette(index);
 		}
+
+		@Override
+		public Image getShape(double index) {
+			return _menuView.getShapesView().getImage(index);
+		}
+		
 		
 	} 
 
@@ -180,6 +185,7 @@ public class UIMain implements UIMainAPI, Observer {
 		_root = new Pane();
 		_root.backgroundProperty().set(GUITools.getBackgroundWithColor(MyColors.GREEN));
 		_scene = new Scene(_root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
+		//up key puts previous command into terminal
 		_scene.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.UP){
 				_terminalView.clear();
@@ -223,12 +229,12 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 
 	private void setupVocabTable() {
-		_vocabTableView = new UIVocabTable(VOCAB_FRAME, new myHandler());
+		_vocabTableView = new UIVocabTable(VOCAB_FRAME, new myHandler(), _resources);
 		_root.getChildren().add(_vocabTableView);
 	}
 
 	private void setupVarsBox() {
-		_varBoxView = new UIVariablesView(VARS_FRAME);
+		_varBoxView = new UIVariablesView(VARS_FRAME,_resources);
 		_root.getChildren().add(_varBoxView);
 	}
 	
@@ -316,9 +322,6 @@ public class UIMain implements UIMainAPI, Observer {
 		_displayView.setPenWidth(width);
 	}
 	
-	public UITurtle getTurtle(){
-		return _displayView.getTurtle();
-	}
 	public UITurtle getTurtle(Double id){
 		return _displayView.getTurtle(id);
 	}

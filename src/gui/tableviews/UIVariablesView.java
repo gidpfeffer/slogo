@@ -3,16 +3,17 @@ package gui.tableviews;
 import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 import gui.tools.Frame;
 
 import parser.storage.VariableStorage;
 
 public class UIVariablesView extends UITableView implements Observer {
-	
-	public UIVariablesView(Frame bounds) {
-		super(bounds, "Variables"); //string for title
-
+	ResourceBundle _resources;
+	public UIVariablesView(Frame bounds, ResourceBundle resources) {
+		super(bounds, resources.getString("VariablesTitle"));
+		_resources = resources;
 	}
 	
 

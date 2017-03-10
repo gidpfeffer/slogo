@@ -2,12 +2,10 @@ package gui;
 
 import gui.API.ButtonControlHandler;
 import gui.tools.Frame;
-import gui.tools.GUITools;
 import gui.tools.ImageButton;
 import gui.tools.MyColors;
 import gui.tools.UIView;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -17,7 +15,6 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
 
 public class UIButtonControlView extends UIView{
 	private ImageButton _pauseButton;
@@ -41,12 +38,12 @@ public class UIButtonControlView extends UIView{
 				play();
 			}
 		});
-		setupButton(_pauseButton, 56, "pause.png",new EventHandler<MouseEvent>() {
+		setupButton(_pauseButton, 60, "pause.png",new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				pause();
 			}
 		});
-		setupButton(_stopButton, 96, "stop.png",new EventHandler<MouseEvent>() {
+		setupButton(_stopButton, 104, "stop.png",new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				stop();
 			}
@@ -57,18 +54,18 @@ public class UIButtonControlView extends UIView{
 		_speedSlider = new Slider();
 		_speedSlider.setMin(1);
 		_speedSlider.setMax(11);
-		_speedSlider.setValue(5);
-		//_speedSlider.setShowTickLabels(true);
-		//_speedSlider.setShowTickMarks(true);
-		//_speedSlider.setMajorTickUnit(6);
-		//_speedSlider.setMinorTickCount(5);
-		_speedSlider.setPrefWidth(_bounds.getWidth()/2 - 8);
-		_speedSlider.setLayoutY(16); // bad way to set this
-		_speedSlider.setLayoutX(_bounds.getWidth()/2);
+		_speedSlider.setValue(4);
+		_speedSlider.setShowTickLabels(true);
+		_speedSlider.setShowTickMarks(true);
+		_speedSlider.setMajorTickUnit(2);
+		_speedSlider.setMinorTickCount(1);
+		_speedSlider.setPrefWidth(getBounds().getWidth()/2 - 8);
+		_speedSlider.setPrefHeight(getBounds().getHeight() - 16);
+		_speedSlider.setLayoutY(8);
+		_speedSlider.setLayoutX(getBounds().getWidth()/2);
 		_speedSlider.setBackground(Background.EMPTY);
 		_speedSlider.setBorder(Border.EMPTY);
-		//_speedSlider.setOnDragDropped(e -> System.out.println(_speedSlider.getValue()));
-		_speedSlider.setOnMouseExited(e -> System.out.println(_speedSlider.getValue()));
+		_speedSlider.setOnMouseExited(e -> _handler.handleNewSpeed(_speedSlider.getValue() * 100));
 		this.getChildren().add(_speedSlider);
 	}
 	private void setupButton(ImageButton b, double insetX, 
@@ -83,17 +80,13 @@ public class UIButtonControlView extends UIView{
 		this.getChildren().add(b);
 	}
 	private void play(){
-		System.out.println("pressed play");
 		_handler.handlePlay();
 	}
 	private void pause(){
 		_handler.handlePause();
 	}
 	private void stop(){
-		_handler.handlePause();
-	}
-	private void createNewWorkspace(){
-		_handler.handleNewWorkspace();
+		_handler.handleStop();
 	}
 	
 }
