@@ -9,8 +9,8 @@ import java.util.Queue;
 import gui.UIMain;
 import gui.tableviews.UIVariablesView;
 import model.*;
-import model.command.TreeNode; 
-
+import model.command.TreeNode;
+import model.turtle.State;
 import model.turtle.Turtle;
 import model.turtle.TurtleState;
 import parser.main.NewParser;
@@ -54,6 +54,12 @@ public class Controller {
 
 		public void handleReset(){
 			reset(); 
+		}
+
+		@Override
+		public double getNumTurtle() {
+			// TODO Auto-generated method stub
+			return myTurtles.size();
 		}
 
 	}
@@ -131,7 +137,7 @@ public class Controller {
 				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
 				List<Turtle> currentTurtles = myModel.getTurtles(); 
 				
-				TurtleState t = findTurtle(turtleId, currentTurtles);
+				State t = findTurtle(turtleId, currentTurtles);
 				Queue<TreeNode> Q = compiler.compile(t, commandsToApply); 
 
 				myModel.update(Q);
@@ -148,11 +154,11 @@ public class Controller {
 		output = myModel.getStringOutput();
 	}
 
-	private TurtleState findTurtle (Double turtleId, List<Turtle> currentTurtles) {
+	private State findTurtle (Double turtleId, List<Turtle> currentTurtles) {
 		try{
 		for (Turtle t: currentTurtles){
 			if (t.getID() == turtleId){
-				return t.getState();
+				return t.getReadOnlyState();
 			}
 		}
 		}
@@ -176,8 +182,9 @@ public class Controller {
 	}
 
 	private void reset(){
+		myModel.reset(); // order important 
  		myViewController.clearScreen();
-		myModel.reset(); 
+		
 	}
 
 

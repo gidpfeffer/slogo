@@ -4,29 +4,26 @@ import java.util.List;
 
 import controller.BackEndHandler;
 import model.command.Command;
+import model.command.LogicCommand;
 import model.command.TreeNode;
-import model.command.TurtleCommand;
 import model.turtle.State;
 
-public class ID extends TurtleCommand implements Command {
-	private State myTurtleState;
+public class Turtles extends LogicCommand implements Command {
 
+	private BackEndHandler handler; 
 
-	public ID(List<TreeNode> args, State st){
+	public Turtles(List<TreeNode> args){
 		children = args;
-		myTurtleState = st;
 	}
-	
-
+		
 	public double getValue(){
-		return myTurtleState.getID();
+		return handler.getNumTurtle();
 	}
 
 	@Override
 	public void execute(BackEndHandler myHandler) {
 		// TODO Auto-generated method stub
-		
+		handler = myHandler;
 	}
-
 
 }
