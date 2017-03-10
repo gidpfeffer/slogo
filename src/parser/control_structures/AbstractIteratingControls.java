@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import controller.SLogoException;
-import parser.helpers.RangeHandler;
-import parser.helpers.RegControl;
+import parser.helpers.AbstractRangeHandler;
+import parser.helpers.AbstractAdvancedControl;
 import parser.helpers.Replacer;
 import parser.tokenizer.TokenList;
 
-public abstract class AbstractIteratingControls extends RegControl{
+public abstract class AbstractIteratingControls extends AbstractAdvancedControl{
 	private static final String VARIABLE = "Variable";
 	private String key;
-	protected RangeHandler range;
+	protected AbstractRangeHandler range;
 	private Replacer replacer;
 	protected Map<String, Double> varMap;
 
@@ -27,7 +27,7 @@ public abstract class AbstractIteratingControls extends RegControl{
 	@Override
 	protected void replace() {
 		setKey();
-		range.handle(turtle, list.newSubList(ifStart + 2, ifEnd));
+		range.handleRange(turtle, list.newSubList(ifStart + 2, ifEnd));
 		List<Integer> vals = range.getList();
 		replaceEach(vals);
 	}

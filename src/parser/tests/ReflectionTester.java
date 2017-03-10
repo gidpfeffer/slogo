@@ -1,4 +1,4 @@
-package parser.reflection;
+package parser.tests;
 
 import java.lang.reflect.Constructor;
 import java.util.List;

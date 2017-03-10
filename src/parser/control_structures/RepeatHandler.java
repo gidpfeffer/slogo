@@ -2,9 +2,9 @@ package parser.control_structures;
 
 import java.util.List;
 
-import parser.helpers.RegControl;
+import parser.helpers.AbstractAdvancedControl;
 
-public class RepeatHandler extends RegControl{
+public class RepeatHandler extends AbstractAdvancedControl{
 	private static final String REPEAT = "Repeat";
 	private int startIndex, endIndex, times;
 	

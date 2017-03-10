@@ -7,8 +7,10 @@ import java.util.Queue;
 import model.command.TreeNode;
 import model.turtle.State;
 import parser.function_seperator.FunctionReconstructor;
+import parser.helpers.QueueSplitter;
+import parser.interfaces.StorageFixer;
+import parser.interfaces.TreeNodeCompiler;
 import parser.interpreter.Interpreter;
-import parser.queue_splitter.QueueSplitter;
 import parser.reflection.TreeGenerator;
 import parser.storage.FixVars;
 import parser.storage.TotalStorage;
@@ -16,9 +18,9 @@ import parser.storage.VariableStorage;
 import parser.tokenizer.ProtectedTokenList;
 import parser.tokenizer.TokenList;
 
-public class Compiler {
+public class Compiler implements TreeNodeCompiler{
 	private TotalStorage storage;
-	private FixVars fixVars;
+	private StorageFixer fixVars;
 	private Interpreter IT;
 	private FunctionReconstructor reconstructor;
 

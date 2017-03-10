@@ -23,12 +23,6 @@ public class VariableStorage extends Observable{
 		notifyObservers();
 	}
 	
-	public void clearMap(){
-		map.clear();
-		setChanged();
-		notifyObservers();
-	}
-	
 	public Set<String> keySet(){
 		return new HashSet<>(map.keySet());
 	}

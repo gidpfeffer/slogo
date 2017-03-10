@@ -102,10 +102,8 @@ public class Controller {
 		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState())); 
 
 		changeLanguage("English");
-		myParser = new NewParser(currentLang.toString());
 		compiler = new Compiler(); 
 		configureVariableStorage(); 
-
 	}
 	private String getLang(){
 		return currentLang.toString();
@@ -140,7 +138,7 @@ public class Controller {
 		currentLang.append(languageLocation);
 		currentLang.append(language);
 		myParser = new NewParser(currentLang.toString());
-		
+		System.out.println(currentLang.toString());
 	}
 
 
