@@ -13,9 +13,7 @@ import model.ModelController;
 import model.turtle.Turtle;
 import parser.main.NewParser;
 import parser.tokenizer.ProtectedTokenList;
-import parser.tokenizer.TokenIdentifier;
 import parser.tokenizer.TokenList;
-import parser.tokenizer.Tokenizer;
 
 public class AskTellParser {
 
@@ -110,9 +108,6 @@ public class AskTellParser {
 		for (Double kk : literalMap.keySet()){
 			if (!commandMap.containsKey(kk)){
 				ProtectedTokenList t = createTokenList(literalMap.get(kk));
-				System.out.println(t.getLogo());
-				System.out.
-				println(t.getLiterals());
 				commandMap.put(kk, t);
 			}
 			else{
@@ -124,15 +119,12 @@ public class AskTellParser {
 
 
 	private ProtectedTokenList createTokenList(List<String> commandsPerTurtle) {
-		// commands per turtle = literal 
-		List<String> logoPerTurtle = new ArrayList<String>();
 		String bigString = " ";
 		for (String literal: commandsPerTurtle){
 			bigString = bigString + literal + " ";
 		}
 
 		NewParser p = new NewParser("resources.languages/English");
-
 		return p.parse(bigString);
 	}
 
@@ -169,7 +161,7 @@ public class AskTellParser {
 		ArrayList<String> t = new ArrayList<String>(); 
 		ArrayList<String> askCommands = new ArrayList<String>();
 		int bracketCount = 0; 
-		while (bracketCount<2){
+		while (bracketCount<2 && !(commandQ.isEmpty())){
 			String st = commandQ.poll(); 
 			if ((st.equals("[")) || (st.equals("]"))){
 				bracketCount++; 
@@ -179,7 +171,7 @@ public class AskTellParser {
 			}
 		}
 		if (bracketCount==2){
-			while (bracketCount<4){
+			while (bracketCount<4 && !(commandQ.isEmpty())){
 				String st1 = commandQ.poll(); 
 				if(st1.equals("tell")){
 					break;

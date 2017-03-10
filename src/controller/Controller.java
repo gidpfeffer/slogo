@@ -2,7 +2,6 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -10,12 +9,11 @@ import java.util.Queue;
 import gui.UIMain;
 import gui.tableviews.UIVariablesView;
 import model.*;
-import model.command.TreeNode; 
-
+import model.command.TreeNode;
+import model.turtle.State;
 import model.turtle.Turtle;
 import model.turtle.TurtleState;
 import parser.main.NewParser;
-import parser.main.Parser;
 import parser.storage.*;
 import parser.storage.VariableStorage;
 import parser.tokenizer.ProtectedTokenList;
@@ -58,12 +56,19 @@ public class Controller {
 			reset(); 
 		}
 
+		@Override
+		public double getNumTurtle() {
+			// TODO Auto-generated method stub
+			return myTurtles.size();
+		}
+
 	}
 
 
 	private ModelController myModel; 
 	private List<Turtle> myTurtles;
-	private List<Double> activeTurtleIndexList;
+
+	private Map<Double,List<String>> myLiteralMap;
 
 	private NewParser myParser;
 	private Compiler compiler;
@@ -72,13 +77,16 @@ public class Controller {
 	private String output; 
 	private final String languageLocation = "resources.languages/";
 	private StringBuilder currentLang; 
+	private final Double DEFAULT_TURTLE_ID = 1.0; 
 
 
 	public Controller(){
 		myModel = new ModelController(new modelHandler()); 
 		myTurtles = myModel.getTurtles();
-		activeTurtleIndexList = new ArrayList<Double>();
-		activeTurtleIndexList.add(new Double(1));
+
+		myLiteralMap = new HashMap<Double,List<String>>();
+		myLiteralMap.put(DEFAULT_TURTLE_ID, new ArrayList<String>());
+		
 		myViewController = new UIMain(new myHandler(), "English"); // handler currently Front to Back
 
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
@@ -105,7 +113,7 @@ public class Controller {
 
 
 	public void changePalette(double index, double r, double g, double b){
-		myViewController.setPalleteAtIndex(index,r,g,b);
+		myViewController.setPaletteAtIndex(index,r,g,b);
 	}
 
 	public void changeLanguage(String language) {
@@ -119,20 +127,23 @@ public class Controller {
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
+
+			// refactor into a method 
 			
 			for (Double turtleId: turtlesToCommands.keySet()){
 				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
 				List<Turtle> currentTurtles = myModel.getTurtles(); 
 				
-				TurtleState t = findTurtle(turtleId, currentTurtles);
+				State t = findTurtle(turtleId, currentTurtles);
 				Queue<TreeNode> Q = compiler.compile(t, commandsToApply); 
-				
+
 				myModel.update(Q);
+				
 				output = myModel.getStringOutput();
 				myViewController.addNewOutput(output);
 				
 			}
-			
+			myViewController.getFunctionsBox().setFunctionBox(compiler.getFunctionList());
 
 		}
 		catch (SLogoException e){ 
@@ -141,11 +152,11 @@ public class Controller {
 		output = myModel.getStringOutput();
 	}
 
-	private TurtleState findTurtle (Double turtleId, List<Turtle> currentTurtles) {
+	private State findTurtle (Double turtleId, List<Turtle> currentTurtles) {
 		try{
 		for (Turtle t: currentTurtles){
 			if (t.getID() == turtleId){
-				return t.getState();
+				return t.getReadOnlyState();
 			}
 		}
 		}
@@ -160,9 +171,8 @@ public class Controller {
 		AskTellParser ap = new AskTellParser(myModel, myViewController); 
 		ap.parseCommands(list);		
 		return ap.getParsedCommands(); 
-			
 	}
-	
+
 
 
 	public String getStringOutput(){
@@ -170,8 +180,9 @@ public class Controller {
 	}
 
 	private void reset(){
+		myModel.reset(); // order important 
  		myViewController.clearScreen();
-		myModel.reset(); 
+		
 	}
 
 

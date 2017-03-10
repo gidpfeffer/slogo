@@ -2,6 +2,7 @@ package model.math;
 
 import java.util.List;
 
+import controller.BackEndHandler;
 import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
@@ -15,7 +16,7 @@ public class Sine extends LogicCommand implements Command{
 		degrees = children.get(0).getValue();
 	}
 	
-	public void execute(){
+	public void execute(BackEndHandler myHandler){
 		
 	}
 	

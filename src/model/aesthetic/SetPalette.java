@@ -2,6 +2,7 @@ package model.aesthetic;
 
 import java.util.List;
 
+import controller.BackEndHandler;
 import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
@@ -18,8 +19,8 @@ public class SetPalette extends LogicCommand implements Command {
 		
 	}
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
+	public void execute(BackEndHandler myHandler) {
+		myHandler.setPalette(children.get(0).getValue(),children.get(1).getValue(),children.get(2).getValue(),children.get(3).getValue());
 
 	}
 

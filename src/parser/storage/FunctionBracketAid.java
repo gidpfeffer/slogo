@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.turtle.State;
-import parser.interpreter.BracketAid;
+import parser.interpreter.AbstractBracketAid;
 import parser.tokenizer.TokenList;
 
-public class FunctionBracketAid extends BracketAid{
+public class FunctionBracketAid extends AbstractBracketAid{
 	private int varBracketStart, varBracketEnd, functionStart, functionEnd, start;
 	private String key;
 	private CommandStorage storage;
@@ -61,7 +61,7 @@ public class FunctionBracketAid extends BracketAid{
 
 
 	@Override
-	protected void handle(TokenList TL, State t) {
+	public void handle(TokenList TL, State t) {
 		list = TL;
 		checkSyntax();
 		correctList();

@@ -1,7 +1,6 @@
 package parser.tokenizer;
 
-public class TokenIdentifier {
-	
+public class TokenIdentifier{
 	private String token;
 	private String type;
 	

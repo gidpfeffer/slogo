@@ -11,14 +11,14 @@ import parser.helpers.RegControl;
 import parser.helpers.Replacer;
 import parser.tokenizer.TokenList;
 
-public abstract class IteratingControls extends RegControl{
+public abstract class AbstractIteratingControls extends RegControl{
 	private static final String VARIABLE = "Variable";
 	private String key;
 	protected RangeHandler range;
 	private Replacer replacer;
 	protected Map<String, Double> varMap;
 
-	public IteratingControls(String INDICATOR, Map<String, Double> varMap){
+	public AbstractIteratingControls(String INDICATOR, Map<String, Double> varMap){
 		super(INDICATOR);
 		this.varMap = varMap;
 		replacer = new Replacer();
@@ -55,6 +55,4 @@ public abstract class IteratingControls extends RegControl{
 			throw new SLogoException("Cannot use a variable name that already exists: " + key);
 		}
 	}
-
-
 }

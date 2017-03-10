@@ -1,5 +1,6 @@
 package gui.tableviews;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,7 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class UIVocabTable extends UITableView implements Observer {
+public class UIVocabTable extends UITableView {
 	
 	private UIMainHandler _handler;
 	String[] _initialFunctions = {
@@ -33,7 +34,7 @@ public class UIVocabTable extends UITableView implements Observer {
 	}
 	
 	@Override
-	protected void addText(String s){
+	protected Text addText(String s){
 		super.addText(s);
 		Text t = _texts.get(_texts.size() - 1); //were assuming that super added text to list
 		t.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -41,13 +42,14 @@ public class UIVocabTable extends UITableView implements Observer {
 				_handler.addFunctionToTerminal(t.getText());
 			}
 		});
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		return t;
 	}
 	
+	public void setFunctionBox(List<String> functions){
+		clear();
+		for(String s: functions){
+			this.addText(s);
+		}
+	}
 
 }

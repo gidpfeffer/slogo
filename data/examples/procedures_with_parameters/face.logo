@@ -18,7 +18,7 @@ to face [ ]
   right 90 forward 20
   pendown square 15
   penup forward 45
-  pendown square 15           
+  pendown square 15
   penup back 15
   right 90 forward 20 left 45
   pendown square 20

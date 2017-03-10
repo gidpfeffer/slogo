@@ -2,6 +2,7 @@ package model.boolean_ops;
 
 import java.util.List;
 
+import controller.BackEndHandler;
 import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
@@ -14,7 +15,7 @@ public class LessThan extends LogicCommand implements Command{
 		children = args;
 	}
 	
-	public void execute(){
+	public void execute(BackEndHandler myHandler){
 		
 	}
 	
