@@ -1,21 +1,23 @@
-package controller;
+package parser.multipleturtleparsing;
 
 import java.util.List;
 
 import model.ModelController;
-import model.command.Command;
-import java.util.Map;
+import model.multipleturtle.AskTellData;
+import model.multipleturtle.MultipleTurtleCommand;
+import model.multipleturtle.Tell;
 
-import javax.activation.CommandMap;
+import java.util.Map;
 
 import parser.main.NewParser;
 import parser.tokenizer.ProtectedTokenList;
 import parser.tokenizer.TokenList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
-public class MapMaker {
+public class MapMaker implements CommandMap<Double, List<String>, ProtectedTokenList>{
 	Map <Double, List<String>> literalMap;
 	Map <Double, ProtectedTokenList> ptlMap;
 
@@ -63,7 +65,6 @@ public class MapMaker {
 
 	private ProtectedTokenList createTokenList(List<String> commandsPerTurtle) {
 		// commands per turtle = literal 
-		List<String> logoPerTurtle = new ArrayList<String>();
 		String bigString = " ";
 		for (String literal: commandsPerTurtle){
 			bigString = bigString + literal + " ";
@@ -173,12 +174,8 @@ public class MapMaker {
 		return cleaned; 
 	}
 
-	public Map<Double, List<String>> getLiteralMap(){
-		return literalMap; 
-	}
-
 	public Map<Double, ProtectedTokenList> getPTLMap(){
-		return ptlMap;
+		return Collections.unmodifiableMap(ptlMap);
 	}	
 
 }

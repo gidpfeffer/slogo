@@ -56,11 +56,11 @@ public class ModelController {
 	
 	
 	public List<Double> getTurtleIDs(){
-		return myTurtleIDs; 
+		return Collections.unmodifiableList(myTurtleIDs); 
 	}
 	
 	public List<Double> getActiveTurtleIDs(){
-		return myActiveTurtleIDs;
+		return Collections.unmodifiableList(myActiveTurtleIDs);
 	}
 	
 	public String getStringOutput(){

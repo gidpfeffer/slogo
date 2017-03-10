@@ -1,8 +1,9 @@
-package controller;
+package controller.testers;
 
 import java.util.List;
 import java.util.Map;
 
+import parser.multipleturtleparsing.StringListCreator;
 import parser.tokenizer.ProtectedTokenList;
 
 public class MultipleTurtleTester {
@@ -15,13 +16,13 @@ public class MultipleTurtleTester {
 	
 	System.out.println(subs);
 	
-	SubListProcessor SLP = new SubListProcessor(subs);
+/*	SubListProcessor SLP = new SubListProcessor(subs);
 	
 	List<String> remainingComms = SLP.getRemainingCommands();
 	List<String> precedingComms = SLP.getPrecedingCommands();
 	System.out.println("preceding are " + precedingComms);
 	System.out.println("remaining are " + remainingComms);
-	List<Object> comms = SLP.getCommandObjects();
+	List<Object> comms = SLP.getCommandObjects();*/
 	
 
 

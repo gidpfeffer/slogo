@@ -14,6 +14,9 @@ import model.turtle.State;
 import model.turtle.Turtle;
 import model.turtle.TurtleState;
 import parser.main.NewParser;
+import parser.multipleturtleparsing.MapMaker;
+import parser.multipleturtleparsing.StringListCreator;
+import parser.multipleturtleparsing.SubListProcessor;
 import parser.storage.*;
 import parser.storage.VariableStorage;
 import parser.tokenizer.ProtectedTokenList;
@@ -121,16 +124,16 @@ public class Controller {
 
 	}
 
-	public void changeBackground(double index){
+	private void changeBackground(double index){
 		myViewController.setBackgroundColor(index);
 	}
 
 
-	public void changePalette(double index, double r, double g, double b){
+	private void changePalette(double index, double r, double g, double b){
 		myViewController.setPaletteAtIndex(index,r,g,b);
 	}
 
-	public void changeLanguage(String language) {
+	private void changeLanguage(String language) {
 		currentLang = new StringBuilder(); 
 		currentLang.append(languageLocation);
 		currentLang.append(language);
@@ -139,7 +142,7 @@ public class Controller {
 	}
 
 
-	public void processInput(String input){
+	private void processInput(String input){
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			// clear literalMAp here 
@@ -240,10 +243,11 @@ public class Controller {
  		myViewController.clearScreen();
 		
 	}
-
-
-	public UIMain getViewController() {
+	
+	public UIMain getViewController(){
 		return myViewController;
 	}
 
+
+	
 }

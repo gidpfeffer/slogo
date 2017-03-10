@@ -1,12 +1,13 @@
-package controller;
+package model.multipleturtle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
 import model.command.Command;
-import model.turtle.Turtle; 
+import model.turtle.Turtle;
+import parser.multipleturtleparsing.QueueConstructor; 
 
-public class Tell extends MultipleTurtleCommand{
+public class Tell implements MultipleTurtleCommand{
 	AskTellData data; 
 	List<String> commands; 
 	
