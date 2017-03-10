@@ -119,14 +119,13 @@ public class Controller {
 		try{
 			ProtectedTokenList list = myParser.parse(input);
 			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
-			Compiler c = new Compiler(); 
 			
 			for (Double turtleId: turtlesToCommands.keySet()){
 				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
 				List<Turtle> currentTurtles = myModel.getTurtles(); 
 				
 				TurtleState t = findTurtle(turtleId, currentTurtles);
-				Queue<TreeNode> Q = c.compile(t, commandsToApply); 
+				Queue<TreeNode> Q = compiler.compile(t, commandsToApply); 
 				
 				myModel.update(Q);
 				output = myModel.getStringOutput();

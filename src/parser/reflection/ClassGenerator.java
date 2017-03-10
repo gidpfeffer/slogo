@@ -22,7 +22,7 @@ public class ClassGenerator {
 			makeAdvancedClass(clazz, list, t, TCH.isTurtleCommand(className));
 	}
 	
-	private Class<?> getClass(String className){
+	protected Class<?> getClass(String className){
 		Class<?> clazz;
 		try {
 			clazz = Class.forName(PLH.getLoc(className) + className);

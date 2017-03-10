@@ -34,7 +34,7 @@ public class AskTellParser {
 		commandQ = new LinkedList<String>(); 
 		commandMap = new HashMap<Double, ProtectedTokenList>(); 
 		literalMap = new HashMap<Double, List<String>>(); 
-
+		
 		activeTurtles = new ArrayList<Double>(); 
 		activeTurtles.add(1.0);
 	}
@@ -95,8 +95,10 @@ public class AskTellParser {
 
 	private void buildLiteralMap(AskTellData data) {
 		for (Double t : data.getTurtleIDS()){
-			if (!(literalMap.containsKey(t))){
+			if (!(currentModel.getTurtles().contains(t))){  // here is the problem
+				System.out.println("u suck");
 				literalMap.put(t, new ArrayList<String>());
+				// THIS IS THE PROBLEM
 				Turtle turtle = currentModel.makeNewTurtle(t);
 				turtle.getState().addObserver(myView.addTurtle(turtle.getState()));
 			}
