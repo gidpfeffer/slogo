@@ -69,7 +69,7 @@ public class UIMenuView extends UIView {
 		setupBackButton();
 		ColorPicker lColorPicker = new ColorPicker(MyColors.GREEN_900);
 		ColorPicker bColorPicker = new ColorPicker(MyColors.GREEN_900);
-		setupColorPicker(LCOLOR_FRAME, _resources.getString("LineColorTitle"), lColorPicker, t -> _handler.setLineColor(lColorPicker.getValue())); //TODO resources
+		setupColorPicker(LCOLOR_FRAME, _resources.getString("LineColorTitle"), lColorPicker, t -> _handler.setLineColor(lColorPicker.getValue()));
 		setupColorPicker(BCOLOR_FRAME, _resources.getString("BackgroundTitle"), bColorPicker, t -> _handler.setBackgroundColor(bColorPicker.getValue()));
 		setupImagePicker();
 		setupPalletteView();
@@ -86,11 +86,7 @@ public class UIMenuView extends UIView {
 		b.setPrefWidth(32);
 		b.setPrefHeight(32);
 
-		b.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent me) {
-				slideMenuOut();
-			}
-		});
+		b.setOnMouseClicked(e -> launchHelpPage());
 		this.getChildren().add(b);
 	}
 
@@ -131,6 +127,10 @@ public class UIMenuView extends UIView {
 		
 		this.getChildren().add(container);
 	}
+	
+	private void launchHelpPage(){
+		//TODO
+	}
 
 	private void setupImagePicker() {
 
@@ -148,7 +148,7 @@ public class UIMenuView extends UIView {
 		_turtleImageView.setFitWidth(32);
 		imagePicker.getChildren().add(_turtleImageView);
 		
-		Label text =  GUITools.plainLabel(_resources.getString("TurtleImageTitle"), 14, Color.BLACK, FontWeight.LIGHT);//TODO
+		Label text =  GUITools.plainLabel(_resources.getString("TurtleImageTitle"), 14, Color.BLACK, FontWeight.LIGHT);
 		text.setLayoutX(64);
 		text.setPrefHeight(IMAGE_FRAME.getHeight());
 		text.setAlignment(Pos.CENTER_LEFT);

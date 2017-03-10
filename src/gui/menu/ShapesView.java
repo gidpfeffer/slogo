@@ -5,17 +5,13 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import gui.API.UIMainHandler;
-import gui.tableviews.UITableView;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
 import gui.tools.UIView;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 
 

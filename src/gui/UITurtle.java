@@ -23,7 +23,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
@@ -156,8 +155,7 @@ public class UITurtle extends Pane implements Observer {
 		}
 		if (deltaAngle != 0) {
 			_animators.y.setByAngle(deltaAngle); // 1 ms per degree
-			_animators.y.setDuration(Duration.millis(Math.abs(0)));
-			_animators.y.setDuration(Duration.millis(Math.abs(deltaAngle)));
+			_animators.y.setDuration(Duration.millis(Math.abs(deltaAngle)*300/ANIMATION_SPEED));//(400/ANIMATION_SPEED) is just some arbitrary constant
 			_animators.y.play();
 		}
 	}
