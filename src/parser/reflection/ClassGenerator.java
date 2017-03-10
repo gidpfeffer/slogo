@@ -8,7 +8,6 @@ import model.command.TreeNode;
 import model.turtle.State;
 
 public class ClassGenerator {
-	private TreeNode generated;
 	private PackageLocationHandler PLH;
 	private TurtleCommandHandler TCH;
 	
@@ -16,10 +15,45 @@ public class ClassGenerator {
 		PLH = new PackageLocationHandler();
 		TCH = new TurtleCommandHandler();
 	}
-		
-	public void generate(String className, List<TreeNode> list, State t) {
-			Class<?> clazz = getClass(className);
-			makeAdvancedClass(clazz, list, t, TCH.isTurtleCommand(className));
+	
+	public TreeNode generate(String className, List<TreeNode> list, State t) {
+		Class<?> clazz = getClass(className);
+		Constructor<?> ctor = makeConstructor(clazz, List.class, TCH.isTurtleCommand(className));
+		return makeCommandClass(clazz, list, t, TCH.isTurtleCommand(className), ctor);
+	}
+	
+	public TreeNode generate(String className, Double num, State t) {
+		Class<?> clazz = getClass(className);
+		Constructor<?> ctor = makeConstructor(clazz, double.class, TCH.isTurtleCommand(className));
+		return makeConstantClass(clazz, num, t, TCH.isTurtleCommand(className), ctor);
+	}
+	
+	private TreeNode makeConstantClass(Class<?> clazz, double num, State t,
+			boolean isTurtleCommand, Constructor<?> ctor){
+		try{
+			if(isTurtleCommand){
+				return (TreeNode) clazz.cast(ctor.newInstance(num, t));
+			}
+			else{
+				return (TreeNode) clazz.cast(ctor.newInstance(num));
+			}
+		} catch (Exception e){
+			throw new SLogoException("invalid syntax: " + clazz.getClass());
+		}
+	}
+	
+	private TreeNode makeCommandClass(Class<?> clazz, List<TreeNode> list, State t,
+			boolean isTurtleCommand, Constructor<?> ctor){
+		try{
+			if(isTurtleCommand){
+				return (TreeNode) clazz.cast(ctor.newInstance(list, t));
+			}
+			else{
+				return (TreeNode) clazz.cast(ctor.newInstance(list));
+			}
+		} catch (Exception e){
+			throw new SLogoException("invalid syntax: " + clazz.getClass());
+		}
 	}
 	
 	private Class<?> getClass(String className){
@@ -34,46 +68,19 @@ public class ClassGenerator {
 		throw new SLogoException("invalid syntax: " + className);
 	}
 	
-	public void generate(String className, Double num, State t) {
-		Class<?> clazz = getClass(className);
-		makeAdvancedClass(clazz, num, t, TCH.isTurtleCommand(className));
-	}
-
-	private void makeAdvancedClass(Class<?> clazz, List<TreeNode>list, State t, boolean isT) {
+	private Constructor<?> makeConstructor(Class<?> clazz, Class theClass, boolean isT) {
+		Constructor<?> ctor;
 		try {
 			if(isT){
-				Constructor<?> ctor = clazz.getDeclaredConstructor(List.class, State.class);
-				Object o = ctor.newInstance(list, t);
-				generated = (TreeNode) clazz.cast(o);
+				ctor = clazz.getDeclaredConstructor(theClass, State.class);
 			}
 			else{
-				Constructor<?> ctor = clazz.getDeclaredConstructor(List.class);
-				Object o = ctor.newInstance(list);
-				generated = (TreeNode) clazz.cast(o);
+				ctor = clazz.getDeclaredConstructor(theClass);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			return ctor;
+		} 
+		catch (Exception e) {
+			throw new SLogoException("Invalid command");
 		}
-	}
-	
-	private void makeAdvancedClass(Class<?> clazz, Double num, State t, boolean isT) {
-		try{
-			if(isT){
-				Constructor<?> ctor = clazz.getDeclaredConstructor(double.class, State.class);
-				Object o = ctor.newInstance(num, t);
-				generated = (TreeNode) clazz.cast(o);
-			}
-			else{
-				Constructor<?> ctor = clazz.getDeclaredConstructor(double.class);
-				Object o = ctor.newInstance(num);
-				generated = (TreeNode) clazz.cast(o);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public TreeNode getGenerated(){
-		return generated;
 	}
 }

@@ -33,11 +33,8 @@ public class CompilerTest {
 		
 		q = c.compile(new TurtleState(), PTL);
 		
-		while(!q.isEmpty()){
-			TreeNode cur = q.remove();
-			if(cur instanceof TurtleCommand){
-				System.out.println("[Class: " + cur.getClass() + "] ["+ "Value: " + cur.getValue() + "]");
-			}
+		for(String s: c.getFunctionList()){
+			System.out.println(s);
 		}
 	}
 
