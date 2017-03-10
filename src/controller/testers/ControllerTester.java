@@ -1,6 +1,6 @@
-package controller;
+package controller.testers;
 
-
+import controller.Controller;
 
 public class ControllerTester{
 	private Controller myController; 
