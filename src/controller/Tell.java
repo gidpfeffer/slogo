@@ -18,7 +18,7 @@ public class Tell extends MultipleTurtleCommand{
 	private final String LEFT_BRACKET = "[";
 	private final String RIGHT_BRACKET = "]";
 	
-	public Tell (List<String> parsed){
+	public Tell (List<String> parsed, List<Double> turtles){
 		commands = new ArrayList<String>(parsed);
 		activeTurtles = new ArrayList<Turtle>();
 		activeTurtleIDs = new ArrayList<Double>(); 
