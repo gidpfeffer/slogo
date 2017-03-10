@@ -82,19 +82,19 @@ final class Palette extends UIView{
 		System.out.println(frame);
 		_color = color;
 		//8,8,frame.getWidth()/2 - 16,frame.getWidth()/2 - 16
-		double len = frame.getWidth()/2;
+		double half = frame.getWidth()/2;
 		_picker = new ColorPicker(color);
-		_picker.setLayoutX(4);
+		_picker.setLayoutX(0);
 		_picker.setLayoutY(0);
-		_picker.setPrefHeight(len);
-		_picker.setPrefWidth(len);
-		//_picker.setBackground(new Background(new BackgroundFill[] { new BackgroundFill(MyColors.GREEN_100, null, null) }));
+		_picker.setPrefHeight(_bounds.getHeight());
+		_picker.setPrefWidth(_bounds.getWidth()*2./3.);
 		_picker.setBackground(Background.EMPTY);
+		_picker.setOnAction(e -> setColor(_picker.getValue()));
 		_label = new Label(text);
-		_label.setLayoutX(frame.getWidth()/2);
+		_label.setLayoutX(_bounds.getWidth()*2./3.);
 		_label.setLayoutY(0);
-		_label.setPrefHeight(len);
-		_label.setPrefWidth(len);
+		_label.setPrefHeight(_bounds.getHeight());
+		_label.setPrefWidth(_bounds.getWidth() /3.0);
 		_label.setAlignment(Pos.CENTER);
 		this.getChildren().add(_picker);
 		this.getChildren().add(_label);
