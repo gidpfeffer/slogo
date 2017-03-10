@@ -37,8 +37,9 @@ public class ModelController {
 
 		while(!commandsToExecute.isEmpty()){ 
 			TreeNode command= commandsToExecute.remove();
-			myOutput = ((Double) command.getValue()).toString();
 			((Command) command).execute(myHandler);
+			myOutput = ((Double) command.getValue()).toString();
+			
 		}
 	}
 	
