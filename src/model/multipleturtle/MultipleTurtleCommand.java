@@ -1,4 +1,4 @@
-package controller;
+package model.multipleturtle;
 
 public interface MultipleTurtleCommand {
 	public AskTellData getData();

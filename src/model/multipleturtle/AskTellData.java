@@ -1,7 +1,9 @@
-package controller;
+package model.multipleturtle;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import controller.SLogoException;
 
 public class AskTellData {
 	private ArrayList<String> turtles; 

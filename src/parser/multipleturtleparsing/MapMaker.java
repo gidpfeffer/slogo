@@ -1,11 +1,13 @@
-package controller;
+package parser.multipleturtleparsing;
 
 import java.util.List;
 
 import model.ModelController;
-import java.util.Map;
+import model.multipleturtle.AskTellData;
+import model.multipleturtle.MultipleTurtleCommand;
+import model.multipleturtle.Tell;
 
-import controller.CommandMap;
+import java.util.Map;
 
 import parser.main.NewParser;
 import parser.tokenizer.ProtectedTokenList;
@@ -91,9 +93,9 @@ public class MapMaker implements CommandMap<Double, List<String>, ProtectedToken
 		
 		for (Object c : commandObjects){
 			
-			if (c instanceof MultipleTurtleCommandClass ){
+			if (c instanceof MultipleTurtleCommand ){
 
-				MultipleTurtleCommandClass comm = (MultipleTurtleCommandClass) c; 
+				MultipleTurtleCommand comm = (MultipleTurtleCommand) c; 
 				comm.execute();
 				AskTellData data = comm.getData(); 
 				
