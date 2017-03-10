@@ -91,8 +91,12 @@ public class UIMain implements UIMainAPI, Observer {
 
 		@Override
 		public void setTurtleImage(Image image) {
-			
 			_displayView.setTurtleImage(image);
+		}
+
+		@Override
+		public void setLanguage(String language) {
+			_handler.setLanguage(language);
 		}
 
 	}
