@@ -103,6 +103,18 @@ public class MapMaker {
 				List<Double> turtleIDs = data.getTurtleIDS();
 				List<String> commands = clean(data.getCommands());
 				
+				if (commands.isEmpty() && c instanceof Tell){
+					
+					for (Double i : turtleIDs){
+					currentModel.setActiveTurtles(turtleIDs);
+					
+					if (!(currentModel.getTurtleIDs().contains(i))){
+						currentModel.makeNewTurtle(i);						
+					}
+					}
+					continue; 
+				}
+				
 								
 				for(Double id: turtleIDs){
 		
