@@ -146,14 +146,26 @@ public class Controller {
 			
 			StringListCreator SLC = new StringListCreator(list.getLiterals());
 			List<List<String>> subs = SLC.getSublists();
+			List<List<String>> cleanSubs = cleanSubLists(subs);
 			
-			SubListProcessor SLP = new SubListProcessor(subs);
+			SubListProcessor SLP = new SubListProcessor(cleanSubs);
+			
+			
+
 			List<String> remainingComms = SLP.getRemainingCommands();
 			List<String> precedingComms = SLP.getPrecedingCommands();
 			List<Object> comms = SLP.getCommandObjects();
 			
+			
+			
 			MapMaker MM = new MapMaker(comms, precedingComms,  remainingComms, myLiteralMap, myModel);
+			
+			
+			
 			Map<Double, ProtectedTokenList> turtlesToCommands = MM.getPTLMap();
+			
+			
+			
 			printTokenList(turtlesToCommands);
 			
 
@@ -181,6 +193,16 @@ public class Controller {
 			myViewController.displayErrorWithMessage(e.getMessage());
 		}
 		output = myModel.getStringOutput();
+	}
+
+	private List<List<String>> cleanSubLists(List<List<String>> subs) {
+		List<List<String>> cleanLists = new ArrayList<List<String>>(); 
+		for (List<String> l : subs){
+			if (!(l.isEmpty())){
+				cleanLists.add(l);
+			}
+		}
+		return cleanLists; 
 	}
 
 	private void printTokenList(Map<Double, ProtectedTokenList> p) {
