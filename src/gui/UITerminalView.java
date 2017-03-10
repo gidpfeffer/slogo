@@ -7,7 +7,6 @@ import gui.tools.UIView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class UITerminalView extends UIView implements UITerminalAPI {

@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import gui.tools.UIView;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;

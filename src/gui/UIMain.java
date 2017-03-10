@@ -5,12 +5,10 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 import controller.ControlHandler;
-import general_data_structures.Tuple;
 import gui.API.ButtonControlHandler;
 import gui.API.DisplayHandler;
 import gui.API.UIMainAPI;
 import gui.API.UIMainHandler;
-import gui.API.UITurtleHandler;
 import gui.menu.UIMenuView;
 import gui.tableviews.UIVariablesView;
 import gui.tableviews.UIVocabTable;
@@ -20,13 +18,11 @@ import gui.tools.ImageButton;
 import gui.tools.MyColors;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
@@ -223,12 +219,12 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 
 	private void setupVocabTable() {
-		_vocabTableView = new UIVocabTable(VOCAB_FRAME, new myHandler());
+		_vocabTableView = new UIVocabTable(VOCAB_FRAME, new myHandler(), _resources);
 		_root.getChildren().add(_vocabTableView);
 	}
 
 	private void setupVarsBox() {
-		_varBoxView = new UIVariablesView(VARS_FRAME);
+		_varBoxView = new UIVariablesView(VARS_FRAME,_resources);
 		_root.getChildren().add(_varBoxView);
 	}
 	

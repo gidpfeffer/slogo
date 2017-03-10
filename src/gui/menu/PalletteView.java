@@ -5,27 +5,22 @@ import gui.tools.GUITools;
 import gui.tools.MyColors;
 import gui.tools.UIView;
 import javafx.geometry.Pos;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class PalletteView extends UIView {
 
 	private Map<Double, Palette> _palettes = new HashMap<Double, Palette>();
-	
+	private ResourceBundle _resources;
 
-	public PalletteView(Frame frame) {
+	public PalletteView(Frame frame,ResourceBundle resources) {
 		super(frame);
-		System.out.println(frame);
+		_resources = resources;
 		setupViews();
 	}
 
@@ -59,7 +54,7 @@ public class PalletteView extends UIView {
 
 	private void setupTitle(){
 		//TODO resources file
-		Label l = GUITools.plainLabel("Palette", 18, MyColors.INDIGO, FontWeight.BOLD); //TODO
+		Label l = GUITools.plainLabel(_resources.getString("PaletteTitle"), 18, MyColors.INDIGO, FontWeight.LIGHT); //TODO
 		l.setPrefHeight(40);
 		l.setPrefWidth(getBounds().getWidth());
 		l.setAlignment(Pos.CENTER);
@@ -72,40 +67,4 @@ public class PalletteView extends UIView {
 	
 }
 
-final class Palette extends UIView{
-	private Color _color;
-	private ColorPicker _picker;
-	private Label _label;
-	
-	public Palette(Color color, String text, Frame frame){
-		super(frame);
-		System.out.println(frame);
-		_color = color;
-		//8,8,frame.getWidth()/2 - 16,frame.getWidth()/2 - 16
-		double half = frame.getWidth()/2;
-		_picker = new ColorPicker(color);
-		_picker.setLayoutX(0);
-		_picker.setLayoutY(0);
-		_picker.setPrefHeight(getBounds().getHeight());
-		_picker.setPrefWidth(getBounds().getWidth()*2./3.);
-		_picker.setBackground(Background.EMPTY);
-		_picker.setOnAction(e -> setColor(_picker.getValue()));
-		_label = new Label(text);
-		_label.setLayoutX(getBounds().getWidth()*2./3.);
-		_label.setLayoutY(0);
-		_label.setPrefHeight(getBounds().getHeight());
-		_label.setPrefWidth(getBounds().getWidth() /3.0);
-		_label.setAlignment(Pos.CENTER);
-		this.getChildren().add(_picker);
-		this.getChildren().add(_label);
-		GUITools.addBackgroundWithColor(this, MyColors.GREEN_200, getBounds());
-	}
-	public Color getColor(){
-		return _color;
-	}
-	public void setColor(Color color){
-		_color = color;
-		_picker.setValue(color);
-	}
 
-}

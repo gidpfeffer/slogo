@@ -16,7 +16,6 @@ import gui.tools.UIView;
 import javafx.animation.TranslateTransition;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ColorPicker;
@@ -67,8 +66,8 @@ public class UIMenuView extends UIView {
 		setupBackButton();
 		ColorPicker lColorPicker = new ColorPicker(MyColors.GREEN_900);
 		ColorPicker bColorPicker = new ColorPicker(MyColors.GREEN_900);
-		setupColorPicker(LCOLOR_FRAME, "Line Color", lColorPicker, t -> _handler.setLineColor(lColorPicker.getValue())); //TODO resources
-		setupColorPicker(BCOLOR_FRAME, "Background Color", bColorPicker, t -> _handler.setBackgroundColor(bColorPicker.getValue()));
+		setupColorPicker(LCOLOR_FRAME, _resources.getString("LineColorTitle"), lColorPicker, t -> _handler.setLineColor(lColorPicker.getValue())); //TODO resources
+		setupColorPicker(BCOLOR_FRAME, _resources.getString("BackgroundTitle"), bColorPicker, t -> _handler.setBackgroundColor(bColorPicker.getValue()));
 		setupImagePicker();
 		setupPalletteView();
 		setupTurtleAttributesView();
@@ -80,7 +79,7 @@ public class UIMenuView extends UIView {
 	}
 
 	private void setupPalletteView() {
-		_paletteView = new PalletteView(PALLETTE_FRAME);
+		_paletteView = new PalletteView(PALLETTE_FRAME, _resources);
 		this.getChildren().add(_paletteView);
 	}
 
@@ -94,7 +93,7 @@ public class UIMenuView extends UIView {
 		colorPicker.setOnAction(event);
 		colorPicker.setBackground(
 				new Background(new BackgroundFill[] { new BackgroundFill(MyColors.GREEN_100, null, null) }));
-		Label l = GUITools.plainLabel(text, 14, Color.BLACK, FontWeight.THIN);//TODO
+		Label l = GUITools.plainLabel(text, 14, Color.BLACK, FontWeight.THIN);
 		l.setLayoutX(64);
 		l.setAlignment(Pos.CENTER_LEFT);
 		l.setPrefHeight(frame.getHeight());
@@ -123,7 +122,7 @@ public class UIMenuView extends UIView {
 		_turtleImageView.setFitWidth(32);
 		imagePicker.getChildren().add(_turtleImageView);
 		
-		Label text =  GUITools.plainLabel("Turtle Image", 14, Color.BLACK, FontWeight.LIGHT);//TODO
+		Label text =  GUITools.plainLabel(_resources.getString("TurtleImageTitle"), 14, Color.BLACK, FontWeight.LIGHT);//TODO
 		text.setLayoutX(64);
 		text.setPrefHeight(IMAGE_FRAME.getHeight());
 		text.setAlignment(Pos.CENTER_LEFT);
@@ -180,7 +179,6 @@ public class UIMenuView extends UIView {
 	}
 
 	public void updateTurtleState(TurtleState s) {
-		// TODO Auto-generated method stub
 		_turtleAttributesView.update(s);
 	}
 	public PalletteView getPaletteView(){

@@ -2,12 +2,10 @@ package gui;
 
 import gui.API.ButtonControlHandler;
 import gui.tools.Frame;
-import gui.tools.GUITools;
 import gui.tools.ImageButton;
 import gui.tools.MyColors;
 import gui.tools.UIView;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -17,7 +15,6 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
 
 public class UIButtonControlView extends UIView{
 	private ImageButton _pauseButton;

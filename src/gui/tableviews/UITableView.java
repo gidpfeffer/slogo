@@ -2,9 +2,6 @@ package gui.tableviews;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Observable;
-import java.util.Observer;
 import gui.tools.Frame;
 import gui.tools.GUITools;
 import gui.tools.MyColors;
@@ -21,13 +18,10 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import parser.storage.VariableStorage;
 
 public class UITableView extends UIView {
 	protected Frame _bounds;
@@ -65,7 +59,7 @@ public class UITableView extends UIView {
 		this.getChildren().add(scroll);
 	}
 	private void setupTitle(String t){
-		Label title = GUITools.plainLabel(t, 20, MyColors.INDIGO, FontWeight.BOLD);
+		Label title = GUITools.plainLabel(t, 20, MyColors.INDIGO, FontWeight.NORMAL);
 		title.setPrefWidth(_bounds.getWidth());
 		title.setPrefHeight(40);
 		title.setAlignment(Pos.CENTER);
