@@ -43,10 +43,10 @@ public class Interpreter {
 	
 	public void handleVarLoops(TokenList TL, State state){
 		checkValidity(TL);
+		commandHandler.fix(TL);
 		for(BracketHandler b: varLoops){
 			b.handle(TL, state);
 		}
-		commandHandler.fix(TL);
 	}
 	
 	public void handleRegLoops(TokenList TL, State state){
