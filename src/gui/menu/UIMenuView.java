@@ -52,10 +52,11 @@ public class UIMenuView extends UIView {
 		super(frame);
 		_handler = handler;
 		_resources = resources;
-		LCOLOR_FRAME = new Frame(16, TOP_INSET, _bounds.getWidth() - 32, 56);
-		BCOLOR_FRAME = new Frame(16, LCOLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 56);
-		IMAGE_FRAME = new Frame(16, BCOLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 56);
-		PALLETTE_FRAME = new Frame(16, IMAGE_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 150);
+		double rightInset = 80 + 32;
+		LCOLOR_FRAME = new Frame(16, TOP_INSET, _bounds.getWidth() - rightInset, 56);
+		BCOLOR_FRAME = new Frame(16, LCOLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - rightInset, 56);
+		IMAGE_FRAME = new Frame(16, BCOLOR_FRAME.getMaxY() + 16, _bounds.getWidth() - rightInset, 56);
+		PALLETTE_FRAME = new Frame(LCOLOR_FRAME.getMaxX() + 8, TOP_INSET, rightInset - 32, IMAGE_FRAME.getMaxY() - TOP_INSET );
 		ATTRIBUTES_FRAME = new Frame(16, PALLETTE_FRAME.getMaxY() + 16, _bounds.getWidth() - 32, 150);
 		
 		setupViews();
@@ -123,7 +124,7 @@ public class UIMenuView extends UIView {
 		imagePicker.getChildren().add(_turtleImageView);
 		
 		Label text =  GUITools.plainLabel("Turtle Image", 14, Color.BLACK, FontWeight.LIGHT);//TODO
-		text.setLayoutX(56);
+		text.setLayoutX(64);
 		text.setPrefHeight(IMAGE_FRAME.getHeight());
 		text.setAlignment(Pos.CENTER_LEFT);
 		imagePicker.getChildren().add(text);

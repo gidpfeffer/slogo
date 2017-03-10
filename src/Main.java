@@ -14,6 +14,7 @@ public class Main extends Application{
 		Controller controller = new Controller();
 		s.setScene(controller.getViewController().getScene());
 		s.setTitle("SLOGO");
+		s.setResizable(false);
 		s.show();
 	}
 }
