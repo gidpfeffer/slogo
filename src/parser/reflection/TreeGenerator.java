@@ -18,13 +18,11 @@ public class TreeGenerator {
 	private Stack<TreeNode> parsed;
 	private Stack<String> commands, logo;
 	private NumArgsHandler numArgs;
-	private Queue<TreeNode> commandQueue;
-	private Queue<TreeNode> allQueue;
+	private Queue<TreeNode> commandQueue, allQueue;
 	private static final String CONSTANT = "Constant";
 	private ClassGenerator CG;
 	private State turtle;
 	private static final String PI = "Pi";
-	private AllQueueHelper AQH;
 	
 	public TreeGenerator(TokenList t, State turtle){
 		list = new TokenList(new ArrayList<String>(t.getLiterals()), new ArrayList<String>(t.getLogo()));
@@ -33,7 +31,6 @@ public class TreeGenerator {
 		initializeData();
 		fillStack();
 		generateTree();
-		AQH = new AllQueueHelper(allQueue);
 	}
 	
 	private void initializeData(){
