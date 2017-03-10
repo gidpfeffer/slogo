@@ -12,6 +12,8 @@ import controller.SLogoException;
 import model.ModelController;
 import model.multipleturtle.AskTellData;
 
+import model.multipleturtle.Tell;
+
 public class SubListProcessor {
 
 	private List<AskTellData> processedCommands; 
@@ -25,8 +27,9 @@ public class SubListProcessor {
 	private final String BREAKPOINT_2 = "tell";
 	private final String BREAKPOINT_3 = "askwith";
 
-	private final String location = "controller.";
+	private final String location = "model.multipleturtle.";
 	private boolean hitBreakPoint; 
+	
 	
 	private ModelController myModel; 
 
@@ -57,9 +60,12 @@ public class SubListProcessor {
 					if ((firstCommand.equals(BREAKPOINT_1)) || (firstCommand.equals(BREAKPOINT_2)) || ((firstCommand.equals(BREAKPOINT_3)))){
 						hitBreakPoint = true; 
 						try{
+							Tell t = new Tell(current, null);
+							
+							System.out.println(t.getClass());
 							String name = firstCommand.substring(0, 1).toUpperCase() + firstCommand.substring(1);
 							Class<?> clazz = Class.forName(location + name);
-							Constructor <?> ctor = clazz.getConstructor(List.class);
+							Constructor <?> ctor = clazz.getConstructor(List.class, List.class);
 							Object obj = ctor.newInstance(current, myModel.getTurtleIDs());
 							commandObjects.add(obj);
 							break;
@@ -67,6 +73,7 @@ public class SubListProcessor {
 						}
 						catch(Exception e){
 							throw new SLogoException("class not found  " + location + firstCommand.substring(0, 1).toUpperCase() + firstCommand.substring(1));
+						
 						}
 
 					}
