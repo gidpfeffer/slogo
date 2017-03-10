@@ -281,10 +281,6 @@ public class UIMain implements UIMainAPI, Observer {
 	private void didPressReset() {
 		_handler.handleReset();
 	}
-	
-	private void turtleStateChanged(TurtleState s){
-		_menuView.updateTurtleState(s);
-	}
 
 	public Scene getScene() {
 		return _scene;
@@ -325,6 +321,10 @@ public class UIMain implements UIMainAPI, Observer {
 	}
 	public UITurtle getTurtle(Double id){
 		return _displayView.getTurtle(id);
+	}
+	
+	public UIVocabTable getFunctionsBox(){
+		return this._vocabTableView;
 	}
 
 	@Override

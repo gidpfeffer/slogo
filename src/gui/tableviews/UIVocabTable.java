@@ -1,5 +1,6 @@
 package gui.tableviews;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,7 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class UIVocabTable extends UITableView implements Observer {
+public class UIVocabTable extends UITableView {
 	
 	private UIMainHandler _handler;
 	String[] _initialFunctions = {
@@ -43,12 +44,12 @@ public class UIVocabTable extends UITableView implements Observer {
 		});
 		return t;
 	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
-	}
 	
+	public void setFunctionBox(List<String> functions){
+		clear();
+		for(String s: functions){
+			this.addText(s);
+		}
+	}
 
 }

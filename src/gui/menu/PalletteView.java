@@ -49,10 +49,10 @@ public class PalletteView extends UIView {
 		double width = _bounds.getWidth() - 12;
 		double height = (_bounds.getHeight() - 40)/4 - 6;
 		double y = 40;
-		addNewPalette(1.0, MyColors.GREEN_900, new Frame(6,y, width, height));
-		addNewPalette(2.0, MyColors.GREEN_100,new Frame(6,y + 1*(height + 6), width, height));
-		addNewPalette(3.0, MyColors.AMBER,new Frame(6,y + 2*(height + 6), width, height));
-		addNewPalette(4.0, MyColors.INDIGO,new Frame(6,y + 3*(height + 6), width, height));
+		addNewPalette(0.0, MyColors.GREEN_900, new Frame(6,y, width, height));
+		addNewPalette(1.0, MyColors.GREEN_100,new Frame(6,y + 1*(height + 6), width, height));
+		addNewPalette(2.0, MyColors.AMBER,new Frame(6,y + 2*(height + 6), width, height));
+		addNewPalette(3.0, MyColors.INDIGO,new Frame(6,y + 3*(height + 6), width, height));
 		//addNewPalette(5.0, MyColors.GREEN_200,new Frame(6,y + 4*(height + 6), width, height));
 		
 	}
