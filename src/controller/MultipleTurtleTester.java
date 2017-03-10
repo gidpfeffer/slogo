@@ -7,9 +7,12 @@ import parser.tokenizer.ProtectedTokenList;
 
 public class MultipleTurtleTester {
 	public static void main (String[] args){
-	String testCode = "fd 50 ask [ 4 ] [ rt 90 fd 10 ] tell [ 1 3 ] fd 100 ask [ 5 ] [ rt 90 ] fd 100"; 
+	//String testCode = "fd 50 ask [ 4 ] [ rt 90 fd 10 ] tell [ 1 3 ] fd 100 ask [ 5 ] [ rt 90 ] fd 100"; 
+	String testCode = "ask [ 1 ] fd 50";
 	StringListCreator SLC = new StringListCreator(testCode.split(" "));
+	
 	List<List<String>> subs = SLC.getSublists();
+	
 	System.out.println(subs);
 	
 	SubListProcessor SLP = new SubListProcessor(subs);
