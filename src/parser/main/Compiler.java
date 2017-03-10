@@ -1,10 +1,12 @@
 package parser.main;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 import model.command.TreeNode;
 import model.turtle.State;
+import parser.function_seperator.FunctionReconstructor;
 import parser.interpreter.Interpreter;
 import parser.queue_splitter.QueueSplitter;
 import parser.reflection.TreeGenerator;
@@ -18,8 +20,10 @@ public class Compiler {
 	private TotalStorage storage;
 	private FixVars fixVars;
 	private Interpreter IT;
+	private FunctionReconstructor reconstructor;
 
 	public Compiler(){
+		reconstructor = new FunctionReconstructor();
 		storage = new TotalStorage();
 		fixVars = new FixVars(storage.getVars());
 		IT = new Interpreter(storage);
@@ -46,5 +50,9 @@ public class Compiler {
 	
 	public VariableStorage getVars(){
 		return storage.getVars();
+	}
+	
+	public List<String> getFunctionList(){
+		return reconstructor.getCommandList(storage.getCommands());
 	}
 }

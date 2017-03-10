@@ -75,12 +75,12 @@ public class TreeGenerator {
 	private TreeNode makeNode(String command, String logo, int arguments){
 		List<TreeNode> list = makeList(arguments);
 		if(logo.equals(CONSTANT)){
-			CG.generate(logo, Double.parseDouble(command), turtle);
+			return CG.generate(logo, Double.parseDouble(command), turtle);
 		}
 		else{
-			CG.generate(logo, list, turtle);
+			return CG.generate(logo, list, turtle);
 		}
-		return CG.getGenerated();
+		
 	}
 	
 	private List<TreeNode> makeList(int numArgs){
