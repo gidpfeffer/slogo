@@ -76,6 +76,7 @@ public class MapMaker {
 
 	private void buildLiteralMap(List<Object> commandObjects, List<String> precedingCommands, List<String> remainingCommands) {
 		
+		if (!precedingCommands.isEmpty()){
 		for (String p : precedingCommands){
 		
 			for (Double t: currentModel.getActiveTurtleIDs()){
@@ -85,6 +86,9 @@ public class MapMaker {
 				literalMap.get(t).add(p);
 			}
 		}
+		}
+		
+		
 		
 		for (Object c : commandObjects){
 			
@@ -93,17 +97,30 @@ public class MapMaker {
 				MultipleTurtleCommand comm = (MultipleTurtleCommand) c; 
 				comm.execute();
 				AskTellData data = comm.getData(); 
+				
+				
 
 				List<Double> turtleIDs = data.getTurtleIDS();
 				List<String> commands = clean(data.getCommands());
 				
+				if (commands.isEmpty() && c instanceof Tell){
+					
+					for (Double i : turtleIDs){
+					currentModel.setActiveTurtles(turtleIDs);
+					
+					if (!(currentModel.getTurtleIDs().contains(i))){
+						currentModel.makeNewTurtle(i);						
+					}
+					}
+					continue; 
+				}
 				
-				
+								
 				for(Double id: turtleIDs){
 		
 					if (!(currentModel.getTurtleIDs().contains(id))){
 						currentModel.makeNewTurtle(id);
-						literalMap.put(id, new ArrayList<String>(commands));
+						//literalMap.put(id, new ArrayList<String>(commands));
 						
 					}
 					
@@ -128,13 +145,14 @@ public class MapMaker {
 
 			}	
 		}
-
+		if (!remainingCommands.isEmpty()){
 		for (Double t : currentModel.getActiveTurtleIDs()){
 			if (!literalMap.containsKey(t)){
 				literalMap.put(t, new ArrayList<String>());
 			}
 			literalMap.get(t).addAll(remainingCommands);
 
+		}
 		}
 	}
 

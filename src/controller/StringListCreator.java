@@ -52,6 +52,7 @@ public class StringListCreator {
 			
 			// ask and ask with 
 			else if ((literal.equals(BREAKPOINT_1)) || (literal.equals(BREAKPOINT_3))){
+
 				
 				sublists.add(currentSublist);
 				currentSublist = new ArrayList<String>(); 
@@ -59,8 +60,8 @@ public class StringListCreator {
 				currentSublist.add(literal);
 				
 				int bracketCount = 0; 
-				while(bracketCount < 4){
-	
+				while(bracketCount < 4 && !commandQ.isEmpty()){
+					
 					String newString = commandQ.poll();
 					if((newString.equals("[")) || (newString.equals("]"))){
 						bracketCount++;

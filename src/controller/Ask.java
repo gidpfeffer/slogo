@@ -45,7 +45,7 @@ public class Ask  extends MultipleTurtleCommand {
 			}
 		}
 		if (bracketCount==TURTLE_BRACKET_COUNT){
-			while (bracketCount< COMMANDS_BRACKET_COUNT){
+			while (bracketCount< COMMANDS_BRACKET_COUNT && !commandQ.isEmpty()){
 				String st1 = commandQ.poll(); 
 			
 				if ((st1.equals(LEFT_BRACKET)) || (st1.equals(RIGHT_BRACKET))){
@@ -59,6 +59,7 @@ public class Ask  extends MultipleTurtleCommand {
 				}
 			}
 		}
+		
 		dataObject =  new AskTellData(turtles, commands);
 		
 	}
