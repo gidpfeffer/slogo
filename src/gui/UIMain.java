@@ -54,8 +54,8 @@ public class UIMain implements UIMainAPI, Observer {
 			VOCAB_FRAME.getWidth(), SCREEN_HEIGHT - VOCAB_FRAME.getMaxY() - 16);
 	public static final Frame MENU_FRAME = new Frame(-SCREEN_WIDTH * 2 / 5, 0, 
 			SCREEN_WIDTH * 2 / 5, SCREEN_HEIGHT);
-	public static final Frame BTN_CONTROL_FRAME = new Frame(188, 20, 
-			DISPLAY_FRAME.getWidth() - 180, TOP_INSET - 28);
+	public static final Frame BTN_CONTROL_FRAME = new Frame(196, 16, 
+			DISPLAY_FRAME.getWidth() - 188, TOP_INSET - 24);
 	
 	private Pane _root;
 	private Scene _scene;
@@ -300,7 +300,7 @@ public class UIMain implements UIMainAPI, Observer {
 
 	@Override
 	public void setPaletteAtIndex(double index, double r, double g, double b) {
-		_menuView.getPaletteView().addNewPalette(index, Color.rgb((int)r, (int)g, (int)b));
+		_menuView.getPaletteView().setPalleteColorAtIndex(index, Color.rgb((int)r, (int)g, (int)b));
 	}
 
 	@Override
