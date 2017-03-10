@@ -10,10 +10,6 @@ public abstract class TreeNode {
 	public double getValue(){
 		return 0.0; 
 	}
-	
-	public List<TreeNode> getChildren(){
-		return children;
-	}
 
 	public boolean isRoot(){
 		return root;
