@@ -7,9 +7,10 @@ import java.util.Map;
 
 import controller.SLogoException;
 import model.turtle.TurtleState;
+import parser.interfaces.StorageFixer;
 import parser.tokenizer.TokenList;
 
-public class CommandHandler extends StorageHandler{
+public class CommandHandler extends AbstractStorageHandler implements StorageFixer{
 	private static final String COMMAND = "Command";
 	private static final String NEW = "MakeUserInstruction";
 	private CommandStorage storage;

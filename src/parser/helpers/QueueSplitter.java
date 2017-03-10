@@ -1,4 +1,4 @@
-package parser.queue_splitter;
+package parser.helpers;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

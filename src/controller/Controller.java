@@ -101,11 +101,9 @@ public class Controller {
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
 		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState())); 
 
-		changeLanguage("English");
-		myParser = new NewParser(currentLang.toString());
+		changeLanguage("Italian");
 		compiler = new Compiler(); 
 		configureVariableStorage(); 
-
 	}
 
 	private void setRelation(Double id){
@@ -138,7 +136,7 @@ public class Controller {
 		currentLang.append(languageLocation);
 		currentLang.append(language);
 		myParser = new NewParser(currentLang.toString());
-		
+		System.out.println(currentLang.toString());
 	}
 
 

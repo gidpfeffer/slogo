@@ -1,9 +1,10 @@
 package parser.storage;
 
 import controller.SLogoException;
+import parser.interfaces.StorageFixer;
 import parser.tokenizer.TokenList;
 
-public class FixVars extends StorageHandler{
+public class FixVars extends AbstractStorageHandler implements StorageFixer{
 	private static final String VARIABLE = "Variable";
 	private static final String MAKE_VAR = "MakeVariable";
 	private VariableStorage VS;

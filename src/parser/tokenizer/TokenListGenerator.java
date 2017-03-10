@@ -22,7 +22,7 @@ public class TokenListGenerator {
 		generate();
 	}
 	
-	public void generate(){
+	private void generate(){
 		List<String> literal = new ArrayList<>();
 		List<String> logo = new ArrayList<>();
 		
