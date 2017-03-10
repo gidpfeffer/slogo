@@ -146,7 +146,7 @@ public class Controller {
 				myViewController.addNewOutput(output);
 				
 			}
-
+			myViewController.getFunctionsBox().setFunctionBox(compiler.getFunctionList());
 
 		}
 		catch (SLogoException e){ 
