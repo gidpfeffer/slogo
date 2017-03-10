@@ -144,4 +144,106 @@
 	FunctionReconstructor: Helps to turn all commands into a String representation which can be displayed on the GUI. Is a pretty small/niche class. 
 
 
+## Tahia
+
+### Multiple Turtle Command API  - interface MultipleTurtleCommand
+
+Classes that implement this API: Ask, Tell, Askwith
+
+Public AskTellData getData() 
+	This method returns the AskTellData object created by executing the multiple turtle command. 
+
+Public void execute()
+	This method executes the given command. Executing a multiple turtle command generates an AskTellData object that is then used to break every multiple turtle command down into single turtle commands the Parser and Compiler can understand, associated with the appropriate turtle ID. 
+
+
+Back End Internal API - interface BackEndHandler
+
+Classes that implement this API: ModelController, Controller 
+
+Public Double getNumTurtle()
+	This method returns the number of turtles in the current model. 
+
+Public void handleReset()
+	This method is used to reset the back end’s data structures when the user resets. 
+
+Public void setBackground(Double int)
+	This method is used to tell the Controller to set the background color of the GUI to the color that corresponds to the number on the palette. 
+
+Public void setRelationship(double turtleID)
+	This method is used to set the Observer/ Observable relationship between the back end and front end turtle States when a new turtle is created. 
+
+
+Controller API - class Controller, ModelController
+Controller coordinates all the communication between the front end and the back end (parsing, updating)
+ModelController controls the commands and turtles that are to be represented on the front end 
+Controller Public Methods:
+
+Public String getStringOutput()
+	This method is used to get String output from the execution of any given command
+Public String getViewController()
+	This method is used to get the View Controller being used for the current program 
+
+ModelController Public Methods:
+
+Public List<Double> getActiveTurtleIDs()
+	This method returns an unmodifiable list of the turtle IDs that are currently active. 
+
+Public List<Double> getTurtleIDs()
+	This method returns an unmodifiable list of all the turtle IDs that have ever been created (in the session), whether active or not. 
+
+Public String getStringOutput() 
+	This method returns string output as associated with executing a command. 
+
+Public void makeNewTurtle(Double id)
+	This method allows for new turtles to be created by id number. 
+
+Public List<Turtle> getTurtles()
+	This method returns an unmodifiable list of all the turtles that have been created during the current session, whether active or not. 
+
+Public void reset()
+	This method resets the model. 
+
+Public void setActiveTurtles(List<Double>)
+	This method sets every turtle id in the list to be active. 
+
+Public void update() 
+	This method is used to update the model by executing turtle commands. 
+	
+
+
+
+### Multiple Turtle Command Parsing API
+
+Interface CommandMap (implemented by MapMaker)
+
+Public Map<K,V> getPTLMap();
+	Returns the unmodifiable map of fully parsed and broken down commands for execution by the compiler. 
+
+
+Class StringListCreator - takes a originally parsed command, and creates sublists that can be used by the SubListProcessor and the MapMaker; these lists represent blocks of commands that correspond to different sets of active turtles. The StringListCreator creates sublists at every Ask, Tell and AskWith, as well as all the commands preceding and trailing such statements, if applicable. 
+
+Public <List<List<String>>> getSublists
+	Returns a list of sublists, each of which represents a broken down command, for use by the SubListProcessor. 
+
+Class SubListProcessor - takes a list of sublists, and creates command objects for all the Ask, Tell and AskWith sublists, as well as lists of trailing and preceding commands. 
+
+Public List<Object> getCommandObjects
+	Returns an unmodifiable list of the created command objects. 
+
+Public List<String> getRemainingCommands
+	Returns an unmodifiable list of the trailing commands. 
+
+Public List<String> getPrecedingCommands
+	Returns an unmodifiable list of the preceding commands. 
+
+Class QueueConstructor  - used to create a Queue given a list of strings 
+
+Public Queue<String> getParsedQ
+	Returns a queue of the list of strings (passed in the constructor), without any Ask, Tell or Askwith  objects 
+
+Public Queue<String> qetQ
+	Returns a queue of the list of string (passed in the constructor) without making any modifications to the list
+
+
 
