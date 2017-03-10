@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
@@ -86,19 +87,15 @@ public class SubListProcessor {
 	}
 
 	public List<String> getRemainingCommands(){
-		return remaining; 
-	}
-
-	public List<Object> getCommands(){
-		return commandObjects;
+		return Collections.unmodifiableList(remaining); 
 	}
 
 	public List<Object> getCommandObjects(){
-		return commandObjects; 
+		return Collections.unmodifiableList(commandObjects); 
 	}
 
 	public List<String> getPrecedingCommands(){
-		return preceding; 
+		return Collections.unmodifiableList(preceding); 
 	}
 
 

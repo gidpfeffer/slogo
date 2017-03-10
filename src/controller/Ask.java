@@ -3,11 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-import model.command.Command; 
-
-public class Ask  extends MultipleTurtleCommand {
-	AskTellData dataObject; 
-	List<String> parsedData; 
+public class Ask implements MultipleTurtleCommand {
+	private AskTellData dataObject; 
+	private List<String> parsedData; 
 	
 	private final int TURTLE_BRACKET_COUNT = 2; 
 	private final int COMMANDS_BRACKET_COUNT = 4;
@@ -44,6 +42,7 @@ public class Ask  extends MultipleTurtleCommand {
 				turtles.add(st);
 			}
 		}
+		
 		if (bracketCount==TURTLE_BRACKET_COUNT){
 			while (bracketCount< COMMANDS_BRACKET_COUNT && !commandQ.isEmpty()){
 				String st1 = commandQ.poll(); 

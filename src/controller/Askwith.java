@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 
-public class Askwith extends MultipleTurtleCommand{
+public class Askwith implements MultipleTurtleCommand{
 	AskTellData data; 
 	
 	List<String> toParse; 

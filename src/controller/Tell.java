@@ -6,7 +6,7 @@ import java.util.Queue;
 import model.command.Command;
 import model.turtle.Turtle; 
 
-public class Tell extends MultipleTurtleCommand{
+public class Tell implements MultipleTurtleCommand{
 	AskTellData data; 
 	List<String> commands; 
 	
