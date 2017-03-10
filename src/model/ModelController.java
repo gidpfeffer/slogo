@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import java.util.Queue;
-import java.util.function.Predicate;
 
 import controller.BackEndHandler;
 
@@ -35,7 +34,7 @@ public class ModelController {
 		myActiveTurtleIDs = new ArrayList<Double>();
 		myActiveTurtleIDs.add(DEFAULT_TURTLE_ID);
 		
-		myHandler = handler; 	
+		myHandler = handler; 	 
 	}
 
 	public void update(Queue<TreeNode> commandsToExecute){
@@ -85,10 +84,5 @@ public class ModelController {
 		myActiveTurtleIDs.clear();
 		myActiveTurtleIDs.addAll(actives);
 	}
-//	
-//	private Turtle getTurtleByID(double id){
-//		Predicate<? super Turtle> predicate = t -> t.getID() == id;
-//		return myTurtles.stream().filter(predicate).findFirst().get();
-//		}
-	
+
 }

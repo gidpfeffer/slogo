@@ -6,7 +6,6 @@ import controller.BackEndHandler;
 import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
-import model.turtle.State;
 
 public class Turtles extends LogicCommand implements Command {
 

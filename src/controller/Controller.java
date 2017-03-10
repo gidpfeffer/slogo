@@ -105,7 +105,9 @@ public class Controller {
 		compiler = new Compiler(); 
 		configureVariableStorage(); 
 	}
-
+	private String getLang(){
+		return currentLang.toString();
+	}
 	private void setRelation(Double id){
 		 findTurtle(id).addObserver(myViewController.addTurtle(findTurtle(id)));
 	}
@@ -161,7 +163,7 @@ public class Controller {
 			
 			
 			
-			MapMaker MM = new MapMaker(comms, precedingComms,  remainingComms, myLiteralMap, myModel);
+			MapMaker MM = new MapMaker(comms, precedingComms,  remainingComms, myLiteralMap, myModel,getLang());
 			
 			
 			
@@ -246,6 +248,4 @@ public class Controller {
 		return myViewController;
 	}
 
-
-	
 }
