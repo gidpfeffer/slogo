@@ -1,7 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -67,8 +67,8 @@ public class Controller {
 
 	private ModelController myModel; 
 	private List<Turtle> myTurtles;
-	private List<Double> activeTurtleIndexList;
-	//private List<Double> currentTurtleIds; 
+
+	private Map<Double,List<String>> myLiteralMap;
 
 	private NewParser myParser;
 	private Compiler compiler;
@@ -76,20 +76,17 @@ public class Controller {
 	private UIMain myViewController;
 	private String output; 
 	private final String languageLocation = "resources.languages/";
-	private final Double DEFAULT_TURTLE_ID = 1.0; 
 	private StringBuilder currentLang; 
+	private final Double DEFAULT_TURTLE_ID = 1.0; 
 
 
 	public Controller(){
 		myModel = new ModelController(new modelHandler()); 
 		myTurtles = myModel.getTurtles();
-		activeTurtleIndexList = new ArrayList<Double>();
-		activeTurtleIndexList.add(DEFAULT_TURTLE_ID);
+
+		myLiteralMap = new HashMap<Double,List<String>>();
+		myLiteralMap.put(DEFAULT_TURTLE_ID, new ArrayList<String>());
 		
-		//currentTurtleIds = new ArrayList<Double>(); 
-		//currentTurtleIds.add(DEFAULT_TURTLE_ID);
-		
-		activeTurtleIndexList.add(DEFAULT_TURTLE_ID);
 		myViewController = new UIMain(new myHandler(), "English"); // handler currently Front to Back
 
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
