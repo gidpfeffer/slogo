@@ -242,7 +242,7 @@ public class UIMenuView extends UIView {
 			FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
 			FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
 			fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
-			fileChooser.setInitialDirectory(new File("/images"));
+			fileChooser.setInitialDirectory(new File("images"));
 			File file = fileChooser.showOpenDialog(null);
 			try {
 				if (file != null) {
