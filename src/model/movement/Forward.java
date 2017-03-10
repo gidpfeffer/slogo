@@ -2,6 +2,7 @@ package model.movement;
 
 import java.util.List;
 
+import controller.BackEndHandler;
 import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
@@ -20,7 +21,7 @@ public class Forward extends TurtleCommand implements Command{
 		myTurtleState = st;
 	}
 	
-	public void execute(){
+	public void execute(BackEndHandler myHandler){
 		TurtleState st = (TurtleState) myTurtleState;
 		double newX = st.getX()+Math.cos(Math.toRadians(st.getHeadAngle()))*pixels;		
 		double newY = st.getY()+Math.sin(Math.toRadians(st.getHeadAngle()))*pixels;

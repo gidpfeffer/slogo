@@ -1,7 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -9,12 +9,11 @@ import java.util.Queue;
 import gui.UIMain;
 import gui.tableviews.UIVariablesView;
 import model.*;
-import model.command.TreeNode; 
-
+import model.command.TreeNode;
+import model.turtle.State;
 import model.turtle.Turtle;
 import model.turtle.TurtleState;
 import parser.main.NewParser;
-import parser.main.Parser;
 import parser.storage.*;
 import parser.storage.VariableStorage;
 import parser.tokenizer.ProtectedTokenList;
@@ -57,13 +56,25 @@ public class Controller {
 			reset(); 
 		}
 
+		@Override
+		public double getNumTurtle() {
+			// TODO Auto-generated method stub
+			return getNums(); 
+		}
+		
+	
+
+		public void setRelationship(Double id){
+			setRelation( id); 
+		}
+
 	}
 
 
 	private ModelController myModel; 
 	private List<Turtle> myTurtles;
-	private List<Double> activeTurtleIndexList;
-	//private List<Double> currentTurtleIds; 
+
+	private Map<Double,List<String>> myLiteralMap;
 
 	private NewParser myParser;
 	private Compiler compiler;
@@ -71,20 +82,17 @@ public class Controller {
 	private UIMain myViewController;
 	private String output; 
 	private final String languageLocation = "resources.languages/";
-	private final Double DEFAULT_TURTLE_ID = 1.0; 
 	private StringBuilder currentLang; 
+	private final Double DEFAULT_TURTLE_ID = 1.0; 
 
 
 	public Controller(){
 		myModel = new ModelController(new modelHandler()); 
 		myTurtles = myModel.getTurtles();
-		activeTurtleIndexList = new ArrayList<Double>();
-		activeTurtleIndexList.add(DEFAULT_TURTLE_ID);
+
+		myLiteralMap = new HashMap<Double,List<String>>();
+		myLiteralMap.put(DEFAULT_TURTLE_ID, new ArrayList<String>());
 		
-		//currentTurtleIds = new ArrayList<Double>(); 
-		//currentTurtleIds.add(DEFAULT_TURTLE_ID);
-		
-		activeTurtleIndexList.add(DEFAULT_TURTLE_ID);
 		myViewController = new UIMain(new myHandler(), "English"); // handler currently Front to Back
 
 		// set the observable/observer relationship for the first turtle - we can make this into a method. 
@@ -97,7 +105,15 @@ public class Controller {
 
 	}
 
-
+	private void setRelation(Double id){
+		 findTurtle(id).addObserver(myViewController.addTurtle(findTurtle(id)));
+	}
+	
+	private double getNums() {
+		// TODO Auto-generated method stub
+		return myModel.getTurtles().size();
+	}
+	
 	private void configureVariableStorage() {
 		VariableStorage vars = compiler.getVars(); 
 		UIVariablesView variableBox = myViewController.getVariableView();
@@ -111,7 +127,7 @@ public class Controller {
 
 
 	public void changePalette(double index, double r, double g, double b){
-		myViewController.setPalleteAtIndex(index,r,g,b);
+		myViewController.setPaletteAtIndex(index,r,g,b);
 	}
 
 	public void changeLanguage(String language) {
@@ -124,29 +140,41 @@ public class Controller {
 	public void processInput(String input){
 		try{
 			ProtectedTokenList list = myParser.parse(input);
-			Map<Double, ProtectedTokenList> turtlesToCommands = parseList(list);
-			Compiler c = new Compiler(); 
+			// clear literalMAp here 
+			myLiteralMap.clear();
+			
+			
+			StringListCreator SLC = new StringListCreator(list.getLiterals());
+			List<List<String>> subs = SLC.getSublists();
+			
+			SubListProcessor SLP = new SubListProcessor(subs);
+			List<String> remainingComms = SLP.getRemainingCommands();
+			List<String> precedingComms = SLP.getPrecedingCommands();
+			List<Object> comms = SLP.getCommandObjects();
+			
+			MapMaker MM = new MapMaker(comms, precedingComms,  remainingComms, myLiteralMap, myModel);
+			Map<Double, ProtectedTokenList> turtlesToCommands = MM.getPTLMap();
+			printTokenList(turtlesToCommands);
+			
 
 			// refactor into a method 
 			
 			for (Double turtleId: turtlesToCommands.keySet()){
+				
 				ProtectedTokenList commandsToApply = turtlesToCommands.get(turtleId);
-				List<Turtle> currentTurtles = myModel.getTurtles(); 
-				
-				TurtleState t = findTurtle(turtleId, currentTurtles);
-				Queue<TreeNode> Q = c.compile(t, commandsToApply); 
-				
-			
 				
 				TurtleState t = findTurtle(turtleId);
-				Queue<TreeNode> Q = c.compile(t, commandsToApply); 
+				Queue<TreeNode> Q = compiler.compile(t, commandsToApply); 
+				
 
 				myModel.update(Q);
+				
 				output = myModel.getStringOutput();
 				myViewController.addNewOutput(output);
 				
 			}
-
+			
+			myViewController.getFunctionsBox().setFunctionBox(compiler.getFunctionList());
 
 		}
 		catch (SLogoException e){ 
@@ -155,9 +183,18 @@ public class Controller {
 		output = myModel.getStringOutput();
 	}
 
-	private TurtleState findTurtle (Double turtleId, List<Turtle> currentTurtles) {
+	private void printTokenList(Map<Double, ProtectedTokenList> p) {
+		for (Double key : p.keySet()){
+			System.out.println("turtle is " + key);
+			System.out.println("literals are " + p.get(key).getLiterals());
+			System.out.println("logo is " + p.get(key).getLogo() );
+		}
+		
+	}
+
+	private TurtleState findTurtle (Double turtleId) {
 		try{
-		for (Turtle t: currentTurtles){
+		for (Turtle t: myModel.getTurtles()){
 			if (t.getID() == turtleId){
 				return t.getState();
 			}
@@ -168,23 +205,16 @@ public class Controller {
 		}
 		return null; 
 	}
-
-
-	private Map<Double, ProtectedTokenList> parseList(ProtectedTokenList list) {
-		AskTellParser ap = new AskTellParser(myModel, myViewController); 
-		ap.parseCommands(list);		
-		return ap.getParsedCommands(); 
-	}
-
-
+ 
 
 	public String getStringOutput(){
 		return output; 
 	}
 
 	private void reset(){
+		myModel.reset(); // order important 
  		myViewController.clearScreen();
-		myModel.reset(); 
+		
 	}
 
 

@@ -9,6 +9,7 @@ import parser.control_structures.ForHandler;
 import parser.control_structures.IfElseHandler;
 import parser.control_structures.IfHandler;
 import parser.control_structures.RepeatHandler;
+import parser.interfaces.BracketHandler;
 import parser.storage.CommandHandler;
 import parser.storage.TotalStorage;
 import parser.tokenizer.TokenList;
@@ -32,7 +33,7 @@ public class Interpreter {
 	}
 	
 	private void makeRegHandlers(){
-		regLoops = new BracketHandler[] {new RepeatHandler(), new IfHandler(), new IfElseHandler()};
+		regLoops = new AbstractBracketHandler[] {new RepeatHandler(), new IfHandler(), new IfElseHandler()};
 	}
 	
 	private void checkValidity(TokenList tokens){
@@ -42,10 +43,10 @@ public class Interpreter {
 	
 	public void handleVarLoops(TokenList TL, State state){
 		checkValidity(TL);
+		commandHandler.fix(TL);
 		for(BracketHandler b: varLoops){
 			b.handle(TL, state);
 		}
-		commandHandler.fix(TL);
 	}
 	
 	public void handleRegLoops(TokenList TL, State state){
