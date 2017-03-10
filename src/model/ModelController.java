@@ -20,6 +20,7 @@ public class ModelController {
 	List<Double> myActiveTurtleIDs;
 
 	String myOutput; 
+	String currentLang; 
 	BackEndHandler myHandler; 
 	
 	private final Double DEFAULT_TURTLE_ID = 1.0; 
@@ -36,6 +37,7 @@ public class ModelController {
 		myActiveTurtleIDs.add(DEFAULT_TURTLE_ID);
 		
 		myHandler = handler; 	
+		currentLang = handler.getCurrentLang(); 
 	}
 
 	public void update(Queue<TreeNode> commandsToExecute){
@@ -47,6 +49,10 @@ public class ModelController {
 			myOutput = ((Double) command.getValue()).toString();
 			
 		}
+	}
+	
+	public String getLanguage(){
+		return currentLang; 
 	}
 	
 

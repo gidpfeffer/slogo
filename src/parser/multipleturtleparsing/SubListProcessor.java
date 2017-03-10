@@ -10,13 +10,11 @@ import java.util.Queue;
 import java.lang.reflect.Constructor;
 import controller.SLogoException;
 import model.ModelController;
-import model.multipleturtle.AskTellData;
 
 import model.multipleturtle.Tell;
 
 public class SubListProcessor {
 
-	private List<AskTellData> processedCommands; 
 	private List<String> remaining; 	
 	private List<String> preceding; 
 	private List<Object> commandObjects; 
