@@ -16,6 +16,7 @@ public class ModelController {
 	
 	List<Turtle> myTurtles; 
 	List<Double> myTurtleIDs; 
+	List<Double> myActiveTurtleIDs;
 
 	String myOutput; 
 	BackEndHandler myHandler; 
@@ -28,6 +29,10 @@ public class ModelController {
 		
 		myTurtleIDs = new ArrayList<Double>(); 
 		myTurtleIDs.add(DEFAULT_TURTLE_ID);
+		
+		
+		myActiveTurtleIDs = new ArrayList<Double>();
+		myActiveTurtleIDs.add(DEFAULT_TURTLE_ID);
 		
 		myHandler = handler; 	
 	}
@@ -53,6 +58,9 @@ public class ModelController {
 		return myTurtleIDs; 
 	}
 	
+	public List<Double> getActiveTurtleIDs(){
+		return myActiveTurtleIDs;
+	}
 	
 	public String getStringOutput(){
 		return myOutput; 
@@ -64,11 +72,16 @@ public class ModelController {
 		}
 	}
 	
-	
 	public Turtle makeNewTurtle(double id){
 		Turtle newTurtle = new Turtle(id);
 		myTurtles.add(newTurtle);
+		myTurtleIDs.add(id);
 		return newTurtle;
+	}
+	
+	public void setActiveTurtles(List<Double> actives){
+		myActiveTurtleIDs.clear();
+		myActiveTurtleIDs.addAll(actives);
 	}
 	
 }
