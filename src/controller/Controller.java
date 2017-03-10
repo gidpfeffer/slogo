@@ -71,6 +71,11 @@ public class Controller {
 			setRelation( id); 
 		}
 
+		@Override
+		public String getCurrentLang() {
+			return getLang(); 
+		}
+
 	}
 
 
@@ -107,7 +112,9 @@ public class Controller {
 		configureVariableStorage(); 
 
 	}
-
+	private String getLang(){
+		return currentLang.toString();
+	}
 	private void setRelation(Double id){
 		 findTurtle(id).addObserver(myViewController.addTurtle(findTurtle(id)));
 	}

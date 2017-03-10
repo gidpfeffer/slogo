@@ -70,7 +70,7 @@ public class MapMaker implements CommandMap<Double, List<String>, ProtectedToken
 			bigString = bigString + literal + " ";
 		}
 
-		NewParser p = new NewParser("resources.languages/English");
+		NewParser p = new NewParser(currentModel.getLanguage());
 
 		return p.parse(bigString);
 	}
