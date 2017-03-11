@@ -31,7 +31,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
-
+/**
+ * Main class in charge of all GUI components.
+ * @author TNK
+ *
+ */
 public class UIMain implements UIMainAPI, Observer {
 	
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
@@ -72,7 +76,12 @@ public class UIMain implements UIMainAPI, Observer {
 		_resources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
 		setupViews();
 	}
-
+	/**
+	 * This handler is used to provide part classes 
+	 * the ability to access methods available in UIMain
+	 * @author TNK
+	 *
+	 */
 	public class myHandler implements UIMainHandler {
 		@Override
 		public void setLineColor(Color color) {
@@ -100,7 +109,12 @@ public class UIMain implements UIMainAPI, Observer {
 		}
 
 	}
-	
+	/**
+	 * Allows the ButtonControlView to access methods in UIMain
+	 * For example, changing the speed of animation or pausing animation 
+	 * @author TNK
+	 *
+	 */
 	public class ButtonHandler implements ButtonControlHandler{
 
 		@Override
@@ -146,7 +160,10 @@ public class UIMain implements UIMainAPI, Observer {
 		Alert alert = new Alert(AlertType.CONFIRMATION, error, ButtonType.CLOSE);
 		alert.showAndWait();
 	}
-
+	
+	/**
+	 * clears the lines on screen as well as command history and current terminal input
+	 */
 	@Override
 	public void clearScreen() {
 		System.out.println("clearing screen");

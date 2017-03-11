@@ -10,6 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 
+
+/**
+ * Holds palettes with colors.
+ * User can use the index of the palette to change the line color or background color
+ * @author TNK
+ *
+ */
 final class Palette extends UIView {
 
 	private Color _color;

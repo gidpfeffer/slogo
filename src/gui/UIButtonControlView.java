@@ -16,6 +16,12 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 
+/**
+ * Purpose of this class is to provide animation control
+ * Contains the Play, Pause, and Stop button,and Animation Speed Slider 
+ * @author TNK
+ *
+ */
 public class UIButtonControlView extends UIView{
 	private ImageButton _pauseButton;
 	private ImageButton _playButton;

@@ -25,7 +25,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
-
+/**
+ * The turtle that is seen by the user
+ * Contains reference to TurtleState from the backend
+ * Contains animators for translating and rotating turtle
+ * Provides the framework for sequentially executing commands
+ * @author TNK
+ *
+ */
 public class UITurtle extends Pane implements Observer {
 
 	private TurtleState _turtleState;
@@ -49,6 +56,11 @@ public class UITurtle extends Pane implements Observer {
 		this(animators, new Image("turtle.png"),state, handler, displayBounds);
 	}
 	
+	/**
+	 * UNIMPLEMENTED
+	 * This event handler should allow the user to right click the turtle
+	 * and toggle attributes such as Penup/Pendown and Visibility
+	 */
 	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -66,6 +78,11 @@ public class UITurtle extends Pane implements Observer {
 		_handler = handler;
 		_displayBounds = displayBounds;
 		setImageView(new ImageView(image));
+		setupAnimators(animators);
+		this.setTurtleState(getTurtleState());
+	}
+	
+	private void setupAnimators(Tuple<TranslateTransition, RotateTransition> animators){
 		_animators = animators;
 		_animators.x.setOnFinished(new EventHandler<ActionEvent>() {
 			@Override
@@ -80,7 +97,6 @@ public class UITurtle extends Pane implements Observer {
 				playNextAnimation();
 			}
 		});
-		this.setTurtleState(getTurtleState());
 	}
 
 	public void setImageView(ImageView imageView) {
@@ -100,7 +116,9 @@ public class UITurtle extends Pane implements Observer {
 			playNextAnimation();
 		}
 	}
-
+	/**
+	 * Pops a TurtleAnimationData and and plays it
+	 */
 	private void playNextAnimation() {
 		TurtleAnimationData next = _queue.poll();
 		if (next != null) {
@@ -115,10 +133,6 @@ public class UITurtle extends Pane implements Observer {
 		if (getPriorAttributes() != null && getTurtleState().getPen()) {
 			addLine();
 		}
-		// TODO UNCOMMENT THE LINE UNDER THIS
-		// this.setVisiblityTo(!this.isVisible());
-
-		// TODO: mention this in analysis
 		// setting the angle was a complicated process but i don't see any
 		// easier way
 		// to mathematically ensure that the turtles angle on display is in sync
@@ -136,6 +150,7 @@ public class UITurtle extends Pane implements Observer {
 		// to zero while still preserving the angles direction (positive or
 		// negative)
 		double deltaAngle = angle1.y == Math.min(angle1.y, angle2.y) ? angle1.x : angle2.x;
+		//If animation speed is too much, then don't animate and directly move turtle
 		if(ANIMATION_SPEED > MAX_SPEED){
 			setTurtleState(getTurtleState());
 		}
@@ -172,7 +187,12 @@ public class UITurtle extends Pane implements Observer {
 			_handler.addLineToScreen(line);
 		}
 	}
-
+	
+	/**
+	 * sets TurtleState and updates the graphical components of the UITurtle to 
+	 * reflect the TurtleState
+	 * @param s
+	 */
 	public void setTurtleState(TurtleState s) {
 		setTurtleAttributes(GUITools.turtleCoordinateToPixelCoordinate(s, _displayBounds),(-s.getHeadAngle() + 90));
 		this._turtleState = s;
@@ -236,7 +256,10 @@ public class UITurtle extends Pane implements Observer {
 		}else if(_shapeIndex != newState.getShapeIndex()){
 			this.setTurtleImage(_handler.getTurtleImage(newState.getShapeIndex()));
 			_shapeIndex = newState.getShapeIndex();
-		}else{
+		}else if(this._strokeWidth != newState.getPenSize()){
+			_strokeWidth = newState.getPenSize();
+		}
+		else{
 			addAnimationToQueue(-newState.getHeadAngle() + 90, GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
 		}
 	}

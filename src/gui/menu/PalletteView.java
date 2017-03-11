@@ -13,6 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+
+/**
+ * Holds palettes with colors.
+ * User can use the index of the palette to change the line color or background color
+ * @author TNK
+ *
+ */
 public class PalletteView extends UIView {
 
 	private Map<Double, Palette> _palettes = new HashMap<Double, Palette>();

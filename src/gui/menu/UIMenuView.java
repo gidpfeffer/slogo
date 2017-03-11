@@ -51,6 +51,13 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
+/**
+ * Menu view holds several GUI components like PaletteView and AttributesView
+ * The purpose of the menu is to open up space in the main display so that 
+ * it isn't as cluttered.
+ * @author TNK
+ *
+ */
 public class UIMenuView extends UIView {
 
 	private final double TOP_INSET = 60;

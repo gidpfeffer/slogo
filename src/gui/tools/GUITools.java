@@ -19,6 +19,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import model.turtle.TurtleState;
 
+/**
+ * contains static methods for general usage by all GUI components
+ * @author TNK
+ *
+ */
 public class GUITools {
 	public static Background getBackgroundWithColor(Color color){
 		return getBackgroundWithColor(color, 0);
