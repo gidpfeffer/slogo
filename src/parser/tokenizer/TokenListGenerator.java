@@ -27,9 +27,9 @@ public class TokenListGenerator {
 		List<String> logo = new ArrayList<>();
 		
 		while(!tokenizer.isEmpty()){
-			TokenIdentifier TI = tokenizer.getToken();
-			literal.add(TI.getToken());
-			logo.add(TI.getType());
+			TokenEntry<String,String> TI = tokenizer.getToken();
+			literal.add(TI.getKey());
+			logo.add(TI.getValue());
 		}
 		tokens = new TokenList(literal, logo);
 	}
