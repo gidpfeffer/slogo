@@ -9,21 +9,8 @@ import model.command.TreeNode;
 public class ReflectionTester {
 	
 	public static void main(String args[]) throws ClassNotFoundException{
-        Class<?> clazz = Class.forName("model.Constant");
-        makeBasicClass(clazz);
-        clazz = Class.forName("model.Forward");
+        Class<?> clazz = Class.forName("model.Forward");
         makeAdvancedClass(clazz);
-	}
-	
-	public static void makeBasicClass(Class<?> clazz){
-        try {
-            // the more robust way
-            Constructor<?> ctor = clazz.getDeclaredConstructor(double.class);
-            Constant c = (Constant) ctor.newInstance(5.0);
-            System.out.println("Printing: " + c.getValue());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 	}
 	
 	public static void makeAdvancedClass(Class<?> clazz){
