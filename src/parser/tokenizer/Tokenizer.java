@@ -12,7 +12,7 @@ import controller.SLogoException;
 public class Tokenizer {
 	private String[] syntax = {"", "resources/languages/syntax"};
 
-	private List<TokenPatterns> patterns;
+	private List<TokenEntry<Pattern, String>> patterns;
 	private String toTokenize;
 	private String[] tokenArray;
 	private int index;
@@ -32,7 +32,9 @@ public class Tokenizer {
 			while (iter.hasMoreElements()) {
 				String key = iter.nextElement();
 				String regex = resources.getString(key);
-				patterns.add(new TokenPatterns(Pattern.compile(regex, Pattern.CASE_INSENSITIVE), key));
+				TokenEntry<Pattern, String> entry = 
+						new TokenEntry<>(Pattern.compile(regex, Pattern.CASE_INSENSITIVE), key);
+				patterns.add(entry);
 			}
 		}
 	}
@@ -42,12 +44,13 @@ public class Tokenizer {
 		tokenArray = toTokenize.split("\\s+|\n");
 	}
 
-	public TokenIdentifier getToken() {
+	public TokenEntry<String, String> getToken() {
 		toTokenize = tokenArray[index];
-		for (TokenPatterns p : patterns) {
-			if (match(toTokenize, p.getPattern())) {
+		for (TokenEntry<Pattern, String> t : patterns) {
+			if (match(toTokenize, t.getKey())) {
 				index++;
-				return new TokenIdentifier(toTokenize, p.getTokenTypes());
+				TokenEntry<String, String> entry = new TokenEntry<>(toTokenize, t.getValue());
+				return entry;
 			}
 		}
 		throw new SLogoException("Could not identify: " + toTokenize);
