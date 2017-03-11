@@ -10,7 +10,7 @@ import controller.SLogoException;
 
 
 public class Tokenizer {
-	private static final String[] SYNTAX = {"", "resources/languages/Syntax"};
+	private String[] syntax = {"", "resources/languages/syntax"};
 
 	private List<TokenPatterns> patterns;
 	private String toTokenize;
@@ -18,7 +18,7 @@ public class Tokenizer {
 	private int index;
 
 	public Tokenizer(String s, String language) {
-		SYNTAX[0] = language;
+		syntax[0] = language;
 		toTokenize = s;
 		fillPatterns();
 		breakUp();
@@ -26,8 +26,8 @@ public class Tokenizer {
 
 	private void fillPatterns() {
 		patterns = new ArrayList<>();
-		for (int i = 0; i < SYNTAX.length; i++) {
-			ResourceBundle resources = ResourceBundle.getBundle(SYNTAX[i]);
+		for (int i = 0; i < syntax.length; i++) {
+			ResourceBundle resources = ResourceBundle.getBundle(syntax[i]);
 			Enumeration<String> iter = resources.getKeys();
 			while (iter.hasMoreElements()) {
 				String key = iter.nextElement();

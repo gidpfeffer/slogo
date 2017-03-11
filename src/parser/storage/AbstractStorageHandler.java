@@ -2,14 +2,14 @@ package parser.storage;
 
 import parser.tokenizer.TokenList;
 
-public abstract class StorageHandler {
+public abstract class AbstractStorageHandler {
 	protected static final String CONSTANT = "Constant";
 	protected String indicator, newIndicator;
 	protected TokenList list;
 	protected int location;
 	protected boolean madeNew;
 	
-	public StorageHandler(String indicator, String newIndicator){
+	public AbstractStorageHandler(String indicator, String newIndicator){
 		this.indicator = indicator;
 		this.newIndicator = newIndicator;
 	}

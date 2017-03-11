@@ -19,8 +19,4 @@ public class CommandStorage {
 	public void setValue(FunctionObj key, TokenList val){
 		map.put(key, val);
 	}
-	
-	public void clearMap(){
-		map.clear();
-	}
 }

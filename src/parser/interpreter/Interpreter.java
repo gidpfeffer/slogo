@@ -10,6 +10,7 @@ import parser.control_structures.IfElseHandler;
 import parser.control_structures.IfHandler;
 import parser.control_structures.RepeatHandler;
 import parser.interfaces.BracketHandler;
+import parser.interfaces.StorageFixer;
 import parser.storage.CommandHandler;
 import parser.storage.TotalStorage;
 import parser.tokenizer.TokenList;
@@ -17,7 +18,7 @@ import parser.tokenizer.TokenList;
 public class Interpreter {
 	private BracketHandler[] varLoops, regLoops;
 	private TotalStorage storage;
-	private CommandHandler commandHandler;
+	private StorageFixer commandHandler;
 
 	public Interpreter(TotalStorage storage) {
 		this.storage = storage;

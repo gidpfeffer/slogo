@@ -10,7 +10,6 @@ import model.command.TreeNode;
 
 public class NaturalLog extends LogicCommand implements Command{
 	
-
 	
 	public NaturalLog(List<TreeNode> args){
 		children = args;
@@ -29,9 +28,6 @@ public class NaturalLog extends LogicCommand implements Command{
 		else{
 			return val;
 		}
-		
-	
-		
 	}
 	
 }

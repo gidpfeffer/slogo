@@ -7,11 +7,11 @@ import model.command.TreeNode;
 import parser.interpreter.AbstractBracketAid;
 import parser.reflection.TreeGenerator;
 
-public abstract class RegControl extends AbstractBracketAid{
+public abstract class AbstractAdvancedControl extends AbstractBracketAid{
 	protected static final String CONSTANT = "Constant";
 	protected int ifStart, ifEnd, elseStart, elseEnd;
 	
-	public RegControl(String indicator){
+	public AbstractAdvancedControl(String indicator){
 		super(indicator);
 	}
 	

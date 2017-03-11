@@ -6,23 +6,24 @@ import java.util.Queue;
 import controller.SLogoException;
 import model.command.TreeNode;
 import model.turtle.State;
+import parser.interfaces.RangeHandler;
 import parser.reflection.TreeGenerator;
 import parser.tokenizer.TokenList;
 
-public abstract class RangeHandler {
+public abstract class AbstractRangeHandler implements RangeHandler{
 	protected List<Integer> list;
 	
-	public RangeHandler(){
+	public AbstractRangeHandler(){
 		
 	}
 	
-	public abstract void handle(State t, TokenList TL);
+	public abstract void handleRange(State t, TokenList TL);
 	
 	protected Queue<TreeNode> getQueue(State t, TokenList TL){
 		TreeGenerator TG = new TreeGenerator(TL, t);
 		if(TG.getAllQueue().size() == 0) 
 			throw new SLogoException("invalid syntax");
-		return TG.getAllQueue();
+		return TG.getCommandQueue();
 	}
 	
 	protected void makeList(double increment, double end, double start){

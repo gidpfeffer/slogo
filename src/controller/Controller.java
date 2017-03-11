@@ -102,12 +102,12 @@ public class Controller {
 		myTurtles.get(0).getState().addObserver(myViewController.addTurtle(myTurtles.get(0).getState())); 
 
 		changeLanguage("English");
-		myParser = new NewParser(currentLang.toString());
 		compiler = new Compiler(); 
 		configureVariableStorage(); 
-
 	}
-
+	private String getLang(){
+		return currentLang.toString();
+	}
 	private void setRelation(Double id){
 		 findTurtle(id).addObserver(myViewController.addTurtle(findTurtle(id)));
 	}
@@ -138,7 +138,7 @@ public class Controller {
 		currentLang.append(languageLocation);
 		currentLang.append(language);
 		myParser = new NewParser(currentLang.toString());
-		
+		System.out.println(currentLang.toString());
 	}
 
 
@@ -163,7 +163,7 @@ public class Controller {
 			
 			
 			
-			MapMaker MM = new MapMaker(comms, precedingComms,  remainingComms, myLiteralMap, myModel);
+			MapMaker MM = new MapMaker(comms, precedingComms,  remainingComms, myLiteralMap, myModel,getLang());
 			
 			
 			
@@ -248,6 +248,4 @@ public class Controller {
 		return myViewController;
 	}
 
-
-	
 }

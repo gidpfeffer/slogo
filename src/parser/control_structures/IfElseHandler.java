@@ -1,9 +1,9 @@
 package parser.control_structures;
 
 import java.util.List;
-import parser.helpers.RegControl;
+import parser.helpers.AbstractAdvancedControl;
 
-public class IfElseHandler extends RegControl{
+public class IfElseHandler extends AbstractAdvancedControl{
 	private static final String INDICATOR = "IfElse";
 	
 	public IfElseHandler(){
