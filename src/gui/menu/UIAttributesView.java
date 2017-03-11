@@ -10,6 +10,11 @@ import gui.tools.MyColors;
 import javafx.scene.text.Text;
 import model.turtle.TurtleState;
 
+/**
+ * Displays the current attributes of the turtle
+ * @author TNK
+ *
+ */
 public class UIAttributesView extends UITableView{
 	private Map<Double, Text> _idToText = new HashMap<Double, Text>();
 	public UIAttributesView(Frame frame){

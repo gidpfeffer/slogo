@@ -2,6 +2,13 @@ package gui.tools;
 
 import javafx.scene.layout.Pane;
 
+/**
+ * 
+ * GUI objects inside a UIView can access frame and bounds to determine
+ * where to locate themselves
+ * @author TNK
+ *
+ */
 public class UIView extends Pane{
 	
 	private Frame _frame;

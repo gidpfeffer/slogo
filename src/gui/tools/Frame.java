@@ -1,5 +1,11 @@
 package gui.tools;
 
+/**
+ * Purpose is specify the layout of views with ease.
+ * Frame is used by UIView to set the layout, height, and width of itself.
+ * @author TNK
+ *
+ */
 public class Frame {
 	private double x;
 	private double y;

@@ -2,6 +2,11 @@ package gui.tools;
 
 import general_data_structures.Tuple;
 
+/**
+ * used in UITurtle for keeping a queue of animation data
+ * @author TNK
+ *
+ */
 public class TurtleAnimationData {
 	private double angle;
 	private Tuple<Double, Double> position;

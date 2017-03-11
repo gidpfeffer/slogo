@@ -23,6 +23,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.turtle.TurtleState;
 
+/**
+ * holds the turtles on display
+ * provides the functionality to move turtles graphically
+ * @author TNK
+ *
+ */
 public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 
 	class Handler implements TurtleDisplayHandler {
@@ -59,11 +65,7 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 	}
 
 	private void setupMouseControl() {
-		//setOnMouseClicked(mouseHandler);
 		setOnMouseDragged(mouseHandler);
-		//setOnMouseEntered(mouseHandler);
-		//setOnMouseExited(mouseHandler);
-		//setOnMouseMoved(mouseHandler);
 		setOnMousePressed(mouseHandler);
 		setOnMouseReleased(mouseHandler);
 
@@ -72,7 +74,13 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 	public void resetDisplay() {
 		clearLines();
 	}
-
+	/**
+	 * adds a new turtle to display with the given TurtleState
+	 * 
+	 * @param state
+	 * @return returns UITurtle so that the Controller class can add the turtle as an
+	 * observer to TurtleState
+	 */
 	public UITurtle addTurtle(TurtleState state) {
 		TranslateTransition tran = new TranslateTransition();
 		RotateTransition rot = new RotateTransition();
@@ -162,7 +170,9 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 	}
 
 	// MOUSE CONTROLS
-
+	/**
+	 * Purpose is to allow user to drag and drop the turtles on screen
+	 */
 	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
 		private UITurtle _selectedTurtle;
 		private Line _line;
@@ -200,7 +210,12 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 			}
 		}
 	};
-
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @return true if there is a turtle at (x,y) 
+	 */
 	private UITurtle detectTurtle(double x, double y) {
 		for(UITurtle t: _turtles){
 			if(t.getBoundsInParent().contains(x, y))
@@ -214,9 +229,13 @@ public class UITurtleDisplayView extends UIView implements UIDisplayAPI {
 			t.setSpeed(speed);
 		}
 	}
-	
+	/**
+	 * Purpose is to change the pos and angle of the current TurtleState to the new TurtleState
+	 * @param turtleState
+	 * @param newState
+	 * 
+	 */
 	private void updateTurtleStatePrimitives(TurtleState turtleState, TurtleState newState) {
-		//turtleState.setHeadAngle(newState.getHeadAngle());
 		turtleState.setAll((newState.getX()),(newState.getY()), newState.getHeadAngle());
 	}
 
