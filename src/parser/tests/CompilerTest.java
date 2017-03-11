@@ -3,7 +3,6 @@ package parser.tests;
 import java.util.Queue;
 
 import model.command.TreeNode;
-import model.command.TurtleCommand;
 import model.turtle.TurtleState;
 import parser.main.Compiler;
 import parser.main.NewParser;
