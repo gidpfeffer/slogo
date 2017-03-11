@@ -18,7 +18,8 @@ public class TreeGenerator {
 	private Stack<TreeNode> parsed;
 	private Stack<String> commands, logo;
 	private NumArgsHandler numArgs;
-	private Queue<TreeNode> commandQueue, allQueue;
+	private Queue<TreeNode> commandQueue;
+	private Stack<TreeNode> commandStack;
 	private static final String CONSTANT = "Constant";
 	private ClassGenerator CG;
 	private State turtle;
@@ -39,7 +40,7 @@ public class TreeGenerator {
 		logo = new Stack<>();
 		numArgs = new NumArgsHandler();
 		commandQueue = new LinkedList<>();
-		allQueue = new LinkedList<>();
+		commandStack = new Stack<>();
 	}
 	
 	private void fillStack(){
@@ -69,7 +70,7 @@ public class TreeGenerator {
 		if(!logoType.equals(CONSTANT) && !logoType.equals(PI)){
 			commandQueue.add(t);
 		}
-		allQueue.add(t);
+		commandStack.push(t);
 	}
 	
 	private TreeNode makeNode(String command, String logo, int arguments){
@@ -79,8 +80,7 @@ public class TreeGenerator {
 		}
 		else{
 			return CG.generate(logo, list, turtle);
-		}
-		
+		}	
 	}
 	
 	private List<TreeNode> makeList(int numArgs){
@@ -98,8 +98,8 @@ public class TreeGenerator {
 		return commandQueue;
 	}
 	
-	public Queue<TreeNode> getAllQueue(){
-		return allQueue;
+	public Stack<TreeNode> getCommandStack(){
+		return commandStack;
 	}
 	
 	public double getLast(){

@@ -24,7 +24,7 @@ public class RepeatHandler extends AbstractAdvancedControl{
 	}
 	
 	private int getTimes(){
-		return (int) evaluateExpression().remove().getValue();
+		return (int) evaluateExpression().pop().getValue();
 	}
 	
 	protected void replace(){

@@ -1,6 +1,6 @@
 package parser.helpers;
 
-import java.util.Queue;
+import java.util.Stack;
 
 import controller.SLogoException;
 import model.command.TreeNode;
@@ -38,12 +38,13 @@ public abstract class AbstractAdvancedControl extends AbstractBracketAid{
 		}
 	}
 	
-	protected Queue<TreeNode> evaluateExpression(){
+	protected Stack<TreeNode> evaluateExpression(){
 		TreeGenerator TG = new TreeGenerator(
 				list.newSubList(getLogoLocations(indicator).get(0) + 1, ifStart), turtle);
-		if(TG.getAllQueue().size() == 0) 
-			throw new SLogoException("invalid syntax");
-		return TG.getAllQueue();
+		Stack<TreeNode> stack = TG.getCommandStack();
+		if(stack.size() == 0) 
+			throw new SLogoException("No arguments provided");
+		return stack;
 	}
 
 }

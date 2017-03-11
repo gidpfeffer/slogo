@@ -1,7 +1,7 @@
 package parser.helpers;
 
 import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
 
 import controller.SLogoException;
 import model.command.TreeNode;
@@ -19,11 +19,11 @@ public abstract class AbstractRangeHandler implements RangeHandler{
 	
 	public abstract void handleRange(State t, TokenList TL);
 	
-	protected Queue<TreeNode> getQueue(State t, TokenList TL){
+	protected Stack<TreeNode> getQueue(State t, TokenList TL){
 		TreeGenerator TG = new TreeGenerator(TL, t);
-		if(TG.getAllQueue().size() == 0) 
+		if(TG.getCommandStack().size() == 0) 
 			throw new SLogoException("invalid syntax");
-		return TG.getCommandQueue();
+		return TG.getCommandStack();
 	}
 	
 	protected void makeList(double increment, double end, double start){

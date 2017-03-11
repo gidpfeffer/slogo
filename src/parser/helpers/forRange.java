@@ -1,7 +1,7 @@
 package parser.helpers;
 
 import java.util.ArrayList;
-import java.util.Queue;
+import java.util.Stack;
 
 import model.command.TreeNode;
 import model.turtle.State;
@@ -15,7 +15,7 @@ public class forRange extends AbstractRangeHandler{
 	@Override
 	public void handleRange(State t, TokenList TL) {
 		list = new ArrayList<>();
-		Queue<TreeNode> q = getQueue(t, TL);
-		makeList(q.remove().getValue(), q.remove().getValue(), q.remove().getValue());	
+		Stack<TreeNode> q = getQueue(t, TL);
+		makeList(q.pop().getValue(), q.pop().getValue(), q.pop().getValue());	
 	}
 }
