@@ -8,17 +8,15 @@
 
 |       Classes      |                                 What It's For                                 |                                                                                                                                   Public Methods                                                                                                                                  |
 |:------------------:|:-----------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|    TokenPatterns   |                         Storing a Pattern/String Entry                        |                                                                                                                   Pattern getPattern(),  String getTokenTypes()                                                                                                                   |
 | TokenListGenerator |                       Turning a String into a TokenList                       |                                                                                                                                TokenList getList()                                                                                                                                |
 |      TokenList     | A data structure for Literal/Logo pairings after parsing in the form of lists |                             String List getLiterals(), String List getLogo(), TokenList newSubList(int start, int end), TokenList oldSubList(int start, int end), void removeAll(int start, int end), void addAll(TokenList list, int loc), int size()                            |
 |      Tokenizer     |          Breaks the String into readable parts and gets the Logo keys         |                                                                                                                   TokenIdentifier getToken(), boolean isEmpty()                                                                                                                   |
-|   TokenIdentifier  |     A data structure for Literal/Logo pairings after parsing (like Entry)     |                                                                                                                        String getToken(), String getType()                                                                                                                        |
 | ProtectedTokenList |  A More protected version of the Token List for passing outside of the parser | Unmodifiable String List getLiterals(), Unmodifiable String List getLogo(), void add(TokenList list, int start), void add(TokenList list), void remove(int start, int stop), ProtectedTokenList oldSubList(int start, int end), ProtectedTokenList newSubList(int start, int end) |
 |   CommentRemover   |           Removes the comments from a String so as to not be parsed           |                                                                                                                                 String getString()                                                                                                                                |
+|     TokenEntry     |               Acts as a generic entry to token data structures                |                                                                                                                              K getKey(), V getValue()                                                                                                                             |
+
 
 **Class Descriptions**
-
-	TokenPatterns: Can be used to store a pattern with an associated String. Can be extended to any program which involves parsing with respect to patterns. Only has getters not setters. 
 
 	TokenListGenerator: This class is integral to the SLogo parser. Can be extended to any program/facet of the program that needs a <String List, String List> structure generated given a String. Is dependent on the other Tokenizer classes to help create the list. 
 
@@ -26,11 +24,11 @@
 
 	Tokenizer: Is responsible for breaking a String into its respective parts. This class could be a valuable asset to any parsing program. Can be continuously called until all parsed items have been parsed (isEmpty).
 
-	TokenIdentifier: Another form of an Entry like class. Stores two Strings, one literal and one logo. Could be used by anyone needing a <String, String> Entry. Only has getters, not setters to make sure Strings are maintained after generation. 
-
 	ProtectedTokenList: Intended to be a more secure form of a TokenList. Returns unmodifiable and checks to make sure that all added lists are the same size for example. Intended for primary use outside of the parser to make sure that the integrity of the data structure is maintained. Would have been implemented in the Parser with more time (more in Analysis). 
 
 	CommentRemover: A simple class which takes a String and returns a copy of that String with the comments removed. Currently uses "#" as the delimiter, but could be extended in the future to handle other delimiters.
+	
+	Token Entry acts as a generic entry class with key value pairing. Used to store Pattern to String and String to String in the tokenizer but could be extended to any < Key, Value >.
 
 ####  Storage
 
