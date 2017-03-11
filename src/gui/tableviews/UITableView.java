@@ -23,7 +23,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class UITableView extends UIView {
+/**
+ * provides the basic layout and functionality
+ * for UIVariablesView, UIVocabView, and UIAttributesView
+ * @author TNK
+ *
+ */
+public abstract class UITableView extends UIView {
 	private FlowPane _flowPane;
 	private List<Text> _texts = new ArrayList<Text>();
 	

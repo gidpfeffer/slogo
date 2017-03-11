@@ -8,6 +8,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 
+/**
+ * A button with an image
+ * @author TNK
+ *
+ */
 public class ImageButton extends Button {
 
     public void updateImages(final Image selected, final Image unselected) {

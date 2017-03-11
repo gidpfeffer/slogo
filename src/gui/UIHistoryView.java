@@ -10,6 +10,11 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 
+/**
+ * displays the command history
+ * @author TNK
+ *
+ */
 public class UIHistoryView extends UIView implements CommandHistoryAPI {
 	
 	private TextArea _textArea;

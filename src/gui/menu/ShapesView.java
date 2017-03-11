@@ -15,6 +15,14 @@ import javafx.scene.image.Image;
 import javafx.scene.text.FontWeight;
 
 
+/**
+ * holds the default images with indexes
+ * User can change the image of the turtle
+ * programmatically by specifying the index of 
+ * a ShapeEntry
+ * @author TNK
+ *
+ */
 public class ShapesView extends UIView {
 
 	private ResourceBundle _resources;
