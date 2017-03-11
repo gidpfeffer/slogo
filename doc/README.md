@@ -44,7 +44,7 @@ Start the program.Click on the top left menu, then the question mark to get a ba
 
 ## Any known bugs, crashes, or problems with the project's functionality
 
-For nested command such as product fd 50 rt 30, the order of commands executed on the turtle is reversed ( the turtle rotates then move forward ) 
+For nested command such as product fd 50 rt 30, the order of commands executed on the turtle is reversed ( the turtle rotates then move forward ). Also, the control structures don't support variables to iterate over although they do support commands. For example, must say for [ :x 1 10 1 ] or for [ :x 1 product 1 10 1 ]. make :y 10 for [ :x 1 :y 1 ] is not supported.
 
 ## Any extra features included in the project
 
