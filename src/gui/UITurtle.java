@@ -263,11 +263,21 @@ public class UITurtle extends Pane implements Observer {
 			addAnimationToQueue(-newState.getHeadAngle() + 90, GUITools.turtleCoordinateToPixelCoordinate(newState, _displayBounds));
 		}
 	}
-
+	
+	//UNIMPLEMENTED
+	//This method should stop the turtle and empty the animation queue.
+	//Current problem is that the animation stops but the TurtleState is out
+	//of sync with the display state.
 	public void stop() {
-		this._animators.x.stop();
-		this._animators.y.stop();
-		emptyAnimationQueue();
+		pause();
+		//emptyAnimationQueue
+		//setTurtleStateToDisplayState
+	}
+	private void setTurtleStateToDisplayState(){
+		this.setTurtleState(GUITools.guiTurtleToTurtleState(
+				this._turtleAtt.getAngle(),
+				new Tuple<Double, Double>(this._turtleAtt.getX(), this._turtleAtt.getY()),
+				_displayBounds));
 	}
 
 	private void emptyAnimationQueue() {
