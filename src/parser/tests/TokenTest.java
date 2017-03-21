@@ -1,3 +1,9 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to print the tokens that are generated after passing a String into the TokenList Generator
+ * Change testCode to try different tests
+ */
+
 package parser.tests;
 
 import java.util.List;

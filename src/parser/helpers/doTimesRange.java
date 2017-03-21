@@ -1,3 +1,9 @@
+/**
+ * Written by Gideon Pfeffer
+ * Handles the rnage for "doTimes"
+ * a lot like the "for" hanlder, except start and increment are always 1
+ */
+
 package parser.helpers;
 
 import java.util.ArrayList;
@@ -12,6 +18,10 @@ public class doTimesRange extends AbstractRangeHandler{
 	public doTimesRange(){
 	}
 
+	/**
+	 * makes the list given the end location from the compiled commands
+	 * assumes start and increment are always 1
+	 */
 	@Override
 	public void handleRange(State t, TokenList TL) {
 		list = new ArrayList<>();

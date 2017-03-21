@@ -1,3 +1,8 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to check whether or not a command is a TurtleCommand
+ */
+
 package parser.reflection;
 
 import java.util.Enumeration;
@@ -14,10 +19,17 @@ public class TurtleCommandHandler {
 		definePattern();
 	}
 
+	/**
+	 * gets the resource bundle where the data is stored
+	 */
 	private void definePattern(){
 		bundle = ResourceBundle.getBundle(TURTLE_COMMANDS);
 	}
 	
+	/**
+	 * @param logoKey gives a Logo command String (ex "Forward")
+	 * @return boolean telling whether or not that command is a TurtleCommand
+	 */
 	public boolean isTurtleCommand(String logoKey) {
 		Enumeration<String> iter = bundle.getKeys();
 		while (iter.hasMoreElements()) {

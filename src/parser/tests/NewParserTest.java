@@ -1,3 +1,9 @@
+/**
+ * Written by Gideon Pfeffer
+ * After refactoring the new Parser, this was used to test its functionality
+ * Change testCode to try different tests
+ */
+
 package parser.tests;
 
 import parser.main.NewParser;

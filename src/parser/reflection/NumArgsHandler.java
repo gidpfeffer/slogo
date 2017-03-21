@@ -1,3 +1,8 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to get the number of arguments for a given command
+ */
+
 package parser.reflection;
 
 import java.util.Enumeration;
@@ -11,10 +16,17 @@ public class NumArgsHandler {
 		definePattern();
 	}
 
+	/**
+	 * gets the resource bundle for the file that contains the number of arguments
+	 */
 	private void definePattern(){
 		bundle = ResourceBundle.getBundle(NUM_ARGS);
 	}
 	
+	/**
+	 * @param logoKey the Logo representation of a function ex. "Forward"
+	 * @return the number of arguments as an int
+	 */
 	public int getNumArgs(String logoKey) {
 		Enumeration<String> iter = bundle.getKeys();
 		while (iter.hasMoreElements()) {

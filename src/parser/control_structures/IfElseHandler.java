@@ -1,3 +1,7 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to handle the ifElse statements
+ */
 package parser.control_structures;
 
 import java.util.List;
@@ -10,6 +14,11 @@ public class IfElseHandler extends AbstractAdvancedControl{
 		super(INDICATOR);
 	}
 
+	/**
+	 * replaces the ifelse statement with the corresponding if or else depending on the value
+	 * ex1. ifelse 0 [ fd 5 ] [ rt 30 ] -> rt 30
+	 * ex2. ifelse 1 [ fd 5 ] [ rt 30 ] -> fd 5
+	 */
 	@Override
 	protected void replace(){
 		int place = getLogoLocations(indicator).get(0);

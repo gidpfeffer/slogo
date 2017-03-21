@@ -1,3 +1,11 @@
+/**
+ * Written by Gideon Pfeffer
+ * An integral part of the compiler
+ * Interpreter is responsible for turning all SLogo inputs into 
+ * exclusively commands and constants
+ * This means no variables, functions, ifelse's, repeats's, etc
+ */
+
 package parser.interpreter;
 
 import java.util.Collections;
@@ -26,6 +34,9 @@ public class Interpreter {
 		makeRegHandlers();
 	}
 	
+	/**
+	 * Makes instances of all of the Handlers related to variables
+	 */
 	private void makeVarHandlers(){
 		varLoops = new BracketHandler[]
 				{new DoTimesHandler(Collections.unmodifiableMap(storage.getVars().getMap())), 
@@ -33,15 +44,26 @@ public class Interpreter {
 		commandHandler = new CommandHandler(storage.getCommands());
 	}
 	
+	/**
+	 * makes all of the handlers not related to variables
+	 */
 	private void makeRegHandlers(){
 		regLoops = new AbstractBracketHandler[] {new RepeatHandler(), new IfHandler(), new IfElseHandler()};
 	}
 	
+	/**
+	 * @param tokens cheks to make sure that the literal and logo lists are the same length
+	 */
 	private void checkValidity(TokenList tokens){
 		if(tokens.getLiterals().size() == tokens.getLogo().size()) return;
 		throw new SLogoException("Invalid Token List");
 	}
 	
+	/**
+	 * @param TL TokenList that needs to be interpreted
+	 * @param state The State associated with the turtle the TokenList represents commands for
+	 * this handles all of the Strings associated with variables
+	 */
 	public void handleVarLoops(TokenList TL, State state){
 		checkValidity(TL);
 		commandHandler.fix(TL);
@@ -50,6 +72,11 @@ public class Interpreter {
 		}
 	}
 	
+	/**
+	 * @param TL TokenList that needs to be interpreted
+	 * @param state The State associated with the turtle the TokenList represents commands for
+	 * this handles all of the Strings not associated with variables
+	 */
 	public void handleRegLoops(TokenList TL, State state){
 		checkValidity(TL);
 		for(BracketHandler b: regLoops){

@@ -1,3 +1,9 @@
+/**
+ * Written by Gideon Pfefer
+ * Used to test the comment remover and make sure that it was parsing the String correctly
+ * Change testCode to try different tests
+ */
+
 package parser.tests;
 
 import parser.tokenizer.CommentRemover;

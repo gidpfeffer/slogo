@@ -1,3 +1,10 @@
+/**
+ * Written by Gideon Pfeffer
+ * Another form of a Queue rearranger
+ * puts queues into a list with each index being the root of a new queue
+ * then, rebuilds a queue using the list
+ */
+
 package parser.helpers;
 
 import java.util.ArrayList;
@@ -20,6 +27,9 @@ public class QueueSplitter {
 		remakeQueue();
 	}
 	
+	/**
+	 * Makes a list of queues with each list index being a new root
+	 */
 	private void fix(){
 		Queue<TreeNode> q = new LinkedList<>();
 		while(!queue.isEmpty()){
@@ -32,6 +42,9 @@ public class QueueSplitter {
 		}
 	}
 	
+	/**
+	 * rebuilds the queue from the list of queues
+	 */
 	private void remakeQueue(){
 		for(Queue<TreeNode> q : list){
 			while(!q.isEmpty()){
@@ -40,10 +53,16 @@ public class QueueSplitter {
 		}
 	}
 	
+	/**
+	 * @param q the queue that you want to add to the list
+	 */
 	private void addToList(Queue<TreeNode> q){
 		list.add(0,q);
 	}
 	
+	/**
+	 * @return the queue generated after redistributing
+	 */
 	public Queue<TreeNode> getQueue(){
 		return newQueue;
 	}

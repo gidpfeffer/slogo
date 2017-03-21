@@ -1,3 +1,8 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to generate a SLogo tree from a TokenList and State
+ */
+
 package parser.reflection;
 
 import java.util.ArrayList;
@@ -34,6 +39,9 @@ public class TreeGenerator {
 		generateTree();
 	}
 	
+	/**
+	 * initializes all of the data structures that will be used by the class
+	 */
 	private void initializeData(){
 		parsed = new Stack<>();
 		commands = new Stack<>();
@@ -43,6 +51,9 @@ public class TreeGenerator {
 		commandStack = new Stack<>();
 	}
 	
+	/**
+	 * fills the command and logo stacks wither the Literals and Logo from the TokenList
+	 */
 	private void fillStack(){
 		if(!commands.isEmpty()|!logo.isEmpty()){
 			commands.clear();
@@ -52,12 +63,19 @@ public class TreeGenerator {
 		logo.addAll(list.getLogo());
 	}
 	
+	/**
+	 * generates the tree using commands instance
+	 */
 	private void generateTree(){
 		while(!commands.isEmpty()){
 			grow();
 		}
 	}
 	
+	/**
+	 * builds the stack and queues with TreeNode instances
+	 * using the next popped element from the stacks 
+	 */
 	private void grow(){
 		String command = commands.pop();
 		String logoType = logo.pop();
@@ -73,6 +91,12 @@ public class TreeGenerator {
 		commandStack.push(t);
 	}
 	
+	/**
+	 * @param command Literal String representation ex. "fd"
+	 * @param logo Logo String representation ex. "Forward"
+	 * @param arguments the number of arguments the command expects
+	 * @return the TreeNode object generated from the specifications
+	 */
 	private TreeNode makeNode(String command, String logo, int arguments){
 		List<TreeNode> list = makeList(arguments);
 		if(logo.equals(CONSTANT)){
@@ -83,6 +107,10 @@ public class TreeGenerator {
 		}	
 	}
 	
+	/**
+	 * @param numArgs the number of arguments needed
+	 * @return a List of length numArgs that contains the most recently added TreeNodes
+	 */
 	private List<TreeNode> makeList(int numArgs){
 		List<TreeNode> list = new ArrayList<>();
 		for(int i = 0; i < numArgs; i++){
@@ -94,14 +122,23 @@ public class TreeGenerator {
 		return list;
 	}
 	
+	/**
+	 * @return a Queue of TurtleCommands from the TokenList passed in
+	 */
 	public Queue<TreeNode> getCommandQueue(){
 		return commandQueue;
 	}
 	
+	/**
+	 * @return a Stack of TurtleCommands from the TokenList passed in
+	 */
 	public Stack<TreeNode> getCommandStack(){
 		return commandStack;
 	}
 	
+	/**
+	 * @return the last value on the queue to be executed
+	 */
 	public double getLast(){
 		Queue<TreeNode> q = new LinkedList<>(commandQueue);
 		while(!q.isEmpty()){
