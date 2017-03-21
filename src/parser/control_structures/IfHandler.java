@@ -1,3 +1,7 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to handle the if statements
+ */
 package parser.control_structures;
 
 import java.util.ArrayList;
@@ -17,11 +21,17 @@ public class IfHandler extends AbstractBracketAid{
 		super(INDICATOR);
 	}
 
+	/**
+	 * resets the location of where the else should be added
+	 */
 	@Override
 	protected void reset() {
 		addLoc = -1;
 	}
 
+	/**
+	 * finds the indices of interest using the most recent indicator location
+	 */
 	@Override
 	protected void findIndices() {
 		checkValidity();
@@ -30,6 +40,10 @@ public class IfHandler extends AbstractBracketAid{
 		addLoc = ifEnd + 1;
 	}
 
+	/**
+	 * converts the if into an ifelse with an empty else statement
+	 * ex. if 1 [ fd 50 ] -> ifelse 1 [ fd 50 ] [ ] 
+	 */
 	@Override
 	protected void replace() {
 		List<String> literalAdd = new ArrayList<>(Arrays.asList(new String[] {"[", "]"}));

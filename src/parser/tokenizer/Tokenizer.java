@@ -1,3 +1,8 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to convert the user input into their SLogo translations one String at a time
+ */
+
 package parser.tokenizer;
 
 import java.util.ArrayList;
@@ -24,6 +29,9 @@ public class Tokenizer {
 		breakUp();
 	}
 
+	/**
+	 * Fills a List with the Patterns to be used in translation
+	 */
 	private void fillPatterns() {
 		patterns = new ArrayList<>();
 		for (int i = 0; i < syntax.length; i++) {
@@ -39,11 +47,17 @@ public class Tokenizer {
 		}
 	}
 
+	/**
+	 * Splits the String using spaces and newLine characters and trims the white space off the edges
+	 */
 	private void breakUp() {
 		toTokenize = toTokenize.trim();
 		tokenArray = toTokenize.split("\\s+|\n");
 	}
 
+	/**
+	 * @return the new TokenEntry which contains the <Literal,Logo> pairing
+	 */
 	public TokenEntry<String, String> getToken() {
 		toTokenize = tokenArray[index];
 		for (TokenEntry<Pattern, String> t : patterns) {
@@ -56,10 +70,18 @@ public class Tokenizer {
 		throw new SLogoException("Could not identify: " + toTokenize);
 	}
 
+	/**
+	 * @return true when there are no more Strings to Tokenize
+	 */
 	public boolean isEmpty() {
 		return index == tokenArray.length;
 	}
 
+	/**
+	 * @param text a String word
+	 * @param regex a Pattern
+	 * @return true when the text matches the given pattern regex
+	 */
 	private boolean match(String text, Pattern regex) {
 		return regex.matcher(text).matches();
 	}

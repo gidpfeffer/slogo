@@ -1,3 +1,8 @@
+/**
+ * Written by Gideon Pfeffer
+ * used to take the comments out of a String
+ */
+
 package parser.tokenizer;
 
 public class CommentRemover {
@@ -8,6 +13,9 @@ public class CommentRemover {
 		removeComments();
 	}
 
+	/**
+	 * removes the comments from the String by looking for "#" and end of line characters
+	 */
 	private void removeComments() {
 		while (str.indexOf('#') >= 0) {
 			int comIndex = str.indexOf('#');
@@ -22,6 +30,9 @@ public class CommentRemover {
 		}
 	}
 
+	/**
+	 * @return the String from which the comments have been removed
+	 */
 	public String getString() {
 		return str;
 	}

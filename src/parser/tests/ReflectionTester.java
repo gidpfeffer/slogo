@@ -1,9 +1,12 @@
+/**
+ * Written by Gideon Pfeffer
+ * Provides the framework, taken from the class demo, to try making different classes using reflection
+ */
 package parser.tests;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import model.command.Constant;
 import model.command.TreeNode;
 
 public class ReflectionTester {

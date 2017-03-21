@@ -1,3 +1,8 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to help with the brackets for when a user defines a new function
+ */
+
 package parser.storage;
 
 import java.util.ArrayList;
@@ -17,11 +22,17 @@ public class FunctionBracketAid extends AbstractBracketAid{
 		this.storage = storage;
 	}
 	
+	/**
+	 * resets the start index for the search of a new function
+	 */
 	@Override
 	protected void reset() {
 		start = -1;
 	}
-
+	
+	/**
+	 * This finds all relevant locations for where variables start/end and where their arguments are
+	 */
 	@Override
 	protected void findIndices() {
 		checkValidity();
@@ -33,6 +44,9 @@ public class FunctionBracketAid extends AbstractBracketAid{
 		functionEnd = findEndBracket(functionStart);
 	}
 
+	/**
+	 * This removes the function definition from the TokenList
+	 */
 	@Override
 	protected void replace() {
 		addKey();
@@ -42,6 +56,9 @@ public class FunctionBracketAid extends AbstractBracketAid{
 		}
 	}
 	
+	/**
+	 * Adds the function key to the global CommandStorage instance
+	 */
 	private void addKey(){
 		List<String> variables = list.getLiterals().subList(varBracketStart + 1, varBracketEnd);
 		FunctionObj f = new FunctionObj(key, variables);
@@ -51,6 +68,9 @@ public class FunctionBracketAid extends AbstractBracketAid{
 		storage.setValue(f, value);	
 	}
 
+	/**
+	 * Checks to make sure that the number of left and right brackets are equal
+	 */
 	@Override
 	protected void checkValidity() {
 		if(getLogoLocations(LEFT_BRACKET).size() != 
@@ -59,7 +79,9 @@ public class FunctionBracketAid extends AbstractBracketAid{
 		}
 	}
 
-
+	/**
+	 * handles the next instance of a function generation
+	 */
 	@Override
 	public void handle(TokenList TL, State t) {
 		list = TL;

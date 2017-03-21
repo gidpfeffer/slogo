@@ -1,3 +1,8 @@
+/**
+ * Written by Gideon Pfeffer
+ * Helps to reorder the queue based on whether or not the command is nested in other commands
+ */
+
 package parser.reflection;
 
 import java.util.LinkedList;
@@ -13,6 +18,10 @@ public class AllQueueHelper {
 		fix(new LinkedList<>(q));
 	}
 	
+	/**
+	 * @param q the queue you want to reorder
+	 * reorders the queue and saves it in fixedQueue
+	 */
 	private void fix(Queue<TreeNode> q){
 		while(!q.isEmpty()){
 			TreeNode cur = q.remove();
@@ -22,6 +31,9 @@ public class AllQueueHelper {
 		}
 	}
 	
+	/**
+	 * @return the reordered queue with nested commands appearing before their parents
+	 */
 	public Queue<TreeNode> getQueue(){
 		return fixedQueue;
 	}

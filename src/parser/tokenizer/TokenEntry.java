@@ -1,3 +1,9 @@
+/**
+ * Written by Gideon Pfeffer
+ * A generic key value pairing to be used 
+ * for various token generation tasks
+ */
+
 package parser.tokenizer;
 
 public class TokenEntry <K,V>{
@@ -10,10 +16,16 @@ public class TokenEntry <K,V>{
 		this.value = value;
 	}
 	
+	/**
+	 * @return the Key of the TokenEntry
+	 */
 	public K getKey(){
 		return key;
 	}
 	
+	/**
+	 * @return the Value of the TokenEntry
+	 */
 	public V getValue(){
 		return value;
 	}

@@ -1,3 +1,9 @@
+/**
+ * Written by Gideon Pfeffer
+ * Takes a String input and generates the TokenList
+ * for the Parser to interpret for commands
+ */
+
 package parser.tokenizer;
 
 import java.util.ArrayList;
@@ -14,6 +20,10 @@ public class TokenListGenerator {
 		setup(language);
 	}
 	
+	/**
+	 * @param language takes the location of a language resource bundle
+	 * Makes a new Tokenizer after removing the comments from the String
+	 */
 	private void setup(String language){
 		CommentRemover comment = new CommentRemover(tokenizing);
 		String withoutComments = comment.getString();
@@ -22,6 +32,9 @@ public class TokenListGenerator {
 		generate();
 	}
 	
+	/**
+	 * Generates the Logo and Literal lists to be put into the TokenList
+	 */
 	private void generate(){
 		List<String> literal = new ArrayList<>();
 		List<String> logo = new ArrayList<>();
@@ -34,6 +47,9 @@ public class TokenListGenerator {
 		tokens = new TokenList(literal, logo);
 	}
 	
+	/**
+	 * @return the TokenList that was generted by the Class with the String it was passed
+	 */
 	public TokenList getList(){
 		return tokens;
 	}

@@ -1,3 +1,10 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to test the commans generatoed by the Compiler
+ * Can be used to print the clases generated as well
+ * Change testCode to try different tests
+ */
+
 package parser.tests;
 
 import java.util.Queue;

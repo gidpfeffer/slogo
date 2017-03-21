@@ -1,3 +1,8 @@
+/**
+ * Written by Gideon Pfeffer
+ * Used to store the variables and commands
+ */
+
 package parser.storage;
 
 public class TotalStorage {
@@ -9,10 +14,16 @@ public class TotalStorage {
 		commands = new CommandStorage();
 	}
 	
+	/**
+	 * @return the VariableStorage object
+	 */
 	public VariableStorage getVars(){
 		return vars;
 	}
 	
+	/**
+	 * @return the CommandStorage object
+	 */
 	public CommandStorage getCommands(){
 		return commands;
 	}
