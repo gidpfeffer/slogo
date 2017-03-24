@@ -14,7 +14,7 @@ import model.turtle.Turtle;
 /**
  * this class is responsible for managing all Turtles and executing commands returned from 
  * the parser/compiler component.
- * @author Anh
+ * @authors Anh and Tahia
  *
  */
 public class ModelController {
