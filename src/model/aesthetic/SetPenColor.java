@@ -8,7 +8,11 @@ import model.command.TreeNode;
 import model.command.TurtleCommand;
 import model.turtle.State;
 import model.turtle.TurtleState;
-
+/**
+ * 
+ * @author Anh
+ *
+ */
 public class SetPenColor extends TurtleCommand implements Command {
 	private double index;
 	private State myTurtleState;

@@ -7,7 +7,11 @@ import controller.SLogoException;
 import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
-
+/**
+ * 
+ * @author Anh
+ *
+ */
 public class Remainder extends LogicCommand implements Command {
 	
 	public Remainder(List<TreeNode> args){

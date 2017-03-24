@@ -1,6 +1,11 @@
 package model.turtle;
 import java.util.Observable; 
 
+/**
+ * this class holds all turtle's properties, providing their getters and setters. 
+ * @author Anh
+ *
+ */
 public class TurtleState extends Observable implements State {
 	private double myX; 
 	private double myY; 
@@ -26,6 +31,10 @@ public class TurtleState extends Observable implements State {
 	
 	public TurtleState(){
 		this(1,0,0,0, true, true,3,0,0);
+	}
+	
+	public TurtleState(double id){
+		this(id,0,0,0, true, true,3,0,0);
 	}
 	
 	public TurtleState(TurtleState o){

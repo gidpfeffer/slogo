@@ -7,7 +7,11 @@ import model.command.Command;
 import model.command.TreeNode;
 import model.command.TurtleCommand;
 import model.turtle.State;
-
+/**
+ * 
+ * @author Anh
+ *
+ */
 public class Heading extends TurtleCommand implements Command{
 	private State myTurtleState;
 

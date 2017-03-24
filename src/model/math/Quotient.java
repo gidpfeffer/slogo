@@ -7,7 +7,11 @@ import controller.SLogoException;
 import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
-
+/**
+ * 
+ * @author Anh
+ *
+ */
 public class Quotient extends LogicCommand implements Command {
 	
 

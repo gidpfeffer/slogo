@@ -8,7 +8,11 @@ import model.command.TreeNode;
 import model.command.TurtleCommand;
 import model.turtle.State;
 import model.turtle.TurtleState;
-
+/**
+ * 
+ * @author Anh
+ *
+ */
 public class SetPenSize extends TurtleCommand implements Command {
 	private double pixels;
 	private State myTurtleState;

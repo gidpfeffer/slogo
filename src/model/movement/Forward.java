@@ -9,7 +9,11 @@ import model.command.TurtleCommand;
 import model.turtle.State;
 import model.turtle.TurtleState;
 
-
+/**
+ * 
+ * @author Anh
+ *
+ */
 public class Forward extends TurtleCommand implements Command{
 	
 	private double pixels;
