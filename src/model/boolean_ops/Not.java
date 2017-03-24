@@ -6,7 +6,11 @@ import controller.BackEndHandler;
 import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
-
+/**
+ * 
+ * @author Anh
+ *
+ */
 public class Not extends LogicCommand implements Command {
 	public Not(List<TreeNode> args){
 		children = args;

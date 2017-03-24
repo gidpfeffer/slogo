@@ -1,7 +1,11 @@
 package model.turtle;
 
 
-
+/**
+ * The class representing the turtle object
+ * @author Anh
+ *
+ */
 public class Turtle {
 	
 	private TurtleState myState; 
@@ -13,19 +17,29 @@ public class Turtle {
 		myState = new TurtleState(state);
 	}
 	public Turtle(){
-		myState = new TurtleState(1,0,0,0,true,true,3,0,0);
+		myState = new TurtleState();
 	}
 	public Turtle(double id){
-		myState = new TurtleState(id,0,0,0,true,true,3,0,0);
-	}
-
-	public State getReadOnlyState(){ //safe way to hand turtle state 
-		return (State) myState;
+		myState = new TurtleState(id);
 	}
 	
+	/**
+	 * 
+	 * @return the read-only version of the turtle state 
+	 */
+	public State getReadOnlyState(){ 
+		return (State) myState;
+	}
+	/**
+	 * 
+	 * @return the state of the turtle with full access to setters of properties
+	 */
 	public TurtleState getState(){ 
 		return myState;
 	}
+	/**
+	 *  bring the turtle to the home position
+	 */
 	public void reset(){
 		myState.reset();
 	}

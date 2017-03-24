@@ -7,6 +7,11 @@ import model.command.Command;
 import model.command.LogicCommand;
 import model.command.TreeNode;
 
+/**
+ * 
+ * @author Anh
+ *
+ */
 public class SetPalette extends LogicCommand implements Command {
 	
 	public SetPalette(List<TreeNode> args){

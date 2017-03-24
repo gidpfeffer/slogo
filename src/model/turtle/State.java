@@ -1,5 +1,9 @@
 package model.turtle;
-
+/**
+ * this interface is implemented by TurtleState and provides a read-only access to the properties of turtle 
+ * @author Anh
+ *
+ */
 public interface State {
 	public double getID();
 	public double getX();
